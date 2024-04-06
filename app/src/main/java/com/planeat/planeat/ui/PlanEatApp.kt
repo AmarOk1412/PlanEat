@@ -44,6 +44,7 @@ import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
+import com.planeat.planeat.connectors.Ricardo
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.ui.navigation.ModalNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PermanentNavigationDrawerContent
@@ -74,7 +75,8 @@ class AppModel(private val maxResult: Int) {
 
     init {
         val marmiton = Marmiton(maxResult)
-        connectors = listOf(marmiton)
+        val ricardo = Ricardo(maxResult)
+        connectors = listOf(ricardo, marmiton)
     }
 
     suspend fun search(searchTerm: String) {

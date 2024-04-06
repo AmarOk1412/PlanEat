@@ -14,8 +14,7 @@ import org.jsoup.select.Elements
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
-
-class Marmiton : Connector {
+class Ricardo : Connector {
     private var maxResult: Int
 
     constructor(maxResult: Int) : super() {
@@ -23,22 +22,60 @@ class Marmiton : Connector {
     }
 
     override fun handleUrl(url: String): Boolean {
-        return url.contains("marmiton.org")
+        return url.contains("ricardocuisine.com")
+    }
+
+    fun getRouteProps(scriptContent: String): JSONObject {
+        val startPos = scriptContent.indexOf("routeProps:") + "routeProps:".length
+        val braceStack = mutableListOf<Char>()
+        var endPos: Int = 0
+
+        for (i in startPos until scriptContent.length) {
+            if (scriptContent[i] == '{') {
+                braceStack.add('{')
+            } else if (scriptContent[i] == '}') {
+                if (braceStack.isEmpty()) {
+                    throw Error("Invalid scriptContent: unexpected }")
+                }
+                braceStack.removeLast()
+                if (braceStack.isEmpty()) {
+                    endPos = i
+                    break
+                }
+            }
+        }
+
+        if (braceStack.isNotEmpty()) {
+            throw Error("Invalid scriptContent: unmatched {")
+        }
+
+        val routePropsStr = scriptContent.substring(startPos, endPos + 1)
+        val routeProps = JSONObject(routePropsStr)
+
+        return routeProps
     }
 
     override fun search(searchTerm: String): List<Recipe> {
         val recipes = mutableListOf<Recipe>()
         try {
             val searchTermEscaped = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8.toString())
-            val url = "https://www.marmiton.org/recettes/recherche.aspx?aqt=$searchTermEscaped"
-            val doc: Document = Jsoup.connect(url).get()
+            val url = "https://www.ricardocuisine.com/recherche?sort=score&searchValue=$searchTermEscaped&content-type=recipe&currentPage=1"
+            val response = Jsoup.connect(url).execute()
+            val document = response.parse()
 
-            val elements: Elements = doc.select(".recipe-card-algolia")
-            for (element in elements) {
-                val relurl = element.select(".recipe-card-link").attr("href")
-                recipes.add(this.getRecipe(relurl))
-                if (recipes.size == this.maxResult)
-                    break
+            val scriptContent = document.select("script[id=\"react-bridge-bootstrap\"]").html()
+            val data = getRouteProps(scriptContent)
+
+            if (data["status"] == "success") {
+                val rows = data.getJSONObject("content").getJSONObject("results").getJSONArray("rows")
+                for (i in 0 until rows.length()) {
+                    val row = rows.getJSONObject(i)
+                    val recipeUrl = row.getString("url")
+                    val url = "https://www.ricardocuisine.com/recettes/$recipeUrl"
+                    recipes.add(this.getRecipe(url))
+                    if (recipes.size == this.maxResult)
+                        break
+                }
             }
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
@@ -48,11 +85,10 @@ class Marmiton : Connector {
 
     override fun getRecipe(url: String): Recipe {
         var recipe: Recipe = Recipe()
-        Log.d("PlanEat", "Parse recipe from Marmiton: $url")
+        Log.d("PlanEat", "Parse recipe from Ricardo: $url")
         try {
             val response = Jsoup.connect(url).execute()
             val document = response.parse()
-
             var recipeData: JSONObject? = null
 
             val scriptElements = document.select("script[type=\"application/ld+json\"]")
@@ -79,13 +115,12 @@ class Marmiton : Connector {
                 }
 
                 val duration = recipeData.getString("totalTime").replace("\\D".toRegex(), "").toInt()
-                val ingredients = recipeData.getJSONArray("recipeIngredient").toList().map { it.toString() }
-                val steps = recipeData.getJSONArray("recipeInstructions").toList().map { (it as LinkedHashMap<*, *>).get("text").toString() }
+                val ingredients = recipeData.optJSONArray("recipeIngredient")?.toList()?.map { it.toString() } ?: emptyList()
                 val imageUrl = recipeData.getJSONArray("image").getString(0)
+                val steps = recipeData.optJSONArray("recipeInstructions")?.toList()?.map { (it as LinkedHashMap<*, *>).get("text").toString() } ?: emptyList()
 
                 recipe = recipe.copy(title = name, image = imageUrl, tags = tags, cookingTime = duration, ingredients = ingredients, steps = steps)
             }
-
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }
