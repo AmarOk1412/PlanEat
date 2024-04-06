@@ -55,7 +55,7 @@ class Marmiton : Connector {
         return url.contains("marmiton.org")
     }
 
-    override fun search(searchTerm: String): Unit {
+    override fun search(searchTerm: String): List<Recipe> {
         val recipes = mutableListOf<Recipe>()
         try {
             val searchTermEscaped = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8.toString())
@@ -72,6 +72,7 @@ class Marmiton : Connector {
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }
+        return recipes
     }
 
     override fun getRecipe(url: String): Recipe {

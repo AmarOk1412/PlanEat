@@ -31,6 +31,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -43,6 +44,7 @@ import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
+import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.ui.navigation.ModalNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PermanentNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.ReplyBottomNavigationBar
@@ -66,21 +68,29 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class AppModel {
-    private var connectors: List<Connector>
+class AppModel(private val maxResult: Int) {
+    private val connectors: List<Connector>
+    val recipes = mutableStateListOf<Recipe>()
 
-    constructor(maxResult: Int) {
+    init {
         val marmiton = Marmiton(maxResult)
-        this.connectors = listOf(marmiton)
+        connectors = listOf(marmiton)
     }
 
-    suspend fun search(searchTerm: String) = withContext(Dispatchers.IO) {
-        coroutineScope {
-            connectors.map { connector ->
-                async {
-                    connector.search(searchTerm)
+    suspend fun search(searchTerm: String) {
+        val results = withContext(Dispatchers.IO) {
+            coroutineScope {
+                connectors.map { connector ->
+                    async {
+                        connector.search(searchTerm)
+                    }
                 }
             }
+        }
+
+        recipes.clear()
+        results.forEach { recipeList ->
+            recipes.addAll(recipeList.await())
         }
     }
 }
@@ -161,11 +171,11 @@ fun PlanEatApp(
         }
     }
 
-    // TODO full async
     NavigationWrapper(
         onQueryChanged = { value -> scope.launch {
             model.search(value)
         } },
+        recipes = model.recipes,
         navigationType = navigationType,
         contentType = contentType,
         displayFeatures = displayFeatures,
@@ -176,6 +186,7 @@ fun PlanEatApp(
 @Composable
 private fun NavigationWrapper(
     onQueryChanged: (String) -> Unit,
+    recipes: List<Recipe>,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     displayFeatures: List<DisplayFeature>,
@@ -203,6 +214,7 @@ private fun NavigationWrapper(
         }) {
             AppContent(
                 onQueryChanged = onQueryChanged,
+                recipes = recipes,
                 navigationType = navigationType,
                 contentType = contentType,
                 displayFeatures = displayFeatures,
@@ -230,6 +242,7 @@ private fun NavigationWrapper(
         ) {
             AppContent(
                 onQueryChanged = onQueryChanged,
+                recipes = recipes,
                 navigationType = navigationType,
                 contentType = contentType,
                 displayFeatures = displayFeatures,
@@ -250,6 +263,7 @@ private fun NavigationWrapper(
 fun AppContent(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
+    recipes: List<Recipe>,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     displayFeatures: List<DisplayFeature>,
@@ -280,6 +294,7 @@ fun AppContent(
                 navigationType = navigationType,
                 modifier = Modifier.weight(1f),
                 onQueryChanged = onQueryChanged,
+                recipes = recipes,
             )
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
                 ReplyBottomNavigationBar(
@@ -298,7 +313,8 @@ private fun NavHost(
     displayFeatures: List<DisplayFeature>,
     navigationType: ReplyNavigationType,
     modifier: Modifier = Modifier,
-    onQueryChanged: (String) -> Unit
+    onQueryChanged: (String) -> Unit,
+    recipes: List<Recipe>
 ) {
     NavHost(
         modifier = modifier,
@@ -311,6 +327,7 @@ private fun NavHost(
                 navigationType = navigationType,
                 displayFeatures = displayFeatures,
                 onQueryChanged = onQueryChanged,
+                recipes = recipes,
             )
         }
         composable(ReplyRoute.DM) {

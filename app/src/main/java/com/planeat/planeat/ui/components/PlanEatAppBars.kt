@@ -18,7 +18,12 @@ package com.planeat.planeat.ui.components
 
 import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
@@ -36,12 +41,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.planeat.planeat.R
+import com.planeat.planeat.data.Recipe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DockedSearchBar(
     modifier: Modifier = Modifier,
-    onQueryChanged: (String) -> Unit
+    onQueryChanged: (String) -> Unit,
+    recipes: List<Recipe>
 ) {
     var query by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
@@ -83,9 +90,24 @@ fun DockedSearchBar(
             }
         },
     ) {
-        Text(
-            text = stringResource(id = R.string.no_search_history),
-            modifier = Modifier.padding(16.dp)
-        )
+        if (recipes.isNotEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                recipes.forEach { recipe ->
+                    Text(
+                        text = recipe.title,
+                        modifier = Modifier.padding(4.dp)
+                    )
+                }
+            }
+        } else {
+            Text(
+                text = stringResource(id = R.string.no_search_history),
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+
     }
 }

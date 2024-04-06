@@ -44,6 +44,7 @@ import com.planeat.planeat.ui.utils.ReplyContentType
 import com.planeat.planeat.ui.utils.ReplyNavigationType
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
+import com.planeat.planeat.data.Recipe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +53,8 @@ fun RecipesScreen(
     navigationType: ReplyNavigationType,
     displayFeatures: List<DisplayFeature>,
     modifier: Modifier = Modifier,
-    onQueryChanged: (String) -> Unit
+    onQueryChanged: (String) -> Unit,
+    recipes: List<Recipe>
 ) {
     /**
      * When moving from LIST_AND_DETAIL page to LIST page clear the selection and user should see LIST screen.
@@ -70,7 +72,8 @@ fun RecipesScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 16.dp),
-                        onQueryChanged
+                        onQueryChanged,
+                        recipes
                     )
 
                     LazyColumn(
@@ -94,7 +97,8 @@ fun RecipesScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 16.dp),
-                    onQueryChanged
+                    onQueryChanged,
+                    recipes
                 )
 
                 LazyColumn(
