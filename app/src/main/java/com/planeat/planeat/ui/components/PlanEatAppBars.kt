@@ -39,8 +39,9 @@ import com.planeat.planeat.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReplyDockedSearchBar(
-    modifier: Modifier = Modifier
+fun DockedSearchBar(
+    modifier: Modifier = Modifier,
+    onQueryChanged: (String) -> Unit
 ) {
     var query by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
@@ -53,8 +54,7 @@ fun ReplyDockedSearchBar(
         query = query,
         onQueryChange = {
             query = it
-            Log.d("PlanEat", query)
-            // TODO pass to search items
+            onQueryChanged.invoke(query)
         },
         onSearch = { active = false },
         active = active,

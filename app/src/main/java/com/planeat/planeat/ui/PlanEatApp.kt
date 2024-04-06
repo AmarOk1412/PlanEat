@@ -41,6 +41,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
+import com.planeat.planeat.connectors.Connector
+import com.planeat.planeat.connectors.Marmiton
 import com.planeat.planeat.ui.navigation.ModalNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PermanentNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.ReplyBottomNavigationBar
@@ -54,14 +56,40 @@ import com.planeat.planeat.ui.utils.ReplyNavigationContentPosition
 import com.planeat.planeat.ui.utils.ReplyNavigationType
 import com.planeat.planeat.ui.utils.isBookPosture
 import com.planeat.planeat.ui.utils.isSeparating
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+
+class AppModel {
+    private var connectors: List<Connector>
+
+    constructor(maxResult: Int) {
+        val marmiton = Marmiton(maxResult)
+        this.connectors = listOf(marmiton)
+    }
+
+    suspend fun search(searchTerm: String) = withContext(Dispatchers.IO) {
+        coroutineScope {
+            connectors.map { connector ->
+                async {
+                    connector.search(searchTerm)
+                }
+            }
+        }
+    }
+}
+
 
 @Composable
 fun PlanEatApp(
     windowSize: WindowSizeClass,
     displayFeatures: List<DisplayFeature>,
-    closeDetailScreen: () -> Unit = {},
-    navigateToDetail: (Long, ReplyContentType) -> Unit = { _, _ -> },
 ) {
     /**
      * This will help us select type of navigation and content type depending on window size and
@@ -69,6 +97,8 @@ fun PlanEatApp(
      */
     val navigationType: ReplyNavigationType
     val contentType: ReplyContentType
+    val model = AppModel(3);
+    val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     /**
      * We are using display's folding features to map the device postures a fold is in.
@@ -131,24 +161,25 @@ fun PlanEatApp(
         }
     }
 
-    ReplyNavigationWrapper(
+    // TODO full async
+    NavigationWrapper(
+        onQueryChanged = { value -> scope.launch {
+            model.search(value)
+        } },
         navigationType = navigationType,
         contentType = contentType,
         displayFeatures = displayFeatures,
         navigationContentPosition = navigationContentPosition,
-        closeDetailScreen = closeDetailScreen,
-        navigateToDetail = navigateToDetail,
     )
 }
 
 @Composable
-private fun ReplyNavigationWrapper(
+private fun NavigationWrapper(
+    onQueryChanged: (String) -> Unit,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     displayFeatures: List<DisplayFeature>,
     navigationContentPosition: ReplyNavigationContentPosition,
-    closeDetailScreen: () -> Unit,
-    navigateToDetail: (Long, ReplyContentType) -> Unit,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -170,7 +201,8 @@ private fun ReplyNavigationWrapper(
                 navigateToTopLevelDestination = navigationActions::navigateTo,
             )
         }) {
-            ReplyAppContent(
+            AppContent(
+                onQueryChanged = onQueryChanged,
                 navigationType = navigationType,
                 contentType = contentType,
                 displayFeatures = displayFeatures,
@@ -178,8 +210,6 @@ private fun ReplyNavigationWrapper(
                 navController = navController,
                 selectedDestination = selectedDestination,
                 navigateToTopLevelDestination = navigationActions::navigateTo,
-                closeDetailScreen = closeDetailScreen,
-                navigateToDetail = navigateToDetail,
             )
         }
     } else {
@@ -198,7 +228,8 @@ private fun ReplyNavigationWrapper(
             },
             drawerState = drawerState
         ) {
-            ReplyAppContent(
+            AppContent(
+                onQueryChanged = onQueryChanged,
                 navigationType = navigationType,
                 contentType = contentType,
                 displayFeatures = displayFeatures,
@@ -206,8 +237,6 @@ private fun ReplyNavigationWrapper(
                 navController = navController,
                 selectedDestination = selectedDestination,
                 navigateToTopLevelDestination = navigationActions::navigateTo,
-                closeDetailScreen = closeDetailScreen,
-                navigateToDetail = navigateToDetail,
             ) {
                 scope.launch {
                     drawerState.open()
@@ -218,8 +247,9 @@ private fun ReplyNavigationWrapper(
 }
 
 @Composable
-fun ReplyAppContent(
+fun AppContent(
     modifier: Modifier = Modifier,
+    onQueryChanged: (String) -> Unit,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     displayFeatures: List<DisplayFeature>,
@@ -227,8 +257,6 @@ fun ReplyAppContent(
     navController: NavHostController,
     selectedDestination: String,
     navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
-    closeDetailScreen: () -> Unit,
-    navigateToDetail: (Long, ReplyContentType) -> Unit,
     onDrawerClicked: () -> Unit = {}
 ) {
     Row(modifier = modifier.fillMaxSize()) {
@@ -245,12 +273,13 @@ fun ReplyAppContent(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surfaceContainerLow)
         ) {
-            ReplyNavHost(
+            NavHost(
                 navController = navController,
                 contentType = contentType,
                 displayFeatures = displayFeatures,
                 navigationType = navigationType,
                 modifier = Modifier.weight(1f),
+                onQueryChanged = onQueryChanged,
             )
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
                 ReplyBottomNavigationBar(
@@ -263,12 +292,13 @@ fun ReplyAppContent(
 }
 
 @Composable
-private fun ReplyNavHost(
+private fun NavHost(
     navController: NavHostController,
     contentType: ReplyContentType,
     displayFeatures: List<DisplayFeature>,
     navigationType: ReplyNavigationType,
     modifier: Modifier = Modifier,
+    onQueryChanged: (String) -> Unit
 ) {
     NavHost(
         modifier = modifier,
@@ -276,10 +306,11 @@ private fun ReplyNavHost(
         startDestination = ReplyRoute.RECIPES,
     ) {
         composable(ReplyRoute.RECIPES) {
-            ReplyInboxScreen(
+            RecipesScreen(
                 contentType = contentType,
                 navigationType = navigationType,
                 displayFeatures = displayFeatures,
+                onQueryChanged = onQueryChanged,
             )
         }
         composable(ReplyRoute.DM) {

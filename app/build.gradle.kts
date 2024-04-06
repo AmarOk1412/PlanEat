@@ -115,6 +115,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.window)
 
+    api("org.jsoup:jsoup:1.17.2")
+
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.runner)

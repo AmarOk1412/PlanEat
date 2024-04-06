@@ -39,7 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
 import com.planeat.planeat.R
-import com.planeat.planeat.ui.components.ReplyDockedSearchBar
+import com.planeat.planeat.ui.components.DockedSearchBar
 import com.planeat.planeat.ui.utils.ReplyContentType
 import com.planeat.planeat.ui.utils.ReplyNavigationType
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
@@ -47,11 +47,12 @@ import com.google.accompanist.adaptive.TwoPane
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReplyInboxScreen(
+fun RecipesScreen(
     contentType: ReplyContentType,
     navigationType: ReplyNavigationType,
     displayFeatures: List<DisplayFeature>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onQueryChanged: (String) -> Unit
 ) {
     /**
      * When moving from LIST_AND_DETAIL page to LIST page clear the selection and user should see LIST screen.
@@ -65,10 +66,11 @@ fun ReplyInboxScreen(
         TwoPane(
             first = {
                 Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
-                    ReplyDockedSearchBar(
+                    DockedSearchBar(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 16.dp)
+                            .padding(horizontal = 16.dp, vertical = 16.dp),
+                        onQueryChanged
                     )
 
                     LazyColumn(
@@ -88,10 +90,11 @@ fun ReplyInboxScreen(
         Box(modifier = modifier.fillMaxSize()) {
 
             Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
-                ReplyDockedSearchBar(
+                DockedSearchBar(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 16.dp)
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                    onQueryChanged
                 )
 
                 LazyColumn(
