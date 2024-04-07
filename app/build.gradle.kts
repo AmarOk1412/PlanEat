@@ -115,6 +115,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.window)
 
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
     api("org.jsoup:jsoup:1.17.2")
 
     androidTestImplementation(libs.junit)

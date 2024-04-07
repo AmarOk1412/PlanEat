@@ -17,14 +17,20 @@
 package com.planeat.planeat.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
+import com.example.reply.ui.components.RecipeListItem
 import com.planeat.planeat.R
 import com.planeat.planeat.ui.components.DockedSearchBar
 import com.planeat.planeat.ui.utils.ReplyContentType
@@ -76,11 +83,16 @@ fun RecipesScreen(
                         recipes
                     )
 
-                    LazyColumn(
+                    Column(
                         modifier = modifier
-                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
                             .padding(top = 80.dp),
                     ) {
+                        recipes.forEach { recipe ->
+                            RecipeListItem(
+                                recipe = recipe,
+                            )
+                        }
                     }
                 }
             },
@@ -101,11 +113,16 @@ fun RecipesScreen(
                     recipes
                 )
 
-                LazyColumn(
+                Column(
                     modifier = modifier
-                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
                         .padding(top = 80.dp),
                 ) {
+                    recipes.forEach { recipe ->
+                        RecipeListItem(
+                            recipe = recipe,
+                        )
+                    }
                 }
             }
             // When we have bottom navigation we show FAB at the bottom end.

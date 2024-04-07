@@ -78,7 +78,7 @@ class AppModel(private val maxResult: Int) {
         val marmiton = Marmiton(maxResult)
         val ricardo = Ricardo(maxResult)
         val chacuit = ChaCuit(maxResult)
-        connectors = listOf(chacuit, ricardo, marmiton)
+        connectors = listOf(/*chacuit,*/ ricardo, marmiton)
     }
 
     suspend fun search(searchTerm: String) {
