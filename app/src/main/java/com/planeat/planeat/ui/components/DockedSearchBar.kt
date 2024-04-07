@@ -42,6 +42,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +55,8 @@ fun DockedSearchBar(
     var active by remember { mutableStateOf(false) }
 
     LaunchedEffect(query) {
+        delay(300)
+        onQueryChanged.invoke(query)
     }
 
     DockedSearchBar(
@@ -61,7 +64,6 @@ fun DockedSearchBar(
         query = query,
         onQueryChange = {
             query = it
-            onQueryChanged.invoke(query)
         },
         onSearch = { active = false },
         active = active,
@@ -104,7 +106,7 @@ fun DockedSearchBar(
             }
         } else {
             Text(
-                text = stringResource(id = R.string.no_search_history),
+                text = stringResource(id = R.string.no_item_found),
                 modifier = Modifier.padding(16.dp)
             )
         }
