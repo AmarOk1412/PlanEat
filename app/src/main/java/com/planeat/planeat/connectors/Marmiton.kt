@@ -1,11 +1,8 @@
 package com.planeat.planeat.connectors
 
 import android.util.Log
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.planeat.planeat.data.Recipe
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 
 import org.jsoup.Jsoup
@@ -26,8 +23,8 @@ class Marmiton : Connector {
         return url.contains("marmiton.org")
     }
 
-    override fun search(searchTerm: String): List<Recipe> {
-        val recipes = mutableListOf<Recipe>()
+    override fun search(searchTerm: String, onRecipe: (Recipe) -> Unit) {
+        var i = 0
         try {
             val searchTermEscaped = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8.toString())
             val url = "https://www.marmiton.org/recettes/recherche.aspx?aqt=$searchTermEscaped"
@@ -36,14 +33,14 @@ class Marmiton : Connector {
             val elements: Elements = doc.select(".recipe-card-algolia")
             for (element in elements) {
                 val relurl = element.select(".recipe-card-link").attr("href")
-                recipes.add(this.getRecipe(relurl))
-                if (recipes.size == this.maxResult)
+                onRecipe(this.getRecipe(relurl))
+                if (i == this.maxResult)
                     break
+                i++
             }
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }
-        return recipes
     }
 
     override fun getRecipe(url: String): Recipe {

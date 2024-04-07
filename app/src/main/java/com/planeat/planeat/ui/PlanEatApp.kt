@@ -16,6 +16,7 @@
 
 package com.planeat.planeat.ui
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -66,8 +67,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 
 class AppModel(private val maxResult: Int) {
     private val connectors: List<Connector>
@@ -79,22 +80,30 @@ class AppModel(private val maxResult: Int) {
         val chacuit = ChaCuit(maxResult)
         connectors = listOf(/*chacuit,*/ ricardo, marmiton)
     }
+    private var searchJob: Job? = null
+    private var currentSearchTerm: String = ""
 
-    suspend fun search(searchTerm: String) {
-        val results = withContext(Dispatchers.IO) {
-            coroutineScope {
+    suspend fun search(searchTerm: String): Boolean {
+        currentSearchTerm = searchTerm
+        searchJob?.cancel()
+        recipes.clear()
+        if (searchTerm.isEmpty())
+            return true
+        searchJob = coroutineScope {
+            launch {
                 connectors.map { connector ->
-                    async {
-                        connector.search(searchTerm)
+                    async(Dispatchers.IO) {
+                        // TODO callback return false?
+                        connector.search(searchTerm, onRecipe = { recipe ->
+                            if (searchTerm == currentSearchTerm) {
+                                recipes.add(recipe)
+                            }
+                        })
                     }
-                }
+                }.awaitAll()
             }
         }
-
-        recipes.clear()
-        results.forEach { recipeList ->
-            recipes.addAll(recipeList.await())
-        }
+        return true
     }
 }
 

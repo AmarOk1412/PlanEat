@@ -1,16 +1,11 @@
 package com.planeat.planeat.connectors
 
 import android.util.Log
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.planeat.planeat.data.Recipe
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -55,8 +50,8 @@ class Ricardo : Connector {
         return routeProps
     }
 
-    override fun search(searchTerm: String): List<Recipe> {
-        val recipes = mutableListOf<Recipe>()
+    override fun search(searchTerm: String, onRecipe: (Recipe) -> Unit) {
+        var r = 0
         try {
             val searchTermEscaped = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8.toString())
             val url = "https://www.ricardocuisine.com/recherche?sort=score&searchValue=$searchTermEscaped&content-type=recipe&currentPage=1"
@@ -72,15 +67,15 @@ class Ricardo : Connector {
                     val row = rows.getJSONObject(i)
                     val recipeUrl = row.getString("url")
                     val url = "https://www.ricardocuisine.com/recettes/$recipeUrl"
-                    recipes.add(this.getRecipe(url))
-                    if (recipes.size == this.maxResult)
+                    onRecipe(this.getRecipe(url))
+                    if (r == this.maxResult)
                         break
+                    r++
                 }
             }
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }
-        return recipes
     }
 
     override fun getRecipe(url: String): Recipe {

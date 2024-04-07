@@ -1,18 +1,10 @@
 package com.planeat.planeat.connectors
 
 import android.util.Log
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.planeat.planeat.data.Recipe
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 class ChaCuit : Connector {
     private var maxResult: Int
@@ -25,8 +17,8 @@ class ChaCuit : Connector {
         return url.contains("cha-cu.it") || url.contains("re7.ache.one")
     }
 
-    override fun search(searchTerm: String): List<Recipe> {
-        val recipes = mutableListOf<Recipe>()
+    override fun search(searchTerm: String, onRecipe: (Recipe) -> Unit) {
+        var i = 0
         try {
             val url = "https://cha-cu.it/recettes"
             val response = Jsoup.connect(url).execute()
@@ -38,15 +30,15 @@ class ChaCuit : Connector {
                 val title = element.select(".my-2.text-xl.font-semibold").text()
 
                 if (title.lowercase().contains(searchTerm.lowercase())) {
-                    recipes.add(getRecipe(recipeUrl))
-                    if (recipes.size == this.maxResult)
+                    onRecipe(getRecipe(recipeUrl))
+                    if (i == this.maxResult)
                         break
+                    i++
                 }
             }
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }
-        return recipes
     }
 
     override fun getRecipe(url: String): Recipe {
