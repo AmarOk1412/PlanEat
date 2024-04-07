@@ -90,6 +90,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.room.common)
+    implementation(libs.room.ktx)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -115,6 +117,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.window)
 
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
 
     api("org.jsoup:jsoup:1.17.2")

@@ -67,7 +67,6 @@ import kotlinx.coroutines.launch
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class AppModel(private val maxResult: Int) {
