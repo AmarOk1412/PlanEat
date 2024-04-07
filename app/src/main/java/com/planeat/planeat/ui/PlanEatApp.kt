@@ -42,6 +42,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
+import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
 import com.planeat.planeat.connectors.Ricardo
@@ -76,7 +77,8 @@ class AppModel(private val maxResult: Int) {
     init {
         val marmiton = Marmiton(maxResult)
         val ricardo = Ricardo(maxResult)
-        connectors = listOf(ricardo, marmiton)
+        val chacuit = ChaCuit(maxResult)
+        connectors = listOf(chacuit, ricardo, marmiton)
     }
 
     suspend fun search(searchTerm: String) {
