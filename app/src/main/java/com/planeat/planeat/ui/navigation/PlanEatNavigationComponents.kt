@@ -52,11 +52,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
@@ -116,7 +118,7 @@ fun ReplyNavigationRail(
                     onClick = { navigateToTopLevelDestination(replyDestination) },
                     icon = {
                         Icon(
-                            imageVector = replyDestination.selectedIcon,
+                            imageVector = ImageVector.vectorResource(replyDestination.icon),
                             contentDescription = stringResource(
                                 id = replyDestination.iconTextId
                             )
@@ -139,10 +141,16 @@ fun ReplyBottomNavigationBar(
                 selected = selectedDestination == replyDestination.route,
                 onClick = { navigateToTopLevelDestination(replyDestination) },
                 icon = {
-                    Icon(
-                        imageVector = replyDestination.selectedIcon,
-                        contentDescription = stringResource(id = replyDestination.iconTextId)
-                    )
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(replyDestination.icon),
+                            contentDescription = stringResource(id = replyDestination.iconTextId)
+                        )
+                        Text(
+                            text = stringResource(id = replyDestination.iconTextId),
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             )
         }
@@ -215,7 +223,7 @@ fun PermanentNavigationDrawerContent(
                             },
                             icon = {
                                 Icon(
-                                    imageVector = replyDestination.selectedIcon,
+                                    imageVector = ImageVector.vectorResource(replyDestination.icon),
                                     contentDescription = stringResource(
                                         id = replyDestination.iconTextId
                                     )
@@ -312,7 +320,7 @@ fun ModalNavigationDrawerContent(
                             },
                             icon = {
                                 Icon(
-                                    imageVector = replyDestination.selectedIcon,
+                                    imageVector = ImageVector.vectorResource(replyDestination.icon),
                                     contentDescription = stringResource(
                                         id = replyDestination.iconTextId
                                     )

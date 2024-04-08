@@ -372,13 +372,13 @@ private fun NavHost(
                 db = db,
             )
         }
-        composable(ReplyRoute.DM) {
+        composable(ReplyRoute.PANTRY) {
             EmptyComingSoon()
         }
         composable(ReplyRoute.AGENDA) {
             EmptyComingSoon()
         }
-        composable(ReplyRoute.GROUPS) {
+        composable(ReplyRoute.SHOPPING_LIST) {
             EmptyComingSoon()
         }
     }
