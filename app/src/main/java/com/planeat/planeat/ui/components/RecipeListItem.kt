@@ -45,11 +45,17 @@
  import androidx.compose.ui.Alignment
  import androidx.compose.ui.Modifier
  import androidx.compose.ui.draw.clip
+ import androidx.compose.ui.platform.LocalContext
  import androidx.compose.ui.semantics.selected
  import androidx.compose.ui.semantics.semantics
  import androidx.compose.ui.unit.dp
+ import androidx.room.Room
  import coil.compose.AsyncImage
  import com.planeat.planeat.data.Recipe
+ import com.planeat.planeat.data.RecipesDb
+ import kotlinx.coroutines.CoroutineScope
+ import kotlinx.coroutines.Dispatchers
+ import kotlinx.coroutines.launch
 
 @OptIn(
      ExperimentalFoundationApi::class,
@@ -57,86 +63,90 @@
  @Composable
  fun RecipeListItem(
     recipe: Recipe,
+    db: RecipesDb,
     modifier: Modifier = Modifier,
  ) {
-     Card(
-         modifier = modifier
-             .padding(horizontal = 16.dp, vertical = 4.dp)
-             .clip(CardDefaults.shape)
-             .combinedClickable(
-                 onClick = { Log.d("PlanEat", "TODO") },
-                 onLongClick = { Log.d("PlanEat", "TODO") }
-             )
-             .clip(CardDefaults.shape),
-         colors = CardDefaults.cardColors(
-             containerColor = MaterialTheme.colorScheme.surfaceVariant
-         )
-     ) {
-         Column(
-             modifier = Modifier
-                 .fillMaxWidth()
-                 .padding(20.dp)
-         ) {
-             Row(modifier = Modifier.fillMaxWidth()) {
-                val clickModifier = Modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null
-                ) { Log.d("PlanEat", "TODO") }
-                AsyncImage(
-                    model = recipe.image,
-                    contentDescription = recipe.title,
-                    modifier = Modifier.size(width = 160.dp, height = 100.dp)
+
+    Card(
+        modifier = modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .clip(CardDefaults.shape)
+            .combinedClickable(
+                onClick = { Log.d("PlanEat", "TODO") },
+                onLongClick = { Log.d("PlanEat", "TODO") }
+            )
+            .clip(CardDefaults.shape),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+            val clickModifier = Modifier.clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) { db.recipeDao().insertAll(recipe) }
+            AsyncImage(
+                model = recipe.image,
+                contentDescription = recipe.title,
+                modifier = Modifier.size(width = 160.dp, height = 100.dp)
+            )
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = recipe.title,
+                    style = MaterialTheme.typography.labelMedium
                 )
+            }
+            IconButton(
+                onClick = { CoroutineScope(Dispatchers.IO).launch {
+                    db.recipeDao().insertAll(recipe)
+                } },
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.StarBorder,
+                    contentDescription = "Favorite",
+                    tint = MaterialTheme.colorScheme.outline
+                )
+            }
+            }
 
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 12.dp, vertical = 4.dp),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = recipe.title,
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
-                IconButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.StarBorder,
-                        contentDescription = "Favorite",
-                        tint = MaterialTheme.colorScheme.outline
-                    )
-                }
-             }
-
-             Text(
-                 text = recipe.url,
-                 style = MaterialTheme.typography.bodyLarge,
-                 modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
-             )
-         }
-     }
+            Text(
+                text = recipe.url,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
+            )
+        }
+    }
  }
 
  @Composable
  fun SelectedProfileImage(modifier: Modifier = Modifier) {
-     Box(
-         modifier
-             .size(40.dp)
-             .clip(CircleShape)
-             .background(MaterialTheme.colorScheme.primary)
-     ) {
-         Icon(
-             Icons.Default.Check,
-             contentDescription = null,
-             modifier = Modifier
-                 .size(24.dp)
-                 .align(Alignment.Center),
-             tint = MaterialTheme.colorScheme.onPrimary
-         )
-     }
+    Box(
+        modifier
+            .size(40.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.primary)
+    ) {
+        Icon(
+            Icons.Default.Check,
+            contentDescription = null,
+            modifier = Modifier
+                .size(24.dp)
+                .align(Alignment.Center),
+            tint = MaterialTheme.colorScheme.onPrimary
+        )
+    }
  }

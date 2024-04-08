@@ -10,9 +10,6 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes")
     fun getAll(): List<Recipe>
 
-    @Query("SELECT * FROM recipes WHERE id IN (:recipesId)")
-    fun loadAllByIds(recipesIds: IntArray): List<Recipe>
-
     @Insert
     fun insertAll(vararg recipe: Recipe)
 

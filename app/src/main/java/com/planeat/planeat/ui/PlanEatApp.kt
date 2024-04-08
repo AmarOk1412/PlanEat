@@ -36,11 +36,13 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
 import com.planeat.planeat.connectors.ChaCuit
@@ -48,6 +50,7 @@ import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
 import com.planeat.planeat.connectors.Ricardo
 import com.planeat.planeat.data.Recipe
+import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.navigation.ModalNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PermanentNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.ReplyBottomNavigationBar
@@ -70,7 +73,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
-class AppModel(private val maxResult: Int) {
+class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     private val connectors: List<Connector>
     val recipes = mutableStateListOf<Recipe>()
 
@@ -80,19 +83,30 @@ class AppModel(private val maxResult: Int) {
         val chacuit = ChaCuit(maxResult)
         connectors = listOf(/*chacuit,*/ ricardo, marmiton)
     }
-    private var searchJob: Job? = null
+    private var listJob: Job? = null
     private var currentSearchTerm: String = ""
 
     suspend fun search(searchTerm: String): Boolean {
         currentSearchTerm = searchTerm
-        searchJob?.cancel()
+        listJob?.cancel()
         recipes.clear()
-        if (searchTerm.isEmpty())
+        if (searchTerm.isEmpty()) {
+            listJob = coroutineScope {
+                async(Dispatchers.IO) {
+                    for (recipe in db.recipeDao().getAll()) {
+                        recipes.add(recipe)
+                    }
+                }
+            }
             return true
-        searchJob = coroutineScope {
+        }
+        listJob = coroutineScope {
             launch {
                 connectors.map { connector ->
                     async(Dispatchers.IO) {
+
+                        Log.d("PlanEat", "Elems: ${db.recipeDao().getAll().size}")
+
                         // TODO callback return false?
                         connector.search(searchTerm, onRecipe = { recipe ->
                             if (searchTerm == currentSearchTerm) {
@@ -119,7 +133,15 @@ fun PlanEatApp(
      */
     val navigationType: ReplyNavigationType
     val contentType: ReplyContentType
-    val model = AppModel(3);
+
+
+
+    val context = LocalContext.current
+    val db = Room.databaseBuilder(
+        context,
+        RecipesDb::class.java, "RecipesDb"
+    ).build()
+    val model = AppModel(3, db);
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     /**
@@ -188,6 +210,7 @@ fun PlanEatApp(
             model.search(value)
         } },
         recipes = model.recipes,
+        db = db,
         navigationType = navigationType,
         contentType = contentType,
         displayFeatures = displayFeatures,
@@ -199,6 +222,7 @@ fun PlanEatApp(
 private fun NavigationWrapper(
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
+    db: RecipesDb,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     displayFeatures: List<DisplayFeature>,
@@ -227,6 +251,7 @@ private fun NavigationWrapper(
             AppContent(
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
+                db = db,
                 navigationType = navigationType,
                 contentType = contentType,
                 displayFeatures = displayFeatures,
@@ -255,6 +280,7 @@ private fun NavigationWrapper(
             AppContent(
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
+                db = db,
                 navigationType = navigationType,
                 contentType = contentType,
                 displayFeatures = displayFeatures,
@@ -276,6 +302,7 @@ fun AppContent(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
+    db: RecipesDb,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     displayFeatures: List<DisplayFeature>,
@@ -307,6 +334,7 @@ fun AppContent(
                 modifier = Modifier.weight(1f),
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
+                db = db,
             )
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
                 ReplyBottomNavigationBar(
@@ -326,7 +354,8 @@ private fun NavHost(
     navigationType: ReplyNavigationType,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
-    recipes: List<Recipe>
+    recipes: List<Recipe>,
+    db: RecipesDb,
 ) {
     NavHost(
         modifier = modifier,
@@ -340,6 +369,7 @@ private fun NavHost(
                 displayFeatures = displayFeatures,
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
+                db = db,
             )
         }
         composable(ReplyRoute.DM) {
