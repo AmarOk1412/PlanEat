@@ -109,7 +109,10 @@
             }
             IconButton(
                 onClick = { CoroutineScope(Dispatchers.IO).launch {
-                    db.recipeDao().insertAll(recipe)
+                    // TODO avoid exception, select first
+                    try {
+                        db.recipeDao().insertAll(recipe)
+                    } catch (error: Exception) {}
                 } },
                 modifier = Modifier
                     .clip(CircleShape)

@@ -22,7 +22,7 @@ class Converters {
 
 @Entity(
     tableName = "recipes",
-    indices = [Index("id")]
+    indices = [Index("id"), Index(value = ["url"], unique = true)]
 )
 @TypeConverters(Converters::class)
 data class Recipe(
