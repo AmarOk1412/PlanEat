@@ -72,10 +72,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import java.text.Normalizer
 
 class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     private val connectors: List<Connector>
     val recipes = mutableStateListOf<Recipe>()
+    val ingredients = mutableStateListOf<String>()
 
     init {
         val marmiton = Marmiton(maxResult)
@@ -86,16 +88,43 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     private var listJob: Job? = null
     private var currentSearchTerm: String = ""
 
+    fun gatherIngredients(recipe: Recipe) {
+        // TODO Replace with IA
+        val units = listOf("g", "gram[a-zA-Z]*", "kg", "kilo[a-zA-Z]*", "ml", "cl", "dl", "L", "litres?", "boite", "cups", "c[a-zA-Z]* a cafe", "c[a-zA-Z]* a soupe", "paquets?", "verres?", "brins?")
+        val unitsPattern = units.joinToString(separator = "|") { "\\b$it\\b" } // Join the units with the OR operator
+        val ingredientPattern = """(\d+(\.\d+)?)?\s*($unitsPattern)?\s*(de|d')?\s*(.+)""".toRegex(RegexOption.IGNORE_CASE)
+
+        recipe.ingredients.forEach { ingredient ->
+            val normalizedIngredient = Normalizer.normalize(ingredient, Normalizer.Form.NFD).replace("\\p{M}".toRegex(), "")
+            val matchResult = ingredientPattern.find(normalizedIngredient)
+            if (matchResult != null) {
+                var (quantity, _, unit, _, ingredientName) = matchResult.destructured
+                quantity = quantity.ifEmpty { "1" }
+                ingredients.add("Quantity: $quantity, Unit: $unit, Ingredient: $ingredientName")
+            } else {
+                ingredients.add("Ingredient: $ingredient")
+            }
+        }
+    }
+
+    fun gatherIngredients(recipes: List<Recipe>) {
+        recipes.forEach { recipe ->
+            gatherIngredients(recipe)
+        }
+    }
+
     suspend fun search(searchTerm: String): Boolean {
         currentSearchTerm = searchTerm
         listJob?.cancel()
         recipes.clear()
+        ingredients.clear()
         if (searchTerm.isEmpty()) {
             listJob = coroutineScope {
                 async(Dispatchers.IO) {
                     for (recipe in db.recipeDao().getAll()) {
                         recipes.add(recipe)
                     }
+                    gatherIngredients(recipes)
                 }
             }
             return true
@@ -112,6 +141,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                             if (searchTerm == currentSearchTerm) {
                                 Log.w("PlanEat", "Adding recipe $recipe")
                                 recipes.add(recipe)
+                                gatherIngredients(recipe)
                             }
                         })
                     }
@@ -211,6 +241,7 @@ fun PlanEatApp(
             model.search(value)
         } },
         recipes = model.recipes,
+        ingredients = model.ingredients,
         db = db,
         navigationType = navigationType,
         contentType = contentType,
@@ -223,6 +254,7 @@ fun PlanEatApp(
 private fun NavigationWrapper(
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
+    ingredients: List<String>,
     db: RecipesDb,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
@@ -252,6 +284,7 @@ private fun NavigationWrapper(
             AppContent(
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
+                ingredients = ingredients,
                 db = db,
                 navigationType = navigationType,
                 contentType = contentType,
@@ -281,6 +314,7 @@ private fun NavigationWrapper(
             AppContent(
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
+                ingredients = ingredients,
                 db = db,
                 navigationType = navigationType,
                 contentType = contentType,
@@ -303,6 +337,7 @@ fun AppContent(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
+    ingredients: List<String>,
     db: RecipesDb,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
@@ -335,6 +370,7 @@ fun AppContent(
                 modifier = Modifier.weight(1f),
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
+                ingredients = ingredients,
                 db = db,
             )
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
@@ -356,6 +392,7 @@ private fun NavHost(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
+    ingredients: List<String>,
     db: RecipesDb,
 ) {
     NavHost(
@@ -380,7 +417,9 @@ private fun NavHost(
             EmptyComingSoon()
         }
         composable(ReplyRoute.SHOPPING_LIST) {
-            EmptyComingSoon()
+            ShoppingScreen(
+                ingredients = ingredients
+            )
         }
     }
 }
