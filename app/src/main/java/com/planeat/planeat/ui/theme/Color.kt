@@ -235,3 +235,10 @@ val surfaceContainerLowDarkHighContrast = Color(0xFF201B13)
 val surfaceContainerDarkHighContrast = Color(0xFF251F17)
 val surfaceContainerHighDarkHighContrast = Color(0xFF2F2921)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF3B342B)
+
+
+val calendarStartCardGradient = Color(0xFF02933B)
+val calendarEndCardGradient = Color(0xFF00AF45)
+val calendarNotSelected = Color(0xFFFFFFFF)
+val calendarTextSelected = Color(0xFFFFFFFF)
+val calendarTextNotSelected = Color(0xFF000000)

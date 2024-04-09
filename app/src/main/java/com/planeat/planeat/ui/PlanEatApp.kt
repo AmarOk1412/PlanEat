@@ -414,7 +414,7 @@ private fun NavHost(
             EmptyComingSoon()
         }
         composable(ReplyRoute.AGENDA) {
-            EmptyComingSoon()
+            AgendaScreen()
         }
         composable(ReplyRoute.SHOPPING_LIST) {
             ShoppingScreen(

@@ -16,6 +16,8 @@
 
 package com.planeat.planeat.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -53,7 +55,9 @@ import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.ui.components.calendar.Calendar
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipesScreen(
@@ -106,8 +110,8 @@ fun RecipesScreen(
         )
     } else {
         Box(modifier = modifier.fillMaxSize()) {
-
             Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
+
                 DockedSearchBar(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -121,6 +125,7 @@ fun RecipesScreen(
                         .verticalScroll(rememberScrollState())
                         .padding(top = 80.dp),
                 ) {
+
                     recipes.forEach { recipe ->
                         RecipeListItem(
                             recipe = recipe,
