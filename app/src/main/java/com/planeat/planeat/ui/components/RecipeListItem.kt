@@ -16,6 +16,7 @@
 
  package com.example.reply.ui.components
 
+ import android.annotation.SuppressLint
  import android.util.Log
  import androidx.compose.animation.ExperimentalAnimationApi
  import androidx.compose.foundation.ExperimentalFoundationApi
@@ -33,6 +34,7 @@
  import androidx.compose.foundation.shape.CircleShape
  import androidx.compose.material.icons.Icons
  import androidx.compose.material.icons.filled.Check
+ import androidx.compose.material.icons.filled.Star
  import androidx.compose.material.icons.filled.StarBorder
  import androidx.compose.material3.Card
  import androidx.compose.material3.CardDefaults
@@ -41,6 +43,8 @@
  import androidx.compose.material3.MaterialTheme
  import androidx.compose.material3.Text
  import androidx.compose.runtime.Composable
+ import androidx.compose.runtime.LaunchedEffect
+ import androidx.compose.runtime.mutableStateOf
  import androidx.compose.runtime.remember
  import androidx.compose.ui.Alignment
  import androidx.compose.ui.Modifier
@@ -56,7 +60,9 @@
  import kotlinx.coroutines.CoroutineScope
  import kotlinx.coroutines.Dispatchers
  import kotlinx.coroutines.launch
+ import kotlinx.coroutines.withContext
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(
      ExperimentalFoundationApi::class,
  )
@@ -96,6 +102,13 @@
                 modifier = Modifier.size(width = 160.dp, height = 100.dp)
             )
 
+            val exists = remember { mutableStateOf(false) }
+
+            LaunchedEffect(Unit) {
+                    exists.value = withContext(Dispatchers.IO) {
+                        db.recipeDao().findByUrl(recipe.url) != null
+                    }
+            }
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -109,9 +122,12 @@
             }
             IconButton(
                 onClick = { CoroutineScope(Dispatchers.IO).launch {
-                    // TODO avoid exception, select first
                     try {
-                        db.recipeDao().insertAll(recipe)
+                        if (exists.value) {
+                            db.recipeDao().delete(recipe)
+                        } else {
+                            db.recipeDao().insertAll(recipe)
+                        }
                     } catch (error: Exception) {
                         Log.d("PlanEat", "Error: $error")
                     }
@@ -121,9 +137,9 @@
                     .background(MaterialTheme.colorScheme.surfaceContainerHigh)
             ) {
                 Icon(
-                    imageVector = Icons.Default.StarBorder,
+                    imageVector = if (exists.value) Icons.Default.Star else Icons.Default.StarBorder,
                     contentDescription = "Favorite",
-                    tint = MaterialTheme.colorScheme.outline
+                    tint = if (exists.value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                 )
             }
             }
