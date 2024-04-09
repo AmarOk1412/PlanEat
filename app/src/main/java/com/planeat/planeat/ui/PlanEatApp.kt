@@ -110,6 +110,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                         // TODO callback return false?
                         connector.search(searchTerm, onRecipe = { recipe ->
                             if (searchTerm == currentSearchTerm) {
+                                Log.w("PlanEat", "Adding recipe $recipe")
                                 recipes.add(recipe)
                             }
                         })

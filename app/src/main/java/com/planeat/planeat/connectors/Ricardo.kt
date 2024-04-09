@@ -65,9 +65,12 @@ class Ricardo : Connector {
                 val rows = data.getJSONObject("content").getJSONObject("results").getJSONArray("rows")
                 for (i in 0 until rows.length()) {
                     val row = rows.getJSONObject(i)
-                    val recipeUrl = row.getString("url")
-                    val url = "https://www.ricardocuisine.com/recettes/$recipeUrl"
-                    onRecipe(this.getRecipe(url))
+                    val rowUrl = row.getString("url")
+                    val recipeUrl = "https://www.ricardocuisine.com/recettes/$rowUrl"
+                    val recipe = getRecipe(recipeUrl)
+                    if (recipe.title.isEmpty())
+                        continue
+                    onRecipe(recipe)
                     if (r == this.maxResult)
                         break
                     r++
@@ -114,7 +117,7 @@ class Ricardo : Connector {
                 val imageUrl = recipeData.getJSONArray("image").getString(0)
                 val steps = recipeData.optJSONArray("recipeInstructions")?.toList()?.map { (it as LinkedHashMap<*, *>).get("text").toString() } ?: emptyList()
 
-                recipe = recipe.copy(title = name, image = imageUrl, tags = tags, cookingTime = duration, ingredients = ingredients, steps = steps)
+                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags, cookingTime = duration, ingredients = ingredients, steps = steps)
             }
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())

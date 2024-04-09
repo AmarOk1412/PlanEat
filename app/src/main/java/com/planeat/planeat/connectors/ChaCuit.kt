@@ -30,7 +30,10 @@ class ChaCuit : Connector {
                 val title = element.select(".my-2.text-xl.font-semibold").text()
 
                 if (title.lowercase().contains(searchTerm.lowercase())) {
-                    onRecipe(getRecipe(recipeUrl))
+                    val recipe = getRecipe(recipeUrl)
+                    if (recipe.title.isEmpty())
+                        continue
+                    onRecipe(recipe)
                     if (i == this.maxResult)
                         break
                     i++
@@ -82,7 +85,7 @@ class ChaCuit : Connector {
                 steps.add(step)
             }
 
-            recipe = recipe.copy(title = name, cookingTime = duration, ingredients = ingredients, steps = steps, tags = tags, image = imageUrl)
+            recipe = recipe.copy(title = name, url = url, cookingTime = duration, ingredients = ingredients, steps = steps, tags = tags, image = imageUrl)
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }

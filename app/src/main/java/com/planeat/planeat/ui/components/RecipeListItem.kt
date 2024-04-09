@@ -112,7 +112,9 @@
                     // TODO avoid exception, select first
                     try {
                         db.recipeDao().insertAll(recipe)
-                    } catch (error: Exception) {}
+                    } catch (error: Exception) {
+                        Log.d("PlanEat", "Error: $error")
+                    }
                 } },
                 modifier = Modifier
                     .clip(CircleShape)

@@ -33,7 +33,10 @@ class Marmiton : Connector {
             val elements: Elements = doc.select(".recipe-card-algolia")
             for (element in elements) {
                 val relurl = element.select(".recipe-card-link").attr("href")
-                onRecipe(this.getRecipe(relurl))
+                val recipe = getRecipe(relurl)
+                if (recipe.title.isEmpty())
+                    continue
+                onRecipe(recipe)
                 if (i == this.maxResult)
                     break
                 i++
@@ -80,7 +83,7 @@ class Marmiton : Connector {
                 val steps = recipeData.getJSONArray("recipeInstructions").toList().map { (it as LinkedHashMap<*, *>).get("text").toString() }
                 val imageUrl = recipeData.getJSONArray("image").getString(0)
 
-                recipe = recipe.copy(title = name, image = imageUrl, tags = tags, cookingTime = duration, ingredients = ingredients, steps = steps)
+                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags, cookingTime = duration, ingredients = ingredients, steps = steps)
             }
 
         } catch (error: Exception) {
