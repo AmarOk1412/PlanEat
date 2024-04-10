@@ -17,7 +17,9 @@
  package com.example.reply.ui.components
 
  import android.annotation.SuppressLint
+ import android.os.Build
  import android.util.Log
+ import androidx.annotation.RequiresApi
  import androidx.compose.animation.ExperimentalAnimationApi
  import androidx.compose.foundation.ExperimentalFoundationApi
  import androidx.compose.foundation.background
@@ -55,13 +57,18 @@
  import androidx.compose.ui.unit.dp
  import androidx.room.Room
  import coil.compose.AsyncImage
+ import com.planeat.planeat.data.Agenda
+ import com.planeat.planeat.data.AgendaDb
  import com.planeat.planeat.data.Recipe
  import com.planeat.planeat.data.RecipesDb
  import kotlinx.coroutines.CoroutineScope
  import kotlinx.coroutines.Dispatchers
  import kotlinx.coroutines.launch
  import kotlinx.coroutines.withContext
+ import java.time.Instant
+ import java.util.Date
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(
      ExperimentalFoundationApi::class,
@@ -72,14 +79,26 @@
     db: RecipesDb,
     modifier: Modifier = Modifier,
  ) {
-
+    val context = LocalContext.current
     Card(
         modifier = modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .clip(CardDefaults.shape)
             .combinedClickable(
                 onClick = { Log.d("PlanEat", "TODO") },
-                onLongClick = { Log.d("PlanEat", "TODO") }
+                onLongClick = {
+                    CoroutineScope(Dispatchers.IO).launch {
+                            val agendaDb = Room.databaseBuilder(
+                                context,
+                                AgendaDb::class.java, "AgendaDb"
+                            ).build()
+                            Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${Date.from(Instant.now()).time}")
+                            agendaDb.agendaDao().insertAll(Agenda(
+                                date = Date.from(Instant.now()).time,
+                                recipeId = recipe.recipeId
+                            ))
+                    }
+                }
             )
             .clip(CardDefaults.shape),
         colors = CardDefaults.cardColors(
@@ -105,9 +124,9 @@
             val exists = remember { mutableStateOf(false) }
 
             LaunchedEffect(Unit) {
-                    exists.value = withContext(Dispatchers.IO) {
-                        db.recipeDao().findByUrl(recipe.url) != null
-                    }
+                exists.value = withContext(Dispatchers.IO) {
+                    db.recipeDao().findByUrl(recipe.url) != null
+                }
             }
             Column(
                 modifier = Modifier
@@ -150,24 +169,5 @@
                 modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
             )
         }
-    }
- }
-
- @Composable
- fun SelectedProfileImage(modifier: Modifier = Modifier) {
-    Box(
-        modifier
-            .size(40.dp)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primary)
-    ) {
-        Icon(
-            Icons.Default.Check,
-            contentDescription = null,
-            modifier = Modifier
-                .size(24.dp)
-                .align(Alignment.Center),
-            tint = MaterialTheme.colorScheme.onPrimary
-        )
     }
  }

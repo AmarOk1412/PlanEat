@@ -165,8 +165,6 @@ fun PlanEatApp(
     val navigationType: ReplyNavigationType
     val contentType: ReplyContentType
 
-
-
     val context = LocalContext.current
     val db = Room.databaseBuilder(
         context,

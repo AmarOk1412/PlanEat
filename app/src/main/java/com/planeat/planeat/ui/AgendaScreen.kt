@@ -16,6 +16,8 @@
 
 package com.planeat.planeat.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -30,16 +32,25 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.planeat.planeat.R
 import com.planeat.planeat.ui.components.calendar.Calendar
+import com.planeat.planeat.ui.components.calendar.CalendarDataSource
+import com.planeat.planeat.ui.components.calendar.RecipeCalendar
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AgendaScreen(
     modifier: Modifier = Modifier,
 ) {
+    val dataSource = CalendarDataSource()
+    var data by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
     Box(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
             Column(
@@ -54,7 +65,13 @@ fun AgendaScreen(
                 )
 
                 Calendar(
-                    modifier.fillMaxWidth()
+                    modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    dataSource
+                )
+
+                RecipeCalendar(
+                    modifier.fillMaxWidth(),
+                    dataSource
                 )
             }
         }

@@ -38,8 +38,8 @@ import java.time.format.FormatStyle
 @RequiresApi(Build.VERSION_CODES.O)
 fun Calendar(
     modifier: Modifier = Modifier,
+    dataSource: CalendarDataSource,
 ) {
-    val dataSource = CalendarDataSource()
     var data by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
     Column(modifier = modifier.fillMaxSize()) {
         Header(

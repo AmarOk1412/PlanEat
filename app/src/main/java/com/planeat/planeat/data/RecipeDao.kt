@@ -10,6 +10,9 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes")
     fun getAll(): List<Recipe>
 
+    @Query("SELECT * FROM recipes WHERE id IN (:id)")
+    fun findById(id: Long): Recipe
+
     @Query("SELECT * FROM recipes WHERE url IN (:url)")
     fun findByUrl(url: String): Recipe
 
