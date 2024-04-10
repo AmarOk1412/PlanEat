@@ -16,14 +16,11 @@
 
 package com.planeat.planeat.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
@@ -70,7 +67,7 @@ fun DockedSearchBar(
         onActiveChange = {
             active = it
         },
-        placeholder = { Text(text = stringResource(id = R.string.search_emails)) },
+        placeholder = { Text(text = stringResource(id = R.string.search_placeholder)) },
         leadingIcon = {
             if (active) {
                 Icon(

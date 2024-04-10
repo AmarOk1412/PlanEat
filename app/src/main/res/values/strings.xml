@@ -32,7 +32,7 @@
     <string name="messages">Messages</string>
     <string name="four_hours_ago">4 hrs ago</string>
 
-    <string name="search_emails">Search recipes</string>
+    <string name="search_placeholder">Tartiflette, Ramen, Crêpes…</string>
     <string name="no_item_found">No item found</string>
     <string name="no_search_history">No search history</string>
     <string name="tab_pantry">Pantry</string>

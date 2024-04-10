@@ -39,6 +39,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -75,47 +76,24 @@ fun RecipesScreen(
     LaunchedEffect(key1 = contentType) {
 
     }
+    Box(modifier = modifier.fillMaxSize()) {
+        Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
 
-    if (contentType == ReplyContentType.DUAL_PANE) {
-        // TODO
-        TwoPane(
-            first = {
-                Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
-                    DockedSearchBar(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 16.dp),
-                        onQueryChanged,
-                        recipes
-                    )
-
-                    Column(
-                        modifier = modifier
-                            .verticalScroll(rememberScrollState())
-                            .padding(top = 80.dp),
-                    ) {
-                        recipes.forEach { recipe ->
-                            RecipeListItem(
-                                recipe = recipe,
-                                db = db,
-                            )
-                        }
-                    }
-                }
-            },
-            second = {
-            },
-            strategy = HorizontalTwoPaneStrategy(splitFraction = 0.5f, gapWidth = 16.dp),
-            displayFeatures = displayFeatures
-        )
-    } else {
-        Box(modifier = modifier.fillMaxSize()) {
-            Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+            ) {
+                // Header element
+                Text(
+                    text = stringResource(id = R.string.tab_recipes),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
 
                 DockedSearchBar(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                        .fillMaxWidth(),
                     onQueryChanged,
                     recipes
                 )
@@ -123,7 +101,7 @@ fun RecipesScreen(
                 Column(
                     modifier = modifier
                         .verticalScroll(rememberScrollState())
-                        .padding(top = 80.dp),
+                        .padding(top = 8.dp),
                 ) {
 
                     recipes.forEach { recipe ->
@@ -134,22 +112,22 @@ fun RecipesScreen(
                     }
                 }
             }
-            // When we have bottom navigation we show FAB at the bottom end.
-            if (navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
-                LargeFloatingActionButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(16.dp),
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = stringResource(id = R.string.edit),
-                        modifier = Modifier.size(28.dp)
-                    )
-                }
+        }
+        // When we have bottom navigation we show FAB at the bottom end.
+        if (navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
+            LargeFloatingActionButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp),
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = stringResource(id = R.string.edit),
+                    modifier = Modifier.size(28.dp)
+                )
             }
         }
     }
