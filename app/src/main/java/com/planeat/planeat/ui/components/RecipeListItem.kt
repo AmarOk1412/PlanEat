@@ -66,6 +66,8 @@
  import kotlinx.coroutines.launch
  import kotlinx.coroutines.withContext
  import java.time.Instant
+ import java.time.ZoneId
+ import java.time.ZoneOffset
  import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -92,9 +94,16 @@
                                 context,
                                 AgendaDb::class.java, "AgendaDb"
                             ).build()
-                            Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${Date.from(Instant.now()).time}")
+                            val todayMiddayMillis = Instant.now()
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate()
+                                .atTime(12, 0)
+                                .toInstant(ZoneOffset.UTC)
+                                .toEpochMilli()
+
+                            Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${todayMiddayMillis}")
                             agendaDb.agendaDao().insertAll(Agenda(
-                                date = Date.from(Instant.now()).time,
+                                date = todayMiddayMillis,
                                 recipeId = recipe.recipeId
                             ))
                     }

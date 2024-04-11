@@ -1,6 +1,7 @@
 package com.planeat.planeat.ui.components.calendar
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,15 +22,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.room.Room
 import com.example.reply.ui.components.RecipeListItem
+import com.planeat.planeat.data.AgendaDb
+import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.theme.calendarEndCardGradient
 import com.planeat.planeat.ui.theme.calendarNotSelected
 import com.planeat.planeat.ui.theme.calendarStartCardGradient
 import com.planeat.planeat.ui.theme.calendarTextNotSelected
 import com.planeat.planeat.ui.theme.calendarTextSelected
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -56,11 +64,49 @@ fun RecipeCalendar(
 fun ContentItem(
     date: CalendarUiModel.Date,
 ) {
-    Text(
-        text = date.date.format(
-            DateTimeFormatter.ofPattern("EEEE dd MMMM")
-        ),
-        style = MaterialTheme.typography.titleLarge,
-        modifier = Modifier.padding(bottom = 8.dp)
-    )
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        val context = LocalContext.current
+        var txt = remember { mutableStateOf("") } // Add this line to store the text value
+
+        LaunchedEffect(Unit) {
+            withContext(Dispatchers.IO) {
+                val adb = Room.databaseBuilder(
+                    context,
+                    AgendaDb::class.java, "AgendaDb"
+                ).build()
+                val rdb = Room.databaseBuilder(
+                    context,
+                    RecipesDb::class.java, "RecipesDb"
+                ).build()
+                val recipesPlanned = adb.agendaDao().findByDate(date.date.atTime(12, 0)
+                    .toInstant(ZoneOffset.UTC)
+                    .toEpochMilli())
+
+                recipesPlanned.forEach {
+                    val recipe = rdb.recipeDao().findById(it.recipeId)
+                    if (recipe !== null) {
+                        val title = recipe.title
+                        if (!title.isEmpty()) {
+                            txt.value += "$title \n"
+                        }
+                    } else {
+                        adb.agendaDao().delete(it)
+                    }
+                }
+            }
+        }
+
+        Text(
+            text = date.date.format(
+                DateTimeFormatter.ofPattern("EEEE dd MMMM")
+            ),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        Text(
+            text = txt.value,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+    }
 }

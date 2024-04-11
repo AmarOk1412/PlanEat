@@ -95,10 +95,18 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
         val ingredientPattern = """(\d+(\.\d+)?)?\s*($unitsPattern)?\s*(de|d')?\s*(.+)""".toRegex(RegexOption.IGNORE_CASE)
 
         recipe.ingredients.forEach { ingredient ->
-            val normalizedIngredient = Normalizer.normalize(ingredient, Normalizer.Form.NFD).replace("\\p{M}".toRegex(), "")
+            var normalizedIngredient = Normalizer.normalize(ingredient, Normalizer.Form.NFD).replace("\\p{M}".toRegex(), "")
+            normalizedIngredient = normalizedIngredient.replace("(", "")
+            normalizedIngredient = normalizedIngredient.replace(")", "")
+            normalizedIngredient = normalizedIngredient.replace("\t", " ")
             val matchResult = ingredientPattern.find(normalizedIngredient)
             if (matchResult != null) {
                 var (quantity, _, unit, _, ingredientName) = matchResult.destructured
+               // val words = normalizedIngredient.split(" ")
+               // for (word in words) {
+               //     Log.d("PlanEat", "@@@ $word | $normalizedIngredient | $quantity | $unit | $ingredientName")
+               // }
+
                 quantity = quantity.ifEmpty { "1" }
                 ingredients.add("Quantity: $quantity, Unit: $unit, Ingredient: $ingredientName")
             } else {

@@ -14,19 +14,13 @@ import java.util.Date
 
 @Entity(
     tableName = "agenda",
-    indices = [Index("id")],
-    foreignKeys = [ForeignKey(
-        entity = Recipe::class,
-        parentColumns = ["id"],
-        childColumns = ["recipeId"],
-        onDelete = ForeignKey.CASCADE
-    )]
+    indices = [Index("id")]
 )
-data class Agenda constructor(
-    @ColumnInfo(name = "date") val date: Long = 0,
-    @ColumnInfo(name = "recipeId", index = true) val recipeId: Long = 0,
-)  {
+data class Agenda(
+    @ColumnInfo(name = "date") val date: Long,
+    @ColumnInfo(name = "recipe_id") val recipeId: Long
+) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var id: Long = 0
+    var agendaId: Long = 0
 }
