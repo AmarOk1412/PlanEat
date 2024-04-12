@@ -1,182 +1,279 @@
-/*
- * Copyright 2022 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
- package com.example.reply.ui.components
+package com.planeat.planeat.ui.components
 
- import android.annotation.SuppressLint
- import android.os.Build
- import android.util.Log
- import androidx.annotation.RequiresApi
- import androidx.compose.animation.ExperimentalAnimationApi
- import androidx.compose.foundation.ExperimentalFoundationApi
- import androidx.compose.foundation.background
- import androidx.compose.foundation.clickable
- import androidx.compose.foundation.combinedClickable
- import androidx.compose.foundation.interaction.MutableInteractionSource
- import androidx.compose.foundation.layout.Arrangement
- import androidx.compose.foundation.layout.Box
- import androidx.compose.foundation.layout.Column
- import androidx.compose.foundation.layout.Row
- import androidx.compose.foundation.layout.fillMaxWidth
- import androidx.compose.foundation.layout.padding
- import androidx.compose.foundation.layout.size
- import androidx.compose.foundation.shape.CircleShape
- import androidx.compose.material.icons.Icons
- import androidx.compose.material.icons.filled.Check
- import androidx.compose.material.icons.filled.Star
- import androidx.compose.material.icons.filled.StarBorder
- import androidx.compose.material3.Card
- import androidx.compose.material3.CardDefaults
- import androidx.compose.material3.Icon
- import androidx.compose.material3.IconButton
- import androidx.compose.material3.MaterialTheme
- import androidx.compose.material3.Text
- import androidx.compose.runtime.Composable
- import androidx.compose.runtime.LaunchedEffect
- import androidx.compose.runtime.mutableStateOf
- import androidx.compose.runtime.remember
- import androidx.compose.ui.Alignment
- import androidx.compose.ui.Modifier
- import androidx.compose.ui.draw.clip
- import androidx.compose.ui.platform.LocalContext
- import androidx.compose.ui.semantics.selected
- import androidx.compose.ui.semantics.semantics
- import androidx.compose.ui.unit.dp
- import androidx.room.Room
- import coil.compose.AsyncImage
- import com.planeat.planeat.data.Agenda
- import com.planeat.planeat.data.AgendaDb
- import com.planeat.planeat.data.Recipe
- import com.planeat.planeat.data.RecipesDb
- import kotlinx.coroutines.CoroutineScope
- import kotlinx.coroutines.Dispatchers
- import kotlinx.coroutines.launch
- import kotlinx.coroutines.withContext
- import java.time.Instant
- import java.time.ZoneId
- import java.time.ZoneOffset
- import java.util.Date
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SuggestionChip
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.room.Room
+import androidx.compose.material3.ChipColors
+import androidx.compose.material3.SuggestionChipDefaults
+import coil.compose.AsyncImage
+import com.planeat.planeat.R
+import com.planeat.planeat.data.Agenda
+import com.planeat.planeat.data.AgendaDb
+import com.planeat.planeat.data.Recipe
+import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.ui.theme.backgroundCardRecipe
+import com.planeat.planeat.ui.theme.tagColor0
+import com.planeat.planeat.ui.theme.tagColor1
+import com.planeat.planeat.ui.theme.tagColor2
+import com.planeat.planeat.ui.theme.tagColor3
+import com.planeat.planeat.ui.theme.tagColor4
+import com.planeat.planeat.ui.theme.tagColor5
+import com.planeat.planeat.ui.theme.tagColor6
+import com.planeat.planeat.ui.theme.tagColor7
+import com.planeat.planeat.ui.theme.tagColor8
+import com.planeat.planeat.ui.theme.textCardRecipe
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(
      ExperimentalFoundationApi::class,
  )
- @Composable
- fun RecipeListItem(
+@Composable
+fun RecipeListItem(
     recipe: Recipe,
-    db: RecipesDb,
     modifier: Modifier = Modifier,
- ) {
+) {
     val context = LocalContext.current
     Card(
         modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 4.dp)
             .clip(CardDefaults.shape)
+            .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp) // Set the width to 40% of the screen
             .combinedClickable(
                 onClick = { Log.d("PlanEat", "TODO") },
                 onLongClick = {
                     CoroutineScope(Dispatchers.IO).launch {
-                            val agendaDb = Room.databaseBuilder(
+                        val agendaDb = Room
+                            .databaseBuilder(
                                 context,
                                 AgendaDb::class.java, "AgendaDb"
-                            ).build()
-                            val todayMiddayMillis = Instant.now()
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDate()
-                                .atTime(12, 0)
-                                .toInstant(ZoneOffset.UTC)
-                                .toEpochMilli()
+                            )
+                            .build()
+                        val todayMiddayMillis = Instant
+                            .now()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate()
+                            .atTime(12, 0)
+                            .toInstant(ZoneOffset.UTC)
+                            .toEpochMilli()
 
-                            Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${todayMiddayMillis}")
-                            agendaDb.agendaDao().insertAll(Agenda(
-                                date = todayMiddayMillis,
-                                recipeId = recipe.recipeId
-                            ))
+                        Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${todayMiddayMillis}")
+                        agendaDb
+                            .agendaDao()
+                            .insertAll(
+                                Agenda(
+                                    date = todayMiddayMillis,
+                                    recipeId = recipe.recipeId
+                                )
+                            )
                     }
                 }
             )
             .clip(CardDefaults.shape),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        ),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        )
+            containerColor = backgroundCardRecipe
+        ),
     ) {
+        val exists = remember { mutableStateOf(false) }
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-            val clickModifier = Modifier.clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null
-            ) { db.recipeDao().insertAll(recipe) }
-            AsyncImage(
-                model = recipe.image,
-                contentDescription = recipe.title,
-                modifier = Modifier.size(width = 160.dp, height = 100.dp)
-            )
-
-            val exists = remember { mutableStateOf(false) }
-
             LaunchedEffect(Unit) {
                 exists.value = withContext(Dispatchers.IO) {
-                    db.recipeDao().findByUrl(recipe.url) != null
+                    val rdb = Room.databaseBuilder(
+                        context,
+                        RecipesDb::class.java, "RecipesDb"
+                    ).build()
+                    rdb.recipeDao().findByUrl(recipe.url) != null
                 }
             }
-            Column(
+
+            Box(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 12.dp, vertical = 4.dp),
-                verticalArrangement = Arrangement.Center
+                    .fillMaxWidth()
+                    .aspectRatio(1f / .8f)
             ) {
-                Text(
-                    text = recipe.title,
-                    style = MaterialTheme.typography.labelMedium
+                AsyncImage(
+                    model = recipe.image,
+                    contentDescription = recipe.title,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
                 )
-            }
-            IconButton(
-                onClick = { CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        if (exists.value) {
-                            db.recipeDao().delete(recipe)
-                        } else {
-                            db.recipeDao().insertAll(recipe)
-                        }
-                    } catch (error: Exception) {
-                        Log.d("PlanEat", "Error: $error")
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp)
+                ) {
+                    IconButton(
+                        onClick = { CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                val rdb = Room.databaseBuilder(
+                                    context,
+                                    RecipesDb::class.java, "RecipesDb"
+                                ).build()
+                                if (exists.value) {
+                                    rdb.recipeDao().delete(recipe)
+                                } else {
+                                    rdb.recipeDao().insertAll(recipe)
+                                }
+                            } catch (error: Exception) {
+                                Log.d("PlanEat", "Error: $error")
+                            }
+                        } },
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(backgroundCardRecipe)
+                            .align(Alignment.TopEnd)
+                    ) {
+                        Icon(
+                            imageVector = if (exists.value) Icons.Default.Star else Icons.Default.StarBorder,
+                            contentDescription = stringResource(R.string.favorite),
+                            tint = textCardRecipe,
+                        )
                     }
-                } },
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-            ) {
-                Icon(
-                    imageVector = if (exists.value) Icons.Default.Star else Icons.Default.StarBorder,
-                    contentDescription = "Favorite",
-                    tint = if (exists.value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-                )
+                }
             }
+            Text(
+                text = recipe.title,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(start = 8.dp, top = 12.dp, end = 8.dp, bottom = 0.dp),
+                color = textCardRecipe,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
+
+            Row(
+                modifier = Modifier.padding(top = 12.dp, start = 8.dp).fillMaxWidth(),
+            ) {
+                Log.d("PlanEat", recipe.toString())
+                for (i in 0 until minOf(recipe.tags.size, 2)) {
+                    val tag = recipe.tags[i]
+                    val colorIndex = tag.first().toInt() % 8
+                    val chipColor = when (colorIndex) {
+                        0 -> tagColor0
+                        1 -> tagColor1
+                        2 -> tagColor2
+                        3 -> tagColor3
+                        4 -> tagColor4
+                        5 -> tagColor5
+                        6 -> tagColor6
+                        7 -> tagColor7
+                        else -> tagColor8
+                    }
+
+                    SuggestionChip(
+                        onClick = { /*TODO*/ },
+                        label = { Text(
+                            text = tag,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.height(18.dp),
+
+                        ) },
+                        colors = SuggestionChipDefaults.suggestionChipColors(
+                            containerColor = chipColor.copy(alpha = 0.5f),
+                            labelColor = chipColor
+                        ),
+                        modifier = Modifier.padding(end = 8.dp).fillMaxWidth(0.5f).height(24.dp),
+                        border = BorderStroke(width = 1.dp, color = chipColor)
+                    )
+
+                }
             }
 
-            Text(
-                text = recipe.url,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
-            )
+
+            Row(
+                modifier = Modifier.padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.schedule),
+                    contentDescription = "Schedule",
+                    modifier = Modifier.size(18.dp)
+                )
+                Text(
+                    text = convertDuration(recipe.cookingTime),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(start = 8.dp),
+                    color = textCardRecipe
+                )
+            }
+
         }
     }
  }
+
+fun convertDuration(cookingTime: Int): String {
+    val hours = cookingTime / 60
+    val minutes = cookingTime % 60
+
+    return when {
+        hours > 0 && minutes > 0 -> "${hours}h ${minutes}min"
+        hours > 0 -> "${hours}h"
+        minutes > 0 -> "${minutes}min"
+        else -> "0min"
+    }
+}

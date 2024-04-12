@@ -95,6 +95,7 @@ dependencies {
     implementation(libs.androidx.room.common)
     implementation(libs.room.ktx)
     implementation(libs.transport.runtime)
+    implementation(libs.compose.material)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
