@@ -53,15 +53,15 @@ import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.navigation.ModalNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PermanentNavigationDrawerContent
-import com.planeat.planeat.ui.navigation.ReplyBottomNavigationBar
-import com.planeat.planeat.ui.navigation.ReplyNavigationActions
-import com.planeat.planeat.ui.navigation.ReplyNavigationRail
-import com.planeat.planeat.ui.navigation.ReplyRoute
-import com.planeat.planeat.ui.navigation.ReplyTopLevelDestination
+import com.planeat.planeat.ui.navigation.PlanEatBottomNavigationBar
+import com.planeat.planeat.ui.navigation.PlanEatNavigationActions
+import com.planeat.planeat.ui.navigation.PlanEatNavigationRail
+import com.planeat.planeat.ui.navigation.PlanEatRoute
+import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
 import com.planeat.planeat.ui.utils.DevicePosture
-import com.planeat.planeat.ui.utils.ReplyContentType
-import com.planeat.planeat.ui.utils.ReplyNavigationContentPosition
-import com.planeat.planeat.ui.utils.ReplyNavigationType
+import com.planeat.planeat.ui.utils.PlanEatContentType
+import com.planeat.planeat.ui.utils.PlanEatNavigationContentPosition
+import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import com.planeat.planeat.ui.utils.isBookPosture
 import com.planeat.planeat.ui.utils.isSeparating
 import kotlinx.coroutines.CoroutineScope
@@ -170,8 +170,8 @@ fun PlanEatApp(
      * This will help us select type of navigation and content type depending on window size and
      * fold state of the device.
      */
-    val navigationType: ReplyNavigationType
-    val contentType: ReplyContentType
+    val navigationType: PlanEatNavigationType
+    val contentType: PlanEatContentType
 
     val context = LocalContext.current
     val db = Room.databaseBuilder(
@@ -200,28 +200,28 @@ fun PlanEatApp(
 
     when (windowSize.widthSizeClass) {
         WindowWidthSizeClass.Compact -> {
-            navigationType = ReplyNavigationType.BOTTOM_NAVIGATION
-            contentType = ReplyContentType.SINGLE_PANE
+            navigationType = PlanEatNavigationType.BOTTOM_NAVIGATION
+            contentType = PlanEatContentType.SINGLE_PANE
         }
         WindowWidthSizeClass.Medium -> {
-            navigationType = ReplyNavigationType.NAVIGATION_RAIL
+            navigationType = PlanEatNavigationType.NAVIGATION_RAIL
             contentType = if (foldingDevicePosture != DevicePosture.NormalPosture) {
-                ReplyContentType.DUAL_PANE
+                PlanEatContentType.DUAL_PANE
             } else {
-                ReplyContentType.SINGLE_PANE
+                PlanEatContentType.SINGLE_PANE
             }
         }
         WindowWidthSizeClass.Expanded -> {
             navigationType = if (foldingDevicePosture is DevicePosture.BookPosture) {
-                ReplyNavigationType.NAVIGATION_RAIL
+                PlanEatNavigationType.NAVIGATION_RAIL
             } else {
-                ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER
+                PlanEatNavigationType.PERMANENT_NAVIGATION_DRAWER
             }
-            contentType = ReplyContentType.DUAL_PANE
+            contentType = PlanEatContentType.DUAL_PANE
         }
         else -> {
-            navigationType = ReplyNavigationType.BOTTOM_NAVIGATION
-            contentType = ReplyContentType.SINGLE_PANE
+            navigationType = PlanEatNavigationType.BOTTOM_NAVIGATION
+            contentType = PlanEatContentType.SINGLE_PANE
         }
     }
 
@@ -231,14 +231,14 @@ fun PlanEatApp(
      */
     val navigationContentPosition = when (windowSize.heightSizeClass) {
         WindowHeightSizeClass.Compact -> {
-            ReplyNavigationContentPosition.TOP
+            PlanEatNavigationContentPosition.TOP
         }
         WindowHeightSizeClass.Medium,
         WindowHeightSizeClass.Expanded -> {
-            ReplyNavigationContentPosition.CENTER
+            PlanEatNavigationContentPosition.CENTER
         }
         else -> {
-            ReplyNavigationContentPosition.TOP
+            PlanEatNavigationContentPosition.TOP
         }
     }
 
@@ -262,23 +262,23 @@ private fun NavigationWrapper(
     recipes: List<Recipe>,
     ingredients: List<String>,
     db: RecipesDb,
-    navigationType: ReplyNavigationType,
-    contentType: ReplyContentType,
+    navigationType: PlanEatNavigationType,
+    contentType: PlanEatContentType,
     displayFeatures: List<DisplayFeature>,
-    navigationContentPosition: ReplyNavigationContentPosition,
+    navigationContentPosition: PlanEatNavigationContentPosition,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     val navController = rememberNavController()
     val navigationActions = remember(navController) {
-        ReplyNavigationActions(navController)
+        PlanEatNavigationActions(navController)
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val selectedDestination =
-        navBackStackEntry?.destination?.route ?: ReplyRoute.AGENDA
+        navBackStackEntry?.destination?.route ?: PlanEatRoute.AGENDA
 
-    if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
+    if (navigationType == PlanEatNavigationType.PERMANENT_NAVIGATION_DRAWER) {
         // TODO check on custom width of PermanentNavigationDrawer: b/232495216
         PermanentNavigationDrawer(drawerContent = {
             PermanentNavigationDrawerContent(
@@ -345,18 +345,18 @@ fun AppContent(
     recipes: List<Recipe>,
     ingredients: List<String>,
     db: RecipesDb,
-    navigationType: ReplyNavigationType,
-    contentType: ReplyContentType,
+    navigationType: PlanEatNavigationType,
+    contentType: PlanEatContentType,
     displayFeatures: List<DisplayFeature>,
-    navigationContentPosition: ReplyNavigationContentPosition,
+    navigationContentPosition: PlanEatNavigationContentPosition,
     navController: NavHostController,
     selectedDestination: String,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
+    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
     onDrawerClicked: () -> Unit = {}
 ) {
     Row(modifier = modifier.fillMaxSize()) {
-        AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
-            ReplyNavigationRail(
+        AnimatedVisibility(visible = navigationType == PlanEatNavigationType.NAVIGATION_RAIL) {
+            PlanEatNavigationRail(
                 selectedDestination = selectedDestination,
                 navigationContentPosition = navigationContentPosition,
                 navigateToTopLevelDestination = navigateToTopLevelDestination,
@@ -379,8 +379,8 @@ fun AppContent(
                 ingredients = ingredients,
                 db = db,
             )
-            AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
-                ReplyBottomNavigationBar(
+            AnimatedVisibility(visible = navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
+                PlanEatBottomNavigationBar(
                     selectedDestination = selectedDestination,
                     navigateToTopLevelDestination = navigateToTopLevelDestination
                 )
@@ -392,9 +392,9 @@ fun AppContent(
 @Composable
 private fun NavHost(
     navController: NavHostController,
-    contentType: ReplyContentType,
+    contentType: PlanEatContentType,
     displayFeatures: List<DisplayFeature>,
-    navigationType: ReplyNavigationType,
+    navigationType: PlanEatNavigationType,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
@@ -404,12 +404,12 @@ private fun NavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = ReplyRoute.AGENDA,
+        startDestination = PlanEatRoute.AGENDA,
     ) {
-        composable(ReplyRoute.AGENDA) {
+        composable(PlanEatRoute.AGENDA) {
             AgendaScreen()
         }
-        composable(ReplyRoute.RECIPES) {
+        composable(PlanEatRoute.RECIPES) {
             RecipesScreen(
                 contentType = contentType,
                 navigationType = navigationType,
@@ -419,10 +419,10 @@ private fun NavHost(
                 db = db,
             )
         }
-        composable(ReplyRoute.PANTRY) {
+        composable(PlanEatRoute.PANTRY) {
             EmptyComingSoon()
         }
-        composable(ReplyRoute.SHOPPING_LIST) {
+        composable(PlanEatRoute.SHOPPING_LIST) {
             ShoppingScreen(
                 ingredients = ingredients
             )

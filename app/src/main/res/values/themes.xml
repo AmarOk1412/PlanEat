@@ -11,5 +11,5 @@
   -->
 <resources>
 
-    <style name="Theme.Reply" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.PlanEat" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

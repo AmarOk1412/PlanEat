@@ -63,13 +63,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
 import com.planeat.planeat.R
-import com.planeat.planeat.ui.utils.ReplyNavigationContentPosition
+import com.planeat.planeat.ui.utils.PlanEatNavigationContentPosition
 
 @Composable
-fun ReplyNavigationRail(
+fun PlanEatNavigationRail(
     selectedDestination: String,
-    navigationContentPosition: ReplyNavigationContentPosition,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
+    navigationContentPosition: PlanEatNavigationContentPosition,
+    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
     onDrawerClicked: () -> Unit = {},
 ) {
     NavigationRail(
@@ -112,15 +112,15 @@ fun ReplyNavigationRail(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            TOP_LEVEL_DESTINATIONS.forEach { replyDestination ->
+            TOP_LEVEL_DESTINATIONS.forEach { planEatDestination ->
                 NavigationRailItem(
-                    selected = selectedDestination == replyDestination.route,
-                    onClick = { navigateToTopLevelDestination(replyDestination) },
+                    selected = selectedDestination == planEatDestination.route,
+                    onClick = { navigateToTopLevelDestination(planEatDestination) },
                     icon = {
                         Icon(
-                            imageVector = ImageVector.vectorResource(replyDestination.icon),
+                            imageVector = ImageVector.vectorResource(planEatDestination.icon),
                             contentDescription = stringResource(
-                                id = replyDestination.iconTextId
+                                id = planEatDestination.iconTextId
                             )
                         )
                     }
@@ -131,23 +131,23 @@ fun ReplyNavigationRail(
 }
 
 @Composable
-fun ReplyBottomNavigationBar(
+fun PlanEatBottomNavigationBar(
     selectedDestination: String,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit
+    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
 ) {
     NavigationBar(modifier = Modifier.fillMaxWidth()) {
-        TOP_LEVEL_DESTINATIONS.forEach { replyDestination ->
+        TOP_LEVEL_DESTINATIONS.forEach { planEatDestination ->
             NavigationBarItem(
-                selected = selectedDestination == replyDestination.route,
-                onClick = { navigateToTopLevelDestination(replyDestination) },
+                selected = selectedDestination == planEatDestination.route,
+                onClick = { navigateToTopLevelDestination(planEatDestination) },
                 icon = {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(
-                            imageVector = ImageVector.vectorResource(replyDestination.icon),
-                            contentDescription = stringResource(id = replyDestination.iconTextId)
+                            imageVector = ImageVector.vectorResource(planEatDestination.icon),
+                            contentDescription = stringResource(id = planEatDestination.iconTextId)
                         )
                         Text(
-                            text = stringResource(id = replyDestination.iconTextId),
+                            text = stringResource(id = planEatDestination.iconTextId),
                             textAlign = TextAlign.Center
                         )
                     }
@@ -160,8 +160,8 @@ fun ReplyBottomNavigationBar(
 @Composable
 fun PermanentNavigationDrawerContent(
     selectedDestination: String,
-    navigationContentPosition: ReplyNavigationContentPosition,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
+    navigationContentPosition: PlanEatNavigationContentPosition,
+    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
 ) {
     PermanentDrawerSheet(
         modifier = Modifier.sizeIn(minWidth = 200.dp, maxWidth = 300.dp),
@@ -212,27 +212,27 @@ fun PermanentNavigationDrawerContent(
                         .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    TOP_LEVEL_DESTINATIONS.forEach { replyDestination ->
+                    TOP_LEVEL_DESTINATIONS.forEach { planEatDestination ->
                         NavigationDrawerItem(
-                            selected = selectedDestination == replyDestination.route,
+                            selected = selectedDestination == planEatDestination.route,
                             label = {
                                 Text(
-                                    text = stringResource(id = replyDestination.iconTextId),
+                                    text = stringResource(id = planEatDestination.iconTextId),
                                     modifier = Modifier.padding(horizontal = 16.dp)
                                 )
                             },
                             icon = {
                                 Icon(
-                                    imageVector = ImageVector.vectorResource(replyDestination.icon),
+                                    imageVector = ImageVector.vectorResource(planEatDestination.icon),
                                     contentDescription = stringResource(
-                                        id = replyDestination.iconTextId
+                                        id = planEatDestination.iconTextId
                                     )
                                 )
                             },
                             colors = NavigationDrawerItemDefaults.colors(
                                 unselectedContainerColor = Color.Transparent
                             ),
-                            onClick = { navigateToTopLevelDestination(replyDestination) }
+                            onClick = { navigateToTopLevelDestination(planEatDestination) }
                         )
                     }
                 }
@@ -246,8 +246,8 @@ fun PermanentNavigationDrawerContent(
 @Composable
 fun ModalNavigationDrawerContent(
     selectedDestination: String,
-    navigationContentPosition: ReplyNavigationContentPosition,
-    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
+    navigationContentPosition: PlanEatNavigationContentPosition,
+    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
     onDrawerClicked: () -> Unit = {}
 ) {
     ModalDrawerSheet {
@@ -309,27 +309,27 @@ fun ModalNavigationDrawerContent(
                         .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    TOP_LEVEL_DESTINATIONS.forEach { replyDestination ->
+                    TOP_LEVEL_DESTINATIONS.forEach { planEatDestination ->
                         NavigationDrawerItem(
-                            selected = selectedDestination == replyDestination.route,
+                            selected = selectedDestination == planEatDestination.route,
                             label = {
                                 Text(
-                                    text = stringResource(id = replyDestination.iconTextId),
+                                    text = stringResource(id = planEatDestination.iconTextId),
                                     modifier = Modifier.padding(horizontal = 16.dp)
                                 )
                             },
                             icon = {
                                 Icon(
-                                    imageVector = ImageVector.vectorResource(replyDestination.icon),
+                                    imageVector = ImageVector.vectorResource(planEatDestination.icon),
                                     contentDescription = stringResource(
-                                        id = replyDestination.iconTextId
+                                        id = planEatDestination.iconTextId
                                     )
                                 )
                             },
                             colors = NavigationDrawerItemDefaults.colors(
                                 unselectedContainerColor = Color.Transparent
                             ),
-                            onClick = { navigateToTopLevelDestination(replyDestination) }
+                            onClick = { navigateToTopLevelDestination(planEatDestination) }
                         )
                     }
                 }
@@ -340,7 +340,7 @@ fun ModalNavigationDrawerContent(
 }
 
 fun navigationMeasurePolicy(
-    navigationContentPosition: ReplyNavigationContentPosition,
+    navigationContentPosition: PlanEatNavigationContentPosition,
 ): MeasurePolicy {
     return MeasurePolicy { measurables, constraints ->
         lateinit var headerMeasurable: Measurable
@@ -367,8 +367,8 @@ fun navigationMeasurePolicy(
             val contentPlaceableY = when (navigationContentPosition) {
                 // Figure out the place we want to place the content, with respect to the
                 // parent (ignoring the header for now)
-                ReplyNavigationContentPosition.TOP -> 0
-                ReplyNavigationContentPosition.CENTER -> nonContentVerticalSpace / 2
+                PlanEatNavigationContentPosition.TOP -> 0
+                PlanEatNavigationContentPosition.CENTER -> nonContentVerticalSpace / 2
             }
                 // And finally, make sure we don't overlap with the header.
                 .coerceAtLeast(headerPlaceable.height)
