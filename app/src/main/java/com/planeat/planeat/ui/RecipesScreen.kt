@@ -20,23 +20,16 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -54,21 +47,18 @@ import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
 import com.planeat.planeat.R
 import com.planeat.planeat.ui.components.DockedSearchBar
-import com.planeat.planeat.ui.utils.ReplyContentType
-import com.planeat.planeat.ui.utils.ReplyNavigationType
-import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
-import com.google.accompanist.adaptive.TwoPane
+import com.planeat.planeat.ui.utils.PlanEatContentType
+import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.components.RecipeListItem
-import com.planeat.planeat.ui.components.calendar.Calendar
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipesScreen(
-    contentType: ReplyContentType,
-    navigationType: ReplyNavigationType,
+    contentType: PlanEatContentType,
+    navigationType: PlanEatNavigationType,
     displayFeatures: List<DisplayFeature>,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
@@ -118,7 +108,7 @@ fun RecipesScreen(
                 }
         }
         // When we have bottom navigation we show FAB at the bottom end.
-        if (navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
+        if (navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
             LargeFloatingActionButton(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
