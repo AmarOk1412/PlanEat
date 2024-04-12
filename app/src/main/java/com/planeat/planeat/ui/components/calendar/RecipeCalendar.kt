@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
@@ -82,11 +83,10 @@ fun ContentItem(
         )
 
         Row(
-            modifier = Modifier.horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier.horizontalScroll(rememberScrollState())
         ) {
             recipesPlanned.value.forEach { recipe ->
-                RecipeListItem(recipe = recipe)
+                RecipeListItem(recipe = recipe, modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium))
             }
         }
     }

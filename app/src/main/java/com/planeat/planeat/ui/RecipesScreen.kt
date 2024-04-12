@@ -48,6 +48,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
@@ -109,11 +110,12 @@ fun RecipesScreen(
                     items(recipes) { recipe ->
                         RecipeListItem(
                             recipe = recipe,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .shadow(8.dp, shape = MaterialTheme.shapes.medium)
                         )
                     }
                 }
-            }
         }
         // When we have bottom navigation we show FAB at the bottom end.
         if (navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
@@ -131,6 +133,7 @@ fun RecipesScreen(
                     modifier = Modifier.size(28.dp)
                 )
             }
+        }
         }
     }
 }

@@ -254,3 +254,5 @@ val tagColor5 = Color(0xFFCDDC39)
 val tagColor6 = Color(0xFFFF5722)
 val tagColor7 = Color(0xFF795548)
 val tagColor8 = Color(0xFF607D8B)
+
+val mainBackgroundColor = Color(0xFFF8F9FB)

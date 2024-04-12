@@ -276,7 +276,7 @@ private fun NavigationWrapper(
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val selectedDestination =
-        navBackStackEntry?.destination?.route ?: ReplyRoute.RECIPES
+        navBackStackEntry?.destination?.route ?: ReplyRoute.AGENDA
 
     if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
         // TODO check on custom width of PermanentNavigationDrawer: b/232495216
@@ -404,8 +404,11 @@ private fun NavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = ReplyRoute.RECIPES,
+        startDestination = ReplyRoute.AGENDA,
     ) {
+        composable(ReplyRoute.AGENDA) {
+            AgendaScreen()
+        }
         composable(ReplyRoute.RECIPES) {
             RecipesScreen(
                 contentType = contentType,
@@ -418,9 +421,6 @@ private fun NavHost(
         }
         composable(ReplyRoute.PANTRY) {
             EmptyComingSoon()
-        }
-        composable(ReplyRoute.AGENDA) {
-            AgendaScreen()
         }
         composable(ReplyRoute.SHOPPING_LIST) {
             ShoppingScreen(

@@ -790,7 +790,7 @@ de | 100 g de gruyere rape | NONE
 gruyere | 100 g de gruyere rape | INGREDIENT
 rape | 100 g de gruyere rape | INGREDIENT
 150 | 150 des de jambon ou 4 tranches de jambon ou lardons | QUANTITY
-des | 150 des de jambon ou 4 tranches de jambon ou lardons | UNIT
+des | 150 des de jambon ou 4 tranches de jambon ou lardons | NONE
 de | 150 des de jambon ou 4 tranches de jambon ou lardons | NONE
 jambon | 150 des de jambon ou 4 tranches de jambon ou lardons | INGREDIENT
 ou | 150 des de jambon ou 4 tranches de jambon ou lardons | OR
@@ -2032,18 +2032,13 @@ a | 5 cuilleres a soupe de sucre | NONE
 soupe | 5 cuilleres a soupe de sucre | NONE
 de | 5 cuilleres a soupe de sucre | NONE
 sucre | 5 cuilleres a soupe de sucre | INGREDIENT
-
-
-
-
-
 1 | 1 sachets de sucre vanille | QUANTITY
 sachets | 1 sachets de sucre vanille | UNIT
 de | 1 sachets de sucre vanille | NONE
 sucre | 1 sachets de sucre vanille | INGREDIENT
 vanille | 1 sachets de sucre vanille | INGREDIENT
 1 | 1 zestes de citron | QUANTITY
-zestes | 1 zestes de citron | INGREDIENT
+zestes | 1 zestes de citron | NONE
 de | 1 zestes de citron | NONE
 citron | 1 zestes de citron | INGREDIENT
 orange | orange ou de clementine | INGREDIENT
@@ -2052,36 +2047,36 @@ de | orange ou de clementine | NONE
 clementine | orange ou de clementine | INGREDIENT
 500 | 500 ml 2 tasses de riz basmati | QUANTITY
 ml | 500 ml 2 tasses de riz basmati | UNIT
-2 | 500 ml 2 tasses de riz basmati | INGREDIENT
-tasses | 500 ml 2 tasses de riz basmati | INGREDIENT
+2 | 500 ml 2 tasses de riz basmati | NONE
+tasses | 500 ml 2 tasses de riz basmati | NONE
 de | 500 ml 2 tasses de riz basmati | NONE
 riz | 500 ml 2 tasses de riz basmati | INGREDIENT
 basmati | 500 ml 2 tasses de riz basmati | INGREDIENT
 750 | 750 ml 3 tasses d'eau | QUANTITY
 ml | 750 ml 3 tasses d'eau | UNIT
-3 | 750 ml 3 tasses d'eau | INGREDIENT
-tasses | 750 ml 3 tasses d'eau | INGREDIENT
+3 | 750 ml 3 tasses d'eau | NONE
+tasses | 750 ml 3 tasses d'eau | NONE
 d' | 750 ml 3 tasses d'eau | NONE
 eau | 750 ml 3 tasses d'eau | INGREDIENT
-2 | 2 | INGREDIENT
+2 | 2 | NONE
 5 | 5 ml 1/2 c. a the de sel | QUANTITY
 ml | 5 ml 1/2 c. a the de sel | UNIT
-1/2 | 5 ml 1/2 c. a the de sel | INGREDIENT
-c. | 5 ml 1/2 c. a the de sel | INGREDIENT
+1/2 | 5 ml 1/2 c. a the de sel | NONE
+c. | 5 ml 1/2 c. a the de sel | NONE
 a | 5 ml 1/2 c. a the de sel | NONE
-the | 5 ml 1/2 c. a the de sel | INGREDIENT
+the | 5 ml 1/2 c. a the de sel | NONE
 de | 5 ml 1/2 c. a the de sel | NONE
 sel | 5 ml 1/2 c. a the de sel | INGREDIENT
 2 | 2 oignons | QUANTITY
 oignons | 2 oignons | INGREDIENT
  | eminces | NONE
-eminces | eminces | INGREDIENT
+eminces | eminces | NONE
 45 | 45 ml 3 c. a soupe d'huile vegetale | QUANTITY
 ml | 45 ml 3 c. a soupe d'huile vegetale | UNIT
-3 | 45 ml 3 c. a soupe d'huile vegetale | INGREDIENT
-c. | 45 ml 3 c. a soupe d'huile vegetale | INGREDIENT
+3 | 45 ml 3 c. a soupe d'huile vegetale | NONE
+c. | 45 ml 3 c. a soupe d'huile vegetale | NONE
 a | 45 ml 3 c. a soupe d'huile vegetale | NONE
-soupe | 45 ml 3 c. a soupe d'huile vegetale | INGREDIENT
+soupe | 45 ml 3 c. a soupe d'huile vegetale | NONE
 d'| 45 ml 3 c. a soupe d'huile vegetale | NONE
 huile | 45 ml 3 c. a soupe d'huile vegetale | INGREDIENT
 vegetale | 45 ml 3 c. a soupe d'huile vegetale | NONE
@@ -2093,89 +2088,89 @@ ail | 4 gousses d'ail | INGREDIENT
 hachees | hachees | NONE
 200 | 200 g 1 tasse de riz basmati | QUANTITY
 g | 200 g 1 tasse de riz basmati | UNIT
-1 | 200 g 1 tasse de riz basmati | INGREDIENT
-tasse | 200 g 1 tasse de riz basmati | INGREDIENT
+1 | 200 g 1 tasse de riz basmati | NONE
+tasse | 200 g 1 tasse de riz basmati | NONE
 de | 200 g 1 tasse de riz basmati | NONE
 riz | 200 g 1 tasse de riz basmati | INGREDIENT
 basmati | 200 g 1 tasse de riz basmati | INGREDIENT
 15 | 15 ml 1 c. a soupe de gingembre frais rape finement | QUANTITY
 ml | 15 ml 1 c. a soupe de gingembre frais rape finement | UNIT
-1 | 15 ml 1 c. a soupe de gingembre frais rape finement | INGREDIENT
-c. | 15 ml 1 c. a soupe de gingembre frais rape finement | INGREDIENT
+1 | 15 ml 1 c. a soupe de gingembre frais rape finement | NONE
+c. | 15 ml 1 c. a soupe de gingembre frais rape finement | NONE
 a | 15 ml 1 c. a soupe de gingembre frais rape finement | NONE
-soupe | 15 ml 1 c. a soupe de gingembre frais rape finement | INGREDIENT
+soupe | 15 ml 1 c. a soupe de gingembre frais rape finement | NONE
 de | 15 ml 1 c. a soupe de gingembre frais rape finement | NONE
 gingembre | 15 ml 1 c. a soupe de gingembre frais rape finement | INGREDIENT
 frais | 15 ml 1 c. a soupe de gingembre frais rape finement | NONE
-rape | 15 ml 1 c. a soupe de gingembre frais rape finement | INGREDIENT
-finement | 15 ml 1 c. a soupe de gingembre frais rape finement | INGREDIENT
-7 | 7 | INGREDIENT
+rape | 15 ml 1 c. a soupe de gingembre frais rape finement | NONE
+finement | 15 ml 1 c. a soupe de gingembre frais rape finement | NONE
+7 | 7 | NONE
 5 | 5 ml 1 1/2 c. a the de poudre de cari | QUANTITY
 ml | 5 ml 1 1/2 c. a the de poudre de cari | UNIT
-1 | 5 ml 1 1/2 c. a the de poudre de cari | INGREDIENT
-1/2 | 5 ml 1 1/2 c. a the de poudre de cari | INGREDIENT
-c. | 5 ml 1 1/2 c. a the de poudre de cari | INGREDIENT
+1 | 5 ml 1 1/2 c. a the de poudre de cari | NONE
+1/2 | 5 ml 1 1/2 c. a the de poudre de cari | NONE
+c. | 5 ml 1 1/2 c. a the de poudre de cari | NONE
 a | 5 ml 1 1/2 c. a the de poudre de cari | NONE
-the | 5 ml 1 1/2 c. a the de poudre de cari | INGREDIENT
+the | 5 ml 1 1/2 c. a the de poudre de cari | NONE
 de | 5 ml 1 1/2 c. a the de poudre de cari | NONE
 poudre | 5 ml 1 1/2 c. a the de poudre de cari | NONE
 de | 5 ml 1 1/2 c. a the de poudre de cari | NONE
 cari | 5 ml 1 1/2 c. a the de poudre de cari | INGREDIENT
 500 | 500 ml 2 tasses de bouillon de poulet | QUANTITY
 ml | 500 ml 2 tasses de bouillon de poulet | UNIT
-2 | 500 ml 2 tasses de bouillon de poulet | INGREDIENT
-tasses | 500 ml 2 tasses de bouillon de poulet | INGREDIENT
+2 | 500 ml 2 tasses de bouillon de poulet | NONE
+tasses | 500 ml 2 tasses de bouillon de poulet | NONE
 de | 500 ml 2 tasses de bouillon de poulet | NONE
 bouillon | 500 ml 2 tasses de bouillon de poulet | INGREDIENT
 de | 500 ml 2 tasses de bouillon de poulet | NONE
 poulet | 500 ml 2 tasses de bouillon de poulet | INGREDIENT
 150 | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | QUANTITY
 g | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | UNIT
-1 | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | INGREDIENT
-1/2 | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | INGREDIENT
-tasse | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | INGREDIENT
+1 | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | NONE
+1/2 | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | NONE
+tasse | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | NONE
 de | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | NONE
-petits | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | INGREDIENT
-bouquets | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | INGREDIENT
+petits | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | NONE
+bouquets | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | NONE
 de | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | NONE
 chou-fleur | 150 g 1 1/2 tasse de petits bouquets de chou-fleur | INGREDIENT
 50 | 50 g 1/3 tasse de carotte coupee en gros des | QUANTITY
 g | 50 g 1/3 tasse de carotte coupee en gros des | UNIT
-1/3 | 50 g 1/3 tasse de carotte coupee en gros des | INGREDIENT
-tasse | 50 g 1/3 tasse de carotte coupee en gros des | INGREDIENT
+1/3 | 50 g 1/3 tasse de carotte coupee en gros des | NONE
+tasse | 50 g 1/3 tasse de carotte coupee en gros des | NONE
 de | 50 g 1/3 tasse de carotte coupee en gros des | NONE
 carotte | 50 g 1/3 tasse de carotte coupee en gros des | INGREDIENT
-coupee | 50 g 1/3 tasse de carotte coupee en gros des | INGREDIENT
+coupee | 50 g 1/3 tasse de carotte coupee en gros des | NONE
 en | 50 g 1/3 tasse de carotte coupee en gros des | NONE
-gros | 50 g 1/3 tasse de carotte coupee en gros des | INGREDIENT
-des | 50 g 1/3 tasse de carotte coupee en gros des | INGREDIENT
+gros | 50 g 1/3 tasse de carotte coupee en gros des | NONE
+des | 50 g 1/3 tasse de carotte coupee en gros des | NONE
 50 | 50 g 1/3 tasse de petits pois surgeles | QUANTITY
 g | 50 g 1/3 tasse de petits pois surgeles | UNIT
-1/3 | 50 g 1/3 tasse de petits pois surgeles | INGREDIENT
-tasse | 50 g 1/3 tasse de petits pois surgeles | INGREDIENT
+1/3 | 50 g 1/3 tasse de petits pois surgeles | NONE
+tasse | 50 g 1/3 tasse de petits pois surgeles | NONE
 de | 50 g 1/3 tasse de petits pois surgeles | NONE
 petits | 50 g 1/3 tasse de petits pois surgeles | INGREDIENT
 pois | 50 g 1/3 tasse de petits pois surgeles | INGREDIENT
-surgeles | 50 g 1/3 tasse de petits pois surgeles | INGREDIENT
+surgeles | 50 g 1/3 tasse de petits pois surgeles | NONE
 45 | 45 g 1/3 tasse de raisins secs | QUANTITY
 g | 45 g 1/3 tasse de raisins secs | UNIT
-1/3 | 45 g 1/3 tasse de raisins secs | INGREDIENT
-tasse | 45 g 1/3 tasse de raisins secs | INGREDIENT
+1/3 | 45 g 1/3 tasse de raisins secs | NONE
+tasse | 45 g 1/3 tasse de raisins secs | NONE
 de | 45 g 1/3 tasse de raisins secs | NONE
 raisins | 45 g 1/3 tasse de raisins secs | INGREDIENT
 secs | 45 g 1/3 tasse de raisins secs | INGREDIENT
 45 | 45 g 1/3 tasse de pistaches ecalees | QUANTITY
 g | 45 g 1/3 tasse de pistaches ecalees | UNIT
-1/3 | 45 g 1/3 tasse de pistaches ecalees | INGREDIENT
-tasse | 45 g 1/3 tasse de pistaches ecalees | INGREDIENT
+1/3 | 45 g 1/3 tasse de pistaches ecalees | NONE
+tasse | 45 g 1/3 tasse de pistaches ecalees | NONE
 de | 45 g 1/3 tasse de pistaches ecalees | NONE
 pistaches | 45 g 1/3 tasse de pistaches ecalees | INGREDIENT
-ecalees | 45 g 1/3 tasse de pistaches ecalees | INGREDIENT
+ecalees | 45 g 1/3 tasse de pistaches ecalees | NONE
 4 | 4 oignons verts | QUANTITY
 oignons | 4 oignons verts | INGREDIENT
 verts | 4 oignons verts | INGREDIENT
  | eminces | NONE
-eminces | eminces | INGREDIENT
+eminces | eminces | NONE
 2 | 2 gousses d’ail | QUANTITY
 gousses | 2 gousses d’ail | NONE
 d’ | 2 gousses d’ail | NONE
@@ -2184,156 +2179,158 @@ ail | 2 gousses d’ail | INGREDIENT
 hachees | hachees | NONE
 30 | 30 ml 2 c. a soupe de beurre | QUANTITY
 ml | 30 ml 2 c. a soupe de beurre | UNIT
-2 | 30 ml 2 c. a soupe de beurre | INGREDIENT
-c. | 30 ml 2 c. a soupe de beurre | INGREDIENT
+2 | 30 ml 2 c. a soupe de beurre | NONE
+c. | 30 ml 2 c. a soupe de beurre | NONE
 a | 30 ml 2 c. a soupe de beurre | NONE
-soupe | 30 ml 2 c. a soupe de beurre | INGREDIENT
+soupe | 30 ml 2 c. a soupe de beurre | NONE
 de | 30 ml 2 c. a soupe de beurre | NONE
 beurre | 30 ml 2 c. a soupe de beurre | INGREDIENT
 200 | 200 g 1 tasse de riz a grains longs etuve | QUANTITY
 g | 200 g 1 tasse de riz a grains longs etuve | UNIT
-1 | 200 g 1 tasse de riz a grains longs etuve | INGREDIENT
-tasse | 200 g 1 tasse de riz a grains longs etuve | INGREDIENT
+1 | 200 g 1 tasse de riz a grains longs etuve | NONE
+tasse | 200 g 1 tasse de riz a grains longs etuve | NONE
 de | 200 g 1 tasse de riz a grains longs etuve | NONE
 riz | 200 g 1 tasse de riz a grains longs etuve | INGREDIENT
 a | 200 g 1 tasse de riz a grains longs etuve | NONE
-grains | 200 g 1 tasse de riz a grains longs etuve | INGREDIENT
-longs | 200 g 1 tasse de riz a grains longs etuve | INGREDIENT
-etuve | 200 g 1 tasse de riz a grains longs etuve | INGREDIENT
+grains | 200 g 1 tasse de riz a grains longs etuve | NONE
+longs | 200 g 1 tasse de riz a grains longs etuve | NONE
+etuve | 200 g 1 tasse de riz a grains longs etuve | NONE
 500 | 500 ml 2 tasses de bouillon de poulet | QUANTITY
 ml | 500 ml 2 tasses de bouillon de poulet | UNIT
-2 | 500 ml 2 tasses de bouillon de poulet | INGREDIENT
-tasses | 500 ml 2 tasses de bouillon de poulet | INGREDIENT
+2 | 500 ml 2 tasses de bouillon de poulet | NONE
+tasses | 500 ml 2 tasses de bouillon de poulet | NONE
 de | 500 ml 2 tasses de bouillon de poulet | NONE
 bouillon | 500 ml 2 tasses de bouillon de poulet | INGREDIENT
 de | 500 ml 2 tasses de bouillon de poulet | NONE
 poulet | 500 ml 2 tasses de bouillon de poulet | INGREDIENT
 20 | 20 g 1/2 tasse d’un melange d’herbes | QUANTITY
 g | 20 g 1/2 tasse d’un melange d’herbes | UNIT
-1/2 | 20 g 1/2 tasse d’un melange d’herbes | INGREDIENT
-tasse | 20 g 1/2 tasse d’un melange d’herbes | INGREDIENT
-d’un | 20 g 1/2 tasse d’un melange d’herbes | INGREDIENT
-melange | 20 g 1/2 tasse d’un melange d’herbes | INGREDIENT
-d’herbes | 20 g 1/2 tasse d’un melange d’herbes | INGREDIENT
+1/2 | 20 g 1/2 tasse d’un melange d’herbes | NONE
+tasse | 20 g 1/2 tasse d’un melange d’herbes | NONE
+d’un | 20 g 1/2 tasse d’un melange d’herbes | NONE
+melange | 20 g 1/2 tasse d’un melange d’herbes | NONE
+d’ | 20 g 1/2 tasse d’un melange d’herbes | NONE
+herbes | 20 g 1/2 tasse d’un melange d’herbes | NONE
  | ciselees persil plat | NONE
 ciselees | ciselees persil plat | NONE
 persil | ciselees persil plat | INGREDIENT
-plat | ciselees persil plat | INGREDIENT
+plat | ciselees persil plat | NONE
  | coriandre et ciboulette | NONE
 coriandre | coriandre et ciboulette | INGREDIENT
-et | coriandre et ciboulette | NONE
+et | coriandre et ciboulette | AND
 ciboulette | coriandre et ciboulette | INGREDIENT
 10 | 10 ml 2 c. a the de jus de lime | QUANTITY
 ml | 10 ml 2 c. a the de jus de lime | UNIT
-2 | 10 ml 2 c. a the de jus de lime | INGREDIENT
-c. | 10 ml 2 c. a the de jus de lime | INGREDIENT
+2 | 10 ml 2 c. a the de jus de lime | NONE
+c. | 10 ml 2 c. a the de jus de lime | NONE
 a | 10 ml 2 c. a the de jus de lime | NONE
-the | 10 ml 2 c. a the de jus de lime | INGREDIENT
+the | 10 ml 2 c. a the de jus de lime | NONE
 de | 10 ml 2 c. a the de jus de lime | NONE
-jus | 10 ml 2 c. a the de jus de lime | INGREDIENT
+jus | 10 ml 2 c. a the de jus de lime | NONE
 de | 10 ml 2 c. a the de jus de lime | NONE
 lime | 10 ml 2 c. a the de jus de lime | INGREDIENT
 3 | 3 poireaux de belle taille | QUANTITY
 poireaux | 3 poireaux de belle taille | INGREDIENT
 de | 3 poireaux de belle taille | NONE
-belle | 3 poireaux de belle taille | INGREDIENT
-taille | 3 poireaux de belle taille | INGREDIENT
+belle | 3 poireaux de belle taille | NONE
+taille | 3 poireaux de belle taille | NONE
 4 | 4 louches de riz pour risotto | QUANTITY
-louches | 4 louches de riz pour risotto | INGREDIENT
+louches | 4 louches de riz pour risotto | NONE
 de | 4 louches de riz pour risotto | NONE
 riz | 4 louches de riz pour risotto | INGREDIENT
 pour | 4 louches de riz pour risotto | NONE
-risotto | 4 louches de riz pour risotto | INGREDIENT
+risotto | 4 louches de riz pour risotto | NONE
 1 | 1 cubes de bouillon de legumes ou un Kub Or | QUANTITY
-cubes | 1 cubes de bouillon de legumes ou un Kub Or | INGREDIENT
+cubes | 1 cubes de bouillon de legumes ou un Kub Or | NONE
 de | 1 cubes de bouillon de legumes ou un Kub Or | NONE
 bouillon | 1 cubes de bouillon de legumes ou un Kub Or | INGREDIENT
 de | 1 cubes de bouillon de legumes ou un Kub Or | NONE
 legumes | 1 cubes de bouillon de legumes ou un Kub Or | INGREDIENT
 ou | 1 cubes de bouillon de legumes ou un Kub Or | OR
-un | 1 cubes de bouillon de legumes ou un Kub Or | INGREDIENT
+un | 1 cubes de bouillon de legumes ou un Kub Or | NONE
 Kub | 1 cubes de bouillon de legumes ou un Kub Or | INGREDIENT
 Or | 1 cubes de bouillon de legumes ou un Kub Or | INGREDIENT
 1 | 1 vin blanc sec | QUANTITY
 vin | 1 vin blanc sec | INGREDIENT
 blanc | 1 vin blanc sec | INGREDIENT
-sec | 1 vin blanc sec | INGREDIENT
+sec | 1 vin blanc sec | NONE
 parmesan | parmesan rape | INGREDIENT
-rape | parmesan rape | INGREDIENT
+rape | parmesan rape | NONE
 beurre | beurre | INGREDIENT
 creme | creme fraiche | INGREDIENT
-fraiche | creme fraiche | NONE
+fraiche | creme fraiche | INGREDIENT
 80 | 80 g 1/2 tasse de vermicelles de ble concasses voir note | QUANTITY
 g | 80 g 1/2 tasse de vermicelles de ble concasses voir note | UNIT
-1/2 | 80 g 1/2 tasse de vermicelles de ble concasses voir note | INGREDIENT
-tasse | 80 g 1/2 tasse de vermicelles de ble concasses voir note | INGREDIENT
+1/2 | 80 g 1/2 tasse de vermicelles de ble concasses voir note | NONE
+tasse | 80 g 1/2 tasse de vermicelles de ble concasses voir note | NONE
 de | 80 g 1/2 tasse de vermicelles de ble concasses voir note | NONE
 vermicelles | 80 g 1/2 tasse de vermicelles de ble concasses voir note | INGREDIENT
 de | 80 g 1/2 tasse de vermicelles de ble concasses voir note | NONE
 ble | 80 g 1/2 tasse de vermicelles de ble concasses voir note | INGREDIENT
-concasses | 80 g 1/2 tasse de vermicelles de ble concasses voir note | INGREDIENT
-voir | 80 g 1/2 tasse de vermicelles de ble concasses voir note | INGREDIENT
-note | 80 g 1/2 tasse de vermicelles de ble concasses voir note | INGREDIENT
+concasses | 80 g 1/2 tasse de vermicelles de ble concasses voir note | NONE
+voir | 80 g 1/2 tasse de vermicelles de ble concasses voir note | NONE
+note | 80 g 1/2 tasse de vermicelles de ble concasses voir note | NONE
 30 | 30 ml 2 c. a soupe d’huile d’olive | QUANTITY
 ml | 30 ml 2 c. a soupe d’huile d’olive | UNIT
-2 | 30 ml 2 c. a soupe d’huile d’olive | INGREDIENT
-c. | 30 ml 2 c. a soupe d’huile d’olive | INGREDIENT
+2 | 30 ml 2 c. a soupe d’huile d’olive | NONE
+c. | 30 ml 2 c. a soupe d’huile d’olive | NONE
 a | 30 ml 2 c. a soupe d’huile d’olive | NONE
-soupe | 30 ml 2 c. a soupe d’huile d’olive | INGREDIENT
+soupe | 30 ml 2 c. a soupe d’huile d’olive | NONE
 d’ | 30 ml 2 c. a soupe d’huile d’olive | NONE
 huile | 30 ml 2 c. a soupe d’huile d’olive | INGREDIENT
 d' | 30 ml 2 c. a soupe d’huile d’olive | NONE
 olive | 30 ml 2 c. a soupe d’huile d’olive | NONE
 230 | 230 g 1 tasse de riz basmati | QUANTITY
 g | 230 g 1 tasse de riz basmati | UNIT
-1 | 230 g 1 tasse de riz basmati | INGREDIENT
-tasse | 230 g 1 tasse de riz basmati | INGREDIENT
+1 | 230 g 1 tasse de riz basmati | NONE
+tasse | 230 g 1 tasse de riz basmati | NONE
 de | 230 g 1 tasse de riz basmati | NONE
 riz | 230 g 1 tasse de riz basmati | INGREDIENT
 basmati | 230 g 1 tasse de riz basmati | INGREDIENT
  | rince et egoutte | NONE
-rince | rince et egoutte | INGREDIENT
+rince | rince et egoutte | NONE
 et | rince et egoutte | NONE
-egoutte | rince et egoutte | INGREDIENT
+egoutte | rince et egoutte | NONE
 400 | 400 ml 1 2/3 tasse d’eau | QUANTITY
 ml | 400 ml 1 2/3 tasse d’eau | UNIT
-1 | 400 ml 1 2/3 tasse d’eau | INGREDIENT
-2/3 | 400 ml 1 2/3 tasse d’eau | INGREDIENT
-tasse | 400 ml 1 2/3 tasse d’eau | INGREDIENT
+1 | 400 ml 1 2/3 tasse d’eau | NONE
+2/3 | 400 ml 1 2/3 tasse d’eau | NONE
+tasse | 400 ml 1 2/3 tasse d’eau | NONE
 d’ | 400 ml 1 2/3 tasse d’eau | NONE
 eau | 400 ml 1 2/3 tasse d’eau | INGREDIENT
 1 | 1 bottes d'asperge verte ou violette plutot fine | QUANTITY
-bottes | 1 bottes d'asperge verte ou violette plutot fine | INGREDIENT
-d'asperge | 1 bottes d'asperge verte ou violette plutot fine | INGREDIENT
-verte | 1 bottes d'asperge verte ou violette plutot fine | INGREDIENT
-ou | 1 bottes d'asperge verte ou violette plutot fine | OR
-violette | 1 bottes d'asperge verte ou violette plutot fine | INGREDIENT
-plutot | 1 bottes d'asperge verte ou violette plutot fine | INGREDIENT
-fine | 1 bottes d'asperge verte ou violette plutot fine | INGREDIENT
+bottes | 1 bottes d'asperge verte ou violette plutot fine | NONE
+d' | 1 bottes d'asperge verte ou violette plutot fine | NONE
+asperge | 1 bottes d'asperge verte ou violette plutot fine | INGREDIENT
+verte | 1 bottes d'asperge verte ou violette plutot fine | NONE
+ou | 1 bottes d'asperge verte ou violette plutot fine | NONE
+violette | 1 bottes d'asperge verte ou violette plutot fine | NONE
+plutot | 1 bottes d'asperge verte ou violette plutot fine | NONE
+fine | 1 bottes d'asperge verte ou violette plutot fine | NONE
 300 | 300 g de riz pour risotto type Arborio | QUANTITY
 g | 300 g de riz pour risotto type Arborio | UNIT
 de | 300 g de riz pour risotto type Arborio | NONE
 riz | 300 g de riz pour risotto type Arborio | INGREDIENT
 pour | 300 g de riz pour risotto type Arborio | NONE
-risotto | 300 g de riz pour risotto type Arborio | INGREDIENT
-type | 300 g de riz pour risotto type Arborio | INGREDIENT
-Arborio | 300 g de riz pour risotto type Arborio | INGREDIENT
+risotto | 300 g de riz pour risotto type Arborio | NONE
+type | 300 g de riz pour risotto type Arborio | NONE
+Arborio | 300 g de riz pour risotto type Arborio | NONE
 50 | 50 g de beurre + 1 noix de beurre | QUANTITY
 g | 50 g de beurre + 1 noix de beurre | UNIT
 de | 50 g de beurre + 1 noix de beurre | NONE
 beurre | 50 g de beurre + 1 noix de beurre | INGREDIENT
-+ | 50 g de beurre + 1 noix de beurre | NONE
-1 | 50 g de beurre + 1 noix de beurre | INGREDIENT
-noix | 50 g de beurre + 1 noix de beurre | INGREDIENT
++ | 50 g de beurre + 1 noix de beurre | AND
+1 | 50 g de beurre + 1 noix de beurre | NONE
+noix | 50 g de beurre + 1 noix de beurre | NONE
 de | 50 g de beurre + 1 noix de beurre | NONE
 beurre | 50 g de beurre + 1 noix de beurre | INGREDIENT
 1 | 1 oignons ou 2 echalotes au choix | QUANTITY
 oignons | 1 oignons ou 2 echalotes au choix | INGREDIENT
 ou | 1 oignons ou 2 echalotes au choix | OR
-2 | 1 oignons ou 2 echalotes au choix | INGREDIENT
+2 | 1 oignons ou 2 echalotes au choix | QUANTITY
 echalotes | 1 oignons ou 2 echalotes au choix | INGREDIENT
-au | 1 oignons ou 2 echalotes au choix | INGREDIENT
-choix | 1 oignons ou 2 echalotes au choix | INGREDIENT
+au | 1 oignons ou 2 echalotes au choix | NONE
+choix | 1 oignons ou 2 echalotes au choix | NONE
 15 | 15 cl de vin blanc | QUANTITY
 cl | 15 cl de vin blanc | UNIT
 de | 15 cl de vin blanc | NONE
@@ -2351,8 +2348,8 @@ de | 100 g de Parmesan ou grana rape fin | NONE
 Parmesan | 100 g de Parmesan ou grana rape fin | INGREDIENT
 ou | 100 g de Parmesan ou grana rape fin | OR
 grana | 100 g de Parmesan ou grana rape fin | INGREDIENT
-rape | 100 g de Parmesan ou grana rape fin | INGREDIENT
-fin | 100 g de Parmesan ou grana rape fin | INGREDIENT
+rape | 100 g de Parmesan ou grana rape fin | NONE
+fin | 100 g de Parmesan ou grana rape fin | NONE
 sel | sel | INGREDIENT
 poivre | poivre blanc | INGREDIENT
 blanc | poivre blanc | INGREDIENT
@@ -2360,31 +2357,31 @@ blanc | poivre blanc | INGREDIENT
 pates | 1 pates a pizza 260 g | INGREDIENT
 a | 1 pates a pizza 260 g | NONE
 pizza | 1 pates a pizza 260 g | INGREDIENT
-260 | 1 pates a pizza 260 g | INGREDIENT
-g | 1 pates a pizza 260 g | INGREDIENT
+260 | 1 pates a pizza 260 g | NONE
+g | 1 pates a pizza 260 g | NONE
 400 | 400 g de tomates pelees | QUANTITY
 g | 400 g de tomates pelees | UNIT
 de | 400 g de tomates pelees | NONE
 tomates | 400 g de tomates pelees | INGREDIENT
-pelees | 400 g de tomates pelees | INGREDIENT
+pelees | 400 g de tomates pelees | NONE
 2 | 2 tranches de jambon blanc sans couenne | QUANTITY
 tranches | 2 tranches de jambon blanc sans couenne | NONE
 de | 2 tranches de jambon blanc sans couenne | NONE
 jambon | 2 tranches de jambon blanc sans couenne | INGREDIENT
 blanc | 2 tranches de jambon blanc sans couenne | INGREDIENT
-sans | 2 tranches de jambon blanc sans couenne | INGREDIENT
-couenne | 2 tranches de jambon blanc sans couenne | INGREDIENT
+sans | 2 tranches de jambon blanc sans couenne | NONE
+couenne | 2 tranches de jambon blanc sans couenne | NONE
 10 | 10 champignons de Paris frais | QUANTITY
 champignons | 10 champignons de Paris frais | INGREDIENT
 de | 10 champignons de Paris frais | NONE
 Paris | 10 champignons de Paris frais | INGREDIENT
 frais | 10 champignons de Paris frais | NONE
-1/3 | 1/3 oignons | INGREDIENT
+1/3 | 1/3 oignons | QUANTITY
 oignons | 1/3 oignons | INGREDIENT
-1/2 | 1/2 poivrons verts petit | INGREDIENT
+1/2 | 1/2 poivrons verts petit | QUANTITY
 poivrons | 1/2 poivrons verts petit | INGREDIENT
 verts | 1/2 poivrons verts petit | INGREDIENT
-petit | 1/2 poivrons verts petit | INGREDIENT
+petit | 1/2 poivrons verts petit | NONE
 40 | 40 g de gruyere | QUANTITY
 g | 40 g de gruyere | UNIT
 de | 40 g de gruyere | NONE
@@ -2395,33 +2392,33 @@ de | 1 pincees de curry | NONE
 curry | 1 pincees de curry | INGREDIENT
 4 | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | QUANTITY
  | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
-grosses | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | INGREDIENT
+grosses | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
 pommes | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | INGREDIENT
 de | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
 terre | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | INGREDIENT
-pelees | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | INGREDIENT
+pelees | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
 et | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
-coupees | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | INGREDIENT
+coupees | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
 en | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
-cubes | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | INGREDIENT
-680 | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | INGREDIENT
-g/4 | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | INGREDIENT
-tasses | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | INGREDIENT
+cubes | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
+680 | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
+g/4 | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
+tasses | 4  grosses pommes de terre pelees et coupees en cubes 680 g/4 tasses | NONE
 40 | 40 g  3 c. a soupe de beurre | QUANTITY
 g | 40 g  3 c. a soupe de beurre | UNIT
  | 40 g  3 c. a soupe de beurre | NONE
-3 | 40 g  3 c. a soupe de beurre | INGREDIENT
-c. | 40 g  3 c. a soupe de beurre | INGREDIENT
+3 | 40 g  3 c. a soupe de beurre | NONE
+c. | 40 g  3 c. a soupe de beurre | NONE
 a | 40 g  3 c. a soupe de beurre | NONE
-soupe | 40 g  3 c. a soupe de beurre | INGREDIENT
+soupe | 40 g  3 c. a soupe de beurre | NONE
 de | 40 g  3 c. a soupe de beurre | NONE
 beurre | 40 g  3 c. a soupe de beurre | INGREDIENT
 45 | 45 ml 3 c. a soupe de creme 15 % ou de lait | QUANTITY
 ml | 45 ml 3 c. a soupe de creme 15 % ou de lait | UNIT
-3 | 45 ml 3 c. a soupe de creme 15 % ou de lait | INGREDIENT
-c. | 45 ml 3 c. a soupe de creme 15 % ou de lait | INGREDIENT
+3 | 45 ml 3 c. a soupe de creme 15 % ou de lait | NONE
+c. | 45 ml 3 c. a soupe de creme 15 % ou de lait | NONE
 a | 45 ml 3 c. a soupe de creme 15 % ou de lait | NONE
-soupe | 45 ml 3 c. a soupe de creme 15 % ou de lait | INGREDIENT
+soupe | 45 ml 3 c. a soupe de creme 15 % ou de lait | NONE
 de | 45 ml 3 c. a soupe de creme 15 % ou de lait | NONE
 creme | 45 ml 3 c. a soupe de creme 15 % ou de lait | INGREDIENT
 15 % | 45 ml 3 c. a soupe de creme 15 % ou de lait | NONE
@@ -2431,34 +2428,34 @@ lait | 45 ml 3 c. a soupe de creme 15 % ou de lait | INGREDIENT
 Sel | Sel | INGREDIENT
 675 | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | QUANTITY
 g | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | UNIT
-1 | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
-½ | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
-lb | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
+1 | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
+½ | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
+lb | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
 de | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
 poisson | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
 blanc | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
-sans | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
-la | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
+sans | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
+la | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
 peau | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
-comme | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
-le | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
+comme | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
+le | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | OR
 dore | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
 de | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
 lac | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
 ou | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | OR
-la | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
+la | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
 morue, | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
-coupe | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
+coupe | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
 en | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
-cubes | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | INGREDIENT
+cubes | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | NONE
 1 | 1  petit poireau, emince | QUANTITY
  | 1  petit poireau, emince | NONE
-petit | 1  petit poireau, emince | INGREDIENT
+petit | 1  petit poireau, emince | NONE
 poireau, | 1  petit poireau, emince | INGREDIENT
-emince | 1  petit poireau, emince | INGREDIENT
+emince | 1  petit poireau, emince | NONE
 1 | 1  branche de celeri, emincee | QUANTITY
  | 1  branche de celeri, emincee | NONE
-branche | 1  branche de celeri, emincee | INGREDIENT
+branche | 1  branche de celeri, emincee | NONE
 de | 1  branche de celeri, emincee | NONE
 celeri, | 1  branche de celeri, emincee | INGREDIENT
 emincee | 1  branche de celeri, emincee | NONE
@@ -2466,77 +2463,77 @@ emincee | 1  branche de celeri, emincee | NONE
  | 1  echalote francaise, hachee | NONE
 echalote | 1  echalote francaise, hachee | INGREDIENT
 francaise, | 1  echalote francaise, hachee | NONE
-hachee | 1  echalote francaise, hachee | INGREDIENT
+hachee | 1  echalote francaise, hachee | NONE
 1 | 1  gousse d’ail, hachee finement | QUANTITY
  | 1  gousse d’ail, hachee finement | NONE
-gousse | 1  gousse d’ail, hachee finement | INGREDIENT
+gousse | 1  gousse d’ail, hachee finement | NONE
 d’, | 1  gousse d’ail, hachee finement | NONE
 ail, | 1  gousse d’ail, hachee finement | INGREDIENT
-hachee | 1  gousse d’ail, hachee finement | INGREDIENT
-finement | 1  gousse d’ail, hachee finement | INGREDIENT
+hachee | 1  gousse d’ail, hachee finement | NONE
+finement | 1  gousse d’ail, hachee finement | NONE
 55 | 55 g  ¼ tasse de beurre | QUANTITY
 g | 55 g  ¼ tasse de beurre | UNIT
  | 55 g  ¼ tasse de beurre | NONE
-¼ | 55 g  ¼ tasse de beurre | INGREDIENT
-tasse | 55 g  ¼ tasse de beurre | INGREDIENT
+¼ | 55 g  ¼ tasse de beurre | NONE
+tasse | 55 g  ¼ tasse de beurre | NONE
 de | 55 g  ¼ tasse de beurre | NONE
 beurre | 55 g  ¼ tasse de beurre | INGREDIENT
 45 | 45 ml 3 c. a soupe de vin blanc | QUANTITY
 ml | 45 ml 3 c. a soupe de vin blanc | UNIT
-3 | 45 ml 3 c. a soupe de vin blanc | INGREDIENT
-c. | 45 ml 3 c. a soupe de vin blanc | INGREDIENT
+3 | 45 ml 3 c. a soupe de vin blanc | NONE
+c. | 45 ml 3 c. a soupe de vin blanc | NONE
 a | 45 ml 3 c. a soupe de vin blanc | NONE
-soupe | 45 ml 3 c. a soupe de vin blanc | INGREDIENT
+soupe | 45 ml 3 c. a soupe de vin blanc | NONE
 de | 45 ml 3 c. a soupe de vin blanc | NONE
 vin | 45 ml 3 c. a soupe de vin blanc | INGREDIENT
 blanc | 45 ml 3 c. a soupe de vin blanc | INGREDIENT
 180 | 180 ml ¾ tasse de bouillon de poulet ou de legumes | QUANTITY
 ml | 180 ml ¾ tasse de bouillon de poulet ou de legumes | UNIT
-¾ | 180 ml ¾ tasse de bouillon de poulet ou de legumes | INGREDIENT
-tasse | 180 ml ¾ tasse de bouillon de poulet ou de legumes | INGREDIENT
+¾ | 180 ml ¾ tasse de bouillon de poulet ou de legumes | NONE
+tasse | 180 ml ¾ tasse de bouillon de poulet ou de legumes | NONE
 de | 180 ml ¾ tasse de bouillon de poulet ou de legumes | NONE
 bouillon | 180 ml ¾ tasse de bouillon de poulet ou de legumes | INGREDIENT
 de | 180 ml ¾ tasse de bouillon de poulet ou de legumes | NONE
 poulet | 180 ml ¾ tasse de bouillon de poulet ou de legumes | INGREDIENT
-ou | 180 ml ¾ tasse de bouillon de poulet ou de legumes | OR
+ou | 180 ml ¾ tasse de bouillon de poulet ou de legumes | NONE
 de | 180 ml ¾ tasse de bouillon de poulet ou de legumes | NONE
-legumes | 180 ml ¾ tasse de bouillon de poulet ou de legumes | INGREDIENT
+legumes | 180 ml ¾ tasse de bouillon de poulet ou de legumes | NONE
 75 | 75 ml 1/3 tasse de creme 15 % | QUANTITY
 ml | 75 ml 1/3 tasse de creme 15 % | UNIT
-1/3 | 75 ml 1/3 tasse de creme 15 % | INGREDIENT
-tasse | 75 ml 1/3 tasse de creme 15 % | INGREDIENT
+1/3 | 75 ml 1/3 tasse de creme 15 % | NONE
+tasse | 75 ml 1/3 tasse de creme 15 % | NONE
 de | 75 ml 1/3 tasse de creme 15 % | NONE
 creme | 75 ml 1/3 tasse de creme 15 % | INGREDIENT
 15 % | 75 ml 1/3 tasse de creme 15 % | NONE
 Poivre | Poivre | INGREDIENT
 1 | 1 kg 2,2 lb de parures de poisson tetes, aretes | QUANTITY
 kg | 1 kg 2,2 lb de parures de poisson tetes, aretes | UNIT
-2,2 | 1 kg 2,2 lb de parures de poisson tetes, aretes | INGREDIENT
-lb | 1 kg 2,2 lb de parures de poisson tetes, aretes | INGREDIENT
+2,2 | 1 kg 2,2 lb de parures de poisson tetes, aretes | NONE
+lb | 1 kg 2,2 lb de parures de poisson tetes, aretes | NONE
 de | 1 kg 2,2 lb de parures de poisson tetes, aretes | NONE
 parures | 1 kg 2,2 lb de parures de poisson tetes, aretes | INGREDIENT
 de | 1 kg 2,2 lb de parures de poisson tetes, aretes | NONE
 poisson | 1 kg 2,2 lb de parures de poisson tetes, aretes | INGREDIENT
-tetes, | 1 kg 2,2 lb de parures de poisson tetes, aretes | INGREDIENT
-aretes | 1 kg 2,2 lb de parures de poisson tetes, aretes | INGREDIENT
+tetes, | 1 kg 2,2 lb de parures de poisson tetes, aretes | NONE
+aretes | 1 kg 2,2 lb de parures de poisson tetes, aretes | NONE
 95 | 95 g  1 tasse de vert de poireau emince | QUANTITY
 g | 95 g  1 tasse de vert de poireau emince | UNIT
  | 95 g  1 tasse de vert de poireau emince | NONE
-1 | 95 g  1 tasse de vert de poireau emince | INGREDIENT
-tasse | 95 g  1 tasse de vert de poireau emince | INGREDIENT
+1 | 95 g  1 tasse de vert de poireau emince | NONE
+tasse | 95 g  1 tasse de vert de poireau emince | NONE
 de | 95 g  1 tasse de vert de poireau emince | NONE
-vert | 95 g  1 tasse de vert de poireau emince | INGREDIENT
+vert | 95 g  1 tasse de vert de poireau emince | NONE
 de | 95 g  1 tasse de vert de poireau emince | NONE
 poireau | 95 g  1 tasse de vert de poireau emince | INGREDIENT
-emince | 95 g  1 tasse de vert de poireau emince | INGREDIENT
+emince | 95 g  1 tasse de vert de poireau emince | NONE
 1 | 1  petit oignon, emince | QUANTITY
  | 1  petit oignon, emince | NONE
-petit | 1  petit oignon, emince | INGREDIENT
+petit | 1  petit oignon, emince | NONE
 oignon, | 1  petit oignon, emince | INGREDIENT
-emince | 1  petit oignon, emince | INGREDIENT
+emince | 1  petit oignon, emince | NONE
 1 | 1  branche de celeri, emincee | QUANTITY
  | 1  branche de celeri, emincee | NONE
-branche | 1  branche de celeri, emincee | INGREDIENT
+branche | 1  branche de celeri, emincee | NONE
 de | 1  branche de celeri, emincee | NONE
 celeri, | 1  branche de celeri, emincee | INGREDIENT
 emincee | 1  branche de celeri, emincee | NONE
@@ -2545,42 +2542,42 @@ emincee | 1  branche de celeri, emincee | NONE
 gousses | 2  gousses d’ail, coupees en deux | NONE
 d’, | 2  gousses d’ail, coupees en deux | NONE
 ail, | 2  gousses d’ail, coupees en deux | INGREDIENT
-coupees | 2  gousses d’ail, coupees en deux | INGREDIENT
+coupees | 2  gousses d’ail, coupees en deux | NONE
 en | 2  gousses d’ail, coupees en deux | NONE
-deux | 2  gousses d’ail, coupees en deux | INGREDIENT
+deux | 2  gousses d’ail, coupees en deux | NONE
 1 | 1  feuille de laurier | QUANTITY
  | 1  feuille de laurier | NONE
-feuille | 1  feuille de laurier | INGREDIENT
+feuille | 1  feuille de laurier | NONE
 de | 1  feuille de laurier | NONE
 laurier | 1  feuille de laurier | INGREDIENT
 1 | 1  branche de thym | QUANTITY
  | 1  branche de thym | NONE
-branche | 1  branche de thym | INGREDIENT
+branche | 1  branche de thym | NONE
 de | 1  branche de thym | NONE
 thym | 1  branche de thym | INGREDIENT
 30 | 30 ml 2 c. a soupe de beurre | QUANTITY
 ml | 30 ml 2 c. a soupe de beurre | UNIT
-2 | 30 ml 2 c. a soupe de beurre | INGREDIENT
-c. | 30 ml 2 c. a soupe de beurre | INGREDIENT
+2 | 30 ml 2 c. a soupe de beurre | NONE
+c. | 30 ml 2 c. a soupe de beurre | NONE
 a | 30 ml 2 c. a soupe de beurre | NONE
-soupe | 30 ml 2 c. a soupe de beurre | INGREDIENT
+soupe | 30 ml 2 c. a soupe de beurre | NONE
 de | 30 ml 2 c. a soupe de beurre | NONE
 beurre | 30 ml 2 c. a soupe de beurre | INGREDIENT
-1,5 | 1,5 litre 6 tasses d’eau | INGREDIENT
-litre | 1,5 litre 6 tasses d’eau | INGREDIENT
-6 | 1,5 litre 6 tasses d’eau | INGREDIENT
-tasses | 1,5 litre 6 tasses d’eau | INGREDIENT
+1,5 | 1,5 litre 6 tasses d’eau | QUANTITY
+litre | 1,5 litre 6 tasses d’eau | UNIT
+6 | 1,5 litre 6 tasses d’eau | NONE
+tasses | 1,5 litre 6 tasses d’eau | NONE
 d’ | 1,5 litre 6 tasses d’eau | NONE
 eau | 1,5 litre 6 tasses d’eau | INGREDIENT
  | 1,5 litre 6 tasses d’eau | NONE
 30 | 30 ml 2 c. a soupe de jus de citron | QUANTITY
 ml | 30 ml 2 c. a soupe de jus de citron | UNIT
-2 | 30 ml 2 c. a soupe de jus de citron | INGREDIENT
-c. | 30 ml 2 c. a soupe de jus de citron | INGREDIENT
+2 | 30 ml 2 c. a soupe de jus de citron | NONE
+c. | 30 ml 2 c. a soupe de jus de citron | NONE
 a | 30 ml 2 c. a soupe de jus de citron | NONE
-soupe | 30 ml 2 c. a soupe de jus de citron | INGREDIENT
+soupe | 30 ml 2 c. a soupe de jus de citron | NONE
 de | 30 ml 2 c. a soupe de jus de citron | NONE
-jus | 30 ml 2 c. a soupe de jus de citron | INGREDIENT
+jus | 30 ml 2 c. a soupe de jus de citron | NONE
 de | 30 ml 2 c. a soupe de jus de citron | NONE
 citron | 30 ml 2 c. a soupe de jus de citron | INGREDIENT
 600 | 600 g de lieu noir ou de cabillaud | QUANTITY
@@ -2598,7 +2595,7 @@ champignons | 400 g de champignons de Paris en boite | INGREDIENT
 de | 400 g de champignons de Paris en boite | NONE
 Paris | 400 g de champignons de Paris en boite | INGREDIENT
 en | 400 g de champignons de Paris en boite | NONE
-boite | 400 g de champignons de Paris en boite | INGREDIENT
+boite | 400 g de champignons de Paris en boite | NONE
 1 | 1 oignons | QUANTITY
 oignons | 1 oignons | INGREDIENT
 15 | 15 cl de vin blanc | QUANTITY
@@ -2610,67 +2607,67 @@ blanc | 15 cl de vin blanc | INGREDIENT
 cl | 15 cl de creme fraiche liquide | UNIT
 de | 15 cl de creme fraiche liquide | NONE
 creme | 15 cl de creme fraiche liquide | INGREDIENT
-fraiche | 15 cl de creme fraiche liquide | NONE
-liquide | 15 cl de creme fraiche liquide | INGREDIENT
+fraiche | 15 cl de creme fraiche liquide | INGREDIENT
+liquide | 15 cl de creme fraiche liquide | NONE
 poivre | poivre | INGREDIENT
 sel | sel | INGREDIENT
 bouquet | bouquet garni | INGREDIENT
 garni | bouquet garni | INGREDIENT
 farine | farine et de beurre | INGREDIENT
-et | farine et de beurre | NONE
+et | farine et de beurre | AND
 de | farine et de beurre | NONE
 beurre | farine et de beurre | INGREDIENT
 1 | 1 oignon, hache finement | QUANTITY
 oignon, | 1 oignon, hache finement | INGREDIENT
 hache | 1 oignon, hache finement | NONE
-finement | 1 oignon, hache finement | INGREDIENT
+finement | 1 oignon, hache finement | NONE
 75 | 75 ml 1/3 tasse d'huile d'olive | QUANTITY
 ml | 75 ml 1/3 tasse d'huile d'olive | UNIT
-1/3 | 75 ml 1/3 tasse d'huile d'olive | INGREDIENT
-tasse | 75 ml 1/3 tasse d'huile d'olive | INGREDIENT
+1/3 | 75 ml 1/3 tasse d'huile d'olive | NONE
+tasse | 75 ml 1/3 tasse d'huile d'olive | NONE
 d'| 75 ml 1/3 tasse d'huile d'olive | NONE
 huile | 75 ml 1/3 tasse d'huile d'olive | INGREDIENT
 d' | 75 ml 1/3 tasse d'huile d'olive | NONE
-olive | 75 ml 1/3 tasse d'huile d'olive | INGREDIENT
+olive | 75 ml 1/3 tasse d'huile d'olive | NONE
 2 | 2 gousses d'ail, hachees finement | QUANTITY
 gousses | 2 gousses d'ail, hachees finement | NONE
 d', | 2 gousses d'ail, hachees finement | INGREDIENT
 ail, | 2 gousses d'ail, hachees finement | INGREDIENT
 hachees | 2 gousses d'ail, hachees finement | NONE
-finement | 2 gousses d'ail, hachees finement | INGREDIENT
+finement | 2 gousses d'ail, hachees finement | NONE
 15 | 15 ml 1 c. a soupe de pate de tomates | QUANTITY
 ml | 15 ml 1 c. a soupe de pate de tomates | UNIT
-1 | 15 ml 1 c. a soupe de pate de tomates | INGREDIENT
-c. | 15 ml 1 c. a soupe de pate de tomates | INGREDIENT
+1 | 15 ml 1 c. a soupe de pate de tomates | NONE
+c. | 15 ml 1 c. a soupe de pate de tomates | NONE
 a | 15 ml 1 c. a soupe de pate de tomates | NONE
-soupe | 15 ml 1 c. a soupe de pate de tomates | INGREDIENT
+soupe | 15 ml 1 c. a soupe de pate de tomates | NONE
 de | 15 ml 1 c. a soupe de pate de tomates | NONE
 pate | 15 ml 1 c. a soupe de pate de tomates | INGREDIENT
 de | 15 ml 1 c. a soupe de pate de tomates | NONE
 tomates | 15 ml 1 c. a soupe de pate de tomates | INGREDIENT
 15 | 15 ml 1 c. a soupe de garam masala | QUANTITY
 ml | 15 ml 1 c. a soupe de garam masala | UNIT
-1 | 15 ml 1 c. a soupe de garam masala | INGREDIENT
-c. | 15 ml 1 c. a soupe de garam masala | INGREDIENT
+1 | 15 ml 1 c. a soupe de garam masala | NONE
+c. | 15 ml 1 c. a soupe de garam masala | NONE
 a | 15 ml 1 c. a soupe de garam masala | NONE
-soupe | 15 ml 1 c. a soupe de garam masala | INGREDIENT
+soupe | 15 ml 1 c. a soupe de garam masala | NONE
 de | 15 ml 1 c. a soupe de garam masala | NONE
 garam | 15 ml 1 c. a soupe de garam masala | INGREDIENT
 masala | 15 ml 1 c. a soupe de garam masala | INGREDIENT
 1 | 1 ml 1/4 c. a the de poivre de Cayenne | QUANTITY
 ml | 1 ml 1/4 c. a the de poivre de Cayenne | UNIT
-1/4 | 1 ml 1/4 c. a the de poivre de Cayenne | INGREDIENT
-c. | 1 ml 1/4 c. a the de poivre de Cayenne | INGREDIENT
+1/4 | 1 ml 1/4 c. a the de poivre de Cayenne | NONE
+c. | 1 ml 1/4 c. a the de poivre de Cayenne | NONE
 a | 1 ml 1/4 c. a the de poivre de Cayenne | NONE
-the | 1 ml 1/4 c. a the de poivre de Cayenne | INGREDIENT
+the | 1 ml 1/4 c. a the de poivre de Cayenne | NONE
 de | 1 ml 1/4 c. a the de poivre de Cayenne | NONE
 poivre | 1 ml 1/4 c. a the de poivre de Cayenne | INGREDIENT
 de | 1 ml 1/4 c. a the de poivre de Cayenne | NONE
 Cayenne | 1 ml 1/4 c. a the de poivre de Cayenne | INGREDIENT
 250 | 250 ml 1 tasse de bouillon de poulet | QUANTITY
 ml | 250 ml 1 tasse de bouillon de poulet | UNIT
-1 | 250 ml 1 tasse de bouillon de poulet | INGREDIENT
-tasse | 250 ml 1 tasse de bouillon de poulet | INGREDIENT
+1 | 250 ml 1 tasse de bouillon de poulet | NONE
+tasse | 250 ml 1 tasse de bouillon de poulet | NONE
 de | 250 ml 1 tasse de bouillon de poulet | NONE
 bouillon | 250 ml 1 tasse de bouillon de poulet | INGREDIENT
 de | 250 ml 1 tasse de bouillon de poulet | NONE
@@ -2678,30 +2675,30 @@ poulet | 250 ml 1 tasse de bouillon de poulet | INGREDIENT
 1 | 1 poivron rouge, epepine et coupe en julienne | QUANTITY
 poivron | 1 poivron rouge, epepine et coupe en julienne | INGREDIENT
 rouge, | 1 poivron rouge, epepine et coupe en julienne | INGREDIENT
-epepine | 1 poivron rouge, epepine et coupe en julienne | INGREDIENT
+epepine | 1 poivron rouge, epepine et coupe en julienne | NONE
 et | 1 poivron rouge, epepine et coupe en julienne | NONE
-coupe | 1 poivron rouge, epepine et coupe en julienne | INGREDIENT
+coupe | 1 poivron rouge, epepine et coupe en julienne | NONE
 en | 1 poivron rouge, epepine et coupe en julienne | NONE
-julienne | 1 poivron rouge, epepine et coupe en julienne | INGREDIENT
+julienne | 1 poivron rouge, epepine et coupe en julienne | NONE
 454 | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | QUANTITY
 g | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | UNIT
-1 | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
-lb | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
+1 | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
+lb | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
 de | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
 tilapia | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
-coupe | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
+coupe | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
 en | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
-gros | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
-cubes | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
+gros | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
+cubes | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
 ou | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | OR
-autre | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
+autre | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
 poisson | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
 blanc | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
 a | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
-chair | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
-ferme | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | INGREDIENT
+chair | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
+ferme | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | NONE
 Sel | Sel et poivre | INGREDIENT
-et | Sel et poivre | NONE
+et | Sel et poivre | AND
 poivre | Sel et poivre | INGREDIENT
 1 | 1 citrons | QUANTITY
 citrons | 1 citrons | INGREDIENT
@@ -2709,68 +2706,69 @@ citrons | 1 citrons | INGREDIENT
 cl | 20 cl de creme fraiche | UNIT
 de | 20 cl de creme fraiche | NONE
 creme | 20 cl de creme fraiche | INGREDIENT
-fraiche | 20 cl de creme fraiche | NONE
+fraiche | 20 cl de creme fraiche | INGREDIENT
 100 | 100 g de beurre | QUANTITY
 g | 100 g de beurre | UNIT
 de | 100 g de beurre | NONE
 beurre | 100 g de beurre | INGREDIENT
 454 | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | QUANTITY
 g | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | UNIT
-1 | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | INGREDIENT
-lb | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | INGREDIENT
+1 | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | NONE
+lb | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | NONE
 de | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | NONE
-filets | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | INGREDIENT
-d'aiglefin | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | INGREDIENT
-frais, | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | INGREDIENT
-coupes | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | INGREDIENT
+filets | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | NONE
+d' | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | NONE
+aiglefin | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | INGREDIENT
+frais, | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | NONE
+coupes | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | NONE
 en | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | NONE
-morceaux | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | INGREDIENT
+morceaux | 454 g 1 lb de filets d'aiglefin frais, coupes en morceaux | NONE
 4 | 4 oeufs | QUANTITY
 oeufs | 4 oeufs | INGREDIENT
 250 | 250 ml 1 tasse de creme 35% a cuisson | QUANTITY
 ml | 250 ml 1 tasse de creme 35% a cuisson | UNIT
-1 | 250 ml 1 tasse de creme 35% a cuisson | INGREDIENT
-tasse | 250 ml 1 tasse de creme 35% a cuisson | INGREDIENT
+1 | 250 ml 1 tasse de creme 35% a cuisson | NONE
+tasse | 250 ml 1 tasse de creme 35% a cuisson | NONE
 de | 250 ml 1 tasse de creme 35% a cuisson | NONE
 creme | 250 ml 1 tasse de creme 35% a cuisson | INGREDIENT
-35% | 250 ml 1 tasse de creme 35% a cuisson | INGREDIENT
-a | 250 ml 1 tasse de creme 35% a cuisson | NONE
+35% | 250 ml 1 tasse de creme 35% a cuisson | NONE
+a | 250 ml 1 tasse de creme 35% a cuisson | INGREDIENT
 cuisson | 250 ml 1 tasse de creme 35% a cuisson | INGREDIENT
 60 | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | QUANTITY
 ml | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | UNIT
-1/4 | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | INGREDIENT
-tasse | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | INGREDIENT
+1/4 | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | NONE
+tasse | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | NONE
 de | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | NONE
 ciboulette | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | INGREDIENT
-fraiche, | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | INGREDIENT
+fraiche, | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | NONE
 ciselee | 60 ml 1/4 tasse de ciboulette fraiche, ciselee | NONE
-2,5 | 2,5 ml 1/2 c. a the de sel | INGREDIENT
-ml | 2,5 ml 1/2 c. a the de sel | INGREDIENT
-1/2 | 2,5 ml 1/2 c. a the de sel | INGREDIENT
-c. | 2,5 ml 1/2 c. a the de sel | INGREDIENT
+2,5 | 2,5 ml 1/2 c. a the de sel | QUANTITY
+ml | 2,5 ml 1/2 c. a the de sel | UNIT
+1/2 | 2,5 ml 1/2 c. a the de sel | NONE
+c. | 2,5 ml 1/2 c. a the de sel | NONE
 a | 2,5 ml 1/2 c. a the de sel | NONE
-the | 2,5 ml 1/2 c. a the de sel | INGREDIENT
+the | 2,5 ml 1/2 c. a the de sel | NONE
 de | 2,5 ml 1/2 c. a the de sel | NONE
 sel | 2,5 ml 1/2 c. a the de sel | INGREDIENT
 Poivre | Poivre | INGREDIENT
 5 | 5 asperges fraiches, cuites | QUANTITY
 asperges | 5 asperges fraiches, cuites | INGREDIENT
-fraiches, | 5 asperges fraiches, cuites | INGREDIENT
-cuites | 5 asperges fraiches, cuites | INGREDIENT
+fraiches, | 5 asperges fraiches, cuites | NONE
+cuites | 5 asperges fraiches, cuites | NONE
 1 | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | QUANTITY
 carotte | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
-pelee, | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
-cuite | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
+pelee, | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
+cuite | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
 et | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
-coupee | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
+coupee | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
 en | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
-batonnets | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
+batonnets | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
 de | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
-meme | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
-longueur | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
-que | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
-les | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
-asperges | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | INGREDIENT
+meme | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
+longueur | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
+que | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
+les | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
+asperges | 1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges | NONE
 20 | 20 g de beurre | QUANTITY
 g | 20 g de beurre | UNIT
 de | 20 g de beurre | NONE
@@ -2779,145 +2777,146 @@ beurre | 20 g de beurre | INGREDIENT
 cl | 40 cl de creme liquide | UNIT
 de | 40 cl de creme liquide | NONE
 creme | 40 cl de creme liquide | INGREDIENT
-liquide | 40 cl de creme liquide | INGREDIENT
+liquide | 40 cl de creme liquide | NONE
 4 | 4 cuilleres a soupe de jus de citron jaune | QUANTITY
-cuilleres | 4 cuilleres a soupe de jus de citron jaune | INGREDIENT
-a | 4 cuilleres a soupe de jus de citron jaune | NONE
-soupe | 4 cuilleres a soupe de jus de citron jaune | INGREDIENT
+cuilleres | 4 cuilleres a soupe de jus de citron jaune | UNIT
+a | 4 cuilleres a soupe de jus de citron jaune | UNIT
+soupe | 4 cuilleres a soupe de jus de citron jaune | UNIT
 de | 4 cuilleres a soupe de jus de citron jaune | NONE
-jus | 4 cuilleres a soupe de jus de citron jaune | INGREDIENT
+jus | 4 cuilleres a soupe de jus de citron jaune | NONE
 de | 4 cuilleres a soupe de jus de citron jaune | NONE
 citron | 4 cuilleres a soupe de jus de citron jaune | INGREDIENT
-jaune | 4 cuilleres a soupe de jus de citron jaune | INGREDIENT
+jaune | 4 cuilleres a soupe de jus de citron jaune | NONE
 herbes | herbes de Provence ou herbes fraiches si vous preferez | INGREDIENT
 de | herbes de Provence ou herbes fraiches si vous preferez | NONE
 Provence | herbes de Provence ou herbes fraiches si vous preferez | INGREDIENT
 ou | herbes de Provence ou herbes fraiches si vous preferez | OR
 herbes | herbes de Provence ou herbes fraiches si vous preferez | INGREDIENT
 fraiches | herbes de Provence ou herbes fraiches si vous preferez | INGREDIENT
-si | herbes de Provence ou herbes fraiches si vous preferez | INGREDIENT
-vous | herbes de Provence ou herbes fraiches si vous preferez | INGREDIENT
-preferez | herbes de Provence ou herbes fraiches si vous preferez | INGREDIENT
+si | herbes de Provence ou herbes fraiches si vous preferez | NONE
+vous | herbes de Provence ou herbes fraiches si vous preferez | NONE
+preferez | herbes de Provence ou herbes fraiches si vous preferez | NONE
 1 | 1 grosses cuilleres a soupe de moutarde | QUANTITY
-grosses | 1 grosses cuilleres a soupe de moutarde | INGREDIENT
-cuilleres | 1 grosses cuilleres a soupe de moutarde | INGREDIENT
-a | 1 grosses cuilleres a soupe de moutarde | NONE
-soupe | 1 grosses cuilleres a soupe de moutarde | INGREDIENT
+grosses | 1 grosses cuilleres a soupe de moutarde | NONE
+cuilleres | 1 grosses cuilleres a soupe de moutarde | UNIT
+a | 1 grosses cuilleres a soupe de moutarde | UNIT
+soupe | 1 grosses cuilleres a soupe de moutarde | UNIT
 de | 1 grosses cuilleres a soupe de moutarde | NONE
 moutarde | 1 grosses cuilleres a soupe de moutarde | INGREDIENT
 poivre | poivre | INGREDIENT
 sel | sel | INGREDIENT
 1 | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | QUANTITY
-cuilleres | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | INGREDIENT
-a | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
-soupe | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | INGREDIENT
+cuilleres | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | UNIT
+a | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | UNIT
+soupe | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | UNIT
 de | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
 maizena | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | INGREDIENT
-ou | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | OR
-autre | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | INGREDIENT
-si | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | INGREDIENT
-vous | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | INGREDIENT
-preferez | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | INGREDIENT
-les | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | INGREDIENT
-sauces | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | INGREDIENT
+ou | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
+autre | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
+si | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
+vous | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
+preferez | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
+les | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
+sauces | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
 plus | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
 epaisses | 1 cuilleres a soupe de maizena ou autre si vous preferez les sauces plus epaisses | NONE
 2 | 2 tomates, epepinees et coupees en des | QUANTITY
 tomates, | 2 tomates, epepinees et coupees en des | INGREDIENT
-epepinees | 2 tomates, epepinees et coupees en des | INGREDIENT
+epepinees | 2 tomates, epepinees et coupees en des | NONE
 et | 2 tomates, epepinees et coupees en des | NONE
-coupees | 2 tomates, epepinees et coupees en des | INGREDIENT
+coupees | 2 tomates, epepinees et coupees en des | NONE
 en | 2 tomates, epepinees et coupees en des | NONE
-des | 2 tomates, epepinees et coupees en des | INGREDIENT
+des | 2 tomates, epepinees et coupees en des | NONE
 1 | 1 petit concombre, pele, epepine et coupe en des | QUANTITY
-petit | 1 petit concombre, pele, epepine et coupe en des | INGREDIENT
+petit | 1 petit concombre, pele, epepine et coupe en des | NONE
 concombre, | 1 petit concombre, pele, epepine et coupe en des | INGREDIENT
-pele, | 1 petit concombre, pele, epepine et coupe en des | INGREDIENT
-epepine | 1 petit concombre, pele, epepine et coupe en des | INGREDIENT
+pele, | 1 petit concombre, pele, epepine et coupe en des | NONE
+epepine | 1 petit concombre, pele, epepine et coupe en des | NONE
 et | 1 petit concombre, pele, epepine et coupe en des | NONE
-coupe | 1 petit concombre, pele, epepine et coupe en des | INGREDIENT
+coupe | 1 petit concombre, pele, epepine et coupe en des | NONE
 en | 1 petit concombre, pele, epepine et coupe en des | NONE
-des | 1 petit concombre, pele, epepine et coupe en des | INGREDIENT
+des | 1 petit concombre, pele, epepine et coupe en des | NONE
 1 | 1 petit oignon rouge, hache finement | QUANTITY
-petit | 1 petit oignon rouge, hache finement | INGREDIENT
+petit | 1 petit oignon rouge, hache finement | NONE
 oignon | 1 petit oignon rouge, hache finement | INGREDIENT
 rouge, | 1 petit oignon rouge, hache finement | INGREDIENT
 hache | 1 petit oignon rouge, hache finement | NONE
-finement | 1 petit oignon rouge, hache finement | INGREDIENT
+finement | 1 petit oignon rouge, hache finement | NONE
 1 | 1 avocat, pele, denoyaute, coupe en des | QUANTITY
 avocat, | 1 avocat, pele, denoyaute, coupe en des | INGREDIENT
-pele, | 1 avocat, pele, denoyaute, coupe en des | INGREDIENT
-denoyaute, | 1 avocat, pele, denoyaute, coupe en des | INGREDIENT
-coupe | 1 avocat, pele, denoyaute, coupe en des | INGREDIENT
+pele, | 1 avocat, pele, denoyaute, coupe en des | NONE
+denoyaute, | 1 avocat, pele, denoyaute, coupe en des | NONE
+coupe | 1 avocat, pele, denoyaute, coupe en des | NONE
 en | 1 avocat, pele, denoyaute, coupe en des | NONE
-des | 1 avocat, pele, denoyaute, coupe en des | INGREDIENT
+des | 1 avocat, pele, denoyaute, coupe en des | NONE
 60 | 60 ml 1/4  tasse de persil, cisele | QUANTITY
 ml | 60 ml 1/4  tasse de persil, cisele | UNIT
-1/4 | 60 ml 1/4  tasse de persil, cisele | INGREDIENT
+1/4 | 60 ml 1/4  tasse de persil, cisele | NONE
  | 60 ml 1/4  tasse de persil, cisele | NONE
-tasse | 60 ml 1/4  tasse de persil, cisele | INGREDIENT
+tasse | 60 ml 1/4  tasse de persil, cisele | NONE
 de | 60 ml 1/4  tasse de persil, cisele | NONE
 persil, | 60 ml 1/4  tasse de persil, cisele | INGREDIENT
 cisele | 60 ml 1/4  tasse de persil, cisele | NONE
  | 60 ml 1/4  tasse de persil, cisele | NONE
 Le | Le zeste rape et le jus d'une lime | NONE
-zeste | Le zeste rape et le jus d'une lime | INGREDIENT
-rape | Le zeste rape et le jus d'une lime | INGREDIENT
+zeste | Le zeste rape et le jus d'une lime | NONE
+rape | Le zeste rape et le jus d'une lime | NONE
 et | Le zeste rape et le jus d'une lime | NONE
 le | Le zeste rape et le jus d'une lime | NONE
-jus | Le zeste rape et le jus d'une lime | INGREDIENT
-d'une | Le zeste rape et le jus d'une lime | INGREDIENT
+jus | Le zeste rape et le jus d'une lime | NONE
+d'une | Le zeste rape et le jus d'une lime | NONE
 lime | Le zeste rape et le jus d'une lime | INGREDIENT
 15 | 15 ml 1 c. a soupe d'huile d'olive | QUANTITY
 ml | 15 ml 1 c. a soupe d'huile d'olive | UNIT
-1 | 15 ml 1 c. a soupe d'huile d'olive | INGREDIENT
-c. | 15 ml 1 c. a soupe d'huile d'olive | INGREDIENT
+1 | 15 ml 1 c. a soupe d'huile d'olive | NONE
+c. | 15 ml 1 c. a soupe d'huile d'olive | NONE
 a | 15 ml 1 c. a soupe d'huile d'olive | NONE
-soupe | 15 ml 1 c. a soupe d'huile d'olive | INGREDIENT
+soupe | 15 ml 1 c. a soupe d'huile d'olive | NONE
 d'| 15 ml 1 c. a soupe d'huile d'olive | NONE
 huile | 15 ml 1 c. a soupe d'huile d'olive | INGREDIENT
 d' | 15 ml 1 c. a soupe d'huile d'olive | NONE
 olive | 15 ml 1 c. a soupe d'huile d'olive | INGREDIENT
 Tabasco, | Tabasco, au gout | INGREDIENT
-au | Tabasco, au gout | INGREDIENT
-gout | Tabasco, au gout | INGREDIENT
+au | Tabasco, au gout | NONE
+gout | Tabasco, au gout | NONE
 Sel | Sel | INGREDIENT
 125 | 125 ml 1/2  tasse de farine | QUANTITY
 ml | 125 ml 1/2  tasse de farine | UNIT
-1/2 | 125 ml 1/2  tasse de farine | INGREDIENT
+1/2 | 125 ml 1/2  tasse de farine | NONE
  | 125 ml 1/2  tasse de farine | NONE
-tasse | 125 ml 1/2  tasse de farine | INGREDIENT
+tasse | 125 ml 1/2  tasse de farine | NONE
 de | 125 ml 1/2  tasse de farine | NONE
 farine | 125 ml 1/2  tasse de farine | INGREDIENT
-2,5 | 2,5 ml 1/2  c. a the de cumin moulu | INGREDIENT
-ml | 2,5 ml 1/2  c. a the de cumin moulu | INGREDIENT
-1/2 | 2,5 ml 1/2  c. a the de cumin moulu | INGREDIENT
+2,5 | 2,5 ml 1/2  c. a the de cumin moulu | QUANTITY
+ml | 2,5 ml 1/2  c. a the de cumin moulu | UNIT
+1/2 | 2,5 ml 1/2  c. a the de cumin moulu | NONE
  | 2,5 ml 1/2  c. a the de cumin moulu | NONE
-c. | 2,5 ml 1/2  c. a the de cumin moulu | INGREDIENT
+c. | 2,5 ml 1/2  c. a the de cumin moulu | NONE
 a | 2,5 ml 1/2  c. a the de cumin moulu | NONE
-the | 2,5 ml 1/2  c. a the de cumin moulu | INGREDIENT
+the | 2,5 ml 1/2  c. a the de cumin moulu | NONE
 de | 2,5 ml 1/2  c. a the de cumin moulu | NONE
 cumin | 2,5 ml 1/2  c. a the de cumin moulu | INGREDIENT
-moulu | 2,5 ml 1/2  c. a the de cumin moulu | INGREDIENT
+moulu | 2,5 ml 1/2  c. a the de cumin moulu | NONE
 Sel | Sel et poivre | INGREDIENT
-et | Sel et poivre | NONE
+et | Sel et poivre | AND
 poivre | Sel et poivre | INGREDIENT
 454 | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | QUANTITY
 g | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | UNIT
-1 | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | INGREDIENT
-livre | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | INGREDIENT
+1 | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | NONE
+livre | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | NONE
 de | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | NONE
-filets | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | INGREDIENT
-d'aiglefin, | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | INGREDIENT
-coupes | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | INGREDIENT
+filets | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | NONE
+d' | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | NONE
+aiglefin | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | INGREDIENT
+coupes | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | NONE
 en | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | NONE
-lanieres | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | INGREDIENT
+lanieres | 454 g 1 livre de filets d'aiglefin, coupes en lanieres | NONE
 30 | 30 ml 2 c. a soupe d'huile vegetale | QUANTITY
 ml | 30 ml 2 c. a soupe d'huile vegetale | UNIT
-2 | 30 ml 2 c. a soupe d'huile vegetale | INGREDIENT
-c. | 30 ml 2 c. a soupe d'huile vegetale | INGREDIENT
+2 | 30 ml 2 c. a soupe d'huile vegetale | NONE
+c. | 30 ml 2 c. a soupe d'huile vegetale | NONE
 a | 30 ml 2 c. a soupe d'huile vegetale | NONE
-soupe | 30 ml 2 c. a soupe d'huile vegetale | INGREDIENT
+soupe | 30 ml 2 c. a soupe d'huile vegetale | NONE
 d'| 30 ml 2 c. a soupe d'huile vegetale | NONE
 huile | 30 ml 2 c. a soupe d'huile vegetale | INGREDIENT
 vegetale | 30 ml 2 c. a soupe d'huile vegetale | NONE
@@ -2925,92 +2924,96 @@ vegetale | 30 ml 2 c. a soupe d'huile vegetale | NONE
 tortillas | 8 tortillas | INGREDIENT
 125 | 125 ml 1/2  tasse de creme sure | QUANTITY
 ml | 125 ml 1/2  tasse de creme sure | UNIT
-1/2 | 125 ml 1/2  tasse de creme sure | INGREDIENT
+1/2 | 125 ml 1/2  tasse de creme sure | NONE
  | 125 ml 1/2  tasse de creme sure | NONE
-tasse | 125 ml 1/2  tasse de creme sure | INGREDIENT
+tasse | 125 ml 1/2  tasse de creme sure | NONE
 de | 125 ml 1/2  tasse de creme sure | NONE
 creme | 125 ml 1/2  tasse de creme sure | INGREDIENT
 sure | 125 ml 1/2  tasse de creme sure | INGREDIENT
 250 | 250 ml 1 tasse de cheddar fort, rape | QUANTITY
 ml | 250 ml 1 tasse de cheddar fort, rape | UNIT
-1 | 250 ml 1 tasse de cheddar fort, rape | INGREDIENT
-tasse | 250 ml 1 tasse de cheddar fort, rape | INGREDIENT
+1 | 250 ml 1 tasse de cheddar fort, rape | NONE
+tasse | 250 ml 1 tasse de cheddar fort, rape | NONE
 de | 250 ml 1 tasse de cheddar fort, rape | NONE
 cheddar | 250 ml 1 tasse de cheddar fort, rape | INGREDIENT
-fort, | 250 ml 1 tasse de cheddar fort, rape | INGREDIENT
-rape | 250 ml 1 tasse de cheddar fort, rape | INGREDIENT
+fort, | 250 ml 1 tasse de cheddar fort, rape | NONE
+rape | 250 ml 1 tasse de cheddar fort, rape | NONE
 1 | 1 oignon, emince | QUANTITY
 oignon, | 1 oignon, emince | INGREDIENT
-emince | 1 oignon, emince | INGREDIENT
+emince | 1 oignon, emince | NONE
 1 | 1 petit piment jalapeno, epepine et hache finement | QUANTITY
-petit | 1 petit piment jalapeno, epepine et hache finement | INGREDIENT
+petit | 1 petit piment jalapeno, epepine et hache finement | NONE
 piment | 1 petit piment jalapeno, epepine et hache finement | INGREDIENT
 jalapeno, | 1 petit piment jalapeno, epepine et hache finement | INGREDIENT
-epepine | 1 petit piment jalapeno, epepine et hache finement | INGREDIENT
+epepine | 1 petit piment jalapeno, epepine et hache finement | NONE
 et | 1 petit piment jalapeno, epepine et hache finement | NONE
 hache | 1 petit piment jalapeno, epepine et hache finement | NONE
-finement | 1 petit piment jalapeno, epepine et hache finement | INGREDIENT
+finement | 1 petit piment jalapeno, epepine et hache finement | NONE
 30 | 30 ml 2 c. a soupe d'huile d'olive | QUANTITY
 ml | 30 ml 2 c. a soupe d'huile d'olive | UNIT
-2 | 30 ml 2 c. a soupe d'huile d'olive | INGREDIENT
-c. | 30 ml 2 c. a soupe d'huile d'olive | INGREDIENT
+2 | 30 ml 2 c. a soupe d'huile d'olive | NONE
+c. | 30 ml 2 c. a soupe d'huile d'olive | NONE
 a | 30 ml 2 c. a soupe d'huile d'olive | NONE
-soupe | 30 ml 2 c. a soupe d'huile d'olive | INGREDIENT
+soupe | 30 ml 2 c. a soupe d'huile d'olive | NONE
 d'| 30 ml 2 c. a soupe d'huile d'olive | NONE
 huile | 30 ml 2 c. a soupe d'huile d'olive | INGREDIENT
 d' | 30 ml 2 c. a soupe d'huile d'olive | NONE
-olive | 30 ml 2 c. a soupe d'huile d'olive | INGREDIENT
+olive | 30 ml 2 c. a soupe d'huile d'olive | NONE
+olives | olives noires denoyautees | INGREDIENT
+noires | olives noires denoyautees | NONE
+denoyautees | olives noires denoyautees | NONE
 60 | 60 ml 1/4 tasse de jus de lime environ 2 limes | QUANTITY
 ml | 60 ml 1/4 tasse de jus de lime environ 2 limes | UNIT
-1/4 | 60 ml 1/4 tasse de jus de lime environ 2 limes | INGREDIENT
-tasse | 60 ml 1/4 tasse de jus de lime environ 2 limes | INGREDIENT
+1/4 | 60 ml 1/4 tasse de jus de lime environ 2 limes | NONE
+tasse | 60 ml 1/4 tasse de jus de lime environ 2 limes | NONE
 de | 60 ml 1/4 tasse de jus de lime environ 2 limes | NONE
-jus | 60 ml 1/4 tasse de jus de lime environ 2 limes | INGREDIENT
+jus | 60 ml 1/4 tasse de jus de lime environ 2 limes | NONE
 de | 60 ml 1/4 tasse de jus de lime environ 2 limes | NONE
 lime | 60 ml 1/4 tasse de jus de lime environ 2 limes | INGREDIENT
-environ | 60 ml 1/4 tasse de jus de lime environ 2 limes | INGREDIENT
-2 | 60 ml 1/4 tasse de jus de lime environ 2 limes | INGREDIENT
-limes | 60 ml 1/4 tasse de jus de lime environ 2 limes | INGREDIENT
+environ | 60 ml 1/4 tasse de jus de lime environ 2 limes | NONE
+2 | 60 ml 1/4 tasse de jus de lime environ 2 limes | NONE
+limes | 60 ml 1/4 tasse de jus de lime environ 2 limes | NONE
 675 | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | QUANTITY
 g | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | UNIT
-1 | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | INGREDIENT
-1/2 | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | INGREDIENT
-lb | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | INGREDIENT
+1 | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
+1/2 | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
+lb | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
 de | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
-filets | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | INGREDIENT
-d'aiglefin | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | INGREDIENT
+filets | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
+d' | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
+aiglefin | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | INGREDIENT
 ou | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | OR
 de | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
 morue | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | INGREDIENT
-sans | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | INGREDIENT
-la | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | INGREDIENT
+sans | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
+la | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
 peau | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | NONE
 2 | 2 tomates italiennes, epepinees et coupees en des | QUANTITY
 tomates | 2 tomates italiennes, epepinees et coupees en des | INGREDIENT
-italiennes, | 2 tomates italiennes, epepinees et coupees en des | INGREDIENT
-epepinees | 2 tomates italiennes, epepinees et coupees en des | INGREDIENT
+italiennes, | 2 tomates italiennes, epepinees et coupees en des | NONE
+epepinees | 2 tomates italiennes, epepinees et coupees en des | NONE
 et | 2 tomates italiennes, epepinees et coupees en des | NONE
-coupees | 2 tomates italiennes, epepinees et coupees en des | INGREDIENT
+coupees | 2 tomates italiennes, epepinees et coupees en des | NONE
 en | 2 tomates italiennes, epepinees et coupees en des | NONE
-des | 2 tomates italiennes, epepinees et coupees en des | INGREDIENT
-1/2 | 1/2 mangue pelee et coupee en des falcultatif | INGREDIENT
+des | 2 tomates italiennes, epepinees et coupees en des | NONE
+1/2 | 1/2 mangue pelee et coupee en des falcultatif | QUANTITY
 mangue | 1/2 mangue pelee et coupee en des falcultatif | INGREDIENT
-pelee | 1/2 mangue pelee et coupee en des falcultatif | INGREDIENT
+pelee | 1/2 mangue pelee et coupee en des falcultatif | NONE
 et | 1/2 mangue pelee et coupee en des falcultatif | NONE
-coupee | 1/2 mangue pelee et coupee en des falcultatif | INGREDIENT
+coupee | 1/2 mangue pelee et coupee en des falcultatif | NONE
 en | 1/2 mangue pelee et coupee en des falcultatif | NONE
-des | 1/2 mangue pelee et coupee en des falcultatif | INGREDIENT
-falcultatif | 1/2 mangue pelee et coupee en des falcultatif | INGREDIENT
+des | 1/2 mangue pelee et coupee en des falcultatif | NONE
+falcultatif | 1/2 mangue pelee et coupee en des falcultatif | NONE
 60 | 60 ml 1/4 tasse de coriandre fraiche, ciselee | QUANTITY
 ml | 60 ml 1/4 tasse de coriandre fraiche, ciselee | UNIT
-1/4 | 60 ml 1/4 tasse de coriandre fraiche, ciselee | INGREDIENT
-tasse | 60 ml 1/4 tasse de coriandre fraiche, ciselee | INGREDIENT
+1/4 | 60 ml 1/4 tasse de coriandre fraiche, ciselee | NONE
+tasse | 60 ml 1/4 tasse de coriandre fraiche, ciselee | NONE
 de | 60 ml 1/4 tasse de coriandre fraiche, ciselee | NONE
 coriandre | 60 ml 1/4 tasse de coriandre fraiche, ciselee | INGREDIENT
-fraiche, | 60 ml 1/4 tasse de coriandre fraiche, ciselee | INGREDIENT
+fraiche, | 60 ml 1/4 tasse de coriandre fraiche, ciselee | NONE
 ciselee | 60 ml 1/4 tasse de coriandre fraiche, ciselee | NONE
 Sel | Sel et poivre | INGREDIENT
-et | Sel et poivre | NONE
+et | Sel et poivre | AND
 poivre | Sel et poivre | INGREDIENT
 8 | 8 coquilles a tacos | QUANTITY
 coquilles | 8 coquilles a tacos | INGREDIENT
@@ -3018,12 +3021,12 @@ a | 8 coquilles a tacos | NONE
 tacos | 8 coquilles a tacos | INGREDIENT
 Creme | Creme sure au gout | INGREDIENT
 sure | Creme sure au gout | INGREDIENT
-au | Creme sure au gout | INGREDIENT
-gout | Creme sure au gout | INGREDIENT
+au | Creme sure au gout | NONE
+gout | Creme sure au gout | NONE
 2 | 2 poivrons jaunes, epepines et tranches | QUANTITY
 poivrons | 2 poivrons jaunes, epepines et tranches | INGREDIENT
 jaunes, | 2 poivrons jaunes, epepines et tranches | INGREDIENT
-epepines | 2 poivrons jaunes, epepines et tranches | INGREDIENT
+epepines | 2 poivrons jaunes, epepines et tranches | NONE
 et | 2 poivrons jaunes, epepines et tranches | NONE
 tranches | 2 poivrons jaunes, epepines et tranches | NONE
 2 | 2 oignons, tranches | QUANTITY
@@ -3031,17 +3034,21 @@ oignons, | 2 oignons, tranches | INGREDIENT
 tranches | 2 oignons, tranches | NONE
 2 | 2 gousses d'ail, hachees | QUANTITY
 gousses | 2 gousses d'ail, hachees | NONE
-d', | 2 gousses d'ail, hachees | INGREDIENT
-ail, | 2 gousses d'ail, hachees | INGREDIENT
+d' | 2 gousses d'ail, hachees | NONE
+ail | 2 gousses d'ail, hachees | INGREDIENT
 hachees | 2 gousses d'ail, hachees | NONE
 60 | 60 ml 1/4 tasse d'huile d'olive | QUANTITY
 ml | 60 ml 1/4 tasse d'huile d'olive | UNIT
-1/4 | 60 ml 1/4 tasse d'huile d'olive | INGREDIENT
-tasse | 60 ml 1/4 tasse d'huile d'olive | INGREDIENT
+1/4 | 60 ml 1/4 tasse d'huile d'olive | NONE
+tasse | 60 ml 1/4 tasse d'huile d'olive | NONE
 d'| 60 ml 1/4 tasse d'huile d'olive | NONE
 huile | 60 ml 1/4 tasse d'huile d'olive | INGREDIENT
 d' | 60 ml 1/4 tasse d'huile d'olive | NONE
-olive | 60 ml 1/4 tasse d'huile d'olive | INGREDIENT
+olive | 60 ml 1/4 tasse d'huile d'olive | NONE
+
+
+
+
 125 | 125 ml 1/2 tasse de fumet de poisson | QUANTITY
 ml | 125 ml 1/2 tasse de fumet de poisson | UNIT
 1/2 | 125 ml 1/2 tasse de fumet de poisson | INGREDIENT
@@ -3128,14 +3135,14 @@ de | 800 g de colin peuvent etre surgeles | NONE
 colin | 800 g de colin peuvent etre surgeles | INGREDIENT
 peuvent | 800 g de colin peuvent etre surgeles | INGREDIENT
 etre | 800 g de colin peuvent etre surgeles | INGREDIENT
-surgeles | 800 g de colin peuvent etre surgeles | INGREDIENT
+surgeles | 800 g de colin peuvent etre surgeles | NONE
 5 | 5 oeufs | QUANTITY
 oeufs | 5 oeufs | INGREDIENT
 1 | 1 briques de creme liquide 30% | QUANTITY
 briques | 1 briques de creme liquide 30% | INGREDIENT
 de | 1 briques de creme liquide 30% | NONE
 creme | 1 briques de creme liquide 30% | INGREDIENT
-liquide | 1 briques de creme liquide 30% | INGREDIENT
+liquide | 1 briques de creme liquide 30% | NONE
 30% | 1 briques de creme liquide 30% | INGREDIENT
 1 | 1 petites boites de sauce tomate | QUANTITY
 petites | 1 petites boites de sauce tomate | INGREDIENT
@@ -3155,7 +3162,7 @@ g | 400 g de filets d'aiglefin surgeles | UNIT
 de | 400 g de filets d'aiglefin surgeles | NONE
 filets | 400 g de filets d'aiglefin surgeles | INGREDIENT
 d'aiglefin | 400 g de filets d'aiglefin surgeles | INGREDIENT
-surgeles | 400 g de filets d'aiglefin surgeles | INGREDIENT
+surgeles | 400 g de filets d'aiglefin surgeles | NONE
 30 | 30 g 3 c. a soupe de farine tout usage non blanchie | QUANTITY
 g | 30 g 3 c. a soupe de farine tout usage non blanchie | UNIT
 3 | 30 g 3 c. a soupe de farine tout usage non blanchie | INGREDIENT
@@ -3215,7 +3222,7 @@ huile | 15 ml 1 c. a soupe d'huile | INGREDIENT
 bulbe | 1 bulbe de fenouil, emince et un peu de feuillage pour le service | INGREDIENT
 de | 1 bulbe de fenouil, emince et un peu de feuillage pour le service | NONE
 fenouil, | 1 bulbe de fenouil, emince et un peu de feuillage pour le service | INGREDIENT
-emince | 1 bulbe de fenouil, emince et un peu de feuillage pour le service | INGREDIENT
+emince | 1 bulbe de fenouil, emince et un peu de feuillage pour le service | NONE
 et | 1 bulbe de fenouil, emince et un peu de feuillage pour le service | NONE
 un | 1 bulbe de fenouil, emince et un peu de feuillage pour le service | INGREDIENT
 peu | 1 bulbe de fenouil, emince et un peu de feuillage pour le service | INGREDIENT
@@ -3227,14 +3234,14 @@ service | 1 bulbe de fenouil, emince et un peu de feuillage pour le service | NO
 1 | 1  oignon, emince | QUANTITY
  | 1  oignon, emince | NONE
 oignon, | 1  oignon, emince | INGREDIENT
-emince | 1  oignon, emince | INGREDIENT
+emince | 1  oignon, emince | NONE
  | 1  oignon, emince | NONE
 2 | 2  gousses d’ail, emincees | QUANTITY
  | 2  gousses d’ail, emincees | NONE
 gousses | 2  gousses d’ail, emincees | NONE
 d’, | 2  gousses d’ail, emincees | NONE
 ail, | 2  gousses d’ail, emincees | INGREDIENT
-emincees | 2  gousses d’ail, emincees | INGREDIENT
+emincees | 2  gousses d’ail, emincees | NONE
  | 2  gousses d’ail, emincees | NONE
  | 2  gousses d’ail, emincees | NONE
 30 | 30 ml  2 c. a soupe d’huile d’olive | QUANTITY
@@ -3279,7 +3286,7 @@ oz | 1  boite de 540 ml 19 oz de tomates en des | INGREDIENT
 de | 1  boite de 540 ml 19 oz de tomates en des | NONE
 tomates | 1  boite de 540 ml 19 oz de tomates en des | INGREDIENT
 en | 1  boite de 540 ml 19 oz de tomates en des | NONE
-des | 1  boite de 540 ml 19 oz de tomates en des | INGREDIENT
+des | 1  boite de 540 ml 19 oz de tomates en des | NONE
  | 1  boite de 540 ml 19 oz de tomates en des | NONE
 45 | 45 ml  3 c. a soupe de pate de tomates | QUANTITY
 ml | 45 ml  3 c. a soupe de pate de tomates | UNIT
@@ -3336,7 +3343,7 @@ aiglefin, | 340 g  3/4 lb de filet de poisson blanc epais et sans la peau morue,
 etc., | 340 g  3/4 lb de filet de poisson blanc epais et sans la peau morue, lotte, aiglefin, etc., coupe en gros cubes | INGREDIENT
 coupe | 340 g  3/4 lb de filet de poisson blanc epais et sans la peau morue, lotte, aiglefin, etc., coupe en gros cubes | INGREDIENT
 en | 340 g  3/4 lb de filet de poisson blanc epais et sans la peau morue, lotte, aiglefin, etc., coupe en gros cubes | NONE
-gros | 340 g  3/4 lb de filet de poisson blanc epais et sans la peau morue, lotte, aiglefin, etc., coupe en gros cubes | INGREDIENT
+gros | 340 g  3/4 lb de filet de poisson blanc epais et sans la peau morue, lotte, aiglefin, etc., coupe en gros cubes | NONE
 cubes | 340 g  3/4 lb de filet de poisson blanc epais et sans la peau morue, lotte, aiglefin, etc., coupe en gros cubes | INGREDIENT
 1 | 1  boite de 398 ml 14 oz de haricots blancs, rinces et egouttes | QUANTITY
  | 1  boite de 398 ml 14 oz de haricots blancs, rinces et egouttes | NONE
@@ -3372,7 +3379,7 @@ tasse | 85 g 1 tasse de chou vert emince | INGREDIENT
 de | 85 g 1 tasse de chou vert emince | NONE
 chou | 85 g 1 tasse de chou vert emince | INGREDIENT
 vert | 85 g 1 tasse de chou vert emince | INGREDIENT
-emince | 85 g 1 tasse de chou vert emince | INGREDIENT
+emince | 85 g 1 tasse de chou vert emince | NONE
 10 | 10 g 1/4 tasse de coriandre ciselee | QUANTITY
 g | 10 g 1/4 tasse de coriandre ciselee | UNIT
 1/4 | 10 g 1/4 tasse de coriandre ciselee | INGREDIENT
@@ -3501,7 +3508,7 @@ sec | 1/2 verres de vin blanc sec | INGREDIENT
 citrons | 1/2 citrons | INGREDIENT
 2 | 2 oignons, eminces | QUANTITY
 oignons, | 2 oignons, eminces | INGREDIENT
-eminces | 2 oignons, eminces | INGREDIENT
+eminces | 2 oignons, eminces | NONE
 40 | 40 g 3 c. a soupe de beurre | QUANTITY
 g | 40 g 3 c. a soupe de beurre | UNIT
 3 | 40 g 3 c. a soupe de beurre | INGREDIENT
@@ -3539,7 +3546,7 @@ de | 1 pomme de terre, pelee et coupee en cubes | NONE
 terre, | 1 pomme de terre, pelee et coupee en cubes | INGREDIENT
 pelee | 1 pomme de terre, pelee et coupee en cubes | INGREDIENT
 et | 1 pomme de terre, pelee et coupee en cubes | NONE
-coupee | 1 pomme de terre, pelee et coupee en cubes | INGREDIENT
+coupee | 1 pomme de terre, pelee et coupee en cubes | NONE
 en | 1 pomme de terre, pelee et coupee en cubes | NONE
 cubes | 1 pomme de terre, pelee et coupee en cubes | INGREDIENT
 1 | 1 litre 4 tasses de bouillon de poulet | QUANTITY
@@ -3595,7 +3602,7 @@ huile | 15 ml 1 c. a soupe d’huile vegetale | INGREDIENT
 vegetale | 15 ml 1 c. a soupe d’huile vegetale | NONE
 2 | 2 radis, eminces | QUANTITY
 radis, | 2 radis, eminces | INGREDIENT
-eminces | 2 radis, eminces | INGREDIENT
+eminces | 2 radis, eminces | NONE
 15 | 15 ml 1 c. a soupe de ciboulette ciselee | QUANTITY
 ml | 15 ml 1 c. a soupe de ciboulette ciselee | UNIT
 1 | 15 ml 1 c. a soupe de ciboulette ciselee | INGREDIENT
@@ -3652,7 +3659,7 @@ epepine | 1  poivron jaune, epepine et coupe en des | INGREDIENT
 et | 1  poivron jaune, epepine et coupe en des | NONE
 coupe | 1  poivron jaune, epepine et coupe en des | INGREDIENT
 en | 1  poivron jaune, epepine et coupe en des | NONE
-des | 1  poivron jaune, epepine et coupe en des | INGREDIENT
+des | 1  poivron jaune, epepine et coupe en des | NONE
 6 | 6  oignons verts, coupes en troncons de 1 cm 1/2 po | QUANTITY
  | 6  oignons verts, coupes en troncons de 1 cm 1/2 po | NONE
 oignons | 6  oignons verts, coupes en troncons de 1 cm 1/2 po | INGREDIENT
@@ -3709,7 +3716,7 @@ la | 450 g  1 lb de filets de poisson blanc sans la peau, coupes en gros morceau
 peau, | 450 g  1 lb de filets de poisson blanc sans la peau, coupes en gros morceaux | NONE
 coupes | 450 g  1 lb de filets de poisson blanc sans la peau, coupes en gros morceaux | INGREDIENT
 en | 450 g  1 lb de filets de poisson blanc sans la peau, coupes en gros morceaux | NONE
-gros | 450 g  1 lb de filets de poisson blanc sans la peau, coupes en gros morceaux | INGREDIENT
+gros | 450 g  1 lb de filets de poisson blanc sans la peau, coupes en gros morceaux | NONE
 morceaux | 450 g  1 lb de filets de poisson blanc sans la peau, coupes en gros morceaux | INGREDIENT
  | 450 g  1 lb de filets de poisson blanc sans la peau, coupes en gros morceaux | NONE
 4 | 4 filets de poisson blanc charnus dos de cabillaud | QUANTITY
@@ -3828,7 +3835,7 @@ echalotes | 6  echalotes francaises, pelees et emincees | INGREDIENT
 francaises, | 6  echalotes francaises, pelees et emincees | NONE
 pelees | 6  echalotes francaises, pelees et emincees | INGREDIENT
 et | 6  echalotes francaises, pelees et emincees | NONE
-emincees | 6  echalotes francaises, pelees et emincees | INGREDIENT
+emincees | 6  echalotes francaises, pelees et emincees | NONE
 15 | 15 ml  1 c. a soupe d’huile vegetale | QUANTITY
 ml | 15 ml  1 c. a soupe d’huile vegetale | UNIT
  | 15 ml  1 c. a soupe d’huile vegetale | NONE
@@ -3926,7 +3933,7 @@ citron, | 1  citron, le zeste rape finement | INGREDIENT
 le | 1  citron, le zeste rape finement | NONE
 zeste | 1  citron, le zeste rape finement | INGREDIENT
 rape | 1  citron, le zeste rape finement | INGREDIENT
-finement | 1  citron, le zeste rape finement | INGREDIENT
+finement | 1  citron, le zeste rape finement | NONE
 60 | 60 g  1 tasse de chapelure panko | QUANTITY
 g | 60 g  1 tasse de chapelure panko | UNIT
  | 60 g  1 tasse de chapelure panko | NONE
@@ -4068,7 +4075,7 @@ de | 1 bulbe de fenouil, coupe en des | NONE
 fenouil, | 1 bulbe de fenouil, coupe en des | INGREDIENT
 coupe | 1 bulbe de fenouil, coupe en des | INGREDIENT
 en | 1 bulbe de fenouil, coupe en des | NONE
-des | 1 bulbe de fenouil, coupe en des | INGREDIENT
+des | 1 bulbe de fenouil, coupe en des | NONE
  | 1 bulbe de fenouil, coupe en des | NONE
 1 | 1 oignon, hache | QUANTITY
 oignon, | 1 oignon, hache | INGREDIENT
@@ -4089,7 +4096,7 @@ epepines | 2 poivrons, epepines et coupes en des | INGREDIENT
 et | 2 poivrons, epepines et coupes en des | NONE
 coupes | 2 poivrons, epepines et coupes en des | INGREDIENT
 en | 2 poivrons, epepines et coupes en des | NONE
-des | 2 poivrons, epepines et coupes en des | INGREDIENT
+des | 2 poivrons, epepines et coupes en des | NONE
 1,5 | 1,5 litre 6 tasses de bouillon de poulet | INGREDIENT
 litre | 1,5 litre 6 tasses de bouillon de poulet | INGREDIENT
 6 | 1,5 litre 6 tasses de bouillon de poulet | INGREDIENT
@@ -4121,7 +4128,7 @@ oz | 1 boite de 398 ml 14 oz de tomates en des | INGREDIENT
 de | 1 boite de 398 ml 14 oz de tomates en des | NONE
 tomates | 1 boite de 398 ml 14 oz de tomates en des | INGREDIENT
 en | 1 boite de 398 ml 14 oz de tomates en des | NONE
-des | 1 boite de 398 ml 14 oz de tomates en des | INGREDIENT
+des | 1 boite de 398 ml 14 oz de tomates en des | NONE
 225 | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes | QUANTITY
 g | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes | UNIT
 1/2 | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes | INGREDIENT
@@ -4141,9 +4148,9 @@ cubes | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en
  | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes | NONE
 1 | 1 courgette, coupee en des | QUANTITY
 courgette, | 1 courgette, coupee en des | INGREDIENT
-coupee | 1 courgette, coupee en des | INGREDIENT
+coupee | 1 courgette, coupee en des | NONE
 en | 1 courgette, coupee en des | NONE
-des | 1 courgette, coupee en des | INGREDIENT
+des | 1 courgette, coupee en des | NONE
  | 1 courgette, coupee en des | NONE
 10 | 10 g  1/4 tasse de feuilles de basilic frais dechirees | QUANTITY
 g | 10 g  1/4 tasse de feuilles de basilic frais dechirees | UNIT
@@ -4211,7 +4218,7 @@ commerce | 60 ml ¼ tasse de salsa verde du commerce | INGREDIENT
  | 1  oignon rouge, emince | NONE
 oignon | 1  oignon rouge, emince | INGREDIENT
 rouge, | 1  oignon rouge, emince | INGREDIENT
-emince | 1  oignon rouge, emince | INGREDIENT
+emince | 1  oignon rouge, emince | NONE
 250 | 250 ml 1 tasse d’eau glacee | QUANTITY
 ml | 250 ml 1 tasse d’eau glacee | UNIT
 1 | 250 ml 1 tasse d’eau glacee | INGREDIENT
@@ -4264,7 +4271,7 @@ piment | ½  piment fresno, epepine et emince | INGREDIENT
 fresno, | ½  piment fresno, epepine et emince | INGREDIENT
 epepine | ½  piment fresno, epepine et emince | INGREDIENT
 et | ½  piment fresno, epepine et emince | NONE
-emince | ½  piment fresno, epepine et emince | INGREDIENT
+emince | ½  piment fresno, epepine et emince | NONE
 60 | 60 ml ¼ tasse d’huile d’olive | QUANTITY
 ml | 60 ml ¼ tasse d’huile d’olive | UNIT
 ¼ | 60 ml ¼ tasse d’huile d’olive | INGREDIENT
@@ -4386,7 +4393,7 @@ g | 870 g 3 tasses de gros sel | UNIT
 3 | 870 g 3 tasses de gros sel | INGREDIENT
 tasses | 870 g 3 tasses de gros sel | INGREDIENT
 de | 870 g 3 tasses de gros sel | NONE
-gros | 870 g 3 tasses de gros sel | INGREDIENT
+gros | 870 g 3 tasses de gros sel | NONE
 sel | 870 g 3 tasses de gros sel | INGREDIENT
 1 | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore | QUANTITY
  | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore | NONE
@@ -4436,7 +4443,7 @@ petite | 1  petite tomate, epepinee et coupee en brunoise | INGREDIENT
 tomate, | 1  petite tomate, epepinee et coupee en brunoise | INGREDIENT
 epepinee | 1  petite tomate, epepinee et coupee en brunoise | INGREDIENT
 et | 1  petite tomate, epepinee et coupee en brunoise | NONE
-coupee | 1  petite tomate, epepinee et coupee en brunoise | INGREDIENT
+coupee | 1  petite tomate, epepinee et coupee en brunoise | NONE
 en | 1  petite tomate, epepinee et coupee en brunoise | NONE
 brunoise | 1  petite tomate, epepinee et coupee en brunoise | INGREDIENT
 1 | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise | QUANTITY
@@ -4459,7 +4466,7 @@ brunoise | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en b
 branche | 1/2  branche de celeri, coupee en brunoise | INGREDIENT
 de | 1/2  branche de celeri, coupee en brunoise | NONE
 celeri, | 1/2  branche de celeri, coupee en brunoise | INGREDIENT
-coupee | 1/2  branche de celeri, coupee en brunoise | INGREDIENT
+coupee | 1/2  branche de celeri, coupee en brunoise | NONE
 en | 1/2  branche de celeri, coupee en brunoise | NONE
 brunoise | 1/2  branche de celeri, coupee en brunoise | INGREDIENT
 60 | 60 ml 1/4 tasse d’huile d’olive | QUANTITY
@@ -4519,7 +4526,7 @@ les | 454 g 1 lb de filets de poisson blanc sans la peau  et sans les aretes | I
 aretes | 454 g 1 lb de filets de poisson blanc sans la peau  et sans les aretes | INGREDIENT
 2 | 2  gros poireaux coupes en rondelles, le blanc  et le vert separes | QUANTITY
  | 2  gros poireaux coupes en rondelles, le blanc  et le vert separes | NONE
-gros | 2  gros poireaux coupes en rondelles, le blanc  et le vert separes | INGREDIENT
+gros | 2  gros poireaux coupes en rondelles, le blanc  et le vert separes | NONE
 poireaux | 2  gros poireaux coupes en rondelles, le blanc  et le vert separes | INGREDIENT
 coupes | 2  gros poireaux coupes en rondelles, le blanc  et le vert separes | INGREDIENT
 en | 2  gros poireaux coupes en rondelles, le blanc  et le vert separes | NONE
@@ -4536,7 +4543,7 @@ separes | 2  gros poireaux coupes en rondelles, le blanc  et le vert separes | I
 branches | 2  branches de celeri, emincees | INGREDIENT
 de | 2  branches de celeri, emincees | NONE
 celeri, | 2  branches de celeri, emincees | INGREDIENT
-emincees | 2  branches de celeri, emincees | INGREDIENT
+emincees | 2  branches de celeri, emincees | NONE
 1 | 1  pomme de terre, pelee et coupee en des | QUANTITY
  | 1  pomme de terre, pelee et coupee en des | NONE
 pomme | 1  pomme de terre, pelee et coupee en des | INGREDIENT
@@ -4544,9 +4551,9 @@ de | 1  pomme de terre, pelee et coupee en des | NONE
 terre, | 1  pomme de terre, pelee et coupee en des | INGREDIENT
 pelee | 1  pomme de terre, pelee et coupee en des | INGREDIENT
 et | 1  pomme de terre, pelee et coupee en des | NONE
-coupee | 1  pomme de terre, pelee et coupee en des | INGREDIENT
+coupee | 1  pomme de terre, pelee et coupee en des | NONE
 en | 1  pomme de terre, pelee et coupee en des | NONE
-des | 1  pomme de terre, pelee et coupee en des | INGREDIENT
+des | 1  pomme de terre, pelee et coupee en des | NONE
 1 | 1  oignon, hache | QUANTITY
  | 1  oignon, hache | NONE
 oignon, | 1  oignon, hache | INGREDIENT
@@ -4634,8 +4641,8 @@ tranches | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches 
 petit | 1/2 petit oignon rouge, emince finement | INGREDIENT
 oignon | 1/2 petit oignon rouge, emince finement | INGREDIENT
 rouge, | 1/2 petit oignon rouge, emince finement | INGREDIENT
-emince | 1/2 petit oignon rouge, emince finement | INGREDIENT
-finement | 1/2 petit oignon rouge, emince finement | INGREDIENT
+emince | 1/2 petit oignon rouge, emince finement | NONE
+finement | 1/2 petit oignon rouge, emince finement | NONE
 Persil | Persil frais facultatif | INGREDIENT
 frais | Persil frais facultatif | NONE
 facultatif | Persil frais facultatif | NONE
@@ -4646,9 +4653,9 @@ au | Huile d’olive, au gout | INGREDIENT
 gout | Huile d’olive, au gout | INGREDIENT
 1 | 1  gros oignon, emince | QUANTITY
  | 1  gros oignon, emince | NONE
-gros | 1  gros oignon, emince | INGREDIENT
+gros | 1  gros oignon, emince | NONE
 oignon, | 1  gros oignon, emince | INGREDIENT
-emince | 1  gros oignon, emince | INGREDIENT
+emince | 1  gros oignon, emince | NONE
 30 | 30 ml 2 c. a soupe d’huile d’olive | QUANTITY
 ml | 30 ml 2 c. a soupe d’huile d’olive | UNIT
 2 | 30 ml 2 c. a soupe d’huile d’olive | INGREDIENT
@@ -4826,7 +4833,7 @@ sec | 1 verres de vin blanc sec | INGREDIENT
 cognac | cognac | INGREDIENT
 1 | 1  gros oignon rouge, coupe en lamelles | QUANTITY
  | 1  gros oignon rouge, coupe en lamelles | NONE
-gros | 1  gros oignon rouge, coupe en lamelles | INGREDIENT
+gros | 1  gros oignon rouge, coupe en lamelles | NONE
 oignon | 1  gros oignon rouge, coupe en lamelles | INGREDIENT
 rouge, | 1  gros oignon rouge, coupe en lamelles | INGREDIENT
 coupe | 1  gros oignon rouge, coupe en lamelles | INGREDIENT
@@ -4958,7 +4965,7 @@ facultatif | 1  avocat coupe en des, legerement citronne facultatif | NONE
 filets | 4 filets de colin surgeles | INGREDIENT
 de | 4 filets de colin surgeles | NONE
 colin | 4 filets de colin surgeles | INGREDIENT
-surgeles | 4 filets de colin surgeles | INGREDIENT
+surgeles | 4 filets de colin surgeles | NONE
 20 | 20 cl de lait de coco | QUANTITY
 cl | 20 cl de lait de coco | UNIT
 de | 20 cl de lait de coco | NONE
@@ -5014,7 +5021,7 @@ d’epaisseur | 12  petites pommes de terre grelots, coupees  en rondelles de 1 
 bulbe | 1  bulbe de fenouil, emince | INGREDIENT
 de | 1  bulbe de fenouil, emince | NONE
 fenouil, | 1  bulbe de fenouil, emince | INGREDIENT
-emince | 1  bulbe de fenouil, emince | INGREDIENT
+emince | 1  bulbe de fenouil, emince | NONE
 2 | 2  gousses d’ail, pelees et ecrasees | QUANTITY
  | 2  gousses d’ail, pelees et ecrasees | NONE
 gousses | 2  gousses d’ail, pelees et ecrasees | NONE
@@ -5047,7 +5054,7 @@ lb | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves | INGREDIENT
 de | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves | NONE
 morue | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves | INGREDIENT
 fraiche, | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves | INGREDIENT
-coupee | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves | INGREDIENT
+coupee | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves | NONE
 en | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves | NONE
 4 | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves | INGREDIENT
 paves | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves | INGREDIENT
@@ -5211,7 +5218,7 @@ soupe | 45 ml  3 c. a soupe de colorant alimentaire liquide rouge | INGREDIENT
 de | 45 ml  3 c. a soupe de colorant alimentaire liquide rouge | NONE
 colorant | 45 ml  3 c. a soupe de colorant alimentaire liquide rouge | INGREDIENT
 alimentaire | 45 ml  3 c. a soupe de colorant alimentaire liquide rouge | INGREDIENT
-liquide | 45 ml  3 c. a soupe de colorant alimentaire liquide rouge | INGREDIENT
+liquide | 45 ml  3 c. a soupe de colorant alimentaire liquide rouge | NONE
 rouge | 45 ml  3 c. a soupe de colorant alimentaire liquide rouge | INGREDIENT
 10 | 10 ml  2 c. a the de vinaigre blanc | QUANTITY
 ml | 10 ml  2 c. a the de vinaigre blanc | UNIT
@@ -5999,7 +6006,7 @@ de | 1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, d
 g | 1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, decongeles | INGREDIENT
 de | 1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, decongeles | NONE
 fruits | 1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, decongeles | INGREDIENT
-surgeles | 1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, decongeles | INGREDIENT
+surgeles | 1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, decongeles | NONE
 fraises, | 1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, decongeles | INGREDIENT
 framboises, | 1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, decongeles | INGREDIENT
 fruits | 1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, decongeles | INGREDIENT
@@ -6372,7 +6379,7 @@ a | 45 ml 3 c. a soupe de kirsh | NONE
 soupe | 45 ml 3 c. a soupe de kirsh | INGREDIENT
 de | 45 ml 3 c. a soupe de kirsh | NONE
 kirsh | 45 ml 3 c. a soupe de kirsh | INGREDIENT
-Gros | Gros copeaux de chocolat | INGREDIENT
+Gros | Gros copeaux de chocolat | NONE
 copeaux | Gros copeaux de chocolat | INGREDIENT
 de | Gros copeaux de chocolat | NONE
 chocolat | Gros copeaux de chocolat | INGREDIENT
@@ -6488,7 +6495,7 @@ citrons, | 2 citrons, le zeste rape finement | INGREDIENT
 le | 2 citrons, le zeste rape finement | NONE
 zeste | 2 citrons, le zeste rape finement | INGREDIENT
 rape | 2 citrons, le zeste rape finement | INGREDIENT
-finement | 2 citrons, le zeste rape finement | INGREDIENT
+finement | 2 citrons, le zeste rape finement | NONE
 Sucre | Sucre a glacer, au gout | INGREDIENT
 a | Sucre a glacer, au gout | NONE
 glacer, | Sucre a glacer, au gout | INGREDIENT
@@ -6884,7 +6891,7 @@ orange, | 1 orange, le zeste rape finement | INGREDIENT
 le | 1 orange, le zeste rape finement | NONE
 zeste | 1 orange, le zeste rape finement | INGREDIENT
 rape | 1 orange, le zeste rape finement | INGREDIENT
-finement | 1 orange, le zeste rape finement | INGREDIENT
+finement | 1 orange, le zeste rape finement | NONE
 4 | 4 œufs, les jaunes et les blancs separes | QUANTITY
 œufs, | 4 œufs, les jaunes et les blancs separes | INGREDIENT
 les | 4 œufs, les jaunes et les blancs separes | INGREDIENT
@@ -7063,7 +7070,7 @@ g | 560 g  4 tasses de bleuets surgeles | UNIT
 tasses | 560 g  4 tasses de bleuets surgeles | INGREDIENT
 de | 560 g  4 tasses de bleuets surgeles | NONE
 bleuets | 560 g  4 tasses de bleuets surgeles | INGREDIENT
-surgeles | 560 g  4 tasses de bleuets surgeles | INGREDIENT
+surgeles | 560 g  4 tasses de bleuets surgeles | NONE
  | 560 g  4 tasses de bleuets surgeles | NONE
 15 | 15 ml  1 c. a soupe de jus de citron | QUANTITY
 ml | 15 ml  1 c. a soupe de jus de citron | UNIT
@@ -7263,7 +7270,7 @@ froid | 55 g 1/4 tasse de beurre non sale, froid et coupe en des | INGREDIENT
 et | 55 g 1/4 tasse de beurre non sale, froid et coupe en des | NONE
 coupe | 55 g 1/4 tasse de beurre non sale, froid et coupe en des | INGREDIENT
 en | 55 g 1/4 tasse de beurre non sale, froid et coupe en des | NONE
-des | 55 g 1/4 tasse de beurre non sale, froid et coupe en des | INGREDIENT
+des | 55 g 1/4 tasse de beurre non sale, froid et coupe en des | NONE
 190 | 190 g 1 1/4 tasse de farine tout usage non blanchie | QUANTITY
 g | 190 g 1 1/4 tasse de farine tout usage non blanchie | UNIT
 1 | 190 g 1 1/4 tasse de farine tout usage non blanchie | INGREDIENT
@@ -7309,7 +7316,7 @@ citrons, | 2 citrons, le zeste rape finement | INGREDIENT
 le | 2 citrons, le zeste rape finement | NONE
 zeste | 2 citrons, le zeste rape finement | INGREDIENT
 rape | 2 citrons, le zeste rape finement | INGREDIENT
-finement | 2 citrons, le zeste rape finement | INGREDIENT
+finement | 2 citrons, le zeste rape finement | NONE
 60 | 60 ml 1/4 tasse de jus de citron | QUANTITY
 ml | 60 ml 1/4 tasse de jus de citron | UNIT
 1/4 | 60 ml 1/4 tasse de jus de citron | INGREDIENT
@@ -7329,7 +7336,7 @@ sel | 1 ml 1/4 c. a the de sel | INGREDIENT
 Colorant | Colorant alimentaire jaune liquide facultatif | INGREDIENT
 alimentaire | Colorant alimentaire jaune liquide facultatif | INGREDIENT
 jaune | Colorant alimentaire jaune liquide facultatif | INGREDIENT
-liquide | Colorant alimentaire jaune liquide facultatif | INGREDIENT
+liquide | Colorant alimentaire jaune liquide facultatif | NONE
 facultatif | Colorant alimentaire jaune liquide facultatif | NONE
 2 | 2 biscuits Graham, concasses | QUANTITY
 biscuits | 2 biscuits Graham, concasses | INGREDIENT
@@ -7583,7 +7590,7 @@ sale, | 55 g  1/4 tasse de beurre froid non sale,  coupe en des | INGREDIENT
  | 55 g  1/4 tasse de beurre froid non sale,  coupe en des | NONE
 coupe | 55 g  1/4 tasse de beurre froid non sale,  coupe en des | INGREDIENT
 en | 55 g  1/4 tasse de beurre froid non sale,  coupe en des | NONE
-des | 55 g  1/4 tasse de beurre froid non sale,  coupe en des | INGREDIENT
+des | 55 g  1/4 tasse de beurre froid non sale,  coupe en des | NONE
 85 | 85 g  3 oz de chocolat noir, hache | QUANTITY
 g | 85 g  3 oz de chocolat noir, hache | UNIT
  | 85 g  3 oz de chocolat noir, hache | NONE
@@ -7638,7 +7645,7 @@ citron, | 1  citron, le zeste rape finement | INGREDIENT
 le | 1  citron, le zeste rape finement | NONE
 zeste | 1  citron, le zeste rape finement | INGREDIENT
 rape | 1  citron, le zeste rape finement | INGREDIENT
-finement | 1  citron, le zeste rape finement | INGREDIENT
+finement | 1  citron, le zeste rape finement | NONE
  | 1  citron, le zeste rape finement | NONE
 15 | 15 ml 1 c. a soupe de jus de citron | QUANTITY
 ml | 15 ml 1 c. a soupe de jus de citron | UNIT
@@ -7924,7 +7931,7 @@ a | 2,5 ml  ½ c. a the de chacun des colorants en gel suivants : bleu royal, 
 the | 2,5 ml  ½ c. a the de chacun des colorants en gel suivants : bleu royal, vert menthe, jaune citron et rouge | INGREDIENT
 de | 2,5 ml  ½ c. a the de chacun des colorants en gel suivants : bleu royal, vert menthe, jaune citron et rouge | NONE
 chacun | 2,5 ml  ½ c. a the de chacun des colorants en gel suivants : bleu royal, vert menthe, jaune citron et rouge | INGREDIENT
-des | 2,5 ml  ½ c. a the de chacun des colorants en gel suivants : bleu royal, vert menthe, jaune citron et rouge | INGREDIENT
+des | 2,5 ml  ½ c. a the de chacun des colorants en gel suivants : bleu royal, vert menthe, jaune citron et rouge | NONE
 colorants | 2,5 ml  ½ c. a the de chacun des colorants en gel suivants : bleu royal, vert menthe, jaune citron et rouge | INGREDIENT
 en | 2,5 ml  ½ c. a the de chacun des colorants en gel suivants : bleu royal, vert menthe, jaune citron et rouge | NONE
 gel | 2,5 ml  ½ c. a the de chacun des colorants en gel suivants : bleu royal, vert menthe, jaune citron et rouge | INGREDIENT
@@ -7997,7 +8004,7 @@ citron, | 1/2  citron, le zeste rape finement | INGREDIENT
 le | 1/2  citron, le zeste rape finement | NONE
 zeste | 1/2  citron, le zeste rape finement | INGREDIENT
 rape | 1/2  citron, le zeste rape finement | INGREDIENT
-finement | 1/2  citron, le zeste rape finement | INGREDIENT
+finement | 1/2  citron, le zeste rape finement | NONE
  | 1/2  citron, le zeste rape finement | NONE
 250 | 250 g 1 tasse de mascarpone | QUANTITY
 g | 250 g 1 tasse de mascarpone | UNIT
@@ -8135,7 +8142,7 @@ de | 225 g 8 oz de chocolat noir, hache finement | NONE
 chocolat | 225 g 8 oz de chocolat noir, hache finement | INGREDIENT
 noir, | 225 g 8 oz de chocolat noir, hache finement | INGREDIENT
 hache | 225 g 8 oz de chocolat noir, hache finement | NONE
-finement | 225 g 8 oz de chocolat noir, hache finement | INGREDIENT
+finement | 225 g 8 oz de chocolat noir, hache finement | NONE
 10 | 10 ml 2 c. a the d’eau | QUANTITY
 ml | 10 ml 2 c. a the d’eau | UNIT
 2 | 10 ml 2 c. a the d’eau | INGREDIENT

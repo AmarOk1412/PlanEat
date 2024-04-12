@@ -28,8 +28,8 @@ import androidx.navigation.NavHostController
 import com.planeat.planeat.R
 
 object ReplyRoute {
-    const val RECIPES = "Recipes"
     const val AGENDA = "Agenda"
+    const val RECIPES = "Recipes"
     const val PANTRY = "Pantry"
     const val SHOPPING_LIST = "ShoppingList"
 }
@@ -61,14 +61,14 @@ class ReplyNavigationActions(private val navController: NavHostController) {
 
 val TOP_LEVEL_DESTINATIONS = listOf(
     ReplyTopLevelDestination(
-        route = ReplyRoute.RECIPES,
-        icon = R.drawable.icon_recipes,
-        iconTextId = R.string.tab_recipes
-    ),
-    ReplyTopLevelDestination(
         route = ReplyRoute.AGENDA,
         icon = R.drawable.icon_agenda,
         iconTextId = R.string.tab_agenda
+    ),
+    ReplyTopLevelDestination(
+        route = ReplyRoute.RECIPES,
+        icon = R.drawable.icon_recipes,
+        iconTextId = R.string.tab_recipes
     ),
     ReplyTopLevelDestination(
         route = ReplyRoute.PANTRY,

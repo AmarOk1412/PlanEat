@@ -189,7 +189,7 @@ fun RecipeListItem(
                             .align(Alignment.TopEnd)
                     ) {
                         Icon(
-                            imageVector = if (exists.value) Icons.Default.Star else Icons.Default.StarBorder,
+                            imageVector = ImageVector.vectorResource(R.drawable.favorite),
                             contentDescription = stringResource(R.string.favorite),
                             tint = textCardRecipe,
                         )
