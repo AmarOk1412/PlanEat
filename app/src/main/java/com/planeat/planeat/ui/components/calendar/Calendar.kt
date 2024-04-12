@@ -39,29 +39,30 @@ import java.time.format.FormatStyle
 fun Calendar(
     modifier: Modifier = Modifier,
     dataSource: CalendarDataSource,
+    dataUi: CalendarUiModel,
+    updateDate: (CalendarUiModel) -> Unit,
 ) {
-    var data by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
     Column(modifier = modifier.fillMaxSize()) {
         Header(
-            data = data,
+            dataUi = dataUi,
             onPrevClickListener = { startDate ->
                 val finalStartDate = startDate.minusDays(1)
-                data = dataSource.getData(startDate = finalStartDate, lastSelectedDate = data.selectedDate.date)
+                updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date))
             },
             onNextClickListener = { endDate ->
                 val finalStartDate = endDate.plusDays(2)
-                data = dataSource.getData(startDate = finalStartDate, lastSelectedDate = data.selectedDate.date)
+                updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date))
             }
         )
-        Content(data = data) { date ->
-            data = data.copy(
+        Content(dataUi = dataUi) { date ->
+            updateDate(dataUi.copy(
                 selectedDate = date,
-                visibleDates = data.visibleDates.map {
+                visibleDates = dataUi.visibleDates.map {
                     it.copy(
                         isSelected = it.date.isEqual(date.date)
                     )
                 }
-            )
+            ))
         }
     }
 }
@@ -69,16 +70,16 @@ fun Calendar(
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun Header(
-    data: CalendarUiModel,
+    dataUi: CalendarUiModel,
     onPrevClickListener: (LocalDate) -> Unit,
     onNextClickListener: (LocalDate) -> Unit,
 ) {
     Row {
         Text(
-            text = if (data.selectedDate.isToday) {
+            text = if (dataUi.selectedDate.isToday) {
                 "Today"
             } else {
-                data.selectedDate.date.format(
+                dataUi.selectedDate.date.format(
                     DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
                 )
             },
@@ -87,7 +88,7 @@ fun Header(
                 .align(Alignment.CenterVertically)
         )
         IconButton(onClick = {
-            onPrevClickListener(data.startDate.date)
+            onPrevClickListener(dataUi.startDate.date)
         }) {
             Icon(
                 imageVector = Icons.Filled.ChevronLeft,
@@ -95,7 +96,7 @@ fun Header(
             )
         }
         IconButton(onClick = {
-            onNextClickListener(data.endDate.date)
+            onNextClickListener(dataUi.endDate.date)
         }) {
             Icon(
                 imageVector = Icons.Filled.ChevronRight,
@@ -108,11 +109,11 @@ fun Header(
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun Content(
-    data: CalendarUiModel,
+    dataUi: CalendarUiModel,
     onDateClickListener: (CalendarUiModel.Date) -> Unit,
 ) {
     Row(Modifier.horizontalScroll(rememberScrollState())) {
-        data.visibleDates.forEach{ visibleDate ->
+        dataUi.visibleDates.forEach{ visibleDate ->
             ContentItem(
                 date = visibleDate,
                 onDateClickListener

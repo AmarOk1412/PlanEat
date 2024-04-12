@@ -27,10 +27,10 @@ import java.time.format.DateTimeFormatter
 fun RecipeCalendar(
     modifier: Modifier = Modifier,
     dataSource: CalendarDataSource,
+    dataUi: CalendarUiModel,
 ) {
-    var data by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
     Column(modifier = modifier.fillMaxSize()) {
-        data.visibleDates.forEach{ visibleDate ->
+        dataUi.visibleDates.forEach{ visibleDate ->
             ContentItem(
                 date = visibleDate,
             )
@@ -49,7 +49,8 @@ fun ContentItem(
         val context = LocalContext.current
         var recipesPlanned = remember {mutableStateOf(listOf<Recipe>())}
 
-        LaunchedEffect(Unit) {
+        LaunchedEffect(date.date) {
+            recipesPlanned.value = emptyList()
             withContext(Dispatchers.IO) {
                 val adb = Room.databaseBuilder(
                     context,

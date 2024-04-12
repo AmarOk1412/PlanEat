@@ -50,7 +50,7 @@ fun AgendaScreen(
     modifier: Modifier = Modifier,
 ) {
     val dataSource = CalendarDataSource()
-    var data by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
+    var dataUi by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
     Box(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
             Column(
@@ -66,12 +66,15 @@ fun AgendaScreen(
 
                 Calendar(
                     modifier.fillMaxWidth().padding(bottom = 8.dp),
-                    dataSource
+                    dataSource,
+                    dataUi,
+                    updateDate = { newUi -> dataUi = newUi }
                 )
 
                 RecipeCalendar(
                     modifier.fillMaxWidth(),
-                    dataSource
+                    dataSource,
+                    dataUi
                 )
             }
         }
