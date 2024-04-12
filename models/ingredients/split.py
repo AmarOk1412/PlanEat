@@ -3,12 +3,15 @@
 import csv
 import random
 
-def write_to_file(line, filename):
+def write_to_file(line, filename, mode='a'):
     with open(filename, 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(line)
 
 def main():
+    write_to_file('sentence @ label', 'train.csv', 'w')
+    write_to_file('sentence @ label', 'test.csv', 'w')
+
     with open('output.csv', 'r') as file:
         reader = csv.reader(file)
         for line in reader:
