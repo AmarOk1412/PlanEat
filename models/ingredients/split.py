@@ -1,26 +1,22 @@
 #!/usr/bin/env python
 
-import csv
 import random
 
 def write_to_file(line, filename, mode='a'):
-    with open(filename, 'a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(line)
+    with open(filename, mode, newline='') as file:
+        file.write(line)
 
 def main():
-    write_to_file('sentence @ label', 'train.csv', 'w')
-    write_to_file('sentence @ label', 'test.csv', 'w')
+    write_to_file('sentence@label\n', 'train.csv', 'w')
+    write_to_file('sentence@label\n', 'test.csv', 'w')
 
     with open('output.csv', 'r') as file:
-        reader = csv.reader(file)
-        for line in reader:
-            if line:
-                probability = random.random()
-                if probability <= 0.7:
-                    write_to_file(line, 'train.csv')
-                else:
-                    write_to_file(line, 'test.csv')
+        for line in file:
+            probability = random.random()
+            if probability <= 0.7:
+                write_to_file(line, 'train.csv')
+            else:
+                write_to_file(line, 'test.csv')
 
 if __name__ == '__main__':
     main()

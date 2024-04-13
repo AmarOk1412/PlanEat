@@ -83,7 +83,7 @@ de | 1 l de lait @ NONE
 lait | 1 l de lait @ INGREDIENT
 3 | 3 grand-marnier ou de rhum @ QUANTITY
 grand-marnier | 3 grand-marnier ou de rhum @ INGREDIENT
-ou | 3 grand-marnier ou de rhum | OR
+ou | 3 grand-marnier ou de rhum @ OR
 de | 3 grand-marnier ou de rhum @ NONE
 rhum | 3 grand-marnier ou de rhum @ INGREDIENT
 5 | 5 oeufs @ QUANTITY
@@ -121,7 +121,7 @@ lardons | 100 g de lardons @ INGREDIENT
 g | 50 g de beurre ou 3 cuilleres a soupe d'huile @ UNIT
 de | 50 g de beurre ou 3 cuilleres a soupe d'huile @ NONE
 beurre | 50 g de beurre ou 3 cuilleres a soupe d'huile @ INGREDIENT
-ou | 50 g de beurre ou 3 cuilleres a soupe d'huile | OR
+ou | 50 g de beurre ou 3 cuilleres a soupe d'huile @ OR
 3 | 50 g de beurre ou 3 cuilleres a soupe d'huile @ QUANTITY
 cuilleres | 50 g de beurre ou 3 cuilleres a soupe d'huile @ UNIT
 a | 50 g de beurre ou 3 cuilleres a soupe d'huile @ NONE
@@ -441,7 +441,7 @@ rape | 150 g 1 1/2 tasse de fromage tex-mex rape @ INGREDIENT
 morceaux | 1 morceaux de paleron ou de bourguignon lkg @ UNIT
 de | 1 morceaux de paleron ou de bourguignon lkg @ NONE
 paleron | 1 morceaux de paleron ou de bourguignon lkg @ INGREDIENT
-ou | 1 morceaux de paleron ou de bourguignon lkg | OR
+ou | 1 morceaux de paleron ou de bourguignon lkg @ OR
 de | 1 morceaux de paleron ou de bourguignon lkg @ NONE
 bourguignon | 1 morceaux de paleron ou de bourguignon lkg @ NONE
 lkg | 1 morceaux de paleron ou de bourguignon lkg @ NONE
@@ -717,7 +717,7 @@ Piment | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
 coreen | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
 moulu | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
 gochugaru | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
-ou | Piment coreen moulu gochugaru ou piment d’Espelette | OR
+ou | Piment coreen moulu gochugaru ou piment d’Espelette @ OR
 piment | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
 d’ | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
 Espelette | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
@@ -725,7 +725,7 @@ Espelette | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
 g | 500 g de ramen ou nouilles de ble chinoises @ UNIT
 de | 500 g de ramen ou nouilles de ble chinoises @ NONE
 ramen | 500 g de ramen ou nouilles de ble chinoises @ INGREDIENT
-ou | 500 g de ramen ou nouilles de ble chinoises | OR
+ou | 500 g de ramen ou nouilles de ble chinoises @ OR
 nouilles | 500 g de ramen ou nouilles de ble chinoises @ INGREDIENT
 de | 500 g de ramen ou nouilles de ble chinoises @ NONE
 ble | 500 g de ramen ou nouilles de ble chinoises @ INGREDIENT
@@ -793,12 +793,12 @@ rape | 100 g de gruyere rape @ INGREDIENT
 des | 150 des de jambon ou 4 tranches de jambon ou lardons @ NONE
 de | 150 des de jambon ou 4 tranches de jambon ou lardons @ NONE
 jambon | 150 des de jambon ou 4 tranches de jambon ou lardons @ INGREDIENT
-ou | 150 des de jambon ou 4 tranches de jambon ou lardons | OR
+ou | 150 des de jambon ou 4 tranches de jambon ou lardons @ OR
 4 | 150 des de jambon ou 4 tranches de jambon ou lardons @ QUANTITY
 tranches | 150 des de jambon ou 4 tranches de jambon ou lardons @ NONE
 de | 150 des de jambon ou 4 tranches de jambon ou lardons @ NONE
 jambon | 150 des de jambon ou 4 tranches de jambon ou lardons @ INGREDIENT
-ou | 150 des de jambon ou 4 tranches de jambon ou lardons | OR
+ou | 150 des de jambon ou 4 tranches de jambon ou lardons @ OR
 lardons | 150 des de jambon ou 4 tranches de jambon ou lardons @ INGREDIENT
 poivre | poivre @ INGREDIENT
 sel | sel @ INGREDIENT
@@ -911,7 +911,7 @@ pommes | 680 g 4 tasses de pommes de terre Russet ou Yukon Gold pelees et coupee
 de | 680 g 4 tasses de pommes de terre Russet ou Yukon Gold pelees et coupees en cubes @ NONE
 terre | 680 g 4 tasses de pommes de terre Russet ou Yukon Gold pelees et coupees en cubes @ INGREDIENT
 Russet | 680 g 4 tasses de pommes de terre Russet ou Yukon Gold pelees et coupees en cubes @ INGREDIENT
-ou | 680 g 4 tasses de pommes de terre Russet ou Yukon Gold pelees et coupees en cubes | OR
+ou | 680 g 4 tasses de pommes de terre Russet ou Yukon Gold pelees et coupees en cubes @ OR
 Yukon | 680 g 4 tasses de pommes de terre Russet ou Yukon Gold pelees et coupees en cubes @ INGREDIENT
 Gold | 680 g 4 tasses de pommes de terre Russet ou Yukon Gold pelees et coupees en cubes @ INGREDIENT
 pelees | 680 g 4 tasses de pommes de terre Russet ou Yukon Gold pelees et coupees en cubes @ NONE
@@ -1315,7 +1315,7 @@ vegetale | 30 ml  2 c. a soupe d’huile vegetale @ NONE
 petites | 3  petites bananes vertes ou plantains @ NONE
 bananes | 3  petites bananes vertes ou plantains @ INGREDIENT
 vertes | 3  petites bananes vertes ou plantains @ NONE
-ou | 3  petites bananes vertes ou plantains | OR
+ou | 3  petites bananes vertes ou plantains @ OR
 plantains | 3  petites bananes vertes ou plantains @ INGREDIENT
  | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
 pelees | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
@@ -1362,7 +1362,7 @@ de | 120 g  1 tasse de fromage queso fresco ou feta @ NONE
 fromage | 120 g  1 tasse de fromage queso fresco ou feta @ INGREDIENT
 queso | 120 g  1 tasse de fromage queso fresco ou feta @ INGREDIENT
 fresco | 120 g  1 tasse de fromage queso fresco ou feta @ INGREDIENT
-ou | 120 g  1 tasse de fromage queso fresco ou feta | OR
+ou | 120 g  1 tasse de fromage queso fresco ou feta @ OR
 feta | 120 g  1 tasse de fromage queso fresco ou feta @ INGREDIENT
  | emiette @ NONE
 emiette | emiette @ NONE
@@ -1592,7 +1592,7 @@ de | 1 litre 4 tasses de bouillon de poulet ou d’eau @ NONE
 bouillon | 1 litre 4 tasses de bouillon de poulet ou d’eau @ INGREDIENT
 de | 1 litre 4 tasses de bouillon de poulet ou d’eau @ NONE
 poulet | 1 litre 4 tasses de bouillon de poulet ou d’eau @ INGREDIENT
-ou | 1 litre 4 tasses de bouillon de poulet ou d’eau | OR
+ou | 1 litre 4 tasses de bouillon de poulet ou d’eau @ OR
 d’ | 1 litre 4 tasses de bouillon de poulet ou d’eau @ NONE
 eau | 1 litre 4 tasses de bouillon de poulet ou d’eau @ INGREDIENT
 4 | 4 tranches de saumon fume @ QUANTITY
@@ -2042,7 +2042,7 @@ zestes | 1 zestes de citron @ NONE
 de | 1 zestes de citron @ NONE
 citron | 1 zestes de citron @ INGREDIENT
 orange | orange ou de clementine @ INGREDIENT
-ou | orange ou de clementine | OR
+ou | orange ou de clementine @ OR
 de | orange ou de clementine @ NONE
 clementine | orange ou de clementine @ INGREDIENT
 500 | 500 ml 2 tasses de riz basmati @ QUANTITY
@@ -2217,7 +2217,7 @@ persil | ciselees persil plat @ INGREDIENT
 plat | ciselees persil plat @ NONE
  | coriandre et ciboulette @ NONE
 coriandre | coriandre et ciboulette @ INGREDIENT
-et | coriandre et ciboulette | AND
+et | coriandre et ciboulette @ AND
 ciboulette | coriandre et ciboulette @ INGREDIENT
 10 | 10 ml 2 c. a the de jus de lime @ QUANTITY
 ml | 10 ml 2 c. a the de jus de lime @ UNIT
@@ -2246,7 +2246,7 @@ de | 1 cubes de bouillon de legumes ou un Kub Or @ NONE
 bouillon | 1 cubes de bouillon de legumes ou un Kub Or @ INGREDIENT
 de | 1 cubes de bouillon de legumes ou un Kub Or @ NONE
 legumes | 1 cubes de bouillon de legumes ou un Kub Or @ INGREDIENT
-ou | 1 cubes de bouillon de legumes ou un Kub Or | OR
+ou | 1 cubes de bouillon de legumes ou un Kub Or @ OR
 un | 1 cubes de bouillon de legumes ou un Kub Or @ NONE
 Kub | 1 cubes de bouillon de legumes ou un Kub Or @ INGREDIENT
 Or | 1 cubes de bouillon de legumes ou un Kub Or @ INGREDIENT
@@ -2319,14 +2319,14 @@ Arborio | 300 g de riz pour risotto type Arborio @ NONE
 g | 50 g de beurre + 1 noix de beurre @ UNIT
 de | 50 g de beurre + 1 noix de beurre @ NONE
 beurre | 50 g de beurre + 1 noix de beurre @ INGREDIENT
-+ | 50 g de beurre + 1 noix de beurre | AND
++ | 50 g de beurre + 1 noix de beurre @ AND
 1 | 50 g de beurre + 1 noix de beurre @ NONE
 noix | 50 g de beurre + 1 noix de beurre @ NONE
 de | 50 g de beurre + 1 noix de beurre @ NONE
 beurre | 50 g de beurre + 1 noix de beurre @ INGREDIENT
 1 | 1 oignons ou 2 echalotes au choix @ QUANTITY
 oignons | 1 oignons ou 2 echalotes au choix @ INGREDIENT
-ou | 1 oignons ou 2 echalotes au choix | OR
+ou | 1 oignons ou 2 echalotes au choix @ OR
 2 | 1 oignons ou 2 echalotes au choix @ QUANTITY
 echalotes | 1 oignons ou 2 echalotes au choix @ INGREDIENT
 au | 1 oignons ou 2 echalotes au choix @ NONE
@@ -2346,7 +2346,7 @@ legumes | 1 l de bouillon de legumes @ INGREDIENT
 g | 100 g de Parmesan ou grana rape fin @ UNIT
 de | 100 g de Parmesan ou grana rape fin @ NONE
 Parmesan | 100 g de Parmesan ou grana rape fin @ INGREDIENT
-ou | 100 g de Parmesan ou grana rape fin | OR
+ou | 100 g de Parmesan ou grana rape fin @ OR
 grana | 100 g de Parmesan ou grana rape fin @ INGREDIENT
 rape | 100 g de Parmesan ou grana rape fin @ NONE
 fin | 100 g de Parmesan ou grana rape fin @ NONE
@@ -2422,7 +2422,7 @@ soupe | 45 ml 3 c. a soupe de creme 15 % ou de lait @ NONE
 de | 45 ml 3 c. a soupe de creme 15 % ou de lait @ NONE
 creme | 45 ml 3 c. a soupe de creme 15 % ou de lait @ INGREDIENT
 15 % | 45 ml 3 c. a soupe de creme 15 % ou de lait @ NONE
-ou | 45 ml 3 c. a soupe de creme 15 % ou de lait | OR
+ou | 45 ml 3 c. a soupe de creme 15 % ou de lait @ OR
 de | 45 ml 3 c. a soupe de creme 15 % ou de lait @ NONE
 lait | 45 ml 3 c. a soupe de creme 15 % ou de lait @ INGREDIENT
 Sel | Sel @ INGREDIENT
@@ -2438,11 +2438,11 @@ sans | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la mo
 la | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ NONE
 peau | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ NONE
 comme | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ NONE
-le | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | OR
+le | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ OR
 dore | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ INGREDIENT
 de | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ NONE
 lac | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ INGREDIENT
-ou | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes | OR
+ou | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ OR
 la | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ NONE
 morue, | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ INGREDIENT
 coupe | 675 g 1 ½ lb de poisson blanc sans la peau comme le dore de lac ou la morue, coupe en cubes @ NONE
@@ -2585,7 +2585,7 @@ g | 600 g de lieu noir ou de cabillaud @ UNIT
 de | 600 g de lieu noir ou de cabillaud @ NONE
 lieu | 600 g de lieu noir ou de cabillaud @ INGREDIENT
 noir | 600 g de lieu noir ou de cabillaud @ INGREDIENT
-ou | 600 g de lieu noir ou de cabillaud | OR
+ou | 600 g de lieu noir ou de cabillaud @ OR
 de | 600 g de lieu noir ou de cabillaud @ NONE
 cabillaud | 600 g de lieu noir ou de cabillaud @ INGREDIENT
 400 | 400 g de champignons de Paris en boite @ QUANTITY
@@ -2614,7 +2614,7 @@ sel | sel @ INGREDIENT
 bouquet | bouquet garni @ INGREDIENT
 garni | bouquet garni @ INGREDIENT
 farine | farine et de beurre @ INGREDIENT
-et | farine et de beurre | AND
+et | farine et de beurre @ AND
 de | farine et de beurre @ NONE
 beurre | farine et de beurre @ INGREDIENT
 1 | 1 oignon, hache finement @ QUANTITY
@@ -2690,7 +2690,7 @@ coupe | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair
 en | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme @ NONE
 gros | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme @ NONE
 cubes | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme @ NONE
-ou | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme | OR
+ou | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme @ OR
 autre | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme @ NONE
 poisson | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme @ INGREDIENT
 blanc | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme @ INGREDIENT
@@ -2698,7 +2698,7 @@ a | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair fer
 chair | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme @ NONE
 ferme | 454 g 1 lb de tilapia coupe en gros cubes ou autre poisson blanc a chair ferme @ NONE
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 1 | 1 citrons @ QUANTITY
 citrons | 1 citrons @ INGREDIENT
@@ -2790,7 +2790,7 @@ jaune | 4 cuilleres a soupe de jus de citron jaune @ NONE
 herbes | herbes de Provence ou herbes fraiches si vous preferez @ INGREDIENT
 de | herbes de Provence ou herbes fraiches si vous preferez @ NONE
 Provence | herbes de Provence ou herbes fraiches si vous preferez @ INGREDIENT
-ou | herbes de Provence ou herbes fraiches si vous preferez | OR
+ou | herbes de Provence ou herbes fraiches si vous preferez @ OR
 herbes | herbes de Provence ou herbes fraiches si vous preferez @ INGREDIENT
 fraiches | herbes de Provence ou herbes fraiches si vous preferez @ INGREDIENT
 si | herbes de Provence ou herbes fraiches si vous preferez @ NONE
@@ -2898,7 +2898,7 @@ de | 2,5 ml 1/2  c. a the de cumin moulu @ NONE
 cumin | 2,5 ml 1/2  c. a the de cumin moulu @ INGREDIENT
 moulu | 2,5 ml 1/2  c. a the de cumin moulu @ NONE
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 454 | 454 g 1 livre de filets d'aiglefin, coupes en lanieres @ QUANTITY
 g | 454 g 1 livre de filets d'aiglefin, coupes en lanieres @ UNIT
@@ -2982,7 +2982,7 @@ de | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau @ NONE
 filets | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau @ NONE
 d' | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau @ NONE
 aiglefin | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau @ INGREDIENT
-ou | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau | OR
+ou | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau @ OR
 de | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau @ NONE
 morue | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau @ INGREDIENT
 sans | 675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau @ NONE
@@ -3013,7 +3013,7 @@ coriandre | 60 ml 1/4 tasse de coriandre fraiche, ciselee @ INGREDIENT
 fraiche, | 60 ml 1/4 tasse de coriandre fraiche, ciselee @ NONE
 ciselee | 60 ml 1/4 tasse de coriandre fraiche, ciselee @ NONE
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 8 | 8 coquilles a tacos @ QUANTITY
 coquilles | 8 coquilles a tacos @ INGREDIENT
@@ -3101,7 +3101,7 @@ Sauce | Sauce de piments @ NONE
 de | Sauce de piments @ NONE
 piments | Sauce de piments @ INGREDIENT
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 1 | 1 kg de filets de poisson a chair blanche, tailles epais, sans la peau espadon, mahi-mahi, etc., coupes en 4 paves @ QUANTITY
 kg | 1 kg de filets de poisson a chair blanche, tailles epais, sans la peau espadon, mahi-mahi, etc., coupes en 4 paves @ UNIT
@@ -3262,7 +3262,7 @@ tasse | 60 ml  1/4 tasse de vin blanc ou de pastis @ NONE
 de | 60 ml  1/4 tasse de vin blanc ou de pastis @ NONE
 vin | 60 ml  1/4 tasse de vin blanc ou de pastis @ INGREDIENT
 blanc | 60 ml  1/4 tasse de vin blanc ou de pastis @ INGREDIENT
-ou | 60 ml  1/4 tasse de vin blanc ou de pastis | OR
+ou | 60 ml  1/4 tasse de vin blanc ou de pastis @ OR
 de | 60 ml  1/4 tasse de vin blanc ou de pastis @ NONE
 pastis | 60 ml  1/4 tasse de vin blanc ou de pastis @ INGREDIENT
 750 | 750 ml 3 tasses de bouillon de legumes @ QUANTITY
@@ -3464,7 +3464,7 @@ gout | Quartiers de lime, au gout @ NONE
 boites | 2 boites de thon ou saumon @ UNIT
 de | 2 boites de thon ou saumon @ NONE
 thon | 2 boites de thon ou saumon @ INGREDIENT
-ou | 2 boites de thon ou saumon | OR
+ou | 2 boites de thon ou saumon @ OR
 saumon | 2 boites de thon ou saumon @ INGREDIENT
 20 | 20 cl de creme fraiche @ QUANTITY
 cl | 20 cl de creme fraiche @ UNIT
@@ -4134,7 +4134,7 @@ g | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cub
 lb | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes @ NONE
 de | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes @ NONE
 mahi-mahi | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes @ INGREDIENT
-ou | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes | OR
+ou | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes @ OR
 autre | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes @ NONE
 poisson | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes @ INGREDIENT
 blanc | 225 g 1/2 lb de mahi-mahi ou autre poisson blanc a chair ferme, coupe en cubes @ INGREDIENT
@@ -4163,7 +4163,7 @@ basilic | 10 g  1/4 tasse de feuilles de basilic frais dechirees @ INGREDIENT
 frais | 10 g  1/4 tasse de feuilles de basilic frais dechirees @ NONE
 dechirees | 10 g  1/4 tasse de feuilles de basilic frais dechirees @ NONE
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 6 | 6 filets de poisson @ QUANTITY
 filets | 6 filets de poisson @ NONE
@@ -4293,7 +4293,7 @@ de | 125 ml ½ tasse de creme sure @ NONE
 creme | 125 ml ½ tasse de creme sure @ INGREDIENT
 sure | 125 ml ½ tasse de creme sure @ INGREDIENT
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 340 | 340 g 3/4 lb de pommes de terre grelots @ QUANTITY
 g | 340 g 3/4 lb de pommes de terre grelots @ UNIT
@@ -4327,7 +4327,7 @@ ml | 500 ml 2 tasses de poulet ou de  bouillon de legumes @ UNIT
 tasses | 500 ml 2 tasses de poulet ou de  bouillon de legumes @ NONE
 de | 500 ml 2 tasses de poulet ou de  bouillon de legumes @ NONE
 poulet | 500 ml 2 tasses de poulet ou de  bouillon de legumes @ INGREDIENT
-ou | 500 ml 2 tasses de poulet ou de  bouillon de legumes | OR
+ou | 500 ml 2 tasses de poulet ou de  bouillon de legumes @ OR
 de | 500 ml 2 tasses de poulet ou de  bouillon de legumes @ NONE
  | 500 ml 2 tasses de poulet ou de  bouillon de legumes @ NONE
 bouillon | 500 ml 2 tasses de poulet ou de  bouillon de legumes @ INGREDIENT
@@ -4352,7 +4352,7 @@ d' | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans l
 omble | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
 de | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
 fontaine | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
-ou | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves | OR
+ou | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ OR
 d' | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
 omble | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
 chevalier | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
@@ -4367,7 +4367,7 @@ d' | Huile d’olive facultatif @ NONE
 olive | Huile d’olive facultatif @ NONE
 facultatif | Huile d’olive facultatif @ NONE
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 4 | 4 filets de poisson blanc @ QUANTITY
 filets | 4 filets de poisson blanc @ NONE
@@ -4452,7 +4452,7 @@ brunoise | 1  petite tomate, epepinee et coupee en brunoise @ NONE
  | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise @ NONE
 mini-poivron | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise @ INGREDIENT
 rouge | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise @ INGREDIENT
-ou | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise | OR
+ou | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise @ OR
 1/4 | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise @ INGREDIENT
 de | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise @ NONE
 poivron | 1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise @ INGREDIENT
@@ -4499,7 +4499,7 @@ de | 15 ml 1 c. a soupe de vinaigre balsamique @ NONE
 vinaigre | 15 ml 1 c. a soupe de vinaigre balsamique @ INGREDIENT
 balsamique | 15 ml 1 c. a soupe de vinaigre balsamique @ INGREDIENT
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 2 | 2 litres 8 tasses de bouillon de poulet @ QUANTITY
 litres | 2 litres 8 tasses de bouillon de poulet @ UNIT
@@ -4577,7 +4577,7 @@ huile | 30 ml 2 c. a soupe d’huile d’olive @ INGREDIENT
 d' | 30 ml 2 c. a soupe d’huile d’olive @ NONE
 olive | 30 ml 2 c. a soupe d’huile d’olive @ NONE
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 10 | 10 surimi @ QUANTITY
 surimi | 10 surimi @ INGREDIENT
@@ -4684,7 +4684,7 @@ tasse | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ NONE
 de | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ NONE
 vin | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ INGREDIENT
 blanc | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ INGREDIENT
-ou | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet | OR
+ou | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ OR
 de | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ NONE
 bouillon | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ INGREDIENT
 de | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ NONE
@@ -4694,7 +4694,7 @@ poulet | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ INGREDIENT
 filets | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
 de | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
 fletan | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ INGREDIENT
-ou | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau | OR
+ou | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ OR
 de | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
 turbot | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ INGREDIENT
 d’environ | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
@@ -4727,7 +4727,7 @@ coriandre | 125 ml 1/2 tasse de coriandre fraiche, ciselee @ INGREDIENT
 fraiche, | 125 ml 1/2 tasse de coriandre fraiche, ciselee @ NONE
 ciselee | 125 ml 1/2 tasse de coriandre fraiche, ciselee @ NONE
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 75 | 75 g  1/2 tasse de farine tout usage non blanchie @ QUANTITY
 g | 75 g  1/2 tasse de farine tout usage non blanchie @ UNIT
@@ -4796,7 +4796,7 @@ mer | 4 petites poignees de Fruits de mer @ INGREDIENT
 paves | 4 paves de colin ou cabillaud... @ NONE
 de | 4 paves de colin ou cabillaud... @ NONE
 colin | 4 paves de colin ou cabillaud... @ INGREDIENT
-ou | 4 paves de colin ou cabillaud... | OR
+ou | 4 paves de colin ou cabillaud... @ OR
 cabillaud... | 4 paves de colin ou cabillaud... @ INGREDIENT
 2 | 2 cuilleres a soupe de creme fraiche @ QUANTITY
 cuilleres | 2 cuilleres a soupe de creme fraiche @ UNIT
@@ -4954,7 +4954,7 @@ coupees | 375 ml 1 1/2 tasse de tomates cerises, coupees en deux @ NONE
 en | 375 ml 1 1/2 tasse de tomates cerises, coupees en deux @ NONE
 deux | 375 ml 1 1/2 tasse de tomates cerises, coupees en deux @ NONE
 Sel | Sel et poivre @ INGREDIENT
-et | Sel et poivre | AND
+et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
 1 | 1  avocat coupe en des, legerement citronne facultatif @ QUANTITY
  | 1  avocat coupe en des, legerement citronne facultatif @ NONE
@@ -5036,7 +5036,7 @@ et | 2  gousses d’ail, pelees et ecrasees @ NONE
 ecrasees | 2  gousses d’ail, pelees et ecrasees @ NONE
 60 | 60 ml 1/4 tasse d’huile d’olive @ QUANTITY
 ml | 60 ml 1/4 tasse d’huile d’olive @ UNITINGREDIENT
-INGREDIENT
+INGREDIENT@
 1/4 | 60 ml 1/4 tasse d’huile d’olive @ NONE
 tasse | 60 ml 1/4 tasse d’huile d’olive @ NONE
 d’ | 60 ml 1/4 tasse d’huile d’olive @ NONE
@@ -5782,7 +5782,7 @@ huile | 3 demis d'huile @ INGREDIENT
 demis | 2 demis de rhum ou de jus d'orange @ NONE
 de | 2 demis de rhum ou de jus d'orange @ NONE
 rhum | 2 demis de rhum ou de jus d'orange @ INGREDIENT
-ou | 2 demis de rhum ou de jus d'orange | OR
+ou | 2 demis de rhum ou de jus d'orange @ OR
 de | 2 demis de rhum ou de jus d'orange @ NONE
 jus | 2 demis de rhum ou de jus d'orange @ INGREDIENT
 d'orange | 2 demis de rhum ou de jus d'orange @ INGREDIENT
@@ -5790,7 +5790,7 @@ d'orange | 2 demis de rhum ou de jus d'orange @ INGREDIENT
 noisettes | 3 noisettes de beurre et un sucre vanille @ NONE
 de | 3 noisettes de beurre et un sucre vanille @ NONE
 beurre | 3 noisettes de beurre et un sucre vanille @ INGREDIENT
-et | 3 noisettes de beurre et un sucre vanille | AND
+et | 3 noisettes de beurre et un sucre vanille @ AND
 un | 3 noisettes de beurre et un sucre vanille @ NONE
 sucre | 3 noisettes de beurre et un sucre vanille @ INGREDIENT
 vanille | 3 noisettes de beurre et un sucre vanille @ INGREDIENT
@@ -6025,13 +6025,13 @@ au | Sucre au gout @ NONE
 gout | Sucre au gout @ NONE
 5 | 5 oeufs @ QUANTITY
 oeufs | 5 oeufs @ INGREDIENT
-
-
-
-
-
-
-
+@
+@
+@
+@
+@
+@
+@
 1 | 1 verres de sucre @ QUANTITY
 verres | 1 verres de sucre @ UNIT
 de | 1 verres de sucre @ NONE
@@ -6189,7 +6189,7 @@ rose | Colorant alimentaire en gel rose @ INGREDIENT
 24 | 24 beignes nature ou au miel du commerce @ QUANTITY
 beignes | 24 beignes nature ou au miel du commerce @ INGREDIENT
 nature | 24 beignes nature ou au miel du commerce @ INGREDIENT
-ou | 24 beignes nature ou au miel du commerce | OR
+ou | 24 beignes nature ou au miel du commerce @ OR
 au | 24 beignes nature ou au miel du commerce @ NONE
 miel | 24 beignes nature ou au miel du commerce @ INGREDIENT
 du | 24 beignes nature ou au miel du commerce @ INGREDIENT

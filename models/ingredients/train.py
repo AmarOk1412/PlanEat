@@ -24,12 +24,14 @@ train_data = DataLoader.from_csv(
    text_column='sentence',
    label_column='label',
    model_spec=spec,
+   delimiter='@',
    is_training=True)
 test_data = DataLoader.from_csv(
    filename='test.csv',
    text_column='sentence',
    label_column='label',
    model_spec=spec,
+   delimiter='@',
    is_training=False)
 
 model = text_classifier.create(train_data, model_spec=spec, epochs=100)
