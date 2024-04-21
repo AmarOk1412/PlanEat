@@ -242,7 +242,6 @@ fun PermanentNavigationDrawerContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalNavigationDrawerContent(
     selectedDestination: String,
