@@ -22,22 +22,10 @@ print(df_test.head())
 
 spec = model_spec.get('mobilebert_qa_squad')
 
-train_data = DataLoader.from_csv(
-   filename='train.csv',
-   text_column='sentence',
-   label_column='label',
-   model_spec=spec,
-   delimiter='@',
-   is_training=True)
-test_data = DataLoader.from_csv(
-   filename='test.csv',
-   text_column='sentence',
-   label_column='label',
-   model_spec=spec,
-   delimiter='@',
-   is_training=False)
+train_data = DataLoader.from_squad(filename='train.csv',model_spec=spec,is_training=True,version_2_with_negative=True)
+test_data = DataLoader.from_squad(filename='test.csv',model_spec=spec,is_training=False,version_2_with_negative=True)
 
-model = text_classifier.create(train_data, model_spec=spec)
+model = question_answer.create(train_data, model_spec=spec)
 
 print(model.summary())
 

@@ -170,22 +170,22 @@ bœuf | 1  roti de 900 g 2 lb de filet de bœuf dans le centre @ INGREDIENT
 dans | 1  roti de 900 g 2 lb de filet de bœuf dans le centre @ INGREDIENT
 le | 1  roti de 900 g 2 lb de filet de bœuf dans le centre @ NONE
 centre | 1  roti de 900 g 2 lb de filet de bœuf dans le centre @ INGREDIENT
-30 | 30 ml 2 c. a soupe d’huile vegetale @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile vegetale @ UNIT
-2 | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-c. | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-a | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-soupe | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-d’ | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-huile | 30 ml 2 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 30 ml 2 c. a soupe d’huile vegetale @ NONE
+30 | 30 ml 2 c. a soupe d'huile vegetale @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile vegetale @ UNIT
+2 | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+c. | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+a | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+soupe | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+d' | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+huile | 30 ml 2 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 30 ml 2 c. a soupe d'huile vegetale @ NONE
 2 | 2 echalotes francaises @ QUANTITY
 echalotes | 2 echalotes francaises @ INGREDIENT
 francaises | 2 echalotes francaises @ NONE
-2 | 2 gousses d’ail @ QUANTITY
-gousses | 2 gousses d’ail @ NONE
-d’ | 2 gousses d’ail @ NONE
-ail | 2 gousses d’ail @ INGREDIENT
+2 | 2 gousses d'ail @ QUANTITY
+gousses | 2 gousses d'ail @ NONE
+d' | 2 gousses d'ail @ NONE
+ail | 2 gousses d'ail @ INGREDIENT
 340 | 340 g 3/4 lb de champignons blancs @ QUANTITY
 g | 340 g 3/4 lb de champignons blancs @ UNIT
 3/4 | 340 g 3/4 lb de champignons blancs @ NONE
@@ -260,16 +260,16 @@ de | 55 g 2 oz de pate de foie de volaille @ NONE
 foie | 55 g 2 oz de pate de foie de volaille @ INGREDIENT
 de | 55 g 2 oz de pate de foie de volaille @ NONE
 volaille | 55 g 2 oz de pate de foie de volaille @ INGREDIENT
- | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
-coupe | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
-en | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
-tranches | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
-de | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
-1 | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
-cm | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
-1/2 | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
-po | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
-d’epaisseur | coupe en tranches de 1 cm 1/2 po d’epaisseur @ NONE
+ | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
+coupe | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
+en | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
+tranches | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
+de | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
+1 | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
+cm | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
+1/2 | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
+po | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
+d'epaisseur | coupe en tranches de 1 cm 1/2 po d'epaisseur @ NONE
 10 | 10 ml 2 c. a the de moutarde de Dijon @ QUANTITY
 ml | 10 ml 2 c. a the de moutarde de Dijon @ UNIT
 2 | 10 ml 2 c. a the de moutarde de Dijon @ NONE
@@ -307,14 +307,15 @@ ml | 500 ml 2 tasses de fond de veau @ UNIT
 2 | 500 ml 2 tasses de fond de veau @ NONE
 tasses | 500 ml 2 tasses de fond de veau @ NONE
 fond | 500 ml 2 tasses de fond de veau @ INGREDIENT
+de | 500 ml 2 tasses de fond de veau @ INGREDIENT
 veau | 500 ml 2 tasses de fond de veau @ INGREDIENT
-180 | 180 ml 3/4 tasse d’eau froide @ QUANTITY
-ml | 180 ml 3/4 tasse d’eau froide @ UNIT
-3/4 | 180 ml 3/4 tasse d’eau froide @ NONE
-tasse | 180 ml 3/4 tasse d’eau froide @ NONE
-d’ | 180 ml 3/4 tasse d’eau froide @ NONE
-eau | 180 ml 3/4 tasse d’eau froide @ INGREDIENT
-froide | 180 ml 3/4 tasse d’eau froide @ NONE
+180 | 180 ml 3/4 tasse d'eau froide @ QUANTITY
+ml | 180 ml 3/4 tasse d'eau froide @ UNIT
+3/4 | 180 ml 3/4 tasse d'eau froide @ NONE
+tasse | 180 ml 3/4 tasse d'eau froide @ NONE
+d' | 180 ml 3/4 tasse d'eau froide @ NONE
+eau | 180 ml 3/4 tasse d'eau froide @ INGREDIENT
+froide | 180 ml 3/4 tasse d'eau froide @ NONE
 100 | 100 g 1/2 tasse de riz basmati @ QUANTITY
 g | 100 g 1/2 tasse de riz basmati @ UNIT
 1/2 | 100 g 1/2 tasse de riz basmati @ NONE
@@ -337,15 +338,15 @@ de | 450 g 1 lb de bœuf hache maigre @ NONE
 bœuf | 450 g 1 lb de bœuf hache maigre @ INGREDIENT
 hache | 450 g 1 lb de bœuf hache maigre @ NONE
 maigre | 450 g 1 lb de bœuf hache maigre @ NONE
-15 | 15 ml 1 c. a soupe d’huile vegetale @ QUANTITY
-ml | 15 ml 1 c. a soupe d’huile vegetale @ UNIT
-1 | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-c. | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-a | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-soupe | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-d’ | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-huile | 15 ml 1 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 15 ml 1 c. a soupe d’huile vegetale @ NONE
+15 | 15 ml 1 c. a soupe d'huile vegetale @ QUANTITY
+ml | 15 ml 1 c. a soupe d'huile vegetale @ UNIT
+1 | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+c. | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+a | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+soupe | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+d' | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+huile | 15 ml 1 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 15 ml 1 c. a soupe d'huile vegetale @ NONE
 1 | 1 poivron rouge @ QUANTITY
 poivron | 1 poivron rouge @ INGREDIENT
 rouge | 1 poivron rouge @ INGREDIENT
@@ -367,15 +368,15 @@ noirs | 1 boite de 398 ml 14 oz de haricots noirs @ INGREDIENT
 rinces | rinces et egouttes @ NONE
 et | rinces et egouttes @ NONE
 egouttes | rinces et egouttes @ NONE
-15 | 15 ml 1 c. a soupe d’assaisonnement au chili @ QUANTITY
-ml | 15 ml 1 c. a soupe d’assaisonnement au chili @ UNIT
-1 | 15 ml 1 c. a soupe d’assaisonnement au chili @ NONE
-c. | 15 ml 1 c. a soupe d’assaisonnement au chili @ NONE
-a | 15 ml 1 c. a soupe d’assaisonnement au chili @ NONE
-soupe | 15 ml 1 c. a soupe d’assaisonnement au chili @ NONE
-d’assaisonnement | 15 ml 1 c. a soupe d’assaisonnement au chili @ NONE
-au | 15 ml 1 c. a soupe d’assaisonnement au chili @ NONE
-chili | 15 ml 1 c. a soupe d’assaisonnement au chili @ INGREDIENT
+15 | 15 ml 1 c. a soupe d'assaisonnement au chili @ QUANTITY
+ml | 15 ml 1 c. a soupe d'assaisonnement au chili @ UNIT
+1 | 15 ml 1 c. a soupe d'assaisonnement au chili @ NONE
+c. | 15 ml 1 c. a soupe d'assaisonnement au chili @ NONE
+a | 15 ml 1 c. a soupe d'assaisonnement au chili @ NONE
+soupe | 15 ml 1 c. a soupe d'assaisonnement au chili @ NONE
+d'assaisonnement | 15 ml 1 c. a soupe d'assaisonnement au chili @ NONE
+au | 15 ml 1 c. a soupe d'assaisonnement au chili @ NONE
+chili | 15 ml 1 c. a soupe d'assaisonnement au chili @ INGREDIENT
 5 | 5 ml 1 c. a the de cumin moulu @ QUANTITY
 ml | 5 ml 1 c. a the de cumin moulu @ UNIT
 1 | 5 ml 1 c. a the de cumin moulu @ NONE
@@ -495,11 +496,11 @@ de | 1 paquet de 120 g de nouilles ramen seches @ NONE
 nouilles | 1 paquet de 120 g de nouilles ramen seches @ INGREDIENT
 ramen | 1 paquet de 120 g de nouilles ramen seches @ INGREDIENT
 seches | 1 paquet de 120 g de nouilles ramen seches @ NONE
- | sans le sachet d’assaisonnement @ NONE
-sans | sans le sachet d’assaisonnement @ NONE
-le | sans le sachet d’assaisonnement @ NONE
-sachet | sans le sachet d’assaisonnement @ NONE
-d’assaisonnement | sans le sachet d’assaisonnement @ NONE
+ | sans le sachet d'assaisonnement @ NONE
+sans | sans le sachet d'assaisonnement @ NONE
+le | sans le sachet d'assaisonnement @ NONE
+sachet | sans le sachet d'assaisonnement @ NONE
+d'assaisonnement | sans le sachet d'assaisonnement @ NONE
 1 | 1 œuf @ QUANTITY
 œuf | 1 œuf @ INGREDIENT
 35 | 35 g 1/2 tasse de fromage parmesan frais rape finement @ QUANTITY
@@ -549,35 +550,35 @@ a | 5 ml 1 c. a the de sel @ NONE
 the | 5 ml 1 c. a the de sel @ NONE
 de | 5 ml 1 c. a the de sel @ NONE
 sel | 5 ml 1 c. a the de sel @ INGREDIENT
-190 | 190 ml d’eau tiede @ QUANTITY
-ml | 190 ml d’eau tiede @ UNIT
-d’ | 190 ml d’eau tiede @ NONE
-eau | 190 ml d’eau tiede @ INGREDIENT
-tiede | 190 ml d’eau tiede @ NONE
+190 | 190 ml d'eau tiede @ QUANTITY
+ml | 190 ml d'eau tiede @ UNIT
+d' | 190 ml d'eau tiede @ NONE
+eau | 190 ml d'eau tiede @ INGREDIENT
+tiede | 190 ml d'eau tiede @ NONE
 1 | 1 kg 2 @ NONE
 kg | 1 kg 2 @ NONE
 2 | 1 kg 2 @ NONE
-2 | 2 lb d’epaule de porc desossee @ QUANTITY
-lb | 2 lb d’epaule de porc desossee @ UNIT
-d’ | 2 lb d’epaule de porc desossee @ NONE
-epaule | 2 lb d’epaule de porc desossee @ INGREDIENT
-de | 2 lb d’epaule de porc desossee @ NONE
-porc | 2 lb d’epaule de porc desossee @ INGREDIENT
-desossee | 2 lb d’epaule de porc desossee @ NONE
+2 | 2 lb d'epaule de porc desossee @ QUANTITY
+lb | 2 lb d'epaule de porc desossee @ UNIT
+d' | 2 lb d'epaule de porc desossee @ NONE
+epaule | 2 lb d'epaule de porc desossee @ INGREDIENT
+de | 2 lb d'epaule de porc desossee @ NONE
+porc | 2 lb d'epaule de porc desossee @ INGREDIENT
+desossee | 2 lb d'epaule de porc desossee @ NONE
  | coupee en gros morceaux @ NONE
 coupee | coupee en gros morceaux @ NONE
 en | coupee en gros morceaux @ NONE
 gros | coupee en gros morceaux @ NONE
 morceaux | coupee en gros morceaux @ NONE
-15 | 15 ml 1 c. a soupe d’huile vegetale @ QUANTITY
-ml | 15 ml 1 c. a soupe d’huile vegetale @ UNIT
-1 | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-c. | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-a | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-soupe | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-d’ | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-huile | 15 ml 1 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 15 ml 1 c. a soupe d’huile vegetale @ NONE
+15 | 15 ml 1 c. a soupe d'huile vegetale @ QUANTITY
+ml | 15 ml 1 c. a soupe d'huile vegetale @ UNIT
+1 | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+c. | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+a | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+soupe | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+d' | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+huile | 15 ml 1 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 15 ml 1 c. a soupe d'huile vegetale @ NONE
 30 | 30 ml 2 c. a soupe de sauce soya @ QUANTITY
 ml | 30 ml 2 c. a soupe de sauce soya @ UNIT
 2 | 30 ml 2 c. a soupe de sauce soya @ NONE
@@ -616,10 +617,10 @@ carottes | 2 carottes @ INGREDIENT
 coupees | coupees en rondelles @ NONE
 en | coupees en rondelles @ NONE
 rondelles | coupees en rondelles @ NONE
-2 | 2 gousses d’ail @ QUANTITY
-gousses | 2 gousses d’ail @ NONE
-d’ | 2 gousses d’ail @ NONE
-ail | 2 gousses d’ail @ INGREDIENT
+2 | 2 gousses d'ail @ QUANTITY
+gousses | 2 gousses d'ail @ NONE
+d' | 2 gousses d'ail @ NONE
+ail | 2 gousses d'ail @ INGREDIENT
  | coupees en deux @ NONE
 coupees | coupees en deux @ NONE
 en | coupees en deux @ NONE
@@ -643,12 +644,12 @@ poulet | 2 litres 8 tasses de bouillon de poulet reduit en sodium @ INGREDIENT
 reduit | 2 litres 8 tasses de bouillon de poulet reduit en sodium @ INGREDIENT
 en | 2 litres 8 tasses de bouillon de poulet reduit en sodium @ NONE
 sodium | 2 litres 8 tasses de bouillon de poulet reduit en sodium @ NONE
-1 | 1 litre 4 tasses d’eau @ QUANTITY
-litre | 1 litre 4 tasses d’eau @ UNIT
-4 | 1 litre 4 tasses d’eau @ NONE
-tasses | 1 litre 4 tasses d’eau @ NONE
-d’ | 1 litre 4 tasses d’eau @ NONE
-eau | 1 litre 4 tasses d’eau @ INGREDIENT
+1 | 1 litre 4 tasses d'eau @ QUANTITY
+litre | 1 litre 4 tasses d'eau @ UNIT
+4 | 1 litre 4 tasses d'eau @ NONE
+tasses | 1 litre 4 tasses d'eau @ NONE
+d' | 1 litre 4 tasses d'eau @ NONE
+eau | 1 litre 4 tasses d'eau @ INGREDIENT
 90 | 90 ml 6 c. a soupe de miso @ QUANTITY
 ml | 90 ml 6 c. a soupe de miso @ UNIT
 6 | 90 ml 6 c. a soupe de miso @ NONE
@@ -713,14 +714,14 @@ en | coupes en deux voir note @ NONE
 deux | coupes en deux voir note @ NONE
 voir | coupes en deux voir note @ NONE
 note | coupes en deux voir note @ NONE
-Piment | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
-coreen | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
-moulu | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
-gochugaru | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
-ou | Piment coreen moulu gochugaru ou piment d’Espelette @ OR
-piment | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
-d’ | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
-Espelette | Piment coreen moulu gochugaru ou piment d’Espelette @ INGREDIENT
+Piment | Piment coreen moulu gochugaru ou piment d'Espelette @ INGREDIENT
+coreen | Piment coreen moulu gochugaru ou piment d'Espelette @ INGREDIENT
+moulu | Piment coreen moulu gochugaru ou piment d'Espelette @ INGREDIENT
+gochugaru | Piment coreen moulu gochugaru ou piment d'Espelette @ INGREDIENT
+ou | Piment coreen moulu gochugaru ou piment d'Espelette @ OR
+piment | Piment coreen moulu gochugaru ou piment d'Espelette @ INGREDIENT
+d' | Piment coreen moulu gochugaru ou piment d'Espelette @ INGREDIENT
+Espelette | Piment coreen moulu gochugaru ou piment d'Espelette @ INGREDIENT
 500 | 500 g de ramen ou nouilles de ble chinoises @ QUANTITY
 g | 500 g de ramen ou nouilles de ble chinoises @ UNIT
 de | 500 g de ramen ou nouilles de ble chinoises @ NONE
@@ -840,7 +841,7 @@ cl | 5 cl d'huile d'olive @ UNIT
 d'| 5 cl d'huile d'olive @ NONE
 huile | 5 cl d'huile d'olive @ INGREDIENT
 d' | 5 cl d'huile d'olive @ NONE
-olive | 5 cl d'huile d'olive @ INGREDIENT
+olive | 5 cl d'huile d'olive @ NONE
 1/2 | 1/2 cuilleres a cafe de sel @ QUANTITY
 cuilleres | 1/2 cuilleres a cafe de sel @ UNIT
 a | 1/2 cuilleres a cafe de sel @ NONE
@@ -1174,16 +1175,16 @@ the | 1 ml 1/4 c. a the de poivre moulu @ NONE
 de | 1 ml 1/4 c. a the de poivre moulu @ NONE
 poivre | 1 ml 1/4 c. a the de poivre moulu @ INGREDIENT
 moulu | 1 ml 1/4 c. a the de poivre moulu @ NONE
-15 | 15 ml 1 c. a soupe d’huile d’olive @ QUANTITY
-ml | 15 ml 1 c. a soupe d’huile d’olive @ UNIT
-1 | 15 ml 1 c. a soupe d’huile d’olive @ NONE
-c. | 15 ml 1 c. a soupe d’huile d’olive @ NONE
-a | 15 ml 1 c. a soupe d’huile d’olive @ NONE
-soupe | 15 ml 1 c. a soupe d’huile d’olive @ NONE
-d’ | 15 ml 1 c. a soupe d’huile d’olive @ NONE
-huile | 15 ml 1 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 15 ml 1 c. a soupe d’huile d’olive @ NONE
-olive | 15 ml 1 c. a soupe d’huile d’olive @ NONE
+15 | 15 ml 1 c. a soupe d'huile d'olive @ QUANTITY
+ml | 15 ml 1 c. a soupe d'huile d'olive @ UNIT
+1 | 15 ml 1 c. a soupe d'huile d'olive @ NONE
+c. | 15 ml 1 c. a soupe d'huile d'olive @ NONE
+a | 15 ml 1 c. a soupe d'huile d'olive @ NONE
+soupe | 15 ml 1 c. a soupe d'huile d'olive @ NONE
+d' | 15 ml 1 c. a soupe d'huile d'olive @ NONE
+huile | 15 ml 1 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 15 ml 1 c. a soupe d'huile d'olive @ NONE
+olive | 15 ml 1 c. a soupe d'huile d'olive @ NONE
 1 | 1 echalote francaise @ QUANTITY
 echalote | 1 echalote francaise @ INGREDIENT
 francaise | 1 echalote francaise @ NONE
@@ -1292,24 +1293,24 @@ a | 5 ml  1/2 c. a the de sel @ NONE
 the | 5 ml  1/2 c. a the de sel @ NONE
 de | 5 ml  1/2 c. a the de sel @ NONE
 sel | 5 ml  1/2 c. a the de sel @ INGREDIENT
-375 | 375 ml  1 1/2 tasse d’eau @ QUANTITY
-ml | 375 ml  1 1/2 tasse d’eau @ UNIT
- | 375 ml  1 1/2 tasse d’eau @ NONE
-1 | 375 ml  1 1/2 tasse d’eau @ NONE
-1/2 | 375 ml  1 1/2 tasse d’eau @ NONE
-tasse | 375 ml  1 1/2 tasse d’eau @ NONE
-d’ | 375 ml  1 1/2 tasse d’eau @ NONE
-eau | 375 ml  1 1/2 tasse d’eau @ INGREDIENT
-30 | 30 ml  2 c. a soupe d’huile vegetale @ QUANTITY
-ml | 30 ml  2 c. a soupe d’huile vegetale @ UNIT
- | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-2 | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-c. | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-a | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-soupe | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-d’ | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-huile | 30 ml  2 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 30 ml  2 c. a soupe d’huile vegetale @ NONE
+375 | 375 ml  1 1/2 tasse d'eau @ QUANTITY
+ml | 375 ml  1 1/2 tasse d'eau @ UNIT
+ | 375 ml  1 1/2 tasse d'eau @ NONE
+1 | 375 ml  1 1/2 tasse d'eau @ NONE
+1/2 | 375 ml  1 1/2 tasse d'eau @ NONE
+tasse | 375 ml  1 1/2 tasse d'eau @ NONE
+d' | 375 ml  1 1/2 tasse d'eau @ NONE
+eau | 375 ml  1 1/2 tasse d'eau @ INGREDIENT
+30 | 30 ml  2 c. a soupe d'huile vegetale @ QUANTITY
+ml | 30 ml  2 c. a soupe d'huile vegetale @ UNIT
+ | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+2 | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+c. | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+a | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+soupe | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+d' | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+huile | 30 ml  2 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 30 ml  2 c. a soupe d'huile vegetale @ NONE
 3 | 3  petites bananes vertes ou plantains @ QUANTITY
  | 3  petites bananes vertes ou plantains @ NONE
 petites | 3  petites bananes vertes ou plantains @ NONE
@@ -1317,28 +1318,28 @@ bananes | 3  petites bananes vertes ou plantains @ INGREDIENT
 vertes | 3  petites bananes vertes ou plantains @ NONE
 ou | 3  petites bananes vertes ou plantains @ OR
 plantains | 3  petites bananes vertes ou plantains @ INGREDIENT
- | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-pelees | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-et | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-coupees | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-en | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-rondelles | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-de | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-1 | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-cm | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-1/2 | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-po | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-d’epaisseur | pelees et coupees en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-30 | 30 ml  2 c. a soupe d’huile vegetale @ QUANTITY
-ml | 30 ml  2 c. a soupe d’huile vegetale @ UNIT
- | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-2 | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-c. | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-a | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-soupe | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-d’ | 30 ml  2 c. a soupe d’huile vegetale @ NONE
-huile | 30 ml  2 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 30 ml  2 c. a soupe d’huile vegetale @ NONE
+ | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+pelees | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+et | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+coupees | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+en | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+rondelles | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+de | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+1 | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+cm | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+1/2 | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+po | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+d'epaisseur | pelees et coupees en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+30 | 30 ml  2 c. a soupe d'huile vegetale @ QUANTITY
+ml | 30 ml  2 c. a soupe d'huile vegetale @ UNIT
+ | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+2 | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+c. | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+a | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+soupe | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+d' | 30 ml  2 c. a soupe d'huile vegetale @ NONE
+huile | 30 ml  2 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 30 ml  2 c. a soupe d'huile vegetale @ NONE
 2 | 2  avocats murs @ QUANTITY
  | 2  avocats murs @ NONE
 avocats | 2  avocats murs @ INGREDIENT
@@ -1410,7 +1411,7 @@ soupe | 1 cuilleres a soupe d'huile d'olive @ UNIT
 d'| 1 cuilleres a soupe d'huile d'olive @ NONE
 huile | 1 cuilleres a soupe d'huile d'olive @ INGREDIENT
 d' | 1 cuilleres a soupe d'huile d'olive @ NONE
-olive | 1 cuilleres a soupe d'huile d'olive @ INGREDIENT
+olive | 1 cuilleres a soupe d'huile d'olive @ NONE
 1 | 1 cuilleres a cafe de curry @ QUANTITY
 cuilleres | 1 cuilleres a cafe de curry @ UNIT
 a | 1 cuilleres a cafe de curry @ NONE
@@ -1453,11 +1454,11 @@ verts | 3  oignons verts @ INGREDIENT
 coupes | coupes en troncons @ NONE
 en | coupes en troncons @ NONE
 troncons | coupes en troncons @ NONE
-4 | 4  gousses d’ail @ QUANTITY
- | 4  gousses d’ail @ NONE
-gousses | 4  gousses d’ail @ NONE
-d’ | 4  gousses d’ail @ NONE
-ail | 4  gousses d’ail @ INGREDIENT
+4 | 4  gousses d'ail @ QUANTITY
+ | 4  gousses d'ail @ NONE
+gousses | 4  gousses d'ail @ NONE
+d' | 4  gousses d'ail @ NONE
+ail | 4  gousses d'ail @ INGREDIENT
  | coupees en deux @ NONE
 coupees | coupees en deux @ NONE
 en | coupees en deux @ NONE
@@ -1490,16 +1491,16 @@ soupe | 45 ml 3 c. a soupe de sauce soya @ NONE
 de | 45 ml 3 c. a soupe de sauce soya @ NONE
 sauce | 45 ml 3 c. a soupe de sauce soya @ INGREDIENT
 soya | 45 ml 3 c. a soupe de sauce soya @ INGREDIENT
-30 | 30 ml 2 c. a soupe d’huile d’olive @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile d’olive @ UNIT
-2 | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-c. | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-a | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-soupe | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-d’ | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-huile | 30 ml 2 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-olive | 30 ml 2 c. a soupe d’huile d’olive @ NONE
+30 | 30 ml 2 c. a soupe d'huile d'olive @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile d'olive @ UNIT
+2 | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+c. | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+a | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+soupe | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+huile | 30 ml 2 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+olive | 30 ml 2 c. a soupe d'huile d'olive @ NONE
 1 | 1  morceau de 2 @ NONE
  | 1  morceau de 2 @ NONE
 morceau | 1  morceau de 2 @ NONE
@@ -1584,17 +1585,17 @@ poulet | 12  pilons de poulet sans la peau @ INGREDIENT
 sans | 12  pilons de poulet sans la peau @ NONE
 la | 12  pilons de poulet sans la peau @ NONE
 peau | 12  pilons de poulet sans la peau @ NONE
-1 | 1 litre 4 tasses de bouillon de poulet ou d’eau @ QUANTITY
-litre | 1 litre 4 tasses de bouillon de poulet ou d’eau @ UNIT
-4 | 1 litre 4 tasses de bouillon de poulet ou d’eau @ NONE
-tasses | 1 litre 4 tasses de bouillon de poulet ou d’eau @ NONE
-de | 1 litre 4 tasses de bouillon de poulet ou d’eau @ NONE
-bouillon | 1 litre 4 tasses de bouillon de poulet ou d’eau @ INGREDIENT
-de | 1 litre 4 tasses de bouillon de poulet ou d’eau @ NONE
-poulet | 1 litre 4 tasses de bouillon de poulet ou d’eau @ INGREDIENT
-ou | 1 litre 4 tasses de bouillon de poulet ou d’eau @ OR
-d’ | 1 litre 4 tasses de bouillon de poulet ou d’eau @ NONE
-eau | 1 litre 4 tasses de bouillon de poulet ou d’eau @ INGREDIENT
+1 | 1 litre 4 tasses de bouillon de poulet ou d'eau @ QUANTITY
+litre | 1 litre 4 tasses de bouillon de poulet ou d'eau @ UNIT
+4 | 1 litre 4 tasses de bouillon de poulet ou d'eau @ NONE
+tasses | 1 litre 4 tasses de bouillon de poulet ou d'eau @ NONE
+de | 1 litre 4 tasses de bouillon de poulet ou d'eau @ NONE
+bouillon | 1 litre 4 tasses de bouillon de poulet ou d'eau @ INGREDIENT
+de | 1 litre 4 tasses de bouillon de poulet ou d'eau @ NONE
+poulet | 1 litre 4 tasses de bouillon de poulet ou d'eau @ INGREDIENT
+ou | 1 litre 4 tasses de bouillon de poulet ou d'eau @ OR
+d' | 1 litre 4 tasses de bouillon de poulet ou d'eau @ NONE
+eau | 1 litre 4 tasses de bouillon de poulet ou d'eau @ INGREDIENT
 4 | 4 tranches de saumon fume @ QUANTITY
 tranches | 4 tranches de saumon fume @ NONE
 de | 4 tranches de saumon fume @ NONE
@@ -1638,16 +1639,16 @@ saumon | 450 g 1 lb de filet de saumon sans la peau @ INGREDIENT
 sans | 450 g 1 lb de filet de saumon sans la peau @ NONE
 la | 450 g 1 lb de filet de saumon sans la peau @ NONE
 peau | 450 g 1 lb de filet de saumon sans la peau @ NONE
-45 | 45 ml 3 c. a soupe d’huile d’olive @ QUANTITY
-ml | 45 ml 3 c. a soupe d’huile d’olive @ UNIT
-3 | 45 ml 3 c. a soupe d’huile d’olive @ NONE
-c. | 45 ml 3 c. a soupe d’huile d’olive @ NONE
-a | 45 ml 3 c. a soupe d’huile d’olive @ NONE
-soupe | 45 ml 3 c. a soupe d’huile d’olive @ NONE
-d’ | 45 ml 3 c. a soupe d’huile d’olive @ NONE
-huile | 45 ml 3 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 45 ml 3 c. a soupe d’huile d’olive @ NONE
-olive | 45 ml 3 c. a soupe d’huile d’olive @ NONE
+45 | 45 ml 3 c. a soupe d'huile d'olive @ QUANTITY
+ml | 45 ml 3 c. a soupe d'huile d'olive @ UNIT
+3 | 45 ml 3 c. a soupe d'huile d'olive @ NONE
+c. | 45 ml 3 c. a soupe d'huile d'olive @ NONE
+a | 45 ml 3 c. a soupe d'huile d'olive @ NONE
+soupe | 45 ml 3 c. a soupe d'huile d'olive @ NONE
+d' | 45 ml 3 c. a soupe d'huile d'olive @ NONE
+huile | 45 ml 3 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 45 ml 3 c. a soupe d'huile d'olive @ NONE
+olive | 45 ml 3 c. a soupe d'huile d'olive @ NONE
 1 | 1 paquet de 250 g de fromage a la creme @ QUANTITY
 paquet | 1 paquet de 250 g de fromage a la creme @ UNIT
 de | 1 paquet de 250 g de fromage a la creme @ NONE
@@ -1688,27 +1689,27 @@ soupe | 30 ml 2 c. a soupe de ciboulette ciselee @ NONE
 de | 30 ml 2 c. a soupe de ciboulette ciselee @ NONE
 ciboulette | 30 ml 2 c. a soupe de ciboulette ciselee @ INGREDIENT
 ciselee | 30 ml 2 c. a soupe de ciboulette ciselee @ NONE
-30 | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ QUANTITY
-ml | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ UNIT
-2 | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ NONE
-c. | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ NONE
-a | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ NONE
-soupe | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ NONE
-d' | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ NONE
-oeufs | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ INGREDIENT
-de | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ NONE
-saumon | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ INGREDIENT
-facultatif | 30 ml 2 c. a soupe d’oeufs de saumon facultatif @ NONE
-Quelques | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ NONE
-feuilles | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ NONE
-de | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ NONE
-cerfeuil | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ INGREDIENT
-ou | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ NONE
-d’une | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ NONE
-autre | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ NONE
-herbe | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ NONE
-au | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ NONE
-gout | Quelques feuilles de cerfeuil ou d’une autre herbe au gout @ NONE
+30 | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ QUANTITY
+ml | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ UNIT
+2 | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ NONE
+c. | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ NONE
+a | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ NONE
+soupe | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ NONE
+d' | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ NONE
+oeufs | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ INGREDIENT
+de | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ NONE
+saumon | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ INGREDIENT
+facultatif | 30 ml 2 c. a soupe d'oeufs de saumon facultatif @ NONE
+Quelques | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ NONE
+feuilles | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ NONE
+de | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ NONE
+cerfeuil | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ INGREDIENT
+ou | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ NONE
+d'une | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ NONE
+autre | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ NONE
+herbe | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ NONE
+au | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ NONE
+gout | Quelques feuilles de cerfeuil ou d'une autre herbe au gout @ NONE
  | pour le service @ NONE
 pour | pour le service @ NONE
 le | pour le service @ NONE
@@ -1763,15 +1764,15 @@ a | 15 ml 1 c. a soupe de sucre @ NONE
 soupe | 15 ml 1 c. a soupe de sucre @ NONE
 de | 15 ml 1 c. a soupe de sucre @ NONE
 sucre | 15 ml 1 c. a soupe de sucre @ INGREDIENT
-30 | 30 ml 2 c. a soupe d’huile vegetale @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile vegetale @ UNIT
-2 | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-c. | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-a | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-soupe | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-d’ | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-huile | 30 ml 2 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 30 ml 2 c. a soupe d’huile vegetale @ NONE
+30 | 30 ml 2 c. a soupe d'huile vegetale @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile vegetale @ UNIT
+2 | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+c. | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+a | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+soupe | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+d' | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+huile | 30 ml 2 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 30 ml 2 c. a soupe d'huile vegetale @ NONE
 125 | 125 ml 1/2 tasse de lait de beurre @ QUANTITY
 ml | 125 ml 1/2 tasse de lait de beurre @ UNIT
 1/2 | 125 ml 1/2 tasse de lait de beurre @ NONE
@@ -1864,28 +1865,28 @@ surgelees | 25 g  1/4 tasse de canneberges fraiches ou surgelees @ NONE
  | hachees @ NONE
 hachees | hachees @ NONE
  | hachees @ NONE
-15 | 15 ml  1 c. a soupe de sirop d’erable @ QUANTITY
-ml | 15 ml  1 c. a soupe de sirop d’erable @ UNIT
- | 15 ml  1 c. a soupe de sirop d’erable @ NONE
-1 | 15 ml  1 c. a soupe de sirop d’erable @ NONE
-c. | 15 ml  1 c. a soupe de sirop d’erable @ NONE
-a | 15 ml  1 c. a soupe de sirop d’erable @ NONE
-soupe | 15 ml  1 c. a soupe de sirop d’erable @ NONE
-de | 15 ml  1 c. a soupe de sirop d’erable @ NONE
-sirop | 15 ml  1 c. a soupe de sirop d’erable @ INGREDIENT
-d' | 15 ml  1 c. a soupe de sirop d’erable @ NONE
-erable | 15 ml  1 c. a soupe de sirop d’erable @ INGREDIENT
-15 | 15 ml  1 c. a soupe de moutarde a l’ancienne @ QUANTITY
-ml | 15 ml  1 c. a soupe de moutarde a l’ancienne @ UNIT
- | 15 ml  1 c. a soupe de moutarde a l’ancienne @ NONE
-1 | 15 ml  1 c. a soupe de moutarde a l’ancienne @ NONE
-c. | 15 ml  1 c. a soupe de moutarde a l’ancienne @ NONE
-a | 15 ml  1 c. a soupe de moutarde a l’ancienne @ NONE
-soupe | 15 ml  1 c. a soupe de moutarde a l’ancienne @ NONE
-de | 15 ml  1 c. a soupe de moutarde a l’ancienne @ NONE
-moutarde | 15 ml  1 c. a soupe de moutarde a l’ancienne @ INGREDIENT
-a | 15 ml  1 c. a soupe de moutarde a l’ancienne @ NONE
-l’ancienne | 15 ml  1 c. a soupe de moutarde a l’ancienne @ NONE
+15 | 15 ml  1 c. a soupe de sirop d'erable @ QUANTITY
+ml | 15 ml  1 c. a soupe de sirop d'erable @ UNIT
+ | 15 ml  1 c. a soupe de sirop d'erable @ NONE
+1 | 15 ml  1 c. a soupe de sirop d'erable @ NONE
+c. | 15 ml  1 c. a soupe de sirop d'erable @ NONE
+a | 15 ml  1 c. a soupe de sirop d'erable @ NONE
+soupe | 15 ml  1 c. a soupe de sirop d'erable @ NONE
+de | 15 ml  1 c. a soupe de sirop d'erable @ NONE
+sirop | 15 ml  1 c. a soupe de sirop d'erable @ INGREDIENT
+d' | 15 ml  1 c. a soupe de sirop d'erable @ NONE
+erable | 15 ml  1 c. a soupe de sirop d'erable @ INGREDIENT
+15 | 15 ml  1 c. a soupe de moutarde a l'ancienne @ QUANTITY
+ml | 15 ml  1 c. a soupe de moutarde a l'ancienne @ UNIT
+ | 15 ml  1 c. a soupe de moutarde a l'ancienne @ NONE
+1 | 15 ml  1 c. a soupe de moutarde a l'ancienne @ NONE
+c. | 15 ml  1 c. a soupe de moutarde a l'ancienne @ NONE
+a | 15 ml  1 c. a soupe de moutarde a l'ancienne @ NONE
+soupe | 15 ml  1 c. a soupe de moutarde a l'ancienne @ NONE
+de | 15 ml  1 c. a soupe de moutarde a l'ancienne @ NONE
+moutarde | 15 ml  1 c. a soupe de moutarde a l'ancienne @ INGREDIENT
+a | 15 ml  1 c. a soupe de moutarde a l'ancienne @ NONE
+l'ancienne | 15 ml  1 c. a soupe de moutarde a l'ancienne @ NONE
 Feuilles | Feuilles de cerfeuil @ NONE
 de | Feuilles de cerfeuil @ NONE
 cerfeuil | Feuilles de cerfeuil @ INGREDIENT
@@ -1921,24 +1922,24 @@ et | epepines et coupes en des @ NONE
 coupes | epepines et coupes en des @ NONE
 en | epepines et coupes en des @ NONE
 des | epepines et coupes en des @ NONE
-30 | 30 ml  2 c. a soupe d’huile d’olive @ QUANTITY
-ml | 30 ml  2 c. a soupe d’huile d’olive @ UNIT
- | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-2 | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-c. | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-a | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-soupe | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-d’ | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-huile | 30 ml  2 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-olive | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-60 | 60 ml  1/4 tasse d’eau @ QUANTITY
-ml | 60 ml  1/4 tasse d’eau @ UNIT
- | 60 ml  1/4 tasse d’eau @ NONE
-1/4 | 60 ml  1/4 tasse d’eau @ NONE
-tasse | 60 ml  1/4 tasse d’eau @ NONE
-d’ | 60 ml  1/4 tasse d’eau @ NONE
-eau | 60 ml  1/4 tasse d’eau @ INGREDIENT
+30 | 30 ml  2 c. a soupe d'huile d'olive @ QUANTITY
+ml | 30 ml  2 c. a soupe d'huile d'olive @ UNIT
+ | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+2 | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+c. | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+a | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+soupe | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+d' | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+huile | 30 ml  2 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+olive | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+60 | 60 ml  1/4 tasse d'eau @ QUANTITY
+ml | 60 ml  1/4 tasse d'eau @ UNIT
+ | 60 ml  1/4 tasse d'eau @ NONE
+1/4 | 60 ml  1/4 tasse d'eau @ NONE
+tasse | 60 ml  1/4 tasse d'eau @ NONE
+d' | 60 ml  1/4 tasse d'eau @ NONE
+eau | 60 ml  1/4 tasse d'eau @ INGREDIENT
 30 | 30 ml  2 c. a soupe de pate de tomates @ QUANTITY
 ml | 30 ml  2 c. a soupe de pate de tomates @ UNIT
  | 30 ml  2 c. a soupe de pate de tomates @ NONE
@@ -2171,10 +2172,10 @@ oignons | 4 oignons verts @ INGREDIENT
 verts | 4 oignons verts @ INGREDIENT
  | eminces @ NONE
 eminces | eminces @ NONE
-2 | 2 gousses d’ail @ QUANTITY
-gousses | 2 gousses d’ail @ NONE
-d’ | 2 gousses d’ail @ NONE
-ail | 2 gousses d’ail @ INGREDIENT
+2 | 2 gousses d'ail @ QUANTITY
+gousses | 2 gousses d'ail @ NONE
+d' | 2 gousses d'ail @ NONE
+ail | 2 gousses d'ail @ INGREDIENT
  | hachees @ NONE
 hachees | hachees @ NONE
 30 | 30 ml 2 c. a soupe de beurre @ QUANTITY
@@ -2203,14 +2204,14 @@ de | 500 ml 2 tasses de bouillon de poulet @ NONE
 bouillon | 500 ml 2 tasses de bouillon de poulet @ INGREDIENT
 de | 500 ml 2 tasses de bouillon de poulet @ NONE
 poulet | 500 ml 2 tasses de bouillon de poulet @ INGREDIENT
-20 | 20 g 1/2 tasse d’un melange d’herbes @ QUANTITY
-g | 20 g 1/2 tasse d’un melange d’herbes @ UNIT
-1/2 | 20 g 1/2 tasse d’un melange d’herbes @ NONE
-tasse | 20 g 1/2 tasse d’un melange d’herbes @ NONE
-d’un | 20 g 1/2 tasse d’un melange d’herbes @ NONE
-melange | 20 g 1/2 tasse d’un melange d’herbes @ NONE
-d’ | 20 g 1/2 tasse d’un melange d’herbes @ NONE
-herbes | 20 g 1/2 tasse d’un melange d’herbes @ NONE
+20 | 20 g 1/2 tasse d'un melange d'herbes @ QUANTITY
+g | 20 g 1/2 tasse d'un melange d'herbes @ UNIT
+1/2 | 20 g 1/2 tasse d'un melange d'herbes @ NONE
+tasse | 20 g 1/2 tasse d'un melange d'herbes @ NONE
+d'un | 20 g 1/2 tasse d'un melange d'herbes @ NONE
+melange | 20 g 1/2 tasse d'un melange d'herbes @ NONE
+d' | 20 g 1/2 tasse d'un melange d'herbes @ NONE
+herbes | 20 g 1/2 tasse d'un melange d'herbes @ NONE
  | ciselees persil plat @ NONE
 ciselees | ciselees persil plat @ NONE
 persil | ciselees persil plat @ INGREDIENT
@@ -2270,16 +2271,16 @@ ble | 80 g 1/2 tasse de vermicelles de ble concasses voir note @ INGREDIENT
 concasses | 80 g 1/2 tasse de vermicelles de ble concasses voir note @ NONE
 voir | 80 g 1/2 tasse de vermicelles de ble concasses voir note @ NONE
 note | 80 g 1/2 tasse de vermicelles de ble concasses voir note @ NONE
-30 | 30 ml 2 c. a soupe d’huile d’olive @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile d’olive @ UNIT
-2 | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-c. | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-a | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-soupe | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-d’ | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-huile | 30 ml 2 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-olive | 30 ml 2 c. a soupe d’huile d’olive @ NONE
+30 | 30 ml 2 c. a soupe d'huile d'olive @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile d'olive @ UNIT
+2 | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+c. | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+a | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+soupe | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+huile | 30 ml 2 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+olive | 30 ml 2 c. a soupe d'huile d'olive @ NONE
 230 | 230 g 1 tasse de riz basmati @ QUANTITY
 g | 230 g 1 tasse de riz basmati @ UNIT
 1 | 230 g 1 tasse de riz basmati @ NONE
@@ -2291,13 +2292,13 @@ basmati | 230 g 1 tasse de riz basmati @ INGREDIENT
 rince | rince et egoutte @ NONE
 et | rince et egoutte @ NONE
 egoutte | rince et egoutte @ NONE
-400 | 400 ml 1 2/3 tasse d’eau @ QUANTITY
-ml | 400 ml 1 2/3 tasse d’eau @ UNIT
-1 | 400 ml 1 2/3 tasse d’eau @ NONE
-2/3 | 400 ml 1 2/3 tasse d’eau @ NONE
-tasse | 400 ml 1 2/3 tasse d’eau @ NONE
-d’ | 400 ml 1 2/3 tasse d’eau @ NONE
-eau | 400 ml 1 2/3 tasse d’eau @ INGREDIENT
+400 | 400 ml 1 2/3 tasse d'eau @ QUANTITY
+ml | 400 ml 1 2/3 tasse d'eau @ UNIT
+1 | 400 ml 1 2/3 tasse d'eau @ NONE
+2/3 | 400 ml 1 2/3 tasse d'eau @ NONE
+tasse | 400 ml 1 2/3 tasse d'eau @ NONE
+d' | 400 ml 1 2/3 tasse d'eau @ NONE
+eau | 400 ml 1 2/3 tasse d'eau @ INGREDIENT
 1 | 1 bottes d'asperge verte ou violette plutot fine @ QUANTITY
 bottes | 1 bottes d'asperge verte ou violette plutot fine @ NONE
 d' | 1 bottes d'asperge verte ou violette plutot fine @ NONE
@@ -2464,13 +2465,13 @@ emincee | 1  branche de celeri, emincee @ NONE
 echalote | 1  echalote francaise, hachee @ INGREDIENT
 francaise, | 1  echalote francaise, hachee @ NONE
 hachee | 1  echalote francaise, hachee @ NONE
-1 | 1  gousse d’ail, hachee finement @ QUANTITY
- | 1  gousse d’ail, hachee finement @ NONE
-gousse | 1  gousse d’ail, hachee finement @ NONE
-d’, | 1  gousse d’ail, hachee finement @ NONE
-ail, | 1  gousse d’ail, hachee finement @ INGREDIENT
-hachee | 1  gousse d’ail, hachee finement @ NONE
-finement | 1  gousse d’ail, hachee finement @ NONE
+1 | 1  gousse d'ail, hachee finement @ QUANTITY
+ | 1  gousse d'ail, hachee finement @ NONE
+gousse | 1  gousse d'ail, hachee finement @ NONE
+d' | 1  gousse d'ail, hachee finement @ NONE
+ail, | 1  gousse d'ail, hachee finement @ INGREDIENT
+hachee | 1  gousse d'ail, hachee finement @ NONE
+finement | 1  gousse d'ail, hachee finement @ NONE
 55 | 55 g  ¼ tasse de beurre @ QUANTITY
 g | 55 g  ¼ tasse de beurre @ UNIT
  | 55 g  ¼ tasse de beurre @ NONE
@@ -2537,14 +2538,14 @@ branche | 1  branche de celeri, emincee @ NONE
 de | 1  branche de celeri, emincee @ NONE
 celeri, | 1  branche de celeri, emincee @ INGREDIENT
 emincee | 1  branche de celeri, emincee @ NONE
-2 | 2  gousses d’ail, coupees en deux @ QUANTITY
- | 2  gousses d’ail, coupees en deux @ NONE
-gousses | 2  gousses d’ail, coupees en deux @ NONE
-d’, | 2  gousses d’ail, coupees en deux @ NONE
-ail, | 2  gousses d’ail, coupees en deux @ INGREDIENT
-coupees | 2  gousses d’ail, coupees en deux @ NONE
-en | 2  gousses d’ail, coupees en deux @ NONE
-deux | 2  gousses d’ail, coupees en deux @ NONE
+2 | 2  gousses d'ail, coupees en deux @ QUANTITY
+ | 2  gousses d'ail, coupees en deux @ NONE
+gousses | 2  gousses d'ail, coupees en deux @ NONE
+d' | 2  gousses d'ail, coupees en deux @ NONE
+ail, | 2  gousses d'ail, coupees en deux @ INGREDIENT
+coupees | 2  gousses d'ail, coupees en deux @ NONE
+en | 2  gousses d'ail, coupees en deux @ NONE
+deux | 2  gousses d'ail, coupees en deux @ NONE
 1 | 1  feuille de laurier @ QUANTITY
  | 1  feuille de laurier @ NONE
 feuille | 1  feuille de laurier @ NONE
@@ -2563,13 +2564,13 @@ a | 30 ml 2 c. a soupe de beurre @ NONE
 soupe | 30 ml 2 c. a soupe de beurre @ NONE
 de | 30 ml 2 c. a soupe de beurre @ NONE
 beurre | 30 ml 2 c. a soupe de beurre @ INGREDIENT
-1,5 | 1,5 litre 6 tasses d’eau @ QUANTITY
-litre | 1,5 litre 6 tasses d’eau @ UNIT
-6 | 1,5 litre 6 tasses d’eau @ NONE
-tasses | 1,5 litre 6 tasses d’eau @ NONE
-d’ | 1,5 litre 6 tasses d’eau @ NONE
-eau | 1,5 litre 6 tasses d’eau @ INGREDIENT
- | 1,5 litre 6 tasses d’eau @ NONE
+1,5 | 1,5 litre 6 tasses d'eau @ QUANTITY
+litre | 1,5 litre 6 tasses d'eau @ UNIT
+6 | 1,5 litre 6 tasses d'eau @ NONE
+tasses | 1,5 litre 6 tasses d'eau @ NONE
+d' | 1,5 litre 6 tasses d'eau @ NONE
+eau | 1,5 litre 6 tasses d'eau @ INGREDIENT
+ | 1,5 litre 6 tasses d'eau @ NONE
 30 | 30 ml 2 c. a soupe de jus de citron @ QUANTITY
 ml | 30 ml 2 c. a soupe de jus de citron @ UNIT
 2 | 30 ml 2 c. a soupe de jus de citron @ NONE
@@ -2631,7 +2632,7 @@ d' | 75 ml 1/3 tasse d'huile d'olive @ NONE
 olive | 75 ml 1/3 tasse d'huile d'olive @ NONE
 2 | 2 gousses d'ail, hachees finement @ QUANTITY
 gousses | 2 gousses d'ail, hachees finement @ NONE
-d', | 2 gousses d'ail, hachees finement @ INGREDIENT
+d' | 2 gousses d'ail, hachees finement @ INGREDIENT
 ail, | 2 gousses d'ail, hachees finement @ INGREDIENT
 hachees | 2 gousses d'ail, hachees finement @ NONE
 finement | 2 gousses d'ail, hachees finement @ NONE
@@ -2875,7 +2876,7 @@ soupe | 15 ml 1 c. a soupe d'huile d'olive @ NONE
 d'| 15 ml 1 c. a soupe d'huile d'olive @ NONE
 huile | 15 ml 1 c. a soupe d'huile d'olive @ INGREDIENT
 d' | 15 ml 1 c. a soupe d'huile d'olive @ NONE
-olive | 15 ml 1 c. a soupe d'huile d'olive @ INGREDIENT
+olive | 15 ml 1 c. a soupe d'huile d'olive @ NONE
 Tabasco, | Tabasco, au gout @ INGREDIENT
 au | Tabasco, au gout @ NONE
 gout | Tabasco, au gout @ NONE
@@ -3234,26 +3235,26 @@ service | 1 bulbe de fenouil, emince et un peu de feuillage pour le service @ NO
 oignon, | 1  oignon, emince @ INGREDIENT
 emince | 1  oignon, emince @ NONE
  | 1  oignon, emince @ NONE
-2 | 2  gousses d’ail, emincees @ QUANTITY
- | 2  gousses d’ail, emincees @ NONE
-gousses | 2  gousses d’ail, emincees @ NONE
-d’, | 2  gousses d’ail, emincees @ NONE
-ail | 2  gousses d’ail, emincees @ INGREDIENT
-emincees | 2  gousses d’ail, emincees @ NONE
- | 2  gousses d’ail, emincees @ NONE
- | 2  gousses d’ail, emincees @ NONE
-30 | 30 ml  2 c. a soupe d’huile d’olive @ QUANTITY
-ml | 30 ml  2 c. a soupe d’huile d’olive @ UNIT
- | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-2 | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-c. | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-a | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-soupe | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-d’ | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-huile | 30 ml  2 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 30 ml  2 c. a soupe d’huile d’olive @ NONE
-olive | 30 ml  2 c. a soupe d’huile d’olive @ NONE
- | 30 ml  2 c. a soupe d’huile d’olive @ NONE
+2 | 2  gousses d'ail, emincees @ QUANTITY
+ | 2  gousses d'ail, emincees @ NONE
+gousses | 2  gousses d'ail, emincees @ NONE
+d' | 2  gousses d'ail, emincees @ NONE
+ail | 2  gousses d'ail, emincees @ INGREDIENT
+emincees | 2  gousses d'ail, emincees @ NONE
+ | 2  gousses d'ail, emincees @ NONE
+ | 2  gousses d'ail, emincees @ NONE
+30 | 30 ml  2 c. a soupe d'huile d'olive @ QUANTITY
+ml | 30 ml  2 c. a soupe d'huile d'olive @ UNIT
+ | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+2 | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+c. | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+a | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+soupe | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+d' | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+huile | 30 ml  2 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+olive | 30 ml  2 c. a soupe d'huile d'olive @ NONE
+ | 30 ml  2 c. a soupe d'huile d'olive @ NONE
 60 | 60 ml  1/4 tasse de vin blanc ou de pastis @ QUANTITY
 ml | 60 ml  1/4 tasse de vin blanc ou de pastis @ UNIT
  | 60 ml  1/4 tasse de vin blanc ou de pastis @ NONE
@@ -3403,15 +3404,15 @@ a | 1 ml 1/4 c. a the de sucre @ NONE
 the | 1 ml 1/4 c. a the de sucre @ NONE
 de | 1 ml 1/4 c. a the de sucre @ NONE
 sucre | 1 ml 1/4 c. a the de sucre @ INGREDIENT
-30 | 30 ml 2 c. a soupe d’huile vegetale @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile vegetale @ UNIT
-2 | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-c. | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-a | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-soupe | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-d’ | 30 ml 2 c. a soupe d’huile vegetale @ NONE
-huile | 30 ml 2 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 30 ml 2 c. a soupe d’huile vegetale @ NONE
+30 | 30 ml 2 c. a soupe d'huile vegetale @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile vegetale @ UNIT
+2 | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+c. | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+a | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+soupe | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+d' | 30 ml 2 c. a soupe d'huile vegetale @ NONE
+huile | 30 ml 2 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 30 ml 2 c. a soupe d'huile vegetale @ NONE
 4 | 4 oignons verts, coupes en troncons de 1,5 cm 1/2 po @ QUANTITY
 oignons | 4 oignons verts, coupes en troncons de 1,5 cm 1/2 po @ INGREDIENT
 verts, | 4 oignons verts, coupes en troncons de 1,5 cm 1/2 po @ INGREDIENT
@@ -3436,18 +3437,18 @@ sole, | 340 g 3/4 lb de filets de poisson blanc sole, tilapia, aiglefin, sebaste
 tilapia, | 340 g 3/4 lb de filets de poisson blanc sole, tilapia, aiglefin, sebaste @ NONE
 aiglefin, | 340 g 3/4 lb de filets de poisson blanc sole, tilapia, aiglefin, sebaste @ NONE
 sebaste | 340 g 3/4 lb de filets de poisson blanc sole, tilapia, aiglefin, sebaste @ NONE
-6 | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ QUANTITY
-tortillas | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ INGREDIENT
-de | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ NONE
-mais | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ NONE
-souples | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ NONE
-d’environ | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ NONE
-15 | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ NONE
-cm | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ NONE
-6 | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ QUANTITY
-po | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ NONE
-de | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ NONE
-diametre | 6 tortillas de mais souples d’environ 15 cm 6 po de diametre @ NONE
+6 | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ QUANTITY
+tortillas | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ INGREDIENT
+de | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ NONE
+mais | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ NONE
+souples | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ NONE
+d'environ | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ NONE
+15 | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ NONE
+cm | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ NONE
+6 | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ QUANTITY
+po | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ NONE
+de | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ NONE
+diametre | 6 tortillas de mais souples d'environ 15 cm 6 po de diametre @ NONE
 Salsa | Salsa de tomatilles, au gout voir note @ INGREDIENT
 de | Salsa de tomatilles, au gout voir note @ NONE
 tomatilles, | Salsa de tomatilles, au gout voir note @ NONE
@@ -3561,22 +3562,22 @@ ml | 500 ml 2 tasses de lait @ UNIT
 tasses | 500 ml 2 tasses de lait @ NONE
 de | 500 ml 2 tasses de lait @ NONE
 lait | 500 ml 2 tasses de lait @ INGREDIENT
-10 | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ QUANTITY
-ml | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ UNIT
-2 | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-c. | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-a | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-the | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-d’ | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-huile | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ INGREDIENT
-de | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-sesame | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ INGREDIENT
-grille, | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-et | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-plus | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-pour | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-le | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
-service | 10 ml 2 c. a the d’huile de sesame grille, et plus pour le service @ NONE
+10 | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ QUANTITY
+ml | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ UNIT
+2 | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+c. | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+a | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+the | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+d' | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+huile | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ INGREDIENT
+de | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+sesame | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ INGREDIENT
+grille, | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+et | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+plus | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+pour | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+le | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
+service | 10 ml 2 c. a the d'huile de sesame grille, et plus pour le service @ NONE
 225 | 225 g 1/2 lb de filet de poisson blanc fletan, aiglefin, merluche @ QUANTITY
 g | 225 g 1/2 lb de filet de poisson blanc fletan, aiglefin, merluche @ UNIT
 1/2 | 225 g 1/2 lb de filet de poisson blanc fletan, aiglefin, merluche @ NONE
@@ -3589,15 +3590,15 @@ blanc | 225 g 1/2 lb de filet de poisson blanc fletan, aiglefin, merluche @ INGR
 fletan, | 225 g 1/2 lb de filet de poisson blanc fletan, aiglefin, merluche @ NONE
 aiglefin, | 225 g 1/2 lb de filet de poisson blanc fletan, aiglefin, merluche @ NONE
 merluche | 225 g 1/2 lb de filet de poisson blanc fletan, aiglefin, merluche @ NONE
-15 | 15 ml 1 c. a soupe d’huile vegetale @ QUANTITY
-ml | 15 ml 1 c. a soupe d’huile vegetale @ UNIT
-1 | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-c. | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-a | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-soupe | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-d’ | 15 ml 1 c. a soupe d’huile vegetale @ NONE
-huile | 15 ml 1 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 15 ml 1 c. a soupe d’huile vegetale @ NONE
+15 | 15 ml 1 c. a soupe d'huile vegetale @ QUANTITY
+ml | 15 ml 1 c. a soupe d'huile vegetale @ UNIT
+1 | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+c. | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+a | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+soupe | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+d' | 15 ml 1 c. a soupe d'huile vegetale @ NONE
+huile | 15 ml 1 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 15 ml 1 c. a soupe d'huile vegetale @ NONE
 2 | 2 radis, eminces @ QUANTITY
 radis | 2 radis, eminces @ INGREDIENT
 eminces | 2 radis, eminces @ NONE
@@ -3729,15 +3730,15 @@ cabillaud | 4 filets de poisson blanc charnus dos de cabillaud @ INGREDIENT
 2 | 2 tomates moyennes @ QUANTITY
 tomates | 2 tomates moyennes @ INGREDIENT
 moyennes | 2 tomates moyennes @ NONE
-2 | 2 morceaux de tomate sechee conservees dans l’huile facultatif @ QUANTITY
-morceaux | 2 morceaux de tomate sechee conservees dans l’huile facultatif @ NONE
-de | 2 morceaux de tomate sechee conservees dans l’huile facultatif @ NONE
-tomate | 2 morceaux de tomate sechee conservees dans l’huile facultatif @ INGREDIENT
-sechee | 2 morceaux de tomate sechee conservees dans l’huile facultatif @ INGREDIENT
-conservees | 2 morceaux de tomate sechee conservees dans l’huile facultatif @ NONE
-dans | 2 morceaux de tomate sechee conservees dans l’huile facultatif @ NONE
-l’huile | 2 morceaux de tomate sechee conservees dans l’huile facultatif @ NONE
-facultatif | 2 morceaux de tomate sechee conservees dans l’huile facultatif @ NONE
+2 | 2 morceaux de tomate sechee conservees dans l'huile facultatif @ QUANTITY
+morceaux | 2 morceaux de tomate sechee conservees dans l'huile facultatif @ NONE
+de | 2 morceaux de tomate sechee conservees dans l'huile facultatif @ NONE
+tomate | 2 morceaux de tomate sechee conservees dans l'huile facultatif @ INGREDIENT
+sechee | 2 morceaux de tomate sechee conservees dans l'huile facultatif @ INGREDIENT
+conservees | 2 morceaux de tomate sechee conservees dans l'huile facultatif @ NONE
+dans | 2 morceaux de tomate sechee conservees dans l'huile facultatif @ NONE
+l'huile | 2 morceaux de tomate sechee conservees dans l'huile facultatif @ NONE
+facultatif | 2 morceaux de tomate sechee conservees dans l'huile facultatif @ NONE
 2 | 2 poignees de persil frise ou plat @ QUANTITY
 poignees | 2 poignees de persil frise ou plat @ NONE
 de | 2 poignees de persil frise ou plat @ NONE
@@ -3834,16 +3835,16 @@ francaises, | 6  echalotes francaises, pelees et emincees @ NONE
 pelees | 6  echalotes francaises, pelees et emincees @ NONE
 et | 6  echalotes francaises, pelees et emincees @ NONE
 emincees | 6  echalotes francaises, pelees et emincees @ NONE
-15 | 15 ml  1 c. a soupe d’huile vegetale @ QUANTITY
-ml | 15 ml  1 c. a soupe d’huile vegetale @ UNIT
- | 15 ml  1 c. a soupe d’huile vegetale @ NONE
-1 | 15 ml  1 c. a soupe d’huile vegetale @ NONE
-c. | 15 ml  1 c. a soupe d’huile vegetale @ NONE
-a | 15 ml  1 c. a soupe d’huile vegetale @ NONE
-soupe | 15 ml  1 c. a soupe d’huile vegetale @ NONE
-d’ | 15 ml  1 c. a soupe d’huile vegetale @ NONE
-huile | 15 ml  1 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 15 ml  1 c. a soupe d’huile vegetale @ NONE
+15 | 15 ml  1 c. a soupe d'huile vegetale @ QUANTITY
+ml | 15 ml  1 c. a soupe d'huile vegetale @ UNIT
+ | 15 ml  1 c. a soupe d'huile vegetale @ NONE
+1 | 15 ml  1 c. a soupe d'huile vegetale @ NONE
+c. | 15 ml  1 c. a soupe d'huile vegetale @ NONE
+a | 15 ml  1 c. a soupe d'huile vegetale @ NONE
+soupe | 15 ml  1 c. a soupe d'huile vegetale @ NONE
+d' | 15 ml  1 c. a soupe d'huile vegetale @ NONE
+huile | 15 ml  1 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 15 ml  1 c. a soupe d'huile vegetale @ NONE
 60 | 60 ml  1/4 tasse de pate de cari rouge @ QUANTITY
 ml | 60 ml  1/4 tasse de pate de cari rouge @ UNIT
  | 60 ml  1/4 tasse de pate de cari rouge @ NONE
@@ -3957,16 +3958,16 @@ broyes | 1 ml  1/4 c. a the de flocons de piment broyes @ NONE
  | 1  œuf @ NONE
 œuf | 1  œuf @ INGREDIENT
  | 1  œuf @ NONE
-45 | 45 ml  3 c. a soupe d’huile vegetale @ QUANTITY
-ml | 45 ml  3 c. a soupe d’huile vegetale @ UNIT
- | 45 ml  3 c. a soupe d’huile vegetale @ NONE
-3 | 45 ml  3 c. a soupe d’huile vegetale @ NONE
-c. | 45 ml  3 c. a soupe d’huile vegetale @ NONE
-a | 45 ml  3 c. a soupe d’huile vegetale @ NONE
-soupe | 45 ml  3 c. a soupe d’huile vegetale @ NONE
-d’ | 45 ml  3 c. a soupe d’huile vegetale @ NONE
-huile | 45 ml  3 c. a soupe d’huile vegetale @ INGREDIENT
-vegetale | 45 ml  3 c. a soupe d’huile vegetale @ NONE
+45 | 45 ml  3 c. a soupe d'huile vegetale @ QUANTITY
+ml | 45 ml  3 c. a soupe d'huile vegetale @ UNIT
+ | 45 ml  3 c. a soupe d'huile vegetale @ NONE
+3 | 45 ml  3 c. a soupe d'huile vegetale @ NONE
+c. | 45 ml  3 c. a soupe d'huile vegetale @ NONE
+a | 45 ml  3 c. a soupe d'huile vegetale @ NONE
+soupe | 45 ml  3 c. a soupe d'huile vegetale @ NONE
+d' | 45 ml  3 c. a soupe d'huile vegetale @ NONE
+huile | 45 ml  3 c. a soupe d'huile vegetale @ INGREDIENT
+vegetale | 45 ml  3 c. a soupe d'huile vegetale @ NONE
 180 | 180 ml  3/4 tasse de yogourt nature @ QUANTITY
 ml | 180 ml  3/4 tasse de yogourt nature @ UNIT
  | 180 ml  3/4 tasse de yogourt nature @ NONE
@@ -3975,13 +3976,13 @@ tasse | 180 ml  3/4 tasse de yogourt nature @ NONE
 de | 180 ml  3/4 tasse de yogourt nature @ NONE
 yogourt | 180 ml  3/4 tasse de yogourt nature @ INGREDIENT
 nature | 180 ml  3/4 tasse de yogourt nature @ INGREDIENT
-180 | 180 ml  3/4 tasse d’houmous @ QUANTITY
-ml | 180 ml  3/4 tasse d’houmous @ UNIT
- | 180 ml  3/4 tasse d’houmous @ NONE
-3/4 | 180 ml  3/4 tasse d’houmous @ NONE
-tasse | 180 ml  3/4 tasse d’houmous @ NONE
-d’ | 180 ml  3/4 tasse d’houmous @ NONE
-houmous | 180 ml  3/4 tasse d’houmous @ INGREDIENT
+180 | 180 ml  3/4 tasse d'houmous @ QUANTITY
+ml | 180 ml  3/4 tasse d'houmous @ UNIT
+ | 180 ml  3/4 tasse d'houmous @ NONE
+3/4 | 180 ml  3/4 tasse d'houmous @ NONE
+tasse | 180 ml  3/4 tasse d'houmous @ NONE
+d' | 180 ml  3/4 tasse d'houmous @ NONE
+houmous | 180 ml  3/4 tasse d'houmous @ INGREDIENT
 15 | 15 ml  1 c. a soupe de jus de citron @ QUANTITY
 ml | 15 ml  1 c. a soupe de jus de citron @ UNIT
  | 15 ml  1 c. a soupe de jus de citron @ NONE
@@ -4079,16 +4080,16 @@ des | 1 bulbe de fenouil, coupe en des @ NONE
 1 | 1 oignon, hache @ QUANTITY
 oignon, | 1 oignon, hache @ INGREDIENT
 hache | 1 oignon, hache @ NONE
-30 | 30 ml 2 c. a soupe d’huile d’olive @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile d’olive @ UNIT
-2 | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-c. | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-a | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-soupe | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-d’ | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-huile | 30 ml 2 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-olive | 30 ml 2 c. a soupe d’huile d’olive @ NONE
+30 | 30 ml 2 c. a soupe d'huile d'olive @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile d'olive @ UNIT
+2 | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+c. | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+a | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+soupe | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+huile | 30 ml 2 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+olive | 30 ml 2 c. a soupe d'huile d'olive @ NONE
 2 | 2 poivrons, epepines et coupes en des @ QUANTITY
 poivrons, | 2 poivrons, epepines et coupes en des @ INGREDIENT
 epepines | 2 poivrons, epepines et coupes en des @ NONE
@@ -4196,15 +4197,15 @@ cornichons | 1 cuilleres a soupe de cornichons haches @ INGREDIENT
 haches | 1 cuilleres a soupe de cornichons haches @ NONE
 poivre | poivre @ INGREDIENT
 sel | sel @ INGREDIENT
-454 | 454 g 1 lb de filet d’aiglefin @ QUANTITY
-g | 454 g 1 lb de filet d’aiglefin @ UNIT
-1 | 454 g 1 lb de filet d’aiglefin @ NONE
-lb | 454 g 1 lb de filet d’aiglefin @ NONE
-de | 454 g 1 lb de filet d’aiglefin @ NONE
-filet | 454 g 1 lb de filet d’aiglefin @ NONE
-d' | 454 g 1 lb de filet d’aiglefin @ NONE
-aiglefin | 454 g 1 lb de filet d’aiglefin @ INGREDIENT
- | 454 g 1 lb de filet d’aiglefin @ NONE
+454 | 454 g 1 lb de filet d'aiglefin @ QUANTITY
+g | 454 g 1 lb de filet d'aiglefin @ UNIT
+1 | 454 g 1 lb de filet d'aiglefin @ NONE
+lb | 454 g 1 lb de filet d'aiglefin @ NONE
+de | 454 g 1 lb de filet d'aiglefin @ NONE
+filet | 454 g 1 lb de filet d'aiglefin @ NONE
+d' | 454 g 1 lb de filet d'aiglefin @ NONE
+aiglefin | 454 g 1 lb de filet d'aiglefin @ INGREDIENT
+ | 454 g 1 lb de filet d'aiglefin @ NONE
 60 | 60 ml ¼ tasse de salsa verde du commerce @ QUANTITY
 ml | 60 ml ¼ tasse de salsa verde du commerce @ UNIT
 ¼ | 60 ml ¼ tasse de salsa verde du commerce @ NONE
@@ -4219,13 +4220,13 @@ commerce | 60 ml ¼ tasse de salsa verde du commerce @ NONE
 oignon | 1  oignon rouge, emince @ INGREDIENT
 rouge, | 1  oignon rouge, emince @ INGREDIENT
 emince | 1  oignon rouge, emince @ NONE
-250 | 250 ml 1 tasse d’eau glacee @ QUANTITY
-ml | 250 ml 1 tasse d’eau glacee @ UNIT
-1 | 250 ml 1 tasse d’eau glacee @ NONE
-tasse | 250 ml 1 tasse d’eau glacee @ NONE
-d’ | 250 ml 1 tasse d’eau glacee @ NONE
-eau | 250 ml 1 tasse d’eau glacee @ INGREDIENT
-glacee | 250 ml 1 tasse d’eau glacee @ NONE
+250 | 250 ml 1 tasse d'eau glacee @ QUANTITY
+ml | 250 ml 1 tasse d'eau glacee @ UNIT
+1 | 250 ml 1 tasse d'eau glacee @ NONE
+tasse | 250 ml 1 tasse d'eau glacee @ NONE
+d' | 250 ml 1 tasse d'eau glacee @ NONE
+eau | 250 ml 1 tasse d'eau glacee @ INGREDIENT
+glacee | 250 ml 1 tasse d'eau glacee @ NONE
 60 | 60 ml ¼ tasse de jus de lime @ QUANTITY
 ml | 60 ml ¼ tasse de jus de lime @ UNIT
 ¼ | 60 ml ¼ tasse de jus de lime @ NONE
@@ -4272,14 +4273,14 @@ fresno | ½  piment fresno, epepine et emince @ INGREDIENT
 epepine | ½  piment fresno, epepine et emince @ NONE
 et | ½  piment fresno, epepine et emince @ NONE
 emince | ½  piment fresno, epepine et emince @ NONE
-60 | 60 ml ¼ tasse d’huile d’olive @ QUANTITY
-ml | 60 ml ¼ tasse d’huile d’olive @ UNIT
-¼ | 60 ml ¼ tasse d’huile d’olive @ NONE
-tasse | 60 ml ¼ tasse d’huile d’olive @ NONE
-d’ | 60 ml ¼ tasse d’huile d’olive @ NONE
-huile | 60 ml ¼ tasse d’huile d’olive @ INGREDIENT
-d' | 60 ml ¼ tasse d’huile d’olive @ NONE
-olive | 60 ml ¼ tasse d’huile d’olive @ NONE
+60 | 60 ml ¼ tasse d'huile d'olive @ QUANTITY
+ml | 60 ml ¼ tasse d'huile d'olive @ UNIT
+¼ | 60 ml ¼ tasse d'huile d'olive @ NONE
+tasse | 60 ml ¼ tasse d'huile d'olive @ NONE
+d' | 60 ml ¼ tasse d'huile d'olive @ NONE
+huile | 60 ml ¼ tasse d'huile d'olive @ INGREDIENT
+d' | 60 ml ¼ tasse d'huile d'olive @ NONE
+olive | 60 ml ¼ tasse d'huile d'olive @ NONE
 8 | 8  tostadas voir note @ QUANTITY
  | 8  tostadas voir note @ NONE
 tostadas | 8  tostadas voir note @ INGREDIENT
@@ -4341,31 +4342,31 @@ tasse | 60 ml 1/4 tasse de vin blanc @ NONE
 de | 60 ml 1/4 tasse de vin blanc @ NONE
 vin | 60 ml 1/4 tasse de vin blanc @ INGREDIENT
 blanc | 60 ml 1/4 tasse de vin blanc @ INGREDIENT
-675 | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ QUANTITY
-g | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ UNIT
-1 | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-1/2 | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-lb | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-de | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-filet | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-d' | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-omble | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
-de | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-fontaine | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
-ou | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ OR
-d' | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-omble | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
-chevalier | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
-sans | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-la | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-peau, | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-coupe | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-en | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-4 paves | 675 g 1 1/2 lb de filet d’omble de fontaine ou d’omble chevalier sans la peau, coupe en 4 paves @ NONE
-Huile | Huile d’olive facultatif @ INGREDIENT
-d' | Huile d’olive facultatif @ NONE
-olive | Huile d’olive facultatif @ NONE
-facultatif | Huile d’olive facultatif @ NONE
+675 | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ QUANTITY
+g | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ UNIT
+1 | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+1/2 | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+lb | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+de | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+filet | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+d' | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+omble | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
+de | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+fontaine | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
+ou | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ OR
+d' | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+omble | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
+chevalier | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ INGREDIENT
+sans | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+la | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+peau, | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+coupe | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+en | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+4 paves | 675 g 1 1/2 lb de filet d'omble de fontaine ou d'omble chevalier sans la peau, coupe en 4 paves @ NONE
+Huile | Huile d'olive facultatif @ INGREDIENT
+d' | Huile d'olive facultatif @ NONE
+olive | Huile d'olive facultatif @ NONE
+facultatif | Huile d'olive facultatif @ NONE
 Sel | Sel et poivre @ INGREDIENT
 et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
@@ -4386,11 +4387,11 @@ tomates | 4 tomates @ INGREDIENT
 oignons | 1 oignons @ INGREDIENT
 curcuma | curcuma facultatif @ INGREDIENT
 facultatif | curcuma facultatif @ NONE
-3 | 3  blancs d’oeufs @ QUANTITY
- | 3  blancs d’oeufs @ NONE
-blancs | 3  blancs d’oeufs @ NONE
-d’ | 3  blancs d’oeufs @ NONE
-oeufs | 3  blancs d’oeufs @ INGREDIENT
+3 | 3  blancs d'oeufs @ QUANTITY
+ | 3  blancs d'oeufs @ NONE
+blancs | 3  blancs d'oeufs @ NONE
+d' | 3  blancs d'oeufs @ NONE
+oeufs | 3  blancs d'oeufs @ INGREDIENT
 870 | 870 g 3 tasses de gros sel @ QUANTITY
 g | 870 g 3 tasses de gros sel @ UNIT
 3 | 870 g 3 tasses de gros sel @ NONE
@@ -4398,23 +4399,23 @@ tasses | 870 g 3 tasses de gros sel @ NONE
 de | 870 g 3 tasses de gros sel @ NONE
 gros | 870 g 3 tasses de gros sel @ NONE
 sel | 870 g 3 tasses de gros sel @ INGREDIENT
-1 | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ QUANTITY
- | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-poisson | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ INGREDIENT
-blanc | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ INGREDIENT
-entier | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-d’environ | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-675 | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-g | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-1/2 | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-lb, | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
- | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-vide | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-et | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-ecaille | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-vivaneau, | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-bar, | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
-dore | 1  poisson blanc entier d’environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+1 | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ QUANTITY
+ | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+poisson | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ INGREDIENT
+blanc | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ INGREDIENT
+entier | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+d'environ | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+675 | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+g | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+1/2 | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+lb, | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+ | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+vide | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+et | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+ecaille | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+vivaneau, | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+bar, | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
+dore | 1  poisson blanc entier d'environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore @ NONE
 1 | 1  oignon vert, coupe en troncons @ QUANTITY
  | 1  oignon vert, coupe en troncons @ NONE
 oignon | 1  oignon vert, coupe en troncons @ INGREDIENT
@@ -4422,12 +4423,12 @@ vert | 1  oignon vert, coupe en troncons @ INGREDIENT
 coupe | 1  oignon vert, coupe en troncons @ NONE
 en | 1  oignon vert, coupe en troncons @ NONE
 troncons | 1  oignon vert, coupe en troncons @ NONE
-3 | 3  gousses d’ail, pelees @ QUANTITY
- | 3  gousses d’ail, pelees @ NONE
-gousses | 3  gousses d’ail, pelees @ NONE
-d’, | 3  gousses d’ail, pelees @ NONE
-ail | 3  gousses d’ail, pelees @ INGREDIENT
-pelees | 3  gousses d’ail, pelees @ NONE
+3 | 3  gousses d'ail, pelees @ QUANTITY
+ | 3  gousses d'ail, pelees @ NONE
+gousses | 3  gousses d'ail, pelees @ NONE
+d' | 3  gousses d'ail, pelees @ NONE
+ail, | 3  gousses d'ail, pelees @ INGREDIENT
+pelees | 3  gousses d'ail, pelees @ NONE
 3 | 3  feuilles de laurier @ QUANTITY
  | 3  feuilles de laurier @ NONE
 feuilles | 3  feuilles de laurier @ NONE
@@ -4471,14 +4472,14 @@ celeri, | 1/2  branche de celeri, coupee en brunoise @ INGREDIENT
 coupee | 1/2  branche de celeri, coupee en brunoise @ NONE
 en | 1/2  branche de celeri, coupee en brunoise @ NONE
 brunoise | 1/2  branche de celeri, coupee en brunoise @ NONE
-60 | 60 ml 1/4 tasse d’huile d’olive @ QUANTITY
-ml | 60 ml 1/4 tasse d’huile d’olive @ UNIT
-1/4 | 60 ml 1/4 tasse d’huile d’olive @ NONE
-tasse | 60 ml 1/4 tasse d’huile d’olive @ NONE
-d’ | 60 ml 1/4 tasse d’huile d’olive @ NONE
-huile | 60 ml 1/4 tasse d’huile d’olive @ INGREDIENT
-d' | 60 ml 1/4 tasse d’huile d’olive @ NONE
-olive | 60 ml 1/4 tasse d’huile d’olive @ NONE
+60 | 60 ml 1/4 tasse d'huile d'olive @ QUANTITY
+ml | 60 ml 1/4 tasse d'huile d'olive @ UNIT
+1/4 | 60 ml 1/4 tasse d'huile d'olive @ NONE
+tasse | 60 ml 1/4 tasse d'huile d'olive @ NONE
+d' | 60 ml 1/4 tasse d'huile d'olive @ NONE
+huile | 60 ml 1/4 tasse d'huile d'olive @ INGREDIENT
+d' | 60 ml 1/4 tasse d'huile d'olive @ NONE
+olive | 60 ml 1/4 tasse d'huile d'olive @ NONE
 30 | 30 ml 2 c. a soupe de ciboulette fraiche ciselee @ QUANTITY
 ml | 30 ml 2 c. a soupe de ciboulette fraiche ciselee @ UNIT
 2 | 30 ml 2 c. a soupe de ciboulette fraiche ciselee @ NONE
@@ -4560,22 +4561,22 @@ des | 1  pomme de terre, pelee et coupee en des @ NONE
  | 1  oignon, hache @ NONE
 oignon, | 1  oignon, hache @ INGREDIENT
 hache | 1  oignon, hache @ NONE
-1 | 1  gousse d’ail, hachee @ QUANTITY
- | 1  gousse d’ail, hachee @ NONE
-gousse | 1  gousse d’ail, hachee @ NONE
-d’, | 1  gousse d’ail, hachee @ NONE
-ail, | 1  gousse d’ail, hachee @ INGREDIENT
-hachee | 1  gousse d’ail, hachee @ NONE
-30 | 30 ml 2 c. a soupe d’huile d’olive @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile d’olive @ UNIT
-2 | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-c. | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-a | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-soupe | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-d’ | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-huile | 30 ml 2 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-olive | 30 ml 2 c. a soupe d’huile d’olive @ NONE
+1 | 1  gousse d'ail, hachee @ QUANTITY
+ | 1  gousse d'ail, hachee @ NONE
+gousse | 1  gousse d'ail, hachee @ NONE
+d' | 1  gousse d'ail, hachee @ NONE
+ail, | 1  gousse d'ail, hachee @ INGREDIENT
+hachee | 1  gousse d'ail, hachee @ NONE
+30 | 30 ml 2 c. a soupe d'huile d'olive @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile d'olive @ UNIT
+2 | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+c. | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+a | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+soupe | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+huile | 30 ml 2 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+olive | 30 ml 2 c. a soupe d'huile d'olive @ NONE
 Sel | Sel et poivre @ INGREDIENT
 et | Sel et poivre @ AND
 poivre | Sel et poivre @ INGREDIENT
@@ -4615,30 +4616,30 @@ feuilletee | 225 g 1/2 lb de pate feuilletee du commerce, decongelee @ INGREDIEN
 du | 225 g 1/2 lb de pate feuilletee du commerce, decongelee @ NONE
 commerce, | 225 g 1/2 lb de pate feuilletee du commerce, decongelee @ NONE
 decongelee | 225 g 1/2 lb de pate feuilletee du commerce, decongelee @ NONE
-45 | 45 ml 3 c. a soupe de tapenade d’olives noires @ QUANTITY
-ml | 45 ml 3 c. a soupe de tapenade d’olives noires @ UNIT
-3 | 45 ml 3 c. a soupe de tapenade d’olives noires @ NONE
-c. | 45 ml 3 c. a soupe de tapenade d’olives noires @ NONE
-a | 45 ml 3 c. a soupe de tapenade d’olives noires @ NONE
-soupe | 45 ml 3 c. a soupe de tapenade d’olives noires @ NONE
-de | 45 ml 3 c. a soupe de tapenade d’olives noires @ NONE
-tapenade | 45 ml 3 c. a soupe de tapenade d’olives noires @ INGREDIENT
-d's | 45 ml 3 c. a soupe de tapenade d’olives noires @ NONE
-olives | 45 ml 3 c. a soupe de tapenade d’olives noires @ INGREDIENT
-noires | 45 ml 3 c. a soupe de tapenade d’olives noires @ INGREDIENT
-1 | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ QUANTITY
-filet | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-de | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-tilapia | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ INGREDIENT
-d’environ | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-115 | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-g | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-1/4 | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-lb, | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-coupe | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-en | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-fines | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
-tranches | 1 filet de tilapia d’environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+45 | 45 ml 3 c. a soupe de tapenade d'olives noires @ QUANTITY
+ml | 45 ml 3 c. a soupe de tapenade d'olives noires @ UNIT
+3 | 45 ml 3 c. a soupe de tapenade d'olives noires @ NONE
+c. | 45 ml 3 c. a soupe de tapenade d'olives noires @ NONE
+a | 45 ml 3 c. a soupe de tapenade d'olives noires @ NONE
+soupe | 45 ml 3 c. a soupe de tapenade d'olives noires @ NONE
+de | 45 ml 3 c. a soupe de tapenade d'olives noires @ NONE
+tapenade | 45 ml 3 c. a soupe de tapenade d'olives noires @ INGREDIENT
+d' | 45 ml 3 c. a soupe de tapenade d'olives noires @ NONE
+olives | 45 ml 3 c. a soupe de tapenade d'olives noires @ INGREDIENT
+noires | 45 ml 3 c. a soupe de tapenade d'olives noires @ INGREDIENT
+1 | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ QUANTITY
+filet | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+de | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+tilapia | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ INGREDIENT
+d'environ | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+115 | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+g | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+1/4 | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+lb, | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+coupe | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+en | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+fines | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
+tranches | 1 filet de tilapia d'environ 115 g 1/4 lb, coupe en fines tranches @ NONE
 1/2 | 1/2 petit oignon rouge, emince finement @ QUANTITY
 petit | 1/2 petit oignon rouge, emince finement @ NONE
 oignon | 1/2 petit oignon rouge, emince finement @ INGREDIENT
@@ -4648,26 +4649,26 @@ finement | 1/2 petit oignon rouge, emince finement @ NONE
 Persil | Persil frais facultatif @ INGREDIENT
 frais | Persil frais facultatif @ NONE
 facultatif | Persil frais facultatif @ NONE
-Huile | Huile d’olive, au gout @ INGREDIENT
-d', | Huile d’olive, au gout @ NONE
-olive, | Huile d’olive, au gout @ NONE
-au | Huile d’olive, au gout @ NONE
-gout | Huile d’olive, au gout @ NONE
+Huile | Huile d'olive, au gout @ INGREDIENT
+d' | Huile d'olive, au gout @ NONE
+olive, | Huile d'olive, au gout @ NONE
+au | Huile d'olive, au gout @ NONE
+gout | Huile d'olive, au gout @ NONE
 1 | 1  gros oignon, emince @ QUANTITY
  | 1  gros oignon, emince @ NONE
 gros | 1  gros oignon, emince @ NONE
 oignon, | 1  gros oignon, emince @ INGREDIENT
 emince | 1  gros oignon, emince @ NONE
-30 | 30 ml 2 c. a soupe d’huile d’olive @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile d’olive @ UNIT
-2 | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-c. | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-a | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-soupe | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-d’ | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-huile | 30 ml 2 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-olive | 30 ml 2 c. a soupe d’huile d’olive @ NONE
+30 | 30 ml 2 c. a soupe d'huile d'olive @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile d'olive @ UNIT
+2 | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+c. | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+a | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+soupe | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+huile | 30 ml 2 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+olive | 30 ml 2 c. a soupe d'huile d'olive @ NONE
 2 | 2  tomates, coupees en tranches epaisses et epepinees @ QUANTITY
  | 2  tomates, coupees en tranches epaisses et epepinees @ NONE
 tomates, | 2  tomates, coupees en tranches epaisses et epepinees @ INGREDIENT
@@ -4689,25 +4690,25 @@ de | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ NONE
 bouillon | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ INGREDIENT
 de | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ NONE
 poulet | 125 ml 1/2 tasse de vin blanc ou de bouillon de poulet @ INGREDIENT
-4 | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ QUANTITY
- | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-filets | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-de | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-fletan | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ INGREDIENT
-ou | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ OR
-de | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-turbot | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ INGREDIENT
-d’environ | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-175 | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-g | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-6 | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-oz | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-chacun, | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-avec | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-ou | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-sans | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-la | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
-peau | 4  filets de fletan ou de turbot d’environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+4 | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ QUANTITY
+ | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+filets | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+de | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+fletan | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ INGREDIENT
+ou | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ OR
+de | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+turbot | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ INGREDIENT
+d'environ | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+175 | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+g | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+6 | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+oz | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+chacun, | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+avec | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+ou | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+sans | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+la | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
+peau | 4  filets de fletan ou de turbot d'environ 175 g 6 oz chacun, avec ou sans la peau @ NONE
 30 | 30 ml 2 c. a soupe de pate de tomates @ QUANTITY
 ml | 30 ml 2 c. a soupe de pate de tomates @ UNIT
 2 | 30 ml 2 c. a soupe de pate de tomates @ NONE
@@ -4751,40 +4752,40 @@ chapelure | 160 g 2 tasses de chapelure panko voir note @ INGREDIENT
 panko | 160 g 2 tasses de chapelure panko voir note @ INGREDIENT
 voir | 160 g 2 tasses de chapelure panko voir note @ NONE
 note | 160 g 2 tasses de chapelure panko voir note @ NONE
-2,5 | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ QUANTITY
-ml | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ UNIT
-1/2 | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ NONE
-c. | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ NONE
-a | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ NONE
-the | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ NONE
-de | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ NONE
-poudre | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ INGREDIENT
-d’ | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ NONE
-oignon | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ INGREDIENT
-facultatif | 2,5 ml 1/2 c. a the de poudre d’oignon facultatif @ NONE
-675 | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ QUANTITY
-g | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ UNIT
-1 | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-1/2 | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-lb | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-de | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-filets | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-d’, | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-aiglefin, | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ INGREDIENT
-eponges | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-et | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-coupes | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
- | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-en | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-batonnets | 675 g 1 1/2 lb de filets d’aiglefin, eponges et coupes  en batonnets @ NONE
-180 | 180 ml 3/4 tasse d’huile de canola @ QUANTITY
-ml | 180 ml 3/4 tasse d’huile de canola @ UNIT
-3/4 | 180 ml 3/4 tasse d’huile de canola @ NONE
-tasse | 180 ml 3/4 tasse d’huile de canola @ NONE
-d’ | 180 ml 3/4 tasse d’huile de canola @ NONE
-huile | 180 ml 3/4 tasse d’huile de canola @ INGREDIENT
-de | 180 ml 3/4 tasse d’huile de canola @ NONE
-canola | 180 ml 3/4 tasse d’huile de canola @ NONE
+2,5 | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ QUANTITY
+ml | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ UNIT
+1/2 | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ NONE
+c. | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ NONE
+a | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ NONE
+the | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ NONE
+de | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ NONE
+poudre | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ INGREDIENT
+d' | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ NONE
+oignon | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ INGREDIENT
+facultatif | 2,5 ml 1/2 c. a the de poudre d'oignon facultatif @ NONE
+675 | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ QUANTITY
+g | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ UNIT
+1 | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+1/2 | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+lb | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+de | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+filets | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+d' | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+aiglefin, | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ INGREDIENT
+eponges | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+et | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+coupes | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+ | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+en | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+batonnets | 675 g 1 1/2 lb de filets d'aiglefin, eponges et coupes  en batonnets @ NONE
+180 | 180 ml 3/4 tasse d'huile de canola @ QUANTITY
+ml | 180 ml 3/4 tasse d'huile de canola @ UNIT
+3/4 | 180 ml 3/4 tasse d'huile de canola @ NONE
+tasse | 180 ml 3/4 tasse d'huile de canola @ NONE
+d' | 180 ml 3/4 tasse d'huile de canola @ NONE
+huile | 180 ml 3/4 tasse d'huile de canola @ INGREDIENT
+de | 180 ml 3/4 tasse d'huile de canola @ NONE
+canola | 180 ml 3/4 tasse d'huile de canola @ NONE
 4 | 4 petites poignees de Fruits de mer @ QUANTITY
 petites | 4 petites poignees de Fruits de mer @ NONE
 poignees | 4 petites poignees de Fruits de mer @ NONE
@@ -4843,16 +4844,16 @@ rouge, | 1  gros oignon rouge, coupe en lamelles @ INGREDIENT
 coupe | 1  gros oignon rouge, coupe en lamelles @ NONE
 en | 1  gros oignon rouge, coupe en lamelles @ NONE
 lamelles | 1  gros oignon rouge, coupe en lamelles @ NONE
-30 | 30 ml 2 c. a soupe d’huile d’olive @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile d’olive @ UNIT
-2 | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-c. | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-a | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-soupe | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-d’ | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-huile | 30 ml 2 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-olive | 30 ml 2 c. a soupe d’huile d’olive @ NONE
+30 | 30 ml 2 c. a soupe d'huile d'olive @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile d'olive @ UNIT
+2 | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+c. | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+a | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+soupe | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+huile | 30 ml 2 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+olive | 30 ml 2 c. a soupe d'huile d'olive @ NONE
 115 | 115 g 4 oz de vermicelles de riz @ QUANTITY
 g | 115 g 4 oz de vermicelles de riz @ UNIT
 4 | 115 g 4 oz de vermicelles de riz @ NONE
@@ -4990,58 +4991,58 @@ grosses | 3 grosses cuilleres d'huile @ NONE
 cuilleres | 3 grosses cuilleres d'huile @ UNIT
 d'| 3 grosses cuilleres d'huile @ NONE
 huile | 3 grosses cuilleres d'huile @ INGREDIENT
-1 | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ QUANTITY
- | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
-poireau, | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ INGREDIENT
-coupe | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
-en | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
-rondelles | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
-d’environ | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
- | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
-1 | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ QUANTITY
-cm | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
-1/2 | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
-po | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
-d’epaisseur | 1  poireau, coupe en rondelles d’environ  1 cm 1/2 po d’epaisseur @ NONE
-12 | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ QUANTITY
- | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-petites | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-pommes | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ INGREDIENT
-de | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-terre | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ INGREDIENT
-grelots, | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ INGREDIENT
-coupees | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
- | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-en | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-rondelles | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-de | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-1 | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-cm | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-1/2 | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-po | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
-d’epaisseur | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d’epaisseur @ NONE
+1 | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ QUANTITY
+ | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+poireau, | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ INGREDIENT
+coupe | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+en | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+rondelles | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+d'environ | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+ | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+1 | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ QUANTITY
+cm | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+1/2 | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+po | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+d'epaisseur | 1  poireau, coupe en rondelles d'environ  1 cm 1/2 po d'epaisseur @ NONE
+12 | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ QUANTITY
+ | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+petites | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+pommes | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ INGREDIENT
+de | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+terre | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ INGREDIENT
+grelots, | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ INGREDIENT
+coupees | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+ | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+en | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+rondelles | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+de | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+1 | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+cm | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+1/2 | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+po | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
+d'epaisseur | 12  petites pommes de terre grelots, coupees  en rondelles de 1 cm 1/2 po d'epaisseur @ NONE
 1 | 1  bulbe de fenouil, emince @ QUANTITY
  | 1  bulbe de fenouil, emince @ NONE
 bulbe | 1  bulbe de fenouil, emince @ NONE
 de | 1  bulbe de fenouil, emince @ NONE
 fenouil, | 1  bulbe de fenouil, emince @ INGREDIENT
 emince | 1  bulbe de fenouil, emince @ NONE
-2 | 2  gousses d’ail, pelees et ecrasees @ QUANTITY
- | 2  gousses d’ail, pelees et ecrasees @ NONE
-gousses | 2  gousses d’ail, pelees et ecrasees @ NONE
-d’, | 2  gousses d’ail, pelees et ecrasees @ NONE
-ail, | 2  gousses d’ail, pelees et ecrasees @ INGREDIENT
-pelees | 2  gousses d’ail, pelees et ecrasees @ NONE
-et | 2  gousses d’ail, pelees et ecrasees @ NONE
-ecrasees | 2  gousses d’ail, pelees et ecrasees @ NONE
-60 | 60 ml 1/4 tasse d’huile d’olive @ QUANTITY
-ml | 60 ml 1/4 tasse d’huile d’olive @ UNIT
-1/4 | 60 ml 1/4 tasse d’huile d’olive @ NONE
-tasse | 60 ml 1/4 tasse d’huile d’olive @ NONE
-d’ | 60 ml 1/4 tasse d’huile d’olive @ NONE
-huile | 60 ml 1/4 tasse d’huile d’olive @ INGREDIENT
-d' | 60 ml 1/4 tasse d’huile d’olive @ NONE
-olive | 60 ml 1/4 tasse d’huile d’olive @ NONE
+2 | 2  gousses d'ail, pelees et ecrasees @ QUANTITY
+ | 2  gousses d'ail, pelees et ecrasees @ NONE
+gousses | 2  gousses d'ail, pelees et ecrasees @ NONE
+d' | 2  gousses d'ail, pelees et ecrasees @ NONE
+ail, | 2  gousses d'ail, pelees et ecrasees @ INGREDIENT
+pelees | 2  gousses d'ail, pelees et ecrasees @ NONE
+et | 2  gousses d'ail, pelees et ecrasees @ NONE
+ecrasees | 2  gousses d'ail, pelees et ecrasees @ NONE
+60 | 60 ml 1/4 tasse d'huile d'olive @ QUANTITY
+ml | 60 ml 1/4 tasse d'huile d'olive @ UNIT
+1/4 | 60 ml 1/4 tasse d'huile d'olive @ NONE
+tasse | 60 ml 1/4 tasse d'huile d'olive @ NONE
+d' | 60 ml 1/4 tasse d'huile d'olive @ NONE
+huile | 60 ml 1/4 tasse d'huile d'olive @ INGREDIENT
+d' | 60 ml 1/4 tasse d'huile d'olive @ NONE
+olive | 60 ml 1/4 tasse d'huile d'olive @ NONE
 1/2 | 1/2   orange, le zeste rape seulement @ QUANTITY
  | 1/2   orange, le zeste rape seulement @ NONE
  | 1/2   orange, le zeste rape seulement @ NONE
@@ -5062,16 +5063,16 @@ coupee | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves @ NONE
 en | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves @ NONE
 4 | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves @ NONE
 paves | 675 g 1 1/2 lb de morue fraiche, coupee en 4 paves @ NONE
-30 | 30 ml 2 c. a soupe d’huile d’olive @ QUANTITY
-ml | 30 ml 2 c. a soupe d’huile d’olive @ UNIT
-2 | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-c. | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-a | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-soupe | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-d’ | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-huile | 30 ml 2 c. a soupe d’huile d’olive @ INGREDIENT
-d' | 30 ml 2 c. a soupe d’huile d’olive @ NONE
-olive | 30 ml 2 c. a soupe d’huile d’olive @ NONE
+30 | 30 ml 2 c. a soupe d'huile d'olive @ QUANTITY
+ml | 30 ml 2 c. a soupe d'huile d'olive @ UNIT
+2 | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+c. | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+a | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+soupe | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+huile | 30 ml 2 c. a soupe d'huile d'olive @ INGREDIENT
+d' | 30 ml 2 c. a soupe d'huile d'olive @ NONE
+olive | 30 ml 2 c. a soupe d'huile d'olive @ NONE
 15 | 15 ml 1 c. a soupe de persil cisele @ QUANTITY
 ml | 15 ml 1 c. a soupe de persil cisele @ UNIT
 1 | 15 ml 1 c. a soupe de persil cisele @ NONE
@@ -5234,17 +5235,17 @@ the | 10 ml  2 c. a the de vinaigre blanc @ NONE
 de | 10 ml  2 c. a the de vinaigre blanc @ NONE
 vinaigre | 10 ml  2 c. a the de vinaigre blanc @ INGREDIENT
 blanc | 10 ml  2 c. a the de vinaigre blanc @ INGREDIENT
-10 | 10 ml  2 c. a the d’extrait de vanille @ QUANTITY
-ml | 10 ml  2 c. a the d’extrait de vanille @ UNIT
- | 10 ml  2 c. a the d’extrait de vanille @ NONE
-2 | 10 ml  2 c. a the d’extrait de vanille @ NONE
-c. | 10 ml  2 c. a the d’extrait de vanille @ NONE
-a | 10 ml  2 c. a the d’extrait de vanille @ NONE
-the | 10 ml  2 c. a the d’extrait de vanille @ NONE
-d’ | 10 ml  2 c. a the d’extrait de vanille @ NONE
-extrait | 10 ml  2 c. a the d’extrait de vanille @ INGREDIENT
-de | 10 ml  2 c. a the d’extrait de vanille @ NONE
-vanille | 10 ml  2 c. a the d’extrait de vanille @ INGREDIENT
+10 | 10 ml  2 c. a the d'extrait de vanille @ QUANTITY
+ml | 10 ml  2 c. a the d'extrait de vanille @ UNIT
+ | 10 ml  2 c. a the d'extrait de vanille @ NONE
+2 | 10 ml  2 c. a the d'extrait de vanille @ NONE
+c. | 10 ml  2 c. a the d'extrait de vanille @ NONE
+a | 10 ml  2 c. a the d'extrait de vanille @ NONE
+the | 10 ml  2 c. a the d'extrait de vanille @ NONE
+d' | 10 ml  2 c. a the d'extrait de vanille @ NONE
+extrait | 10 ml  2 c. a the d'extrait de vanille @ INGREDIENT
+de | 10 ml  2 c. a the d'extrait de vanille @ NONE
+vanille | 10 ml  2 c. a the d'extrait de vanille @ INGREDIENT
 2 | 2  œufs @ QUANTITY
  | 2  œufs @ NONE
 œufs | 2  œufs @ INGREDIENT
@@ -5256,13 +5257,13 @@ g | 315 g  1 1/2 tasse de sucre @ UNIT
 tasse | 315 g  1 1/2 tasse de sucre @ NONE
 de | 315 g  1 1/2 tasse de sucre @ NONE
 sucre | 315 g  1 1/2 tasse de sucre @ INGREDIENT
-180 | 180 ml 3/4 tasse d’huile vegetale @ QUANTITY
-ml | 180 ml 3/4 tasse d’huile vegetale @ UNIT
-3/4 | 180 ml 3/4 tasse d’huile vegetale @ NONE
-tasse | 180 ml 3/4 tasse d’huile vegetale @ NONE
-d’ | 180 ml 3/4 tasse d’huile vegetale @ NONE
-huile | 180 ml 3/4 tasse d’huile vegetale @ INGREDIENT
-vegetale | 180 ml 3/4 tasse d’huile vegetale @ NONE
+180 | 180 ml 3/4 tasse d'huile vegetale @ QUANTITY
+ml | 180 ml 3/4 tasse d'huile vegetale @ UNIT
+3/4 | 180 ml 3/4 tasse d'huile vegetale @ NONE
+tasse | 180 ml 3/4 tasse d'huile vegetale @ NONE
+d' | 180 ml 3/4 tasse d'huile vegetale @ NONE
+huile | 180 ml 3/4 tasse d'huile vegetale @ INGREDIENT
+vegetale | 180 ml 3/4 tasse d'huile vegetale @ NONE
 1 | 1  bloc de 250 g de fromage a la creme, ramolli @ QUANTITY
  | 1  bloc de 250 g de fromage a la creme, ramolli @ NONE
 bloc | 1  bloc de 250 g de fromage a la creme, ramolli @ NONE
@@ -6210,15 +6211,15 @@ g | 55 g 1/4 tasse de sucre @ UNIT
 tasse | 55 g 1/4 tasse de sucre @ NONE
 de | 55 g 1/4 tasse de sucre @ NONE
 sucre | 55 g 1/4 tasse de sucre @ INGREDIENT
-2,5 | 2,5 ml 1/2 c. a the d’extrait de vanille @ QUANTITY
-ml | 2,5 ml 1/2 c. a the d’extrait de vanille @ UNIT
-1/2 | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-c. | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-a | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-the | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-d’extrait | 2,5 ml 1/2 c. a the d’extrait de vanille @ INGREDIENT
-de | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-vanille | 2,5 ml 1/2 c. a the d’extrait de vanille @ INGREDIENT
+2,5 | 2,5 ml 1/2 c. a the d'extrait de vanille @ QUANTITY
+ml | 2,5 ml 1/2 c. a the d'extrait de vanille @ UNIT
+1/2 | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+c. | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+a | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+the | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+d'extrait | 2,5 ml 1/2 c. a the d'extrait de vanille @ INGREDIENT
+de | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+vanille | 2,5 ml 1/2 c. a the d'extrait de vanille @ INGREDIENT
 75 | 75 g 1/2 tasse de cerises fraiches @ QUANTITY
 g | 75 g 1/2 tasse de cerises fraiches @ UNIT
 1/2 | 75 g 1/2 tasse de cerises fraiches @ NONE
@@ -6346,15 +6347,15 @@ g | 315 g 1 1/2 tasse de sucre @ UNIT
 tasse | 315 g 1 1/2 tasse de sucre @ NONE
 de | 315 g 1 1/2 tasse de sucre @ NONE
 sucre | 315 g 1 1/2 tasse de sucre @ INGREDIENT
-5 | 5 ml 1 c. a the d’extrait de vanille @ QUANTITY
-ml | 5 ml 1 c. a the d’extrait de vanille @ UNIT
-1 | 5 ml 1 c. a the d’extrait de vanille @ NONE
-c. | 5 ml 1 c. a the d’extrait de vanille @ NONE
-a | 5 ml 1 c. a the d’extrait de vanille @ NONE
-the | 5 ml 1 c. a the d’extrait de vanille @ NONE
-d’extrait | 5 ml 1 c. a the d’extrait de vanille @ INGREDIENT
-de | 5 ml 1 c. a the d’extrait de vanille @ NONE
-vanille | 5 ml 1 c. a the d’extrait de vanille @ INGREDIENT
+5 | 5 ml 1 c. a the d'extrait de vanille @ QUANTITY
+ml | 5 ml 1 c. a the d'extrait de vanille @ UNIT
+1 | 5 ml 1 c. a the d'extrait de vanille @ NONE
+c. | 5 ml 1 c. a the d'extrait de vanille @ NONE
+a | 5 ml 1 c. a the d'extrait de vanille @ NONE
+the | 5 ml 1 c. a the d'extrait de vanille @ NONE
+d'extrait | 5 ml 1 c. a the d'extrait de vanille @ INGREDIENT
+de | 5 ml 1 c. a the d'extrait de vanille @ NONE
+vanille | 5 ml 1 c. a the d'extrait de vanille @ INGREDIENT
 4 | 4 œufs @ QUANTITY
 œufs | 4 œufs @ INGREDIENT
 250 | 250 ml 1 tasse de lait @ QUANTITY
@@ -6406,15 +6407,15 @@ g | 105 g 1/2 tasse de sucre @ UNIT
 tasse | 105 g 1/2 tasse de sucre @ NONE
 de | 105 g 1/2 tasse de sucre @ NONE
 sucre | 105 g 1/2 tasse de sucre @ INGREDIENT
-10 | 10 ml 2 c. a the d’extrait de vanille @ QUANTITY
-ml | 10 ml 2 c. a the d’extrait de vanille @ UNIT
-2 | 10 ml 2 c. a the d’extrait de vanille @ NONE
-c. | 10 ml 2 c. a the d’extrait de vanille @ NONE
-a | 10 ml 2 c. a the d’extrait de vanille @ NONE
-the | 10 ml 2 c. a the d’extrait de vanille @ NONE
-d’extrait | 10 ml 2 c. a the d’extrait de vanille @ INGREDIENT
-de | 10 ml 2 c. a the d’extrait de vanille @ NONE
-vanille | 10 ml 2 c. a the d’extrait de vanille @ INGREDIENT
+10 | 10 ml 2 c. a the d'extrait de vanille @ QUANTITY
+ml | 10 ml 2 c. a the d'extrait de vanille @ UNIT
+2 | 10 ml 2 c. a the d'extrait de vanille @ NONE
+c. | 10 ml 2 c. a the d'extrait de vanille @ NONE
+a | 10 ml 2 c. a the d'extrait de vanille @ NONE
+the | 10 ml 2 c. a the d'extrait de vanille @ NONE
+d'extrait | 10 ml 2 c. a the d'extrait de vanille @ INGREDIENT
+de | 10 ml 2 c. a the d'extrait de vanille @ NONE
+vanille | 10 ml 2 c. a the d'extrait de vanille @ INGREDIENT
 250 | 250 g de carotte rapees @ QUANTITY
 g | 250 g de carotte rapees @ UNIT
 de | 250 g de carotte rapees @ NONE
@@ -6532,16 +6533,16 @@ g | 70 g  1/3 tasse de sucre @ UNIT
 tasse | 70 g  1/3 tasse de sucre @ NONE
 de | 70 g  1/3 tasse de sucre @ NONE
 sucre | 70 g  1/3 tasse de sucre @ INGREDIENT
-5 | 5 ml  1 c. a the d’agar-agar voir note @ QUANTITY
-ml | 5 ml  1 c. a the d’agar-agar voir note @ UNIT
- | 5 ml  1 c. a the d’agar-agar voir note @ NONE
-1 | 5 ml  1 c. a the d’agar-agar voir note @ NONE
-c. | 5 ml  1 c. a the d’agar-agar voir note @ NONE
-a | 5 ml  1 c. a the d’agar-agar voir note @ NONE
-the | 5 ml  1 c. a the d’agar-agar voir note @ NONE
-d’agar-agar | 5 ml  1 c. a the d’agar-agar voir note @ INGREDIENT
-voir | 5 ml  1 c. a the d’agar-agar voir note @ NONE
-note | 5 ml  1 c. a the d’agar-agar voir note @ NONE
+5 | 5 ml  1 c. a the d'agar-agar voir note @ QUANTITY
+ml | 5 ml  1 c. a the d'agar-agar voir note @ UNIT
+ | 5 ml  1 c. a the d'agar-agar voir note @ NONE
+1 | 5 ml  1 c. a the d'agar-agar voir note @ NONE
+c. | 5 ml  1 c. a the d'agar-agar voir note @ NONE
+a | 5 ml  1 c. a the d'agar-agar voir note @ NONE
+the | 5 ml  1 c. a the d'agar-agar voir note @ NONE
+d'agar-agar | 5 ml  1 c. a the d'agar-agar voir note @ INGREDIENT
+voir | 5 ml  1 c. a the d'agar-agar voir note @ NONE
+note | 5 ml  1 c. a the d'agar-agar voir note @ NONE
 180 | 180 ml 3/4 tasse de puree de fraise @ QUANTITY
 ml | 180 ml 3/4 tasse de puree de fraise @ UNIT
 3/4 | 180 ml 3/4 tasse de puree de fraise @ NONE
@@ -6757,24 +6758,24 @@ de | 250 ml 1 tasse de lait de beurre @ NONE
 lait | 250 ml 1 tasse de lait de beurre @ INGREDIENT
 de | 250 ml 1 tasse de lait de beurre @ NONE
 beurre | 250 ml 1 tasse de lait de beurre @ INGREDIENT
-125 | 125 ml 1/2 tasse d’huile de canola @ QUANTITY
-ml | 125 ml 1/2 tasse d’huile de canola @ UNIT
-1/2 | 125 ml 1/2 tasse d’huile de canola @ NONE
-tasse | 125 ml 1/2 tasse d’huile de canola @ NONE
-d’ | 125 ml 1/2 tasse d’huile de canola @ NONE
-huile | 125 ml 1/2 tasse d’huile de canola @ INGREDIENT
-de | 125 ml 1/2 tasse d’huile de canola @ NONE
-canola | 125 ml 1/2 tasse d’huile de canola @ NONE
-10 | 10 ml  2 c. a the d’extrait de vanille @ QUANTITY
-ml | 10 ml  2 c. a the d’extrait de vanille @ UNIT
- | 10 ml  2 c. a the d’extrait de vanille @ NONE
-2 | 10 ml  2 c. a the d’extrait de vanille @ NONE
-c. | 10 ml  2 c. a the d’extrait de vanille @ NONE
-a | 10 ml  2 c. a the d’extrait de vanille @ NONE
-the | 10 ml  2 c. a the d’extrait de vanille @ NONE
-d’extrait | 10 ml  2 c. a the d’extrait de vanille @ INGREDIENT
-de | 10 ml  2 c. a the d’extrait de vanille @ NONE
-vanille | 10 ml  2 c. a the d’extrait de vanille @ INGREDIENT
+125 | 125 ml 1/2 tasse d'huile de canola @ QUANTITY
+ml | 125 ml 1/2 tasse d'huile de canola @ UNIT
+1/2 | 125 ml 1/2 tasse d'huile de canola @ NONE
+tasse | 125 ml 1/2 tasse d'huile de canola @ NONE
+d' | 125 ml 1/2 tasse d'huile de canola @ NONE
+huile | 125 ml 1/2 tasse d'huile de canola @ INGREDIENT
+de | 125 ml 1/2 tasse d'huile de canola @ NONE
+canola | 125 ml 1/2 tasse d'huile de canola @ NONE
+10 | 10 ml  2 c. a the d'extrait de vanille @ QUANTITY
+ml | 10 ml  2 c. a the d'extrait de vanille @ UNIT
+ | 10 ml  2 c. a the d'extrait de vanille @ NONE
+2 | 10 ml  2 c. a the d'extrait de vanille @ NONE
+c. | 10 ml  2 c. a the d'extrait de vanille @ NONE
+a | 10 ml  2 c. a the d'extrait de vanille @ NONE
+the | 10 ml  2 c. a the d'extrait de vanille @ NONE
+d'extrait | 10 ml  2 c. a the d'extrait de vanille @ INGREDIENT
+de | 10 ml  2 c. a the d'extrait de vanille @ NONE
+vanille | 10 ml  2 c. a the d'extrait de vanille @ INGREDIENT
 75 | 75 g    3/4 tasse de cacao @ QUANTITY
 g | 75 g    3/4 tasse de cacao @ UNIT
  | 75 g    3/4 tasse de cacao @ NONE
@@ -6913,15 +6914,15 @@ g | 160 g 3/4 tasse de sucre @ UNIT
 tasse | 160 g 3/4 tasse de sucre @ NONE
 de | 160 g 3/4 tasse de sucre @ NONE
 sucre | 160 g 3/4 tasse de sucre @ INGREDIENT
-10 | 10 ml 2 c. a the d’extrait de vanille @ QUANTITY
-ml | 10 ml 2 c. a the d’extrait de vanille @ UNIT
-2 | 10 ml 2 c. a the d’extrait de vanille @ NONE
-c. | 10 ml 2 c. a the d’extrait de vanille @ NONE
-a | 10 ml 2 c. a the d’extrait de vanille @ NONE
-the | 10 ml 2 c. a the d’extrait de vanille @ NONE
-d’extrait | 10 ml 2 c. a the d’extrait de vanille @ INGREDIENT
-de | 10 ml 2 c. a the d’extrait de vanille @ NONE
-vanille | 10 ml 2 c. a the d’extrait de vanille @ INGREDIENT
+10 | 10 ml 2 c. a the d'extrait de vanille @ QUANTITY
+ml | 10 ml 2 c. a the d'extrait de vanille @ UNIT
+2 | 10 ml 2 c. a the d'extrait de vanille @ NONE
+c. | 10 ml 2 c. a the d'extrait de vanille @ NONE
+a | 10 ml 2 c. a the d'extrait de vanille @ NONE
+the | 10 ml 2 c. a the d'extrait de vanille @ NONE
+d'extrait | 10 ml 2 c. a the d'extrait de vanille @ INGREDIENT
+de | 10 ml 2 c. a the d'extrait de vanille @ NONE
+vanille | 10 ml 2 c. a the d'extrait de vanille @ INGREDIENT
 85 | 85 g 6 c. a soupe de beurre non sale, fondu @ QUANTITY
 g | 85 g 6 c. a soupe de beurre non sale, fondu @ UNIT
 6 | 85 g 6 c. a soupe de beurre non sale, fondu @ NONE
@@ -6994,15 +6995,15 @@ tasse | 250 ml 1 tasse de lait @ NONE
 de | 250 ml 1 tasse de lait @ NONE
 lait | 250 ml 1 tasse de lait @ INGREDIENT
  | 250 ml 1 tasse de lait @ NONE
-2,5 | 2,5 ml 1/2 c. a the d’extrait de vanille @ QUANTITY
-ml | 2,5 ml 1/2 c. a the d’extrait de vanille @ UNIT
-1/2 | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-c. | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-a | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-the | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-d’extrait | 2,5 ml 1/2 c. a the d’extrait de vanille @ INGREDIENT
-de | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-vanille | 2,5 ml 1/2 c. a the d’extrait de vanille @ INGREDIENT
+2,5 | 2,5 ml 1/2 c. a the d'extrait de vanille @ QUANTITY
+ml | 2,5 ml 1/2 c. a the d'extrait de vanille @ UNIT
+1/2 | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+c. | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+a | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+the | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+d'extrait | 2,5 ml 1/2 c. a the d'extrait de vanille @ INGREDIENT
+de | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+vanille | 2,5 ml 1/2 c. a the d'extrait de vanille @ INGREDIENT
 340 | 340 g 1 1/2 tasse de beurre non sale, ramolli @ QUANTITY
 g | 340 g 1 1/2 tasse de beurre non sale, ramolli @ UNIT
 1 | 340 g 1 1/2 tasse de beurre non sale, ramolli @ NONE
@@ -7108,10 +7109,10 @@ de | 25 g 3 c. a soupe de fecule de mais @ NONE
 mais | 25 g 3 c. a soupe de fecule de mais @ INGREDIENT
 3 | 3 œufs @ QUANTITY
 œufs | 3 œufs @ INGREDIENT
-3 | 3 jaunes d’œufs @ QUANTITY
-jaunes | 3 jaunes d’œufs @ NONE
-d' | 3 jaunes d’œufs @ NONE
-œufs | 3 jaunes d’œufs @ INGREDIENT
+3 | 3 jaunes d'œufs @ QUANTITY
+jaunes | 3 jaunes d'œufs @ NONE
+d' | 3 jaunes d'œufs @ NONE
+œufs | 3 jaunes d'œufs @ INGREDIENT
 180 | 180 ml 3/4 tasse de puree de mangues voir note @ QUANTITY
 ml | 180 ml 3/4 tasse de puree de mangues voir note @ UNIT
 3/4 | 180 ml 3/4 tasse de puree de mangues voir note @ NONE
@@ -7172,13 +7173,13 @@ g | 210 g 1 tasse de sucre @ UNIT
 tasse | 210 g 1 tasse de sucre @ NONE
 de | 210 g 1 tasse de sucre @ NONE
 sucre | 210 g 1 tasse de sucre @ INGREDIENT
-75 | 75 ml 1/3 tasse d’huile vegetale @ QUANTITY
-ml | 75 ml 1/3 tasse d’huile vegetale @ UNIT
-1/3 | 75 ml 1/3 tasse d’huile vegetale @ NONE
-tasse | 75 ml 1/3 tasse d’huile vegetale @ NONE
-d’ | 75 ml 1/3 tasse d’huile vegetale @ NONE
-huile | 75 ml 1/3 tasse d’huile vegetale @ INGREDIENT
-vegetale | 75 ml 1/3 tasse d’huile vegetale @ NONE
+75 | 75 ml 1/3 tasse d'huile vegetale @ QUANTITY
+ml | 75 ml 1/3 tasse d'huile vegetale @ UNIT
+1/3 | 75 ml 1/3 tasse d'huile vegetale @ NONE
+tasse | 75 ml 1/3 tasse d'huile vegetale @ NONE
+d' | 75 ml 1/3 tasse d'huile vegetale @ NONE
+huile | 75 ml 1/3 tasse d'huile vegetale @ INGREDIENT
+vegetale | 75 ml 1/3 tasse d'huile vegetale @ NONE
 60 | 60 ml 1/4 tasse de lait @ QUANTITY
 ml | 60 ml 1/4 tasse de lait @ UNIT
 1/4 | 60 ml 1/4 tasse de lait @ NONE
@@ -7242,14 +7243,14 @@ a | 2,5 ml 1/2 c. a the de gelatine @ NONE
 the | 2,5 ml 1/2 c. a the de gelatine @ NONE
 de | 2,5 ml 1/2 c. a the de gelatine @ NONE
 gelatine | 2,5 ml 1/2 c. a the de gelatine @ INGREDIENT
-15 | 15 ml 1 c. a soupe d’eau @ QUANTITY
-ml | 15 ml 1 c. a soupe d’eau @ UNIT
-1 | 15 ml 1 c. a soupe d’eau @ NONE
-c. | 15 ml 1 c. a soupe d’eau @ NONE
-a | 15 ml 1 c. a soupe d’eau @ NONE
-soupe | 15 ml 1 c. a soupe d’eau @ NONE
-d’ | 15 ml 1 c. a soupe d’eau @ NONE
-eau | 15 ml 1 c. a soupe d’eau @ INGREDIENT
+15 | 15 ml 1 c. a soupe d'eau @ QUANTITY
+ml | 15 ml 1 c. a soupe d'eau @ UNIT
+1 | 15 ml 1 c. a soupe d'eau @ NONE
+c. | 15 ml 1 c. a soupe d'eau @ NONE
+a | 15 ml 1 c. a soupe d'eau @ NONE
+soupe | 15 ml 1 c. a soupe d'eau @ NONE
+d' | 15 ml 1 c. a soupe d'eau @ NONE
+eau | 15 ml 1 c. a soupe d'eau @ INGREDIENT
 125 | 125 ml 1/2 tasse de jus de citron @ QUANTITY
 ml | 125 ml 1/2 tasse de jus de citron @ UNIT
 1/2 | 125 ml 1/2 tasse de jus de citron @ NONE
@@ -7312,13 +7313,13 @@ g | 265 g 1 1/4 tasse de sucre @ UNIT
 tasse | 265 g 1 1/4 tasse de sucre @ NONE
 de | 265 g 1 1/4 tasse de sucre @ NONE
 sucre | 265 g 1 1/4 tasse de sucre @ INGREDIENT
-75 | 75 ml 1/3 tasse d’huile vegetale @ QUANTITY
-ml | 75 ml 1/3 tasse d’huile vegetale @ UNIT
-1/3 | 75 ml 1/3 tasse d’huile vegetale @ NONE
-tasse | 75 ml 1/3 tasse d’huile vegetale @ NONE
-d’ | 75 ml 1/3 tasse d’huile vegetale @ NONE
-huile | 75 ml 1/3 tasse d’huile vegetale @ INGREDIENT
-vegetale | 75 ml 1/3 tasse d’huile vegetale @ NONE
+75 | 75 ml 1/3 tasse d'huile vegetale @ QUANTITY
+ml | 75 ml 1/3 tasse d'huile vegetale @ UNIT
+1/3 | 75 ml 1/3 tasse d'huile vegetale @ NONE
+tasse | 75 ml 1/3 tasse d'huile vegetale @ NONE
+d' | 75 ml 1/3 tasse d'huile vegetale @ NONE
+huile | 75 ml 1/3 tasse d'huile vegetale @ INGREDIENT
+vegetale | 75 ml 1/3 tasse d'huile vegetale @ NONE
 2 | 2 citrons, le zeste rape finement @ QUANTITY
 citrons, | 2 citrons, le zeste rape finement @ INGREDIENT
 le | 2 citrons, le zeste rape finement @ NONE
@@ -7398,31 +7399,31 @@ g | 315 g  1 1/2 tasse de sucre @ UNIT
 tasse | 315 g  1 1/2 tasse de sucre @ NONE
 de | 315 g  1 1/2 tasse de sucre @ NONE
 sucre | 315 g  1 1/2 tasse de sucre @ INGREDIENT
-2,5 | 2,5 ml  1/2 c. a the d’extrait de vanille @ QUANTITY
-ml | 2,5 ml  1/2 c. a the d’extrait de vanille @ UNIT
- | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-1/2 | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-c. | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-a | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-the | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-d’extrait | 2,5 ml  1/2 c. a the d’extrait de vanille @ INGREDIENT
-de | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-vanille | 2,5 ml  1/2 c. a the d’extrait de vanille @ INGREDIENT
+2,5 | 2,5 ml  1/2 c. a the d'extrait de vanille @ QUANTITY
+ml | 2,5 ml  1/2 c. a the d'extrait de vanille @ UNIT
+ | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+1/2 | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+c. | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+a | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+the | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+d'extrait | 2,5 ml  1/2 c. a the d'extrait de vanille @ INGREDIENT
+de | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+vanille | 2,5 ml  1/2 c. a the d'extrait de vanille @ INGREDIENT
 12 | 12  gouttes de colorant rouge @ QUANTITY
  | 12  gouttes de colorant rouge @ NONE
 gouttes | 12  gouttes de colorant rouge @ NONE
 de | 12  gouttes de colorant rouge @ NONE
 colorant | 12  gouttes de colorant rouge @ INGREDIENT
 rouge | 12  gouttes de colorant rouge @ INGREDIENT
-60 | 60 ml  1/4 tasse d’huile de canola @ QUANTITY
-ml | 60 ml  1/4 tasse d’huile de canola @ UNIT
- | 60 ml  1/4 tasse d’huile de canola @ NONE
-1/4 | 60 ml  1/4 tasse d’huile de canola @ NONE
-tasse | 60 ml  1/4 tasse d’huile de canola @ NONE
-d’ | 60 ml  1/4 tasse d’huile de canola @ NONE
-huile | 60 ml  1/4 tasse d’huile de canola @ INGREDIENT
-de | 60 ml  1/4 tasse d’huile de canola @ NONE
-canola | 60 ml  1/4 tasse d’huile de canola @ NONE
+60 | 60 ml  1/4 tasse d'huile de canola @ QUANTITY
+ml | 60 ml  1/4 tasse d'huile de canola @ UNIT
+ | 60 ml  1/4 tasse d'huile de canola @ NONE
+1/4 | 60 ml  1/4 tasse d'huile de canola @ NONE
+tasse | 60 ml  1/4 tasse d'huile de canola @ NONE
+d' | 60 ml  1/4 tasse d'huile de canola @ NONE
+huile | 60 ml  1/4 tasse d'huile de canola @ INGREDIENT
+de | 60 ml  1/4 tasse d'huile de canola @ NONE
+canola | 60 ml  1/4 tasse d'huile de canola @ NONE
 250 | 250 ml  1 tasse de nectar de goyave @ QUANTITY
 ml | 250 ml  1 tasse de nectar de goyave @ UNIT
  | 250 ml  1 tasse de nectar de goyave @ NONE
@@ -7459,16 +7460,16 @@ a | 7,5 ml  1 1/2 c. a the de gelatine @ NONE
 the | 7,5 ml  1 1/2 c. a the de gelatine @ NONE
 de | 7,5 ml  1 1/2 c. a the de gelatine @ NONE
 gelatine | 7,5 ml  1 1/2 c. a the de gelatine @ INGREDIENT
-30 | 30 ml  2 c. a soupe d’eau froide @ QUANTITY
-ml | 30 ml  2 c. a soupe d’eau froide @ UNIT
- | 30 ml  2 c. a soupe d’eau froide @ NONE
-2 | 30 ml  2 c. a soupe d’eau froide @ NONE
-c. | 30 ml  2 c. a soupe d’eau froide @ NONE
-a | 30 ml  2 c. a soupe d’eau froide @ NONE
-soupe | 30 ml  2 c. a soupe d’eau froide @ NONE
-d’ | 30 ml  2 c. a soupe d’eau froide @ NONE
-eau | 30 ml  2 c. a soupe d’eau froide @ INGREDIENT
-froide | 30 ml  2 c. a soupe d’eau froide @ NONE
+30 | 30 ml  2 c. a soupe d'eau froide @ QUANTITY
+ml | 30 ml  2 c. a soupe d'eau froide @ UNIT
+ | 30 ml  2 c. a soupe d'eau froide @ NONE
+2 | 30 ml  2 c. a soupe d'eau froide @ NONE
+c. | 30 ml  2 c. a soupe d'eau froide @ NONE
+a | 30 ml  2 c. a soupe d'eau froide @ NONE
+soupe | 30 ml  2 c. a soupe d'eau froide @ NONE
+d' | 30 ml  2 c. a soupe d'eau froide @ NONE
+eau | 30 ml  2 c. a soupe d'eau froide @ INGREDIENT
+froide | 30 ml  2 c. a soupe d'eau froide @ NONE
 500 | 500 ml  2 tasses de creme 35 % @ QUANTITY
 ml | 500 ml  2 tasses de creme 35 % @ UNIT
  | 500 ml  2 tasses de creme 35 % @ NONE
@@ -7478,17 +7479,17 @@ de | 500 ml  2 tasses de creme 35 % @ NONE
 creme | 500 ml  2 tasses de creme 35 % @ INGREDIENT
 35 | 500 ml  2 tasses de creme 35 % @ NONE
 % | 500 ml  2 tasses de creme 35 % @ NONE
-2,5 | 2,5 ml  1/2 c. a the d’extrait de vanille @ QUANTITY
-ml | 2,5 ml  1/2 c. a the d’extrait de vanille @ UNIT
- | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-1/2 | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-c. | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-a | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-the | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-d’ | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-extrait | 2,5 ml  1/2 c. a the d’extrait de vanille @ INGREDIENT
-de | 2,5 ml  1/2 c. a the d’extrait de vanille @ NONE
-vanille | 2,5 ml  1/2 c. a the d’extrait de vanille @ INGREDIENT
+2,5 | 2,5 ml  1/2 c. a the d'extrait de vanille @ QUANTITY
+ml | 2,5 ml  1/2 c. a the d'extrait de vanille @ UNIT
+ | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+1/2 | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+c. | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+a | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+the | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+d' | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+extrait | 2,5 ml  1/2 c. a the d'extrait de vanille @ INGREDIENT
+de | 2,5 ml  1/2 c. a the d'extrait de vanille @ NONE
+vanille | 2,5 ml  1/2 c. a the d'extrait de vanille @ INGREDIENT
 100 | 100 g  2/3 tasse de farine tout usage non blanchie @ QUANTITY
 g | 100 g  2/3 tasse de farine tout usage non blanchie @ UNIT
  | 100 g  2/3 tasse de farine tout usage non blanchie @ NONE
@@ -7582,11 +7583,11 @@ de | 30 ml  2 c. a soupe de fecule de mais @ NONE
 fecule | 30 ml  2 c. a soupe de fecule de mais @ INGREDIENT
 de | 30 ml  2 c. a soupe de fecule de mais @ INGREDIENT
 mais | 30 ml  2 c. a soupe de fecule de mais @ INGREDIENT
-3 | 3  jaunes d’œufs @ QUANTITY
- | 3  jaunes d’œufs @ NONE
-jaunes | 3  jaunes d’œufs @ NONE
-d’ | 3  jaunes d’œufs @ NONE
-œufs | 3  jaunes d’œufs @ INGREDIENT
+3 | 3  jaunes d'œufs @ QUANTITY
+ | 3  jaunes d'œufs @ NONE
+jaunes | 3  jaunes d'œufs @ NONE
+d' | 3  jaunes d'œufs @ NONE
+œufs | 3  jaunes d'œufs @ INGREDIENT
 55 | 55 g  1/4 tasse de beurre froid non sale,  coupe en des @ QUANTITY
 g | 55 g  1/4 tasse de beurre froid non sale,  coupe en des @ UNIT
  | 55 g  1/4 tasse de beurre froid non sale,  coupe en des @ NONE
@@ -7644,11 +7645,11 @@ tout | 35 g  ¼ tasse de farine tout usage non blanchie @ NONE
 usage | 35 g  ¼ tasse de farine tout usage non blanchie @ NONE
 non | 35 g  ¼ tasse de farine tout usage non blanchie @ NONE
 blanchie | 35 g  ¼ tasse de farine tout usage non blanchie @ NONE
-4 | 4  jaunes d’œufs @ QUANTITY
- | 4  jaunes d’œufs @ NONE
-jaunes | 4  jaunes d’œufs @ NONE
-d’œufs | 4  jaunes d’œufs @ INGREDIENT
- | 4  jaunes d’œufs @ NONE
+4 | 4  jaunes d'œufs @ QUANTITY
+ | 4  jaunes d'œufs @ NONE
+jaunes | 4  jaunes d'œufs @ NONE
+d'œufs | 4  jaunes d'œufs @ INGREDIENT
+ | 4  jaunes d'œufs @ NONE
 1 | 1  citron, le zeste rape finement @ QUANTITY
  | 1  citron, le zeste rape finement @ NONE
 citron, | 1  citron, le zeste rape finement @ INGREDIENT
@@ -7668,11 +7669,11 @@ jus | 15 ml 1 c. a soupe de jus de citron @ NONE
 de | 15 ml 1 c. a soupe de jus de citron @ NONE
 citron | 15 ml 1 c. a soupe de jus de citron @ INGREDIENT
  | 15 ml 1 c. a soupe de jus de citron @ NONE
-4 | 4  blancs d’œufs @ QUANTITY
- | 4  blancs d’œufs @ NONE
-blancs | 4  blancs d’œufs @ NONE
-d’fs | 4  blancs d’œufs @ NONE
-œufs | 4  blancs d’œufs @ INGREDIENT
+4 | 4  blancs d'œufs @ QUANTITY
+ | 4  blancs d'œufs @ NONE
+blancs | 4  blancs d'œufs @ NONE
+d'fs | 4  blancs d'œufs @ NONE
+œufs | 4  blancs d'œufs @ INGREDIENT
 Sucre | Sucre a glacer pour le service @ INGREDIENT
 a | Sucre a glacer pour le service @ INGREDIENT
 glacer | Sucre a glacer pour le service @ INGREDIENT
@@ -7720,26 +7721,26 @@ g | 420 g  2 tasses de sucre @ UNIT
 tasses | 420 g  2 tasses de sucre @ NONE
 de | 420 g  2 tasses de sucre @ NONE
 sucre | 420 g  2 tasses de sucre @ INGREDIENT
-15 | 15 ml  1 c. a soupe d’extrait de vanille @ QUANTITY
-ml | 15 ml  1 c. a soupe d’extrait de vanille @ UNIT
- | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-1 | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-c. | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-a | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-soupe | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-d’ | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-extrait | 15 ml  1 c. a soupe d’extrait de vanille @ INGREDIENT
-de | 15 ml  1 c. a soupe d’extrait de vanille @ INGREDIENT
-vanille | 15 ml  1 c. a soupe d’extrait de vanille @ INGREDIENT
-180 | 180 ml  ¾ tasse d’huile de canola @ QUANTITY
-ml | 180 ml  ¾ tasse d’huile de canola @ UNIT
- | 180 ml  ¾ tasse d’huile de canola @ NONE
-¾ | 180 ml  ¾ tasse d’huile de canola @ NONE
-tasse | 180 ml  ¾ tasse d’huile de canola @ NONE
-d’ | 180 ml  ¾ tasse d’huile de canola @ NONE
-huile | 180 ml  ¾ tasse d’huile de canola @ INGREDIENT
-de | 180 ml  ¾ tasse d’huile de canola @ NONE
-canola | 180 ml  ¾ tasse d’huile de canola @ NONE
+15 | 15 ml  1 c. a soupe d'extrait de vanille @ QUANTITY
+ml | 15 ml  1 c. a soupe d'extrait de vanille @ UNIT
+ | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+1 | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+c. | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+a | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+soupe | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+d' | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+extrait | 15 ml  1 c. a soupe d'extrait de vanille @ INGREDIENT
+de | 15 ml  1 c. a soupe d'extrait de vanille @ INGREDIENT
+vanille | 15 ml  1 c. a soupe d'extrait de vanille @ INGREDIENT
+180 | 180 ml  ¾ tasse d'huile de canola @ QUANTITY
+ml | 180 ml  ¾ tasse d'huile de canola @ UNIT
+ | 180 ml  ¾ tasse d'huile de canola @ NONE
+¾ | 180 ml  ¾ tasse d'huile de canola @ NONE
+tasse | 180 ml  ¾ tasse d'huile de canola @ NONE
+d' | 180 ml  ¾ tasse d'huile de canola @ NONE
+huile | 180 ml  ¾ tasse d'huile de canola @ INGREDIENT
+de | 180 ml  ¾ tasse d'huile de canola @ NONE
+canola | 180 ml  ¾ tasse d'huile de canola @ NONE
 310 | 310 ml  1 ¼ tasse de lait @ QUANTITY
 ml | 310 ml  1 ¼ tasse de lait @ UNIT
  | 310 ml  1 ¼ tasse de lait @ NONE
@@ -7759,17 +7760,17 @@ beurre | 500 g  2 ¼ tasses de beurre non sale, ramolli @ INGREDIENT
 non | 500 g  2 ¼ tasses de beurre non sale, ramolli @ NONE
 sale, | 500 g  2 ¼ tasses de beurre non sale, ramolli @ NONE
 ramolli | 500 g  2 ¼ tasses de beurre non sale, ramolli @ NONE
-7,5 | 7,5 ml  1 ½ c. a the d’extrait de vanille @ QUANTITY
-ml | 7,5 ml  1 ½ c. a the d’extrait de vanille @ UNIT
- | 7,5 ml  1 ½ c. a the d’extrait de vanille @ NONE
-1 | 7,5 ml  1 ½ c. a the d’extrait de vanille @ NONE
-½ | 7,5 ml  1 ½ c. a the d’extrait de vanille @ NONE
-c. | 7,5 ml  1 ½ c. a the d’extrait de vanille @ NONE
-a | 7,5 ml  1 ½ c. a the d’extrait de vanille @ NONE
-the | 7,5 ml  1 ½ c. a the d’extrait de vanille @ NONE
-extrait | 7,5 ml  1 ½ c. a the d’extrait de vanille @ INGREDIENT
-de | 7,5 ml  1 ½ c. a the d’extrait de vanille @ INGREDIENT
-vanille | 7,5 ml  1 ½ c. a the d’extrait de vanille @ INGREDIENT
+7,5 | 7,5 ml  1 ½ c. a the d'extrait de vanille @ QUANTITY
+ml | 7,5 ml  1 ½ c. a the d'extrait de vanille @ UNIT
+ | 7,5 ml  1 ½ c. a the d'extrait de vanille @ NONE
+1 | 7,5 ml  1 ½ c. a the d'extrait de vanille @ NONE
+½ | 7,5 ml  1 ½ c. a the d'extrait de vanille @ NONE
+c. | 7,5 ml  1 ½ c. a the d'extrait de vanille @ NONE
+a | 7,5 ml  1 ½ c. a the d'extrait de vanille @ NONE
+the | 7,5 ml  1 ½ c. a the d'extrait de vanille @ NONE
+extrait | 7,5 ml  1 ½ c. a the d'extrait de vanille @ INGREDIENT
+de | 7,5 ml  1 ½ c. a the d'extrait de vanille @ INGREDIENT
+vanille | 7,5 ml  1 ½ c. a the d'extrait de vanille @ INGREDIENT
 780 | 780 g  6 tasses de sucre a glacer @ QUANTITY
 g | 780 g  6 tasses de sucre a glacer @ UNIT
  | 780 g  6 tasses de sucre a glacer @ NONE
@@ -7907,25 +7908,25 @@ g | 420 g  2 tasses de sucre @ UNIT
 tasses | 420 g  2 tasses de sucre @ NONE
 de | 420 g  2 tasses de sucre @ NONE
 sucre | 420 g  2 tasses de sucre @ INGREDIENT
-15 | 15 ml  1 c. a soupe d’extrait de vanille @ QUANTITY
-ml | 15 ml  1 c. a soupe d’extrait de vanille @ UNIT
- | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-1 | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-c. | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-a | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-soupe | 15 ml  1 c. a soupe d’extrait de vanille @ NONE
-extrait | 15 ml  1 c. a soupe d’extrait de vanille @ INGREDIENT
-de | 15 ml  1 c. a soupe d’extrait de vanille @ INGREDIENT
-vanille | 15 ml  1 c. a soupe d’extrait de vanille @ INGREDIENT
-180 | 180 ml  ¾ tasse d’huile de canola @ QUANTITY
-ml | 180 ml  ¾ tasse d’huile de canola @ UNIT
- | 180 ml  ¾ tasse d’huile de canola @ NONE
-¾ | 180 ml  ¾ tasse d’huile de canola @ NONE
-tasse | 180 ml  ¾ tasse d’huile de canola @ NONE
-d’ | 180 ml  ¾ tasse d’huile de canola @ NONE
-huile | 180 ml  ¾ tasse d’huile de canola @ INGREDIENT
-de | 180 ml  ¾ tasse d’huile de canola @ NONE
-canola | 180 ml  ¾ tasse d’huile de canola @ NONE
+15 | 15 ml  1 c. a soupe d'extrait de vanille @ QUANTITY
+ml | 15 ml  1 c. a soupe d'extrait de vanille @ UNIT
+ | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+1 | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+c. | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+a | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+soupe | 15 ml  1 c. a soupe d'extrait de vanille @ NONE
+extrait | 15 ml  1 c. a soupe d'extrait de vanille @ INGREDIENT
+de | 15 ml  1 c. a soupe d'extrait de vanille @ INGREDIENT
+vanille | 15 ml  1 c. a soupe d'extrait de vanille @ INGREDIENT
+180 | 180 ml  ¾ tasse d'huile de canola @ QUANTITY
+ml | 180 ml  ¾ tasse d'huile de canola @ UNIT
+ | 180 ml  ¾ tasse d'huile de canola @ NONE
+¾ | 180 ml  ¾ tasse d'huile de canola @ NONE
+tasse | 180 ml  ¾ tasse d'huile de canola @ NONE
+d' | 180 ml  ¾ tasse d'huile de canola @ NONE
+huile | 180 ml  ¾ tasse d'huile de canola @ INGREDIENT
+de | 180 ml  ¾ tasse d'huile de canola @ NONE
+canola | 180 ml  ¾ tasse d'huile de canola @ NONE
 310 | 310 ml  1 ¼ tasse de lait @ QUANTITY
 ml | 310 ml  1 ¼ tasse de lait @ UNIT
  | 310 ml  1 ¼ tasse de lait @ NONE
@@ -7944,16 +7945,16 @@ beurre | 450 g  2 tasses de beurre non sale, ramolli @ INGREDIENT
 non | 450 g  2 tasses de beurre non sale, ramolli @ NONE
 sale, | 450 g  2 tasses de beurre non sale, ramolli @ NONE
 ramolli | 450 g  2 tasses de beurre non sale, ramolli @ NONE
-5 | 5 ml  1 c. a the d’extrait de vanille @ QUANTITY
-ml | 5 ml  1 c. a the d’extrait de vanille @ UNIT
- | 5 ml  1 c. a the d’extrait de vanille @ NONE
-1 | 5 ml  1 c. a the d’extrait de vanille @ NONE
-c. | 5 ml  1 c. a the d’extrait de vanille @ NONE
-a | 5 ml  1 c. a the d’extrait de vanille @ NONE
-the | 5 ml  1 c. a the d’extrait de vanille @ NONE
-extrait | 5 ml  1 c. a the d’extrait de vanille @ INGREDIENT
-de | 5 ml  1 c. a the d’extrait de vanille @ INGREDIENT
-vanille | 5 ml  1 c. a the d’extrait de vanille @ INGREDIENT
+5 | 5 ml  1 c. a the d'extrait de vanille @ QUANTITY
+ml | 5 ml  1 c. a the d'extrait de vanille @ UNIT
+ | 5 ml  1 c. a the d'extrait de vanille @ NONE
+1 | 5 ml  1 c. a the d'extrait de vanille @ NONE
+c. | 5 ml  1 c. a the d'extrait de vanille @ NONE
+a | 5 ml  1 c. a the d'extrait de vanille @ NONE
+the | 5 ml  1 c. a the d'extrait de vanille @ NONE
+extrait | 5 ml  1 c. a the d'extrait de vanille @ INGREDIENT
+de | 5 ml  1 c. a the d'extrait de vanille @ INGREDIENT
+vanille | 5 ml  1 c. a the d'extrait de vanille @ INGREDIENT
 650 | 650 g  5 tasses de sucre a glacer @ QUANTITY
 g | 650 g  5 tasses de sucre a glacer @ UNIT
  | 650 g  5 tasses de sucre a glacer @ NONE
@@ -8039,15 +8040,15 @@ ml | 560 ml 2 1/4 tasses de lait @ UNIT
 tasses | 560 ml 2 1/4 tasses de lait @ NONE
 de | 560 ml 2 1/4 tasses de lait @ NONE
 lait | 560 ml 2 1/4 tasses de lait @ INGREDIENT
-2,5 | 2,5 ml 1/2 c. a the d’extrait de vanille @ QUANTITY
-ml | 2,5 ml 1/2 c. a the d’extrait de vanille @ UNIT
-1/2 | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-c. | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-a | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-the | 2,5 ml 1/2 c. a the d’extrait de vanille @ NONE
-extrait | 2,5 ml 1/2 c. a the d’extrait de vanille @ INGREDIENT
-de | 2,5 ml 1/2 c. a the d’extrait de vanille @ INGREDIENT
-vanille | 2,5 ml 1/2 c. a the d’extrait de vanille @ INGREDIENT
+2,5 | 2,5 ml 1/2 c. a the d'extrait de vanille @ QUANTITY
+ml | 2,5 ml 1/2 c. a the d'extrait de vanille @ UNIT
+1/2 | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+c. | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+a | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+the | 2,5 ml 1/2 c. a the d'extrait de vanille @ NONE
+extrait | 2,5 ml 1/2 c. a the d'extrait de vanille @ INGREDIENT
+de | 2,5 ml 1/2 c. a the d'extrait de vanille @ INGREDIENT
+vanille | 2,5 ml 1/2 c. a the d'extrait de vanille @ INGREDIENT
 Sucre | Sucre a glacer, au gout @ INGREDIENT
 a | Sucre a glacer, au gout @ INGREDIENT
 glacer, | Sucre a glacer, au gout @ INGREDIENT
@@ -8105,15 +8106,15 @@ ml | 180 ml 3/4 tasse de cacao @ UNIT
 tasse | 180 ml 3/4 tasse de cacao @ NONE
 de | 180 ml 3/4 tasse de cacao @ NONE
 cacao | 180 ml 3/4 tasse de cacao @ INGREDIENT
-10 | 10 ml 2 c. a the d’extrait de vanille @ QUANTITY
-ml | 10 ml 2 c. a the d’extrait de vanille @ UNIT
-2 | 10 ml 2 c. a the d’extrait de vanille @ NONE
-c. | 10 ml 2 c. a the d’extrait de vanille @ NONE
-a | 10 ml 2 c. a the d’extrait de vanille @ NONE
-the | 10 ml 2 c. a the d’extrait de vanille @ NONE
-extrait | 10 ml 2 c. a the d’extrait de vanille @ INGREDIENT
-de | 10 ml 2 c. a the d’extrait de vanille @ INGREDIENT
-vanille | 10 ml 2 c. a the d’extrait de vanille @ INGREDIENT
+10 | 10 ml 2 c. a the d'extrait de vanille @ QUANTITY
+ml | 10 ml 2 c. a the d'extrait de vanille @ UNIT
+2 | 10 ml 2 c. a the d'extrait de vanille @ NONE
+c. | 10 ml 2 c. a the d'extrait de vanille @ NONE
+a | 10 ml 2 c. a the d'extrait de vanille @ NONE
+the | 10 ml 2 c. a the d'extrait de vanille @ NONE
+extrait | 10 ml 2 c. a the d'extrait de vanille @ INGREDIENT
+de | 10 ml 2 c. a the d'extrait de vanille @ INGREDIENT
+vanille | 10 ml 2 c. a the d'extrait de vanille @ INGREDIENT
 6 | 6  oeufs @ QUANTITY
  | 6  oeufs @ NONE
 oeufs | 6  oeufs @ INGREDIENT
@@ -8133,14 +8134,14 @@ chocolat | 225 g 8 oz de chocolat noir, hache finement @ INGREDIENT
 noir, | 225 g 8 oz de chocolat noir, hache finement @ INGREDIENT
 hache | 225 g 8 oz de chocolat noir, hache finement @ NONE
 finement | 225 g 8 oz de chocolat noir, hache finement @ NONE
-10 | 10 ml 2 c. a the d’eau @ QUANTITY
-ml | 10 ml 2 c. a the d’eau @ UNIT
-2 | 10 ml 2 c. a the d’eau @ NONE
-c. | 10 ml 2 c. a the d’eau @ NONE
-a | 10 ml 2 c. a the d’eau @ NONE
-the | 10 ml 2 c. a the d’eau @ NONE
-d’ | 10 ml 2 c. a the d’eau @ NONE
-eau | 10 ml 2 c. a the d’eau @ INGREDIENT
+10 | 10 ml 2 c. a the d'eau @ QUANTITY
+ml | 10 ml 2 c. a the d'eau @ UNIT
+2 | 10 ml 2 c. a the d'eau @ NONE
+c. | 10 ml 2 c. a the d'eau @ NONE
+a | 10 ml 2 c. a the d'eau @ NONE
+the | 10 ml 2 c. a the d'eau @ NONE
+d' | 10 ml 2 c. a the d'eau @ NONE
+eau | 10 ml 2 c. a the d'eau @ INGREDIENT
 5 | 5 ml 1 c. a the de colorant vert en gel voir note @ QUANTITY
 ml | 5 ml 1 c. a the de colorant vert en gel voir note @ UNIT
 1 | 5 ml 1 c. a the de colorant vert en gel voir note @ NONE

@@ -1,6 +1,7 @@
 import json
 import random
 
+cnt = 0
 
 def parse_data(data):
     # Split the data into components
@@ -45,7 +46,9 @@ def parse_data(data):
         elif label == 'AND' or label == 'OR':
             buffer_str = ''
         elif label == 'NONE' and ingredient_str != "":
-            buffer_str += text + " "
+            buffer_str += text
+            if len(text)>0 and text[-1] != "'":
+                buffer_str += " "
 
         is_end = components.index(component) == len(components) - 1
         if label != last_label or is_end:
@@ -56,14 +59,14 @@ def parse_data(data):
                 })
                 quantity_str = ""
                 buffer_str = ""
-            elif last_label == 'UNIT' and unit_str != "":
+            if last_label == 'UNIT' and unit_str != "":
                 unit.append({
                     "text": unit_str.strip(),
                     "answer_start": unit_pos
                 })
                 unit_str = ""
                 buffer_str = ""
-            elif ingredient_str != "" and ((label != 'NONE' and last_label == 'INGREDIENT') or is_end):
+            if ingredient_str != "" and ((label != 'NONE' and last_label == 'INGREDIENT') or is_end):
                 ingredient.append({
                     "text": ingredient_str.strip(),
                     "answer_start": ingredient_pos
@@ -75,19 +78,28 @@ def parse_data(data):
 
     # Create a question and answer
     qas = []
-    if len(quantity) > 0:
+    global cnt
+    cnt += 1
+    id_str = str(cnt)
+    if len(quantity) == 1:
         qas.append({
-            "question": "quantity",
+            "question": "quantity?",
+            "id": "q" + id_str,
+            "is_impossible": len(quantity) == 0,
             "answers": quantity
         })
-    if len(unit) > 0:
+    if len(unit) == 1:
         qas.append({
-            "question": "unit",
+            "question": "unit?",
+            "id": "u" + id_str,
+            "is_impossible": len(unit) == 0,
             "answers": unit
         })
-    if len(ingredient) > 0:
+    if len(ingredient) == 1:
         qas.append({
-            "question": "ingredient",
+            "question": "ingredient?",
+            "id": "i" + id_str,
+            "is_impossible": len(ingredient) == 0,
             "answers": ingredient
         })
     # Create the final output
@@ -99,13 +111,13 @@ def parse_data(data):
             }
         ]
     }
-    return json.dumps(output, indent=2)
+    return json.dumps(output)
 
 def read_file():
     with open('final.json', 'w') as outf:
         with open('final_val.json', 'w') as outf_v:
-            outf.write('{"paragraphs":[\n')
-            outf_v.write('{"paragraphs":[\n')
+            outf.write('{"version":"v2.0","data":[\n')
+            outf_v.write('{"version":"v2.0","data":[\n')
             data = []
             with open('input.csv') as f:
                 last_context = ''
