@@ -1,4 +1,6 @@
 import json
+import random
+
 
 def parse_data(data):
     # Split the data into components
@@ -101,23 +103,31 @@ def parse_data(data):
 
 def read_file():
     with open('final.json', 'w') as outf:
-        outf.write('{"paragraphs":[\n')
-        data = []
-        with open('input.csv') as f:
-            last_context = ''
-            for line in f:
-                components = line.split("|")
-                context, label = components[1].split("@")
-                if last_context == '':
-                    last_context = context.strip()
-                if last_context != context.strip():
-                    outf.write(parse_data(data))
-                    outf.write(',\n')
-                    data = []
-                    last_context = context.strip()
-                data.append(line.strip())
-        outf.write(parse_data(data)) # Parse the last data
-        outf.write('\n]}')
+        with open('final_val.json', 'w') as outf_v:
+            outf.write('{"paragraphs":[\n')
+            outf_v.write('{"paragraphs":[\n')
+            data = []
+            with open('input.csv') as f:
+                last_context = ''
+                for line in f:
+                    components = line.split("|")
+                    context, label = components[1].split("@")
+                    if last_context == '':
+                        last_context = context.strip()
+                    if last_context != context.strip():
+                        if random.random() < 0.3:
+                            outf_v.write(parse_data(data))
+                            outf_v.write(',\n')
+                        else:
+                            outf.write(parse_data(data))
+                            outf.write(',\n')
+                        data = []
+                        last_context = context.strip()
+                    data.append(line.strip())
+            outf.write(parse_data(data)) # Parse the last data
+            outf_v.write(parse_data(data)) # Parse the last data
+            outf.write('\n]}')
+            outf_v.write('\n]}')
 
 
 if __name__ == '__main__':

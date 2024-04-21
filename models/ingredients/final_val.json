@@ -1,0 +1,9935 @@
+{"paragraphs":[
+{
+  "paragraphs": [
+    {
+      "context": "1/2 paquets de levure chimique",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1/2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "paquets",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "levure chimique",
+              "answer_start": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3 oeufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3 pincees de sel",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "6 oeufs entiers",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "6",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oeufs",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "90 g de beurre fondu",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "90",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "500 g de farine",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "500",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 l de lait demi-ecreme",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "l",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait",
+              "answer_start": 7
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "250 g de champignons de Paris en boite",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "250",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "champignons de Paris",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "340 g 3/4 lb de champignons blancs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "340",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "champignons blancs",
+              "answer_start": 16
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "55 g 2 oz de pate de foie de volaille",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "55",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "pate de foie de volaille",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "40 g 3 c. a soupe de beurre non sale",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "40",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "60 ml 1/4 tasse de madere",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "60",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "madere",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "180 ml 3/4 tasse d\u2019eau froide",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "180",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "eau",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "100 g 1/2 tasse de riz basmati",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "100",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "riz basmati",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "450 g 1 lb de b\u0153uf hache maigre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "450",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "b\u0153uf",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml 1 c. a soupe d\u2019huile vegetale",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "epepine et emince",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "rinces et egouttes",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4 tortillas de ble souples de 30 cm 12 po de diametre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "tortillas",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "150 g 1 tasse de grains de mais surgeles",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "150",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "grains de mais",
+              "answer_start": 17
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "decongeles",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 morceaux de paleron ou de bourguignon lkg",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "morceaux",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "paleron",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "matiere grasse",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "sauge",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sauge",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 tablettes de bouillon de boeuf",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bouillon de boeuf",
+              "answer_start": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "poivre",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poivre",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 gousses d'ail",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "ail",
+              "answer_start": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "emincees",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "et plus pour le service",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "5 ml 1 c. a the de bicarbonate de soude",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bicarbonate de soude",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "190 ml d\u2019eau tiede",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "190",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "eau",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "coupee en gros morceaux",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 carottes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "14 g 1/2 oz de champignons shiitakes seches",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "14",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "champignons shiitakes",
+              "answer_start": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "90 ml 6 c. a soupe de miso",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "90",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "miso",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "coupee en fines spirales",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 echalotes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 cubes de bouillon de poule",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bouillon de poule",
+              "answer_start": 11
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "10 cl de creme fraiche",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "10",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cl",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 grosses cuilleres a soupe de farine",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cuilleres",
+              "answer_start": 10
+            },
+            {
+              "text": "soupe",
+              "answer_start": 10
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 31
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "100 g de gruyere rape",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "100",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "gruyere rape",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "150 des de jambon ou 4 tranches de jambon ou lardons",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "150",
+              "answer_start": 0
+            },
+            {
+              "text": "4",
+              "answer_start": 21
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "jambon",
+              "answer_start": 11
+            },
+            {
+              "text": "jambon",
+              "answer_start": 11
+            },
+            {
+              "text": "lardons",
+              "answer_start": 45
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "poivre",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poivre",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 sachets de levure de boulangerie express",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "sachets",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "levure de boulangerie",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "fromage rape facultatif",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "fromage rape",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1   oignon",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oignon",
+              "answer_start": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "hache finement",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "au gout",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "5 ml 1 1/2 c. a the de poudre a pate",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poudre a pate",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "froid et coupe en cubes",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "battu",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "20 ml 4 c. a the de vinaigre blanc",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "20",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "vinaigre",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 gousse d'ail",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "ail",
+              "answer_start": 11
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "75 g 1/2 tasse de champignons",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "75",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "champignons",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "haches finement",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 ml 1/4 c. a the de clou de girofle moulu",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "clou de girofle",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "12 merguez",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "12",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "huile d'olive",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 boites de concentre de tomates",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "boites",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "concentre de tomates",
+              "answer_start": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 cubes de bouillon de boeuf",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "boeuf",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 courgettes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml 1 c. a soupe d\u2019huile d\u2019olive",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml 1 c. a soupe de paprika doux",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "paprika",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "170 g  1 tasse de poulet cuit hache grossierement",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "170",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poulet",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "45 ml  3 c. a soupe de mayonnaise",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "45",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "mayonnaise",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "240 g  2 tasses de farine de mais masa instantanee voir note",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "240",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine de mais",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml  2 c. a soupe d\u2019huile vegetale",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Quartiers de lime",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lime",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "au gout",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "ail au poudre",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "ail",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4 cuilleres a soupe de sauce soja",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cuilleres",
+              "answer_start": 2
+            },
+            {
+              "text": "soupe",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sauce soja",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "10 cl de creme fraiche epaisse ou liquide",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "10",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cl",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme fraiche",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml 2 c. a soupe d\u2019huile d\u2019olive",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml 1 c. a soupe de piment de la Jamaique moulu",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "piment",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "5 ml \u00bd c. a the de sel",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3 oeufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "10 cl de creme fraiche epaisse",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "10",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cl",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme fraiche",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "aneth",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "aneth",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "sel",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "450 g 1 lb de filet de saumon sans la peau",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "450",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "saumon",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "ramolli",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "pour le service",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 ml 1/4 c. a the de bicarbonate de soude",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bicarbonate de soude",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "125 g 1/2 tasse de fromage a la creme a tartiner",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "125",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "1/2 tasse de fromage a la creme",
+              "answer_start": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "tempere",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "115 g 4 oz de saumon fume en tranches",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "115",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "saumon fume",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "coupees en deux",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4 tranches de saumon fume",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "saumon fume",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "hachees",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "au gout",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "epepines et coupes en des",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml  2 c. a soupe d\u2019huile d\u2019olive",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "decongeles",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "5 cuilleres a soupe de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 zestes de citron",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "citron",
+              "answer_start": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "750 ml 3 tasses d'eau",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "750",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "eau",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "hachees",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml 1 c. a soupe de gingembre frais rape finement",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "gingembre",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "7",
+      "qas": []
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "500 ml 2 tasses de bouillon de poulet",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "500",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bouillon de poulet",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "150 g 1 1/2 tasse de petits bouquets de chou-fleur",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "150",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "chou-fleur",
+              "answer_start": 40
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "ciselees persil plat",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "persil",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 vin blanc sec",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "vin blanc",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "80 g 1/2 tasse de vermicelles de ble concasses voir note",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "80",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "vermicelles de ble",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "50 g de beurre + 1 noix de beurre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "50",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 oignons ou 2 echalotes au choix",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            },
+            {
+              "text": "2",
+              "answer_start": 13
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oignons",
+              "answer_start": 2
+            },
+            {
+              "text": "echalotes",
+              "answer_start": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 cl de vin blanc",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cl",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "vin blanc",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 l de bouillon de legumes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "l",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bouillon de legumes",
+              "answer_start": 7
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "sel",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "400 g de tomates pelees",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "400",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "tomates",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1/3 oignons",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1/3",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1/2 poivrons verts petit",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1/2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poivrons verts",
+              "answer_start": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 pincees de curry",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "curry",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Sel",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "Sel",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "45 ml 3 c. a soupe de vin blanc",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "45",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "vin blanc",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "180 ml \u00be tasse de bouillon de poulet ou de legumes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "180",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bouillon de poulet",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "95 g  1 tasse de vert de poireau emince",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "95",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poireau",
+              "answer_start": 25
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  branche de thym",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "thym",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "sel",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 oignon, hache finement",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oignon,",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 gousses d'ail, hachees finement",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "d', ail,",
+              "answer_start": -1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml 1 c. a soupe de garam masala",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "garam masala",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "454 g 1 lb de filets d'aiglefin frais, coupes en morceaux",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "454",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "aiglefin",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2,5 ml 1/2 c. a the de sel",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 carotte pelee, cuite et coupee en batonnets de meme longueur que les asperges",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "carotte",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4 cuilleres a soupe de jus de citron jaune",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cuilleres a soupe",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "citron",
+              "answer_start": 30
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "poivre",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poivre",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Sel",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "Sel",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "125 ml 1/2  tasse de farine",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "125",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2,5 ml 1/2  c. a the de cumin moulu",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cumin",
+              "answer_start": 24
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml 2 c. a soupe d'huile vegetale",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "8 tortillas",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "8",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "250 ml 1 tasse de cheddar fort, rape",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "250",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cheddar",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 petit piment jalapeno, epepine et hache finement",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "piment jalapeno,",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml 2 c. a soupe d'huile d'olive",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "olives noires denoyautees",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "olives",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "675 g 1 1/2 lb de filets d'aiglefin ou de morue sans la peau",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "675",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "aiglefin",
+              "answer_start": 27
+            },
+            {
+              "text": "morue",
+              "answer_start": 42
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "60 ml 1/4 tasse de coriandre fraiche, ciselee",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "60",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "coriandre",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "8 coquilles a tacos",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "8",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "coquilles a tacos",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "125 ml 1/2 tasse de fumet de poisson",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "125",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "fumet de poisson",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "75 ml 1/3 tasse de raisins secs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "75",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "raisins secs",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 boite de 540 ml 19 oz de tomates broyees",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "boite",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "tomates broyees",
+              "answer_start": 27
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Le jus et le zeste rape de 2 limes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 27
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2,5 ml 1/2 c. a the de thym frais",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "thym",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 oeufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  oignon, emince",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "750 ml 3 tasses de bouillon de legumes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "750",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bouillon de legumes",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  boite de 540 ml 19 oz de tomates en des",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "boite",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "45 ml  3 c. a soupe de pate de tomates",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "45",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "pate de tomates",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "6 tortillas de mais souples d\u2019environ 15 cm 6 po de diametre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "6",
+              "answer_start": 0
+            },
+            {
+              "text": "6",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "tortillas",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 boites de thon ou saumon",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "boites",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "thon",
+              "answer_start": 12
+            },
+            {
+              "text": "saumon",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 echalotes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "40 g de beurre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "40",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "450 g 1 lb de panais, peles et coupes en troncons",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "450",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "panais,",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 pomme de terre, pelee et coupee en cubes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "pomme de terre,",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "500 ml 2 tasses de lait",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "500",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "225 g 1/2 lb de filet de poisson blanc fletan, aiglefin, merluche",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "225",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poisson blanc",
+              "answer_start": 25
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml 1 c. a soupe de ciboulette ciselee",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "ciboulette",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4 filets de poisson blanc charnus dos de cabillaud",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poisson blanc charnus dos de cabillaud",
+              "answer_start": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 tomates moyennes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "tomates",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 morceaux de tomate sechee conservees dans l\u2019huile facultatif",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "tomate sechee",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "sel",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "10 cl de creme fraiche",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "10",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cl",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 oeufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3 cuilleres a soupe de herbes hachees ciboulette, persil, cerfeuil",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cuilleres a soupe",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "herbes",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "75 g de beurre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "75",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "sel",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "6  echalotes francaises, pelees et emincees",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "6",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "echalotes",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml  1 c. a soupe d\u2019huile vegetale",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "60 ml  1/4 tasse de pate de cari rouge",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "60",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cari rouge",
+              "answer_start": 28
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "45 ml  3 c. a soupe de jus de lime",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "45",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "jus de lime",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "125 ml  1/2 tasse de lait de coco",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "125",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait de coco",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  oignon vert, hache grossierement",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oignon vert",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "45 ml  3 c. a soupe d\u2019huile vegetale",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "45",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "180 ml  3/4 tasse de yogourt nature",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "180",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "yogourt nature",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4  pains pitas, chacun coupes en deux",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "200 g  4 tasses de laitue emincee",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "200",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 branches de basilic",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "basilic",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3 gousses d'ail",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "ail",
+              "answer_start": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1/2 verres d'huile d'olive",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1/2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "verres",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 bulbe de fenouil, coupe en des",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "fenouil,",
+              "answer_start": 11
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 poivrons, epepines et coupes en des",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poivrons,",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 bonnes cuilleres a soupe de creme fraiche allegee",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cuilleres a soupe",
+              "answer_start": 9
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme",
+              "answer_start": 30
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "poivre",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poivre",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "60 ml \u00bc tasse de salsa verde du commerce",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "60",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "salsa verde",
+              "answer_start": 17
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "220 g 4 tasses de laitue iceberg emincee",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "220",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "laitue iceberg",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "8  tostadas voir note",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "8",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "tostadas",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "125 ml \u00bd tasse de creme sure",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "125",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme sure",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "675 g 1 1/2 lb de filet d\u2019omble de fontaine ou d\u2019omble chevalier sans la peau, coupe en 4\u00a0paves",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "675",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "omble de fontaine",
+              "answer_start": 26
+            },
+            {
+              "text": "omble chevalier",
+              "answer_start": 26
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 oignons",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  poisson blanc entier d\u2019environ 675 g 1 1/2 lb,  vide et ecaille vivaneau, bar, dore",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poisson blanc",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  oignon vert, coupe en troncons",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oignon vert",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3  feuilles de laurier",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "laurier",
+              "answer_start": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  branche de thym frais",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "thym",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  mini-poivron rouge ou 1/4 de poivron rouge,  epepine et coupe en brunoise",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "mini-poivron rouge",
+              "answer_start": 3
+            },
+            {
+              "text": "1/4 de poivron rouge,  epepine et coupe",
+              "answer_start": 25
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "60 ml 1/4 tasse d\u2019huile d\u2019olive",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "60",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "454 g 1 lb de filets de poisson blanc sans la peau  et sans les aretes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "454",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poisson blanc",
+              "answer_start": 24
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  oignon, hache",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oignon,",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "120 g de crevettes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "120",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "crevettes",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "6 oeufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "6",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "100 g de gruyere rape",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "100",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "gruyere rape",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "ail",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "ail",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "persil",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "persil",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 filet de tilapia d\u2019environ 115 g 1/4 lb, coupe en fines tranches",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "tilapia",
+              "answer_start": 11
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  gros oignon, emince",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oignon,",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "160 g 2 tasses de chapelure panko voir note",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "160",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "chapelure panko",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "curry",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "curry",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "cognac",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cognac",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  gros oignon rouge, coupe en lamelles",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oignon rouge,",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1/2  concombre anglais, rape",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1/2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "concombre anglais,",
+              "answer_start": 5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "675 g 1 1/2 lb de poisson a chair blanche au choix,  avec ou sans la peau, coupe en 4 paves",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "675",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poisson a chair blanche",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "375 ml 1 1/2 tasse de tomates cerises, coupees en deux",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "375",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "tomates cerises,",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4 filets de colin surgeles",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "colin",
+              "answer_start": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "20 cl de lait de coco",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "20",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cl",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait de coco",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1/2   orange, le zeste rape seulement",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1/2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "orange,",
+              "answer_start": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "200 g de chocolat patissier",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "200",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "chocolat patissier",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "100 g de beurre + une noix pour le moule",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "100",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "10 ml  2 c. a the de poudre a pate",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "10",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poudre a pate",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "140 g 2/3 tasse de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "140",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  gousse de vanille, fendue en 2 et grattee",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "vanille,",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "300 g de farine",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "300",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "200 g de chocolat noir",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "200",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "chocolat noir",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 sachets de levure chimique",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "sachets",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "levure chimique",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Fruits frais, pour garnir",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "Fruits",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "100 g de beurre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "100",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "100 g de farine",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "100",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 ml 1/4 c. a the de bicarbonate de soude",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bicarbonate de soude",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "500 ml 2 tasses de farine",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "500",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "10 ml 2 c. a the de poudre a pate",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "10",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poudre a pate",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "125 ml 1/2 tasse de lait",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "125",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "250 ml 1 tasse de beurre non sale, ramolli",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "250",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "75 g de cerneau de noix",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "75",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cerneau de noix",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 pots de yaourt nature",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "pots",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "yaourt nature",
+              "answer_start": 10
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1/2 pots d'huile de colza",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1/2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "pots",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 11
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 pots de sucre semoule",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "pots",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre semoule",
+              "answer_start": 10
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3 noisettes de beurre et un sucre vanille",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 15
+            },
+            {
+              "text": "sucre vanille",
+              "answer_start": 28
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "40 g de beurre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "40",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "150 g de sucre en poudre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "150",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "5 cl d'huile",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cl",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 7
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 sachets de levure chimique",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "sachets",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "levure chimique",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 sachets de sucre vanille",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "sachets",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre vanille",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Le zeste rape de 1 orange",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 17
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "375 ml 1 1/2 tasse de farine",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "375",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "75 ml 1/3 tasse de raisins secs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "75",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "raisins secs",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "375 ml 1 1/2 tasse de flocons d'avoine",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "375",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "flocons d'avoine",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3 oeufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 boite de 300 g de fruits surgeles fraises, framboises, fruits melanges, decongeles",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "boite",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "fruits",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Sucre au gout",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "Sucre",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1/2 sachets de levure",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1/2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "sachets",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "levure",
+              "answer_start": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 sachets de sucre vanille",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "sachets",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre vanille",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "180 g de creme dessert au chocolat",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "180",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme dessert au chocolat",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "50 g de beurre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "50",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 yaourts natures",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "yaourts natures",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml a 70 g 2 c. a soupe a 1/3 tasse de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 41
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "625 ml 2 1/2 tasses de lait",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "625",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "20 ml 4 c. a the de lait",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "20",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "250 ml 1tasse de creme 35 % a fouetter",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "250",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme",
+              "answer_start": 17
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2,5 ml 1/2 c. a the d\u2019extrait de vanille",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "d\u2019extrait de vanille",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "75 g 1/2 tasse de cerises fraiches",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "75",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cerises",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Petits bonbons en sucre facultatif",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bonbons",
+              "answer_start": 7
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1/4 sachets de levure chimique",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1/4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "sachets",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "levure chimique",
+              "answer_start": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "100 g de beurre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "100",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3 oeufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 cuilleres a soupe de sucre glace",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "cuilleres a soupe",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre glace",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "35 g 1/3 tasse de cacao, tamise",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "35",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cacao,",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "315 g 1 1/2 tasse de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "315",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "250 ml 1 tasse de lait",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "250",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Gros copeaux de chocolat",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "chocolat",
+              "answer_start": 16
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "105 g 1/2 tasse de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "105",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "250 g de carotte rapees",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "250",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "carotte",
+              "answer_start": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 oeufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "60 g de cerneau de noix concasses",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "60",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cerneau de noix",
+              "answer_start": 8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 sachets de levure chimique",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "sachets",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "levure chimique",
+              "answer_start": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "45 g 1/3 tasse de fecule de mais",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "45",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "fecule de mais",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "5 oeufs, temperes et separes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "oeufs,",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "160 g 3/4 tasse de sucre, et plus pour saupoudrer",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "160",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre,",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2 citrons, le zeste rape finement",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "citrons,",
+              "answer_start": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Sucre a glacer, au gout",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "Sucre a glacer,",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "500 ml  2 tasses de creme 35 %",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "500",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "5 ml  1 c. a the d\u2019agar-agar voir note",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "d\u2019agar-agar",
+              "answer_start": 17
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml 2 c. a soupe de beurre non sale, ramolli",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml 2 c. a soupe de lait en poudre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait en poudre",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 pincee de fleur de sel",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "fleur de sel",
+              "answer_start": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "200 g  1 1/3 tasse de farine tout usage non blanchie",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "200",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Colorant alimentaire rouge facultatif",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "Colorant alimentaire rouge",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "450 g 16 oz de chocolat au lait, hache",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "450",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "chocolat au lait,",
+              "answer_start": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "625 ml  2 1/2 tasses de creme 35 %",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "625",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme",
+              "answer_start": 24
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "10 ml  2 c. a the d\u2019extrait de vanille",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "10",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "d\u2019extrait de vanille",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "115 g 4 oz de chocolat noir, hache",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "115",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "chocolat noir,",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml  1 c. a soupe de cacao",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cacao",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Une pincee de fleur de sel",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "fleur de sel",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "Sucre a glacer, pour saupoudrer",
+      "qas": [
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "Sucre a glacer,",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "315 g 1 1/2 tasse de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "315",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "340 g 1 1/2 tasse de beurre non sale, ramolli",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "340",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml 2 c. a soupe de jus de citron",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "citron",
+              "answer_start": 29
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "30 ml  2 c. a soupe de fecule de mais",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "30",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "fecule de mais",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml  1 c. a soupe de jus de citron",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "citron",
+              "answer_start": 30
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3 jaunes d\u2019\u0153ufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "\u0153ufs",
+              "answer_start": 11
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "190 g 1 1/4 tasse de farine tout usage non blanchie",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "190",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "7,5 ml 1 1/2 c. a the de poudre a pate",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "7,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poudre a pate",
+              "answer_start": 25
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "60 ml 1/4 tasse de lait",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "60",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "115 g 4 oz de chocolat blanc, hache",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "115",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "chocolat blanc,",
+              "answer_start": 14
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml 1 c. a soupe d\u2019eau",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "eau",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "105 g 1/2 tasse de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "105",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 ml 1/4 c. a the de sel",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "300 g  2 tasses de farine tout usage non blanchie",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "300",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "2 tasses de farine",
+              "answer_start": 7
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4  \u0153ufs, temperes",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "\u0153ufs,",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2,5 ml  1/2 c. a the d\u2019extrait de vanille",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "extrait de vanille",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4  \u0153ufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "\u0153ufs",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "3  jaunes d\u2019\u0153ufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "3",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "\u0153ufs",
+              "answer_start": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "90 ml  6 c. a soupe de creme 35\u00a0%",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "90",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "210 g 1 tasse de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "210",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 17
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1  citron, le zeste rape finement",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4  blancs d\u2019\u0153ufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "\u0153ufs",
+              "answer_start": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "15 ml  1 c. a soupe de poudre a pate",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "15",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "poudre a pate",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2,5 ml  \u00bd c. a the de sel",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "420 g  2 tasses de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "420",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "180 ml  \u00be tasse d\u2019huile de canola",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "180",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "huile",
+              "answer_start": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "310 ml  1 \u00bc tasse de lait",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "310",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "lait",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "7,5 ml  1 \u00bd c. a the d\u2019extrait de vanille",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "7,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "extrait de vanille",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "0,5 ml  1/8 c. a the de colorant en gel vert irlandais",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "0,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "colorant en gel vert",
+              "answer_start": 24
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "0,5 ml  1/8 c. a the de colorant en gel orange",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "0,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "colorant en gel orange",
+              "answer_start": 24
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "420 g  3 tasses de farine tout usage non blanchie",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "420",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "4  \u0153ufs",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "4",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "\u0153ufs",
+              "answer_start": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "500 ml 2 tasses de creme 35\u00a0%",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "500",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "creme",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "40 g 3 c. a soupe de sucre",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "40",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "g",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "1 ml 1/4 c. a the de sel",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "1",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sel",
+              "answer_start": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "500 ml 2 tasses de farine tout usage non blanchie",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "500",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "farine",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "2,5 ml 1/2 c. a the de bicarbonate de soude",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "2,5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "bicarbonate de soude",
+              "answer_start": 23
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "430 ml 1 3/4 tasse de cassonade",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "430",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "cassonade",
+              "answer_start": 22
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "10 ml 2 c. a the d\u2019eau",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "10",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 3
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "eau",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "5 ml 1 c. a the de colorant vert en gel voir note",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "5",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 2
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "colorant vert",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "180 ml 3/4 tasse de beurre non sale ramolli",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "180",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "beurre",
+              "answer_start": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "paragraphs": [
+    {
+      "context": "500 ml 2 tasses de sucre a glacer",
+      "qas": [
+        {
+          "question": "quantity",
+          "answers": [
+            {
+              "text": "500",
+              "answer_start": 0
+            }
+          ]
+        },
+        {
+          "question": "unit",
+          "answers": [
+            {
+              "text": "ml",
+              "answer_start": 4
+            }
+          ]
+        },
+        {
+          "question": "ingredient",
+          "answers": [
+            {
+              "text": "sucre a glacer",
+              "answer_start": 19
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+]}

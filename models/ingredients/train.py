@@ -8,6 +8,9 @@ from tflite_model_maker.config import ExportFormat
 from tflite_model_maker.config import QuantizationConfig
 from tflite_model_maker.text_classifier import AverageWordVecSpec
 from tflite_model_maker.text_classifier import DataLoader
+from tflite_model_maker import question_answer
+from tflite_model_maker.question_answer import DataLoader
+
 import tensorflow as tf
 assert tf.__version__.startswith('2')
 tf.get_logger().setLevel('ERROR')
@@ -17,7 +20,7 @@ df_test = pd.read_csv('test.csv', error_bad_lines=False, engine="python")
 
 print(df_test.head())
 
-spec = model_spec.get('mobilebert_classifier')
+spec = model_spec.get('mobilebert_qa_squad')
 
 train_data = DataLoader.from_csv(
    filename='train.csv',
@@ -34,7 +37,7 @@ test_data = DataLoader.from_csv(
    delimiter='@',
    is_training=False)
 
-model = text_classifier.create(train_data, model_spec=spec, epochs=100)
+model = text_classifier.create(train_data, model_spec=spec)
 
 print(model.summary())
 
