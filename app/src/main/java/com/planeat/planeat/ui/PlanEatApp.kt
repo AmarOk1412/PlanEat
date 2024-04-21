@@ -16,6 +16,7 @@
 
 package com.planeat.planeat.ui
 
+import android.R.attr.text
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -45,6 +46,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
+import com.planeat.planeat.ai.client.TextClassificationClient
 import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
@@ -67,17 +69,18 @@ import com.planeat.planeat.ui.utils.isSeparating
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.text.Normalizer
+
 
 class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     private val connectors: List<Connector>
     val recipes = mutableStateListOf<Recipe>()
     val ingredients = mutableStateListOf<String>()
+    var client: TextClassificationClient? = null
 
     init {
         val marmiton = Marmiton(maxResult)
@@ -141,8 +144,9 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
             launch {
                 connectors.map { connector ->
                     async(Dispatchers.IO) {
-
-                        Log.d("PlanEat", "Elems: ${db.recipeDao().getAll().size}")
+                        //var text = "sucre | 50 g de sucre en poudre"
+                        //var results = client!!.classify(text)
+                        //Log.d("PlanEat", "@@@ ${text} -> ${results}");
 
                         // TODO callback return false?
                         connector.search(searchTerm, onRecipe = { recipe ->
@@ -179,6 +183,8 @@ fun PlanEatApp(
         RecipesDb::class.java, "RecipesDb"
     ).build()
     val model = AppModel(3, db);
+    model.client = TextClassificationClient(context);
+    model.client!!.load()
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     /**

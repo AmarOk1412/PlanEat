@@ -208,20 +208,22 @@ fun RecipeListItem(
             Row(
                 modifier = Modifier.padding(top = 12.dp, start = 8.dp).fillMaxWidth(),
             ) {
-                Log.d("PlanEat", recipe.toString())
                 for (i in 0 until minOf(recipe.tags.size, 2)) {
                     val tag = recipe.tags[i]
-                    val colorIndex = tag.first().toInt() % 8
-                    val chipColor = when (colorIndex) {
-                        0 -> tagColor0
-                        1 -> tagColor1
-                        2 -> tagColor2
-                        3 -> tagColor3
-                        4 -> tagColor4
-                        5 -> tagColor5
-                        6 -> tagColor6
-                        7 -> tagColor7
-                        else -> tagColor8
+                    var chipColor = tagColor0
+                    if (!tag.isEmpty()) {
+                        val colorIndex = tag.first().toInt() % 8
+                        chipColor = when (colorIndex) {
+                            0 -> tagColor0
+                            1 -> tagColor1
+                            2 -> tagColor2
+                            3 -> tagColor3
+                            4 -> tagColor4
+                            5 -> tagColor5
+                            6 -> tagColor6
+                            7 -> tagColor7
+                            else -> tagColor8
+                        }
                     }
 
                     SuggestionChip(

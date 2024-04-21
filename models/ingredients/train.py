@@ -17,7 +17,7 @@ df_test = pd.read_csv('test.csv', error_bad_lines=False, engine="python")
 
 print(df_test.head())
 
-spec = model_spec.get('average_word_vec')
+spec = model_spec.get('mobilebert_classifier')
 
 train_data = DataLoader.from_csv(
    filename='train.csv',
@@ -43,4 +43,10 @@ loss, acc = model.evaluate(test_data)
 print('Loss:', loss)
 print('Accuracy:', acc)
 
-model.export(export_dir='average_word_vec')
+model.export(export_dir='mobilebert',
+    tflite_filename='ingredients.tflite',
+    label_filename='labels.txt',
+    vocab_filename='vocab.txt',
+    saved_model_filename='saved_model',
+    tfjs_folder_name='tfjs',
+    export_format=None)

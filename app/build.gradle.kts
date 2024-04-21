@@ -124,6 +124,9 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
 
+    implementation("org.tensorflow:tensorflow-lite:2.4.4")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-task-text:0.4.4")
 
     val room_version = "2.6.1"
 
