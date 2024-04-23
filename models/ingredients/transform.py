@@ -50,7 +50,7 @@ def parse_data(data):
             if len(text)>0 and text[-1] != "'":
                 buffer_str += " "
 
-        is_end = components.index(component) == len(components) - 1
+        is_end = components.index(component) == len(components) - 1 or label == 'AND' or label == 'OR'
         if label != last_label or is_end:
             if last_label == 'QUANTITY' and quantity_str != "":
                 quantity.append({
@@ -81,27 +81,24 @@ def parse_data(data):
     global cnt
     cnt += 1
     id_str = str(cnt)
-    if len(quantity) == 1:
-        qas.append({
-            "question": "quantity?",
-            "id": "q" + id_str,
-            "is_impossible": len(quantity) == 0,
-            "answers": quantity
-        })
-    if len(unit) == 1:
-        qas.append({
-            "question": "unit?",
-            "id": "u" + id_str,
-            "is_impossible": len(unit) == 0,
-            "answers": unit
-        })
-    if len(ingredient) == 1:
-        qas.append({
-            "question": "ingredient?",
-            "id": "i" + id_str,
-            "is_impossible": len(ingredient) == 0,
-            "answers": ingredient
-        })
+    qas.append({
+        "question": "quantity?",
+        "id": "q" + id_str,
+        "is_impossible": len(quantity) == 0,
+        "answers": quantity
+    })
+    qas.append({
+        "question": "unit?",
+        "id": "u" + id_str,
+        "is_impossible": len(unit) == 0,
+        "answers": unit
+    })
+    qas.append({
+        "question": "ingredient?",
+        "id": "i" + id_str,
+        "is_impossible": len(ingredient) == 0,
+        "answers": ingredient
+    })
     # Create the final output
     output = {
         "paragraphs": [
