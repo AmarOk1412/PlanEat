@@ -16,7 +16,6 @@
 
 package com.planeat.planeat.ui
 
-import android.R.attr.text
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -46,7 +45,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
-import com.planeat.planeat.ai.client.TextClassificationClient
+import com.planeat.planeat.ai.client.BertQaHelper
+import org.tensorflow.lite.task.text.qa.QaAnswer
 import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
@@ -76,11 +76,11 @@ import kotlinx.coroutines.launch
 import java.text.Normalizer
 
 
-class AppModel(private val maxResult: Int, private val db: RecipesDb) {
+class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHelper.AnswererListener {
     private val connectors: List<Connector>
     val recipes = mutableStateListOf<Recipe>()
     val ingredients = mutableStateListOf<String>()
-    var client: TextClassificationClient? = null
+    lateinit var bertQaHelper: BertQaHelper
 
     init {
         val marmiton = Marmiton(maxResult)
@@ -144,10 +144,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
             launch {
                 connectors.map { connector ->
                     async(Dispatchers.IO) {
-                        //var text = "sucre | 50 g de sucre en poudre"
-                        //var results = client!!.classify(text)
-                        //Log.d("PlanEat", "@@@ ${text} -> ${results}");
-
                         // TODO callback return false?
                         connector.search(searchTerm, onRecipe = { recipe ->
                             if (searchTerm == currentSearchTerm) {
@@ -158,9 +154,29 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                         })
                     }
                 }.awaitAll()
+
+                bertQaHelper.answer("3 verres de genepi bien agrumé au gout", "ingredient?")
+                bertQaHelper.answer("3 verres de genepi bien agrumé au gout", "quantity?")
+                bertQaHelper.answer("sel et poivre", "ingredient?")
+                bertQaHelper.answer("sel et poivre", "quantity?")
+
+                //var text = "sucre | 50 g de sucre en poudre"
+                //var results = client!!.classify(text)
+                //Log.d("PlanEat", "@@@ ${text} -> ${results}");
             }
         }
         return true
+    }
+
+    override fun onError(error: String) {
+        Log.e("PlanEat", error)
+    }
+
+    override fun onResults(contextOfQuestion: String, question: String, results: List<QaAnswer>?, inferenceTime: Long) {
+        results?.first()?.let {
+            Log.d("PlanEat", it.text)
+        }
+        Log.d("PlanEat", inferenceTime.toString())
     }
 }
 
@@ -183,8 +199,8 @@ fun PlanEatApp(
         RecipesDb::class.java, "RecipesDb"
     ).build()
     val model = AppModel(3, db);
-    model.client = TextClassificationClient(context);
-    model.client!!.load()
+
+    model.bertQaHelper = BertQaHelper(context = context, answererListener = model)
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     /**

@@ -25,7 +25,7 @@ spec = model_spec.get('mobilebert_qa_squad')
 train_data = DataLoader.from_squad(filename='train.csv',model_spec=spec,is_training=True,version_2_with_negative=True)
 test_data = DataLoader.from_squad(filename='test.csv',model_spec=spec,is_training=False,version_2_with_negative=True)
 
-model = question_answer.create(train_data, model_spec=spec)
+model = question_answer.create(train_data, model_spec=spec, epoch=8, steps_per_epoch=100)
 
 print(model.summary())
 
