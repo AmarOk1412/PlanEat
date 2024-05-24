@@ -87,7 +87,9 @@ fun ContentItem(
             modifier = Modifier.horizontalScroll(rememberScrollState())
         ) {
             recipesPlanned.value.forEach { recipe ->
-                RecipeListItem(recipe = recipe, modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium))
+                RecipeListItem(recipe = recipe,
+                    onRecipeSelected = {},
+                    modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium))
             }
         }
     }

@@ -17,6 +17,7 @@
 package com.planeat.planeat.ui
 
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -63,8 +68,10 @@ fun RecipesScreen(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
-    db: RecipesDb
+    db: RecipesDb,
 ) {
+    var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
+
     /**
      * When moving from LIST_AND_DETAIL page to LIST page clear the selection and user should see LIST screen.
      */
@@ -74,56 +81,108 @@ fun RecipesScreen(
     Box(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
-            ) {
-                // Header element
-                Text(
-                    text = stringResource(id = R.string.tab_recipes),
-                    style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-
-                DockedSearchBar(
+            if (selectedRecipe != null) {
+                // Show the detail screen
+                // TODO separate the detail screen into a separate composable
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    onQueryChanged,
-                    recipes
-                )
-
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier.padding(top = 8.dp)
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
                 ) {
-                    items(recipes) { recipe ->
-                        RecipeListItem(
-                            recipe = recipe,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .shadow(8.dp, shape = MaterialTheme.shapes.medium)
+                    BackHandler {
+                        selectedRecipe = null
+                    }
+                    Text(
+                        text = selectedRecipe!!.title,
+                        style = MaterialTheme.typography.headlineLarge,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.ingredients),
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    selectedRecipe!!.ingredients.forEach {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
+
+                    Text(
+                        text = stringResource(id = R.string.steps),
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    selectedRecipe!!.steps.forEachIndexed { index, step ->
+                        Text(
+                            text = "${index + 1}. $step",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(bottom = 8.dp)
                         )
                     }
                 }
-        }
-        // When we have bottom navigation we show FAB at the bottom end.
-        if (navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
-            LargeFloatingActionButton(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(16.dp),
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = stringResource(id = R.string.edit),
-                    modifier = Modifier.size(28.dp)
-                )
+
+            } else {
+                // Show the list screen
+                // TODO separate the list screen into a separate composable
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                ) {
+                    // Header element
+                    Text(
+                        text = stringResource(id = R.string.tab_recipes),
+                        style = MaterialTheme.typography.headlineLarge,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    DockedSearchBar(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        onQueryChanged,
+                        recipes
+                    )
+
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        modifier = Modifier.padding(top = 8.dp)
+                    ) {
+                        items(count = recipes.size, key = {recipes[it].recipeId}, itemContent = { index ->
+                            RecipeListItem(
+                                recipe = recipes[index],
+                                onRecipeSelected = { r -> selectedRecipe = r },
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .shadow(8.dp, shape = MaterialTheme.shapes.medium)
+                            )
+                        })
+                    }
+                }
             }
-        }
+
+            // When we have bottom navigation we show FAB at the bottom end.
+            if (navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
+                LargeFloatingActionButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp),
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = stringResource(id = R.string.edit),
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+            }
         }
     }
 }

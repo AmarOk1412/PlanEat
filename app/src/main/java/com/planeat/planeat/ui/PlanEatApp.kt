@@ -153,12 +153,12 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
                             }
                         })
                     }
-                }.awaitAll()
+                }//.awaitAll()
 
-                bertQaHelper.answer("3 verres de genepi bien agrumé au gout", "ingredient?")
-                bertQaHelper.answer("3 verres de genepi bien agrumé au gout", "quantity?")
-                bertQaHelper.answer("sel et poivre", "ingredient?")
-                bertQaHelper.answer("sel et poivre", "quantity?")
+                //bertQaHelper.answer("3 verres de genepi bien agrumé au gout", "ingredient?")
+                //bertQaHelper.answer("3 verres de genepi bien agrumé au gout", "quantity?")
+                //bertQaHelper.answer("sel et poivre", "ingredient?")
+                //bertQaHelper.answer("sel et poivre", "quantity?")
 
                 //var text = "sucre | 50 g de sucre en poudre"
                 //var results = client!!.classify(text)
@@ -200,7 +200,7 @@ fun PlanEatApp(
     ).build()
     val model = AppModel(3, db);
 
-    model.bertQaHelper = BertQaHelper(context = context, answererListener = model)
+    //model.bertQaHelper = BertQaHelper(context = context, answererListener = model)
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     /**
@@ -438,7 +438,7 @@ private fun NavHost(
                 displayFeatures = displayFeatures,
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
-                db = db,
+                db = db
             )
         }
         composable(PlanEatRoute.PANTRY) {
