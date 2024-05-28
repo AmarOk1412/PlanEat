@@ -17,11 +17,13 @@
 package com.planeat.planeat.ui
 
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,14 +32,15 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,9 +50,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
+import coil.compose.AsyncImage
 import com.planeat.planeat.R
 import com.planeat.planeat.ui.components.DockedSearchBar
 import com.planeat.planeat.ui.utils.PlanEatContentType
@@ -59,7 +64,6 @@ import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.components.RecipeListItem
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipesScreen(
     contentType: PlanEatContentType,
@@ -71,6 +75,7 @@ fun RecipesScreen(
     db: RecipesDb,
 ) {
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
+    var addNewRecipe by remember { mutableStateOf(false) }
 
     /**
      * When moving from LIST_AND_DETAIL page to LIST page clear the selection and user should see LIST screen.
@@ -97,6 +102,19 @@ fun RecipesScreen(
                         style = MaterialTheme.typography.headlineLarge,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
+
+                     Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f / .8f)
+                    ) {
+                        AsyncImage(
+                            model = selectedRecipe!!.image,
+                            contentDescription = selectedRecipe!!.title,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop,
+                        )
+                    }
 
                     Text(
                         text = stringResource(id = R.string.ingredients),
@@ -127,6 +145,22 @@ fun RecipesScreen(
                     }
                 }
 
+            } else if (addNewRecipe) {
+                // Show the detail screen
+                // TODO separate the detail screen into a separate composable
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                ) {
+                    BackHandler {
+                        addNewRecipe = false
+                    }
+
+                    EditRecipeScreen(
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             } else {
                 // Show the list screen
                 // TODO separate the list screen into a separate composable
@@ -169,7 +203,7 @@ fun RecipesScreen(
             // When we have bottom navigation we show FAB at the bottom end.
             if (navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
                 LargeFloatingActionButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { selectedRecipe = null; addNewRecipe = true },
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(16.dp),
@@ -183,6 +217,54 @@ fun RecipesScreen(
                     )
                 }
             }
+        }
+    }
+}
+
+
+@Composable
+fun EditRecipeScreen(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 16.dp),
+    ) {
+        var title by remember { mutableStateOf("") }
+        var ingredients by remember { mutableStateOf("") }
+        var steps by remember { mutableStateOf("") }
+        // Title input
+        TextField(
+            value = title,
+            onValueChange = { title = it },
+            label = { Text(text = "Title") },
+            maxLines = 1,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        // Ingredients input
+        TextField(
+            value = ingredients,
+            onValueChange = { ingredients = it },
+            label = { Text(text = "Ingredients") },
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        // Steps input
+        TextField(
+            value = steps,
+            onValueChange = { steps = it },
+            label = { Text(text = "Steps") },
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        // Save button
+        Button(
+            onClick = { Log.d("EditRecipeScreen", "Save button clicked") },
+            modifier = Modifier.align(Alignment.End)
+        ) {
+            Text(text = "Save")
         }
     }
 }

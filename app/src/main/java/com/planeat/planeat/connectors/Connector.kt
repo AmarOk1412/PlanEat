@@ -1,6 +1,5 @@
 package com.planeat.planeat.connectors
 
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.planeat.planeat.data.Recipe
 import org.json.JSONArray
 import org.json.JSONException

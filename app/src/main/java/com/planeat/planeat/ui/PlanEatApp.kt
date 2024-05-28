@@ -46,7 +46,6 @@ import androidx.room.Room
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
 import com.planeat.planeat.ai.client.BertQaHelper
-import org.tensorflow.lite.task.text.qa.QaAnswer
 import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
@@ -70,9 +69,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import org.tensorflow.lite.task.text.qa.QaAnswer
 import java.text.Normalizer
 
 

@@ -1,7 +1,6 @@
 package com.planeat.planeat.connectors
 
 import android.util.Log
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.planeat.planeat.data.Recipe
 
 import org.jsoup.Jsoup
