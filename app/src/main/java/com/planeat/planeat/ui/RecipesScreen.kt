@@ -20,6 +20,7 @@ import android.os.Build
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -32,11 +33,12 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -49,19 +51,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.room.Room
 import androidx.window.layout.DisplayFeature
 import coil.compose.AsyncImage
 import com.planeat.planeat.R
-import com.planeat.planeat.ui.components.DockedSearchBar
-import com.planeat.planeat.ui.utils.PlanEatContentType
-import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.ui.components.DockedSearchBar
 import com.planeat.planeat.ui.components.RecipeListItem
+import com.planeat.planeat.ui.theme.backgroundCardRecipe
+import com.planeat.planeat.ui.theme.textCardRecipe
+import com.planeat.planeat.ui.utils.PlanEatContentType
+import com.planeat.planeat.ui.utils.PlanEatNavigationType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -76,6 +88,7 @@ fun RecipesScreen(
 ) {
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
     var addNewRecipe by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     /**
      * When moving from LIST_AND_DETAIL page to LIST page clear the selection and user should see LIST screen.
@@ -103,7 +116,8 @@ fun RecipesScreen(
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
 
-                     Box(
+                    // TODO better icon/redesign
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1f / .8f)
@@ -114,6 +128,38 @@ fun RecipesScreen(
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop,
                         )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(8.dp)
+                        ) {
+                            IconButton(
+                                onClick = { CoroutineScope(Dispatchers.IO).launch {
+                                    try {
+                                        val rdb = Room.databaseBuilder(
+                                            context,
+                                            RecipesDb::class.java, "RecipesDb"
+                                        ).build()
+                                        rdb.recipeDao().delete(selectedRecipe!!)
+                                        rdb.close()
+                                        selectedRecipe = null
+                                    } catch (error: Exception) {
+                                        Log.d("PlanEat", "Error: $error")
+                                    }
+                                } },
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .background(backgroundCardRecipe)
+                                    .align(Alignment.TopEnd)
+                            ) {
+                                Icon(
+                                    imageVector = ImageVector.vectorResource(R.drawable.favorite),
+                                    contentDescription = stringResource(R.string.favorite),
+                                    tint = textCardRecipe,
+                                )
+                            }
+                        }
                     }
 
                     Text(
@@ -158,7 +204,17 @@ fun RecipesScreen(
                     }
 
                     EditRecipeScreen(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
+                                val rdb = Room.databaseBuilder(
+                                    context,
+                                    RecipesDb::class.java, "RecipesDb"
+                                ).build()
+                                rdb.recipeDao().insertAll(recipe)
+                                rdb.close()
+                                addNewRecipe = false
+                            }
+                        }
                     )
                 }
             } else {
@@ -225,7 +281,9 @@ fun RecipesScreen(
 @Composable
 fun EditRecipeScreen(
     modifier: Modifier = Modifier,
+    onSaved: (Recipe) -> Unit
 ) {
+    val context = LocalContext.current
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -261,8 +319,15 @@ fun EditRecipeScreen(
 
         // Save button
         Button(
-            onClick = { Log.d("EditRecipeScreen", "Save button clicked") },
-            modifier = Modifier.align(Alignment.End)
+            onClick = {
+                Log.d("PlanEat", "Save recipe: $title")
+                val recipe = Recipe(
+                    title = title,
+                    ingredients = ingredients.split("\n"),
+                    steps = steps.split("\n")
+                )
+                onSaved(recipe)
+            }
         ) {
             Text(text = "Save")
         }

@@ -72,6 +72,8 @@ fun ContentItem(
                         adb.agendaDao().delete(it)
                     }
                 }
+                adb.close()
+                rdb.close()
             }
         }
 

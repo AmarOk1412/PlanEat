@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
+import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,7 +44,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
-import androidx.compose.material3.SuggestionChipDefaults
 import coil.compose.AsyncImage
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
@@ -128,12 +128,14 @@ fun RecipeListItem(
             modifier = Modifier.fillMaxWidth()
         ) {
             LaunchedEffect(Unit) {
-                exists.value = withContext(Dispatchers.IO) {
+                withContext(Dispatchers.IO) {
                     val rdb = Room.databaseBuilder(
                         context,
                         RecipesDb::class.java, "RecipesDb"
                     ).build()
-                    rdb.recipeDao().findByUrl(recipe.url) != null
+                    val res = rdb.recipeDao().findByUrl(recipe.url)
+                    rdb.close()
+                    res != null
                 }
             }
 
@@ -166,6 +168,7 @@ fun RecipeListItem(
                                 } else {
                                     rdb.recipeDao().insertAll(recipe)
                                 }
+                                rdb.close()
                             } catch (error: Exception) {
                                 Log.d("PlanEat", "Error: $error")
                             }
