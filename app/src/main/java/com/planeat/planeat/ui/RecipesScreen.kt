@@ -243,7 +243,7 @@ fun RecipesScreen(
                         columns = GridCells.Fixed(2),
                         modifier = Modifier.padding(top = 8.dp)
                     ) {
-                        items(count = recipes.size, key = {recipes[it].recipeId}, itemContent = { index ->
+                        items(count = recipes.size, key = {index -> index}, itemContent = { index ->
                             RecipeListItem(
                                 recipe = recipes[index],
                                 onRecipeSelected = { r -> selectedRecipe = r },
