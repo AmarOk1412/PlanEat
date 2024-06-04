@@ -10,7 +10,8 @@ import java.time.format.DateTimeFormatter
  */
 data class CalendarUiModel(
     val selectedDate: Date,
-    val visibleDates: List<Date>
+    val visibleDates: List<Date>,
+    val scrollDates: List<Date>
 ) {
 
     val startDate: Date = visibleDates.first()

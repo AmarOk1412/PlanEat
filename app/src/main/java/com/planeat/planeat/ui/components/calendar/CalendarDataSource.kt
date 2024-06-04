@@ -24,7 +24,10 @@ class CalendarDataSource {
         val firstDayOfWeek = startDate.with(DayOfWeek.MONDAY)
         val endDayOfWeek = firstDayOfWeek.plusDays(7)
         val visibleDates = getDatesBetween(firstDayOfWeek, endDayOfWeek)
-        return toUiModel(visibleDates, lastSelectedDate)
+        val firstDate = firstDayOfWeek.minusDays(7)
+        val endDate = endDayOfWeek.plusDays(7)
+        val scrollDates = getDatesBetween(firstDate, endDate)
+        return toUiModel(visibleDates, lastSelectedDate, scrollDates)
     }
 
     private fun getDatesBetween(startDate: LocalDate, endDate: LocalDate): List<LocalDate> {
@@ -38,11 +41,15 @@ class CalendarDataSource {
 
     private fun toUiModel(
         dateList: List<LocalDate>,
-        lastSelectedDate: LocalDate
+        lastSelectedDate: LocalDate,
+        scrollDateList: List<LocalDate>,
     ): CalendarUiModel {
         return CalendarUiModel(
             selectedDate = toItemUiModel(lastSelectedDate, true),
             visibleDates = dateList.map {
+                toItemUiModel(it, it.isEqual(lastSelectedDate))
+            },
+            scrollDates = scrollDateList.map {
                 toItemUiModel(it, it.isEqual(lastSelectedDate))
             },
         )
