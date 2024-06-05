@@ -139,7 +139,6 @@ fun Content(
     var active by remember { mutableStateOf(false) }
 
     Row(Modifier.horizontalScroll(scrollState)) {
-        Log.d("PlanEat", active.toString())
         if (active) {
             if (scrollState.value > 5*scrollState.maxValue/6) {
                 LaunchedEffect(Unit) {
@@ -155,7 +154,6 @@ fun Content(
         } else {
             LaunchedEffect(Unit) {
                 scrollState.scrollTo(scrollState.maxValue/2)
-                Log.d("PlanEat","GO")
                 active = true
             }
         }

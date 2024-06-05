@@ -30,8 +30,6 @@ import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -128,7 +126,6 @@ fun RecipeListItem(
             containerColor = backgroundCardRecipe
         ),
     ) {
-        val exists = remember { mutableStateOf(false) }
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -153,7 +150,6 @@ fun RecipeListItem(
                     model = if (recipe.image.startsWith("http")) {
                         recipe.image
                     } else {
-                        Log.d("PlanEat", recipe.image)
                         ImageRequest.Builder(LocalContext.current)
                             .data(recipe.image)
                             .build()
@@ -175,7 +171,8 @@ fun RecipeListItem(
                                     context,
                                     RecipesDb::class.java, "RecipesDb"
                                 ).build()
-                                if (exists.value) {
+                                val exists = rdb.recipeDao().findById(recipe.recipeId)
+                                if (exists != null) {
                                     rdb.recipeDao().delete(recipe)
                                 } else {
                                     rdb.recipeDao().insertAll(recipe)

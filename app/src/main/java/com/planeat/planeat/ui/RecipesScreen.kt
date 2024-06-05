@@ -350,6 +350,7 @@ fun RequestContentPermission(imageUri: Uri?, onUriSelected: (Uri) -> Unit) {
         Spacer(modifier = Modifier.height(12.dp))
 
         Log.d("PlanEat", imageUri.toString())
+        // TODO lagguy!
 
         imageBitmap.value?.let {
             Image(bitmap = it,
@@ -443,7 +444,6 @@ fun EditRecipeScreen(
                 imagePath = Uri.fromFile(outputFile).toString()
                 imageUri = imagePath.toUri()
                 recipe.image = imagePath
-                Log.d("PlanEat", "Yo callback")
             }
         })
 
