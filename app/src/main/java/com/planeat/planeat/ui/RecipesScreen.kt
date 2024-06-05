@@ -99,7 +99,7 @@ fun RecipesScreen(
     recipes: List<Recipe>,
 ) {
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
-    var addNewRecipe by remember { mutableStateOf(false) }
+    var editRecipe by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     /**
@@ -111,7 +111,42 @@ fun RecipesScreen(
     Box(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
 
-            if (selectedRecipe != null) {
+            if (editRecipe) {
+                // Show the detail screen
+                // TODO separate the detail screen into a separate composable
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                ) {
+                    BackHandler {
+                        editRecipe = false
+                    }
+
+                    EditRecipeScreen(
+                        r = selectedRecipe ?: Recipe(),
+                        model = model,
+                        modifier = Modifier.fillMaxWidth(),
+                        onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
+                                val rdb = Room.databaseBuilder(
+                                    context,
+                                    RecipesDb::class.java, "RecipesDb"
+                                ).build()
+
+                                val r = rdb.recipeDao().findById(recipe.recipeId)
+                                if (r !== null) {
+                                    rdb.recipeDao().update(recipe)
+                                } else {
+                                    rdb.recipeDao().insertAll(recipe)
+                                }
+
+                                rdb.close()
+                                editRecipe = false
+                            }
+                        }
+                    )
+                }
+            } else if (selectedRecipe != null) {
                 // Show the detail screen
                 // TODO separate the detail screen into a separate composable
                 Column(
@@ -203,33 +238,6 @@ fun RecipesScreen(
                     }
                 }
 
-            } else if (addNewRecipe) {
-                // Show the detail screen
-                // TODO separate the detail screen into a separate composable
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 16.dp),
-                ) {
-                    BackHandler {
-                        addNewRecipe = false
-                    }
-
-                    EditRecipeScreen(
-                        model = model,
-                        modifier = Modifier.fillMaxWidth(),
-                        onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
-                                val rdb = Room.databaseBuilder(
-                                    context,
-                                    RecipesDb::class.java, "RecipesDb"
-                                ).build()
-                                rdb.recipeDao().insertAll(recipe)
-                                rdb.close()
-                                addNewRecipe = false
-                            }
-                        }
-                    )
-                }
             } else {
                 // Show the list screen
                 // TODO separate the list screen into a separate composable
@@ -272,7 +280,7 @@ fun RecipesScreen(
             // When we have bottom navigation we show FAB at the bottom end.
             if (navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
                 LargeFloatingActionButton(
-                    onClick = { selectedRecipe = null; addNewRecipe = true },
+                    onClick = { editRecipe = true },
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(16.dp),
@@ -336,6 +344,7 @@ fun RequestContentPermission(onUriSelected: (Uri?) -> Unit) {
 
 @Composable
 fun EditRecipeScreen(
+    r: Recipe,
     model: AppModel,
     modifier: Modifier = Modifier,
     onSaved: (Recipe) -> Unit
@@ -346,7 +355,14 @@ fun EditRecipeScreen(
             .padding(horizontal = 16.dp, vertical = 16.dp)
             .verticalScroll(rememberScrollState()), // Add vertical scroll modifier
     ) {
-        var recipe by remember { mutableStateOf(Recipe()) }
+        var recipe by remember { mutableStateOf(r) }
+        var title by remember { mutableStateOf(r.title) }
+        var kindOfMeal by remember { mutableStateOf(r.kindOfMeal) }
+        var season by remember { mutableStateOf(r.season) }
+        var cookingTime by remember { mutableStateOf(r.cookingTime) }
+        var tags by remember { mutableStateOf(r.tags.joinToString(", ")) }
+        var ingredients by remember { mutableStateOf(r.ingredients.joinToString("\n")) }
+        var steps by remember { mutableStateOf(r.steps.joinToString("\n")) }
 
         // URL input
         var url by remember { mutableStateOf("") }
@@ -376,8 +392,8 @@ fun EditRecipeScreen(
 
         // Title input
         TextField(
-            value = recipe.title,
-            onValueChange = { recipe.title = it },
+            value = title,
+            onValueChange = { title = it },
             label = { Text(text = "Title") },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -385,16 +401,16 @@ fun EditRecipeScreen(
 
         // Kind of Meal input
         TextField(
-            value = recipe.kindOfMeal,
-            onValueChange = { recipe.kindOfMeal = it },
+            value = kindOfMeal,
+            onValueChange = { kindOfMeal = it },
             label = { Text(text = "Kind of Meal") },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         // Cooking Time input
         TextField(
-            value = recipe.cookingTime.toString(),
-            onValueChange = { recipe.cookingTime = it.toIntOrNull() ?: 0 },
+            value = cookingTime.toString(),
+            onValueChange = { cookingTime = it.toIntOrNull() ?: 0 },
             label = { Text(text = "Cooking Time") },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -409,24 +425,24 @@ fun EditRecipeScreen(
         )
         // Tags input
         TextField(
-            value = recipe.tags.joinToString("\n"),
-            onValueChange = { recipe.tags = it.split("\n") },
+            value = tags,
+            onValueChange = { tags = it },
             label = { Text(text = "Tags") },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         // Ingredients input
         TextField(
-            value = recipe.ingredients.joinToString("\n"),
-            onValueChange = { recipe.ingredients = it.split("\n") },
+            value = ingredients,
+            onValueChange = { ingredients = it },
             label = { Text(text = "Ingredients") },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         // Steps input
         TextField(
-            value = recipe.steps.joinToString("\n"),
-            onValueChange = { recipe.steps = it.split("\n") },
+            value = steps,
+            onValueChange = { steps = it },
             label = { Text(text = "Steps") },
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -435,6 +451,13 @@ fun EditRecipeScreen(
         Button(
             onClick = {
                 Log.d("PlanEat", "Save recipe: $recipe.title")
+                recipe.title = title
+                recipe.kindOfMeal = kindOfMeal
+                recipe.season = season
+                recipe.cookingTime = cookingTime
+                recipe.tags = tags.split(", ")
+                recipe.ingredients = ingredients.split("\n")
+                recipe.steps = steps.split("\n")
                 recipe.url = if (url.isNotEmpty()) url else "recipe_${System.currentTimeMillis()}"
                 onSaved(recipe)
             }
