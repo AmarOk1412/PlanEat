@@ -26,15 +26,15 @@ class Converters {
 )
 @TypeConverters(Converters::class)
 data class Recipe(
-    @ColumnInfo(name = "title") val title: String = "",
-    @ColumnInfo(name = "url") val url: String = "",
-    @ColumnInfo(name = "image") val image: String = "",
-    @ColumnInfo(name = "kindOfMeal") val kindOfMeal: String = "",
-    @ColumnInfo(name = "cookingTime") val cookingTime: Int = 0,
-    @ColumnInfo(name = "season") val season: String = "",
-    @ColumnInfo(name = "tags") val tags: List<String> = emptyList(),
-    @ColumnInfo(name = "ingredients") val ingredients: List<String> = emptyList(),
-    @ColumnInfo(name = "steps") val steps: List<String> = emptyList()
+    @ColumnInfo(name = "title") var title: String = "",
+    @ColumnInfo(name = "url") var url: String = "",
+    @ColumnInfo(name = "image") var image: String = "",
+    @ColumnInfo(name = "kindOfMeal") var kindOfMeal: String = "",
+    @ColumnInfo(name = "cookingTime") var cookingTime: Int = 0,
+    @ColumnInfo(name = "season") var season: String = "",
+    @ColumnInfo(name = "tags") var tags: List<String> = emptyList(),
+    @ColumnInfo(name = "ingredients") var ingredients: List<String> = emptyList(),
+    @ColumnInfo(name = "steps") var steps: List<String> = emptyList()
 )  {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

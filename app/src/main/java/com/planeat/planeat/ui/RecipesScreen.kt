@@ -91,6 +91,7 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecipesScreen(
+    model: AppModel,
     contentType: PlanEatContentType,
     navigationType: PlanEatNavigationType,
     modifier: Modifier = Modifier,
@@ -215,6 +216,7 @@ fun RecipesScreen(
                     }
 
                     EditRecipeScreen(
+                        model = model,
                         modifier = Modifier.fillMaxWidth(),
                         onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
                                 val rdb = Room.databaseBuilder(
@@ -334,6 +336,7 @@ fun RequestContentPermission(onUriSelected: (Uri?) -> Unit) {
 
 @Composable
 fun EditRecipeScreen(
+    model: AppModel,
     modifier: Modifier = Modifier,
     onSaved: (Recipe) -> Unit
 ) {
@@ -343,14 +346,7 @@ fun EditRecipeScreen(
             .padding(horizontal = 16.dp, vertical = 16.dp)
             .verticalScroll(rememberScrollState()), // Add vertical scroll modifier
     ) {
-        var title by remember { mutableStateOf("") }
-        var ingredients by remember { mutableStateOf("") }
-        var steps by remember { mutableStateOf("") }
-        var kindOfMeal by remember { mutableStateOf("") }
-        var cookingTime by remember { mutableStateOf(0) }
-        var season by remember { mutableStateOf("") }
-        var tags by remember { mutableStateOf("") }
-        var imageUri by remember { mutableStateOf("") }
+        var recipe by remember { mutableStateOf(Recipe()) }
 
         // URL input
         var url by remember { mutableStateOf("") }
@@ -366,6 +362,9 @@ fun EditRecipeScreen(
         Button(
             onClick = {
                 // Add your import logic here
+                CoroutineScope(Dispatchers.IO).launch {
+                    model.getRecipe(url) { recipe = it }
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -373,12 +372,12 @@ fun EditRecipeScreen(
         }
 
         // Image input
-        RequestContentPermission(onUriSelected = { uri -> imageUri = uri.toString() })
+        RequestContentPermission(onUriSelected = { uri -> recipe.image = uri.toString() })
 
         // Title input
         TextField(
-            value = title,
-            onValueChange = { title = it },
+            value = recipe.title,
+            onValueChange = { recipe.title = it },
             label = { Text(text = "Title") },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -386,48 +385,48 @@ fun EditRecipeScreen(
 
         // Kind of Meal input
         TextField(
-            value = kindOfMeal,
-            onValueChange = { kindOfMeal = it },
+            value = recipe.kindOfMeal,
+            onValueChange = { recipe.kindOfMeal = it },
             label = { Text(text = "Kind of Meal") },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         // Cooking Time input
         TextField(
-            value = cookingTime.toString(),
-            onValueChange = { cookingTime = it.toIntOrNull() ?: 0 },
+            value = recipe.cookingTime.toString(),
+            onValueChange = { recipe.cookingTime = it.toIntOrNull() ?: 0 },
             label = { Text(text = "Cooking Time") },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         // Season input
         TextField(
-            value = season,
-            onValueChange = { season = it },
+            value = recipe.season,
+            onValueChange = { recipe.season = it },
             label = { Text(text = "Season") },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         // Tags input
         TextField(
-            value = tags,
-            onValueChange = { tags = it },
+            value = recipe.tags.joinToString("\n"),
+            onValueChange = { recipe.tags = it.split("\n") },
             label = { Text(text = "Tags") },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         // Ingredients input
         TextField(
-            value = ingredients,
-            onValueChange = { ingredients = it },
+            value = recipe.ingredients.joinToString("\n"),
+            onValueChange = { recipe.ingredients = it.split("\n") },
             label = { Text(text = "Ingredients") },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         // Steps input
         TextField(
-            value = steps,
-            onValueChange = { steps = it },
+            value = recipe.steps.joinToString("\n"),
+            onValueChange = { recipe.steps = it.split("\n") },
             label = { Text(text = "Steps") },
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -435,19 +434,8 @@ fun EditRecipeScreen(
         // Save button
         Button(
             onClick = {
-                Log.d("PlanEat", "Save recipe: $title")
-
-                val recipe = Recipe(
-                    title = title,
-                    url = if (url.isNotEmpty()) url else "recipe_${System.currentTimeMillis()}",
-                    image = imageUri,
-                    kindOfMeal = kindOfMeal,
-                    cookingTime = cookingTime,
-                    season = season,
-                    tags = tags.split("\n"),
-                    ingredients = ingredients.split("\n"),
-                    steps = steps.split("\n")
-                )
+                Log.d("PlanEat", "Save recipe: $recipe.title")
+                recipe.url = if (url.isNotEmpty()) url else "recipe_${System.currentTimeMillis()}"
                 onSaved(recipe)
             }
         ) {

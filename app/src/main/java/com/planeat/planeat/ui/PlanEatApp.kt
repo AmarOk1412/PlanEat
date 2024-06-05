@@ -123,6 +123,20 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         }
     }
 
+    suspend fun getRecipe(url: String, onRecipe: (Recipe) -> Unit) {
+        coroutineScope {
+            launch(Dispatchers.IO) {
+                for (connector in connectors) {
+                    if (connector.handleUrl(url)) {
+                        val recipe = connector.getRecipe(url)
+                        onRecipe(recipe)
+                        break
+                    }
+                }
+            }
+        }
+    }
+
     suspend fun search(searchTerm: String): Boolean {
         currentSearchTerm = searchTerm
         listJob?.cancel()
@@ -264,6 +278,7 @@ fun PlanEatApp(
     }
 
     NavigationWrapper(
+        model = model,
         onQueryChanged = { value -> scope.launch {
             model.search(value)
         } },
@@ -277,6 +292,7 @@ fun PlanEatApp(
 
 @Composable
 private fun NavigationWrapper(
+    model: AppModel,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
     ingredients: List<String>,
@@ -305,6 +321,7 @@ private fun NavigationWrapper(
             )
         }) {
             AppContent(
+                model = model,
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
                 ingredients = ingredients,
@@ -333,6 +350,7 @@ private fun NavigationWrapper(
             drawerState = drawerState
         ) {
             AppContent(
+                model = model,
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
                 ingredients = ingredients,
@@ -354,6 +372,7 @@ private fun NavigationWrapper(
 @Composable
 fun AppContent(
     modifier: Modifier = Modifier,
+    model: AppModel,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
     ingredients: List<String>,
@@ -380,6 +399,7 @@ fun AppContent(
                 .background(MaterialTheme.colorScheme.surfaceContainerLow)
         ) {
             NavHost(
+                model = model,
                 navController = navController,
                 contentType = contentType,
                 navigationType = navigationType,
@@ -400,6 +420,7 @@ fun AppContent(
 
 @Composable
 private fun NavHost(
+    model: AppModel,
     navController: NavHostController,
     contentType: PlanEatContentType,
     navigationType: PlanEatNavigationType,
@@ -418,6 +439,7 @@ private fun NavHost(
         }
         composable(PlanEatRoute.RECIPES) {
             RecipesScreen(
+                model = model,
                 contentType = contentType,
                 navigationType = navigationType,
                 onQueryChanged = onQueryChanged,
