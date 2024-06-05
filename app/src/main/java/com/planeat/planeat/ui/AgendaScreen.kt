@@ -73,7 +73,8 @@ fun AgendaScreen(
                 RecipeCalendar(
                     modifier.fillMaxWidth(),
                     dataSource,
-                    dataUi
+                    dataUi,
+                    updateDate = { newUi -> dataUi = newUi }
                 )
             }
         }
