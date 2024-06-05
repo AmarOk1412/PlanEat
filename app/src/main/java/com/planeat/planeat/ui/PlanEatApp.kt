@@ -16,7 +16,9 @@
 
 package com.planeat.planeat.ui
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -33,8 +35,10 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -52,6 +56,7 @@ import com.planeat.planeat.connectors.Marmiton
 import com.planeat.planeat.connectors.Ricardo
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.ui.components.calendar.CalendarDataSource
 import com.planeat.planeat.ui.navigation.ModalNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PermanentNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PlanEatBottomNavigationBar
@@ -194,6 +199,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlanEatApp(
     windowSize: WindowSizeClass,
@@ -290,6 +296,7 @@ fun PlanEatApp(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun NavigationWrapper(
     model: AppModel,
@@ -369,6 +376,7 @@ private fun NavigationWrapper(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppContent(
     modifier: Modifier = Modifier,
@@ -407,6 +415,7 @@ fun AppContent(
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
                 ingredients = ingredients,
+                navigateToTopLevelDestination = navigateToTopLevelDestination
             )
             AnimatedVisibility(visible = navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
                 PlanEatBottomNavigationBar(
@@ -418,6 +427,7 @@ fun AppContent(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun NavHost(
     model: AppModel,
@@ -428,14 +438,27 @@ private fun NavHost(
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
     ingredients: List<String>,
+    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
 ) {
+    val dataSource by remember { mutableStateOf(CalendarDataSource()) }
+    var dataUi by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
+
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = PlanEatRoute.AGENDA,
     ) {
         composable(PlanEatRoute.AGENDA) {
-            AgendaScreen()
+            AgendaScreen(dataSource = dataSource, dataUi = dataUi, 
+                         updateDate = { newUi ->
+                            dataUi = newUi
+                            val destination = PlanEatTopLevelDestination(
+                                route = PlanEatRoute.RECIPES,
+                                icon = 0,
+                                iconTextId = 0
+                            )
+                            navigateToTopLevelDestination(destination)
+                        })
         }
         composable(PlanEatRoute.RECIPES) {
             RecipesScreen(
@@ -444,6 +467,7 @@ private fun NavHost(
                 navigationType = navigationType,
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
+                dataUi = dataUi
             )
         }
         composable(PlanEatRoute.PANTRY) {

@@ -66,8 +66,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.Instant
-import java.time.ZoneId
+import java.time.LocalDate
 import java.time.ZoneOffset
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -79,6 +78,8 @@ import java.time.ZoneOffset
 fun RecipeListItem(
     recipe: Recipe,
     onRecipeSelected: (Recipe) -> Unit,
+    selectedDate: LocalDate,
+    agenda: Agenda?,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -96,23 +97,26 @@ fun RecipeListItem(
                                 AgendaDb::class.java, "AgendaDb"
                             )
                             .build()
-                        val todayMiddayMillis = Instant
-                            .now()
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDate()
+                        Log.w("PlanEat", "Selected date: ${selectedDate}")
+                        val todayMiddayMillis = selectedDate
                             .atTime(12, 0)
                             .toInstant(ZoneOffset.UTC)
                             .toEpochMilli()
 
                         Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${todayMiddayMillis}")
-                        agendaDb
-                            .agendaDao()
-                            .insertAll(
-                                Agenda(
-                                    date = todayMiddayMillis,
-                                    recipeId = recipe.recipeId
+                        if (agenda != null) {
+                            agendaDb.agendaDao().delete(agenda)
+                        } else {
+                            agendaDb
+                                .agendaDao()
+                                .insertAll(
+                                    Agenda(
+                                        date = todayMiddayMillis,
+                                        recipeId = recipe.recipeId
+                                    )
                                 )
-                            )
+                        }
+                        agendaDb.close()
                     }
                 }
             )

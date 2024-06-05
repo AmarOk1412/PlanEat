@@ -31,25 +31,23 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.planeat.planeat.R
 import com.planeat.planeat.ui.components.calendar.Calendar
 import com.planeat.planeat.ui.components.calendar.CalendarDataSource
+import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.components.calendar.RecipeCalendar
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AgendaScreen(
     modifier: Modifier = Modifier,
+    dataSource: CalendarDataSource,
+    dataUi: CalendarUiModel,
+    updateDate: (CalendarUiModel) -> Unit,
 ) {
-    val dataSource = CalendarDataSource()
-    var dataUi by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
     Box(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
             Column(
@@ -67,14 +65,14 @@ fun AgendaScreen(
                     modifier.fillMaxWidth().padding(bottom = 8.dp),
                     dataSource,
                     dataUi,
-                    updateDate = { newUi -> dataUi = newUi }
+                    updateDate = updateDate
                 )
 
                 RecipeCalendar(
                     modifier.fillMaxWidth(),
                     dataSource,
                     dataUi,
-                    updateDate = { newUi -> dataUi = newUi }
+                    updateDate = updateDate
                 )
             }
         }

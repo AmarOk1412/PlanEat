@@ -16,12 +16,11 @@
 
 package com.planeat.planeat.ui
 
-import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -65,6 +64,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -72,14 +72,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.room.Room
-import androidx.window.layout.DisplayFeature
 import coil.compose.AsyncImage
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.components.DockedSearchBar
 import com.planeat.planeat.ui.components.RecipeListItem
+import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.theme.backgroundCardRecipe
 import com.planeat.planeat.ui.theme.textCardRecipe
 import com.planeat.planeat.ui.utils.PlanEatContentType
@@ -87,6 +88,8 @@ import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -97,6 +100,7 @@ fun RecipesScreen(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
+    dataUi: CalendarUiModel,
 ) {
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
     var editRecipe by remember { mutableStateOf(false) }
@@ -134,7 +138,7 @@ fun RecipesScreen(
                                 ).build()
 
                                 val r = rdb.recipeDao().findById(recipe.recipeId)
-                                if (r !== null) {
+                                if (recipe.recipeId != 0.toLong()) {
                                     rdb.recipeDao().update(recipe)
                                 } else {
                                     rdb.recipeDao().insertAll(recipe)
@@ -268,6 +272,8 @@ fun RecipesScreen(
                             RecipeListItem(
                                 recipe = recipes[index],
                                 onRecipeSelected = { r -> selectedRecipe = r },
+                                agenda = null,
+                                selectedDate = dataUi.selectedDate.date,
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .shadow(8.dp, shape = MaterialTheme.shapes.medium)
@@ -297,20 +303,42 @@ fun RecipesScreen(
         }
     }
 }
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun RequestContentPermission(onUriSelected: (Uri?) -> Unit) {
+fun RequestContentPermission(imageUri: Uri?, onUriSelected: (Uri) -> Unit) {
     val context = LocalContext.current
-    val bitmap =  remember {
-        mutableStateOf<Bitmap?>(null)
+
+    val bitmap = Bitmap.createBitmap(
+        100,
+        100,
+        Bitmap.Config.ARGB_8888
+    )
+
+    val imageBitmap =  remember {
+        mutableStateOf<ImageBitmap>(bitmap.asImageBitmap())
     }
-    var imageUri by remember {
-        mutableStateOf<Uri?>(null)
+    if (imageUri != null) {
+        val source = ImageDecoder
+            .createSource(context.contentResolver, imageUri)
+        val bitmap = ImageDecoder.decodeBitmap(source)
+        if (bitmap != null) {
+            imageBitmap.value = bitmap.asImageBitmap()
+        }
     }
 
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
-            onUriSelected(uri)
-            imageUri = uri
+            if (imageUri != uri) {
+                if (uri != null) {
+                    Log.d("PlanEat", "XXX" + imageUri.toString())
+                    onUriSelected(uri)
+                    
+                    val source = ImageDecoder
+                        .createSource(context.contentResolver, uri)
+                    val bitmap = ImageDecoder.decodeBitmap(source)
+                    imageBitmap.value = bitmap.asImageBitmap()
+                }
+            }
     }
     Column() {
         Button(onClick = {
@@ -321,22 +349,12 @@ fun RequestContentPermission(onUriSelected: (Uri?) -> Unit) {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        imageUri?.let {
-            if (Build.VERSION.SDK_INT < 28) {
-                bitmap.value = MediaStore.Images
-                    .Media.getBitmap(context.contentResolver,it)
+        Log.d("PlanEat", imageUri.toString())
 
-            } else {
-                val source = ImageDecoder
-                    .createSource(context.contentResolver,it)
-                bitmap.value = ImageDecoder.decodeBitmap(source)
-            }
-
-            bitmap.value?.let {  btm ->
-                Image(bitmap = btm.asImageBitmap(),
-                    contentDescription =null,
-                    modifier = Modifier.size(400.dp))
-            }
+        imageBitmap.value?.let {
+            Image(bitmap = it,
+                contentDescription = null,
+                modifier = Modifier.size(400.dp))
         }
     }
 }
@@ -355,6 +373,8 @@ fun EditRecipeScreen(
             .padding(horizontal = 16.dp, vertical = 16.dp)
             .verticalScroll(rememberScrollState()), // Add vertical scroll modifier
     ) {
+        val context = LocalContext.current
+
         var recipe by remember { mutableStateOf(r) }
         var title by remember { mutableStateOf(r.title) }
         var kindOfMeal by remember { mutableStateOf(r.kindOfMeal) }
@@ -364,8 +384,23 @@ fun EditRecipeScreen(
         var ingredients by remember { mutableStateOf(r.ingredients.joinToString("\n")) }
         var steps by remember { mutableStateOf(r.steps.joinToString("\n")) }
 
+
+        var imageUri by remember {
+            mutableStateOf<Uri?>(null)
+        }
+        var imagePath by remember { mutableStateOf(r.image) }
+        // Image input
+        if (imagePath.startsWith("http")) {
+            imagePath = ""
+        } else if (imagePath.isNotEmpty()) {
+            imageUri = imagePath.toUri()
+        }
+
         // URL input
         var url by remember { mutableStateOf("") }
+        if (r.url.startsWith("http")) {
+            url = r.url
+        }
         TextField(
             value = url,
             onValueChange = { url = it },
@@ -388,7 +423,29 @@ fun EditRecipeScreen(
         }
 
         // Image input
-        RequestContentPermission(onUriSelected = { uri -> recipe.image = uri.toString() })
+        RequestContentPermission(imageUri, onUriSelected = { uri ->
+            val cacheDir = context.cacheDir
+            val inputStream = context.contentResolver.openInputStream(uri)
+            if (inputStream != null) {
+                if (imagePath.isEmpty()) {
+                    imagePath = "recipe_${System.currentTimeMillis()}"
+                }
+                val outputFile = File(cacheDir, imagePath)
+                val outputStream = FileOutputStream(outputFile)
+                val buffer = ByteArray(4 * 1024)
+                var bytesRead: Int
+                while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                    outputStream.write(buffer, 0, bytesRead)
+                }
+                outputStream.flush()
+                outputStream.close()
+                inputStream.close()
+                imagePath = Uri.fromFile(outputFile).toString()
+                imageUri = imagePath.toUri()
+                recipe.image = imagePath
+                Log.d("PlanEat", "Yo callback")
+            }
+        })
 
         // Title input
         TextField(
@@ -417,8 +474,8 @@ fun EditRecipeScreen(
         )
         // Season input
         TextField(
-            value = recipe.season,
-            onValueChange = { recipe.season = it },
+            value = season,
+            onValueChange = { season = it },
             label = { Text(text = "Season") },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)

@@ -14,6 +14,7 @@ interface AgendaDao {
     @Query("SELECT * FROM agenda WHERE date IN (:date)")
     fun findByDate(date: Long): List<Agenda>
 
+
     @Transaction
     @Insert
     fun insertAll(vararg agenda: Agenda)

@@ -6,10 +6,30 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,6 +42,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
 import com.planeat.planeat.R
+import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
@@ -52,6 +73,11 @@ fun RecipeCalendar(
     }
 }
 
+data class RecipeAgenda (
+    val recipe: Recipe,
+    val agenda: Agenda
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
@@ -63,7 +89,7 @@ fun ContentItem(
     Column(modifier = Modifier.fillMaxSize()) {
 
         val context = LocalContext.current
-        var recipesPlanned = remember {mutableStateOf(listOf<Recipe>())}
+        var recipesPlanned = remember {mutableStateOf(listOf<RecipeAgenda>())}
 
         LaunchedEffect(date.date) {
             recipesPlanned.value = emptyList()
@@ -82,8 +108,9 @@ fun ContentItem(
 
                 recipesPlannedDb.forEach {
                     val recipe = rdb.recipeDao().findById(it.recipeId)
-                    if (recipe !== null) {
-                        recipesPlanned.value += recipe
+                    val ra = RecipeAgenda(recipe = recipe, agenda = it)
+                    if (recipe.recipeId != 0.toLong()) {
+                        recipesPlanned.value += ra
                     } else {
                         adb.agendaDao().delete(it)
                     }
@@ -104,9 +131,11 @@ fun ContentItem(
         Row(
             modifier = Modifier.horizontalScroll(rememberScrollState()).height(IntrinsicSize.Min)
         ) {
-            recipesPlanned.value.forEach { recipe ->
-                RecipeListItem(recipe = recipe,
+            recipesPlanned.value.forEach { recipeAgenda ->
+                RecipeListItem(recipe = recipeAgenda.recipe,
                     onRecipeSelected = {},
+                    selectedDate = date.date,
+                    agenda = recipeAgenda.agenda,
                     modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium))
             }
 
@@ -128,7 +157,7 @@ fun addRecipeCard(
     date: CalendarUiModel.Date,
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel) -> Unit,
-    ) {
+) {
     Card(
         modifier = modifier
             .clip(CardDefaults.shape)
