@@ -16,24 +16,36 @@
 
 package com.planeat.planeat.ui
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
@@ -53,6 +65,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -80,11 +93,9 @@ import kotlinx.coroutines.launch
 fun RecipesScreen(
     contentType: PlanEatContentType,
     navigationType: PlanEatNavigationType,
-    displayFeatures: List<DisplayFeature>,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
-    db: RecipesDb,
 ) {
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
     var addNewRecipe by remember { mutableStateOf(false) }
@@ -276,6 +287,49 @@ fun RecipesScreen(
         }
     }
 }
+@Composable
+fun RequestContentPermission(onUriSelected: (Uri?) -> Unit) {
+    val context = LocalContext.current
+    val bitmap =  remember {
+        mutableStateOf<Bitmap?>(null)
+    }
+    var imageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+
+    val launcher = rememberLauncherForActivityResult(contract =
+    ActivityResultContracts.GetContent()) { uri: Uri? ->
+            onUriSelected(uri)
+            imageUri = uri
+    }
+    Column() {
+        Button(onClick = {
+            launcher.launch("image/*")
+        }) {
+            Text(text = "Pick image")
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        imageUri?.let {
+            if (Build.VERSION.SDK_INT < 28) {
+                bitmap.value = MediaStore.Images
+                    .Media.getBitmap(context.contentResolver,it)
+
+            } else {
+                val source = ImageDecoder
+                    .createSource(context.contentResolver,it)
+                bitmap.value = ImageDecoder.decodeBitmap(source)
+            }
+
+            bitmap.value?.let {  btm ->
+                Image(bitmap = btm.asImageBitmap(),
+                    contentDescription =null,
+                    modifier = Modifier.size(400.dp))
+            }
+        }
+    }
+}
 
 
 @Composable
@@ -283,21 +337,82 @@ fun EditRecipeScreen(
     modifier: Modifier = Modifier,
     onSaved: (Recipe) -> Unit
 ) {
-    val context = LocalContext.current
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .verticalScroll(rememberScrollState()), // Add vertical scroll modifier
     ) {
         var title by remember { mutableStateOf("") }
         var ingredients by remember { mutableStateOf("") }
         var steps by remember { mutableStateOf("") }
+        var kindOfMeal by remember { mutableStateOf("") }
+        var cookingTime by remember { mutableStateOf(0) }
+        var season by remember { mutableStateOf("") }
+        var tags by remember { mutableStateOf("") }
+        var imageUri by remember { mutableStateOf("") }
+
+        // URL input
+        var url by remember { mutableStateOf("") }
+        TextField(
+            value = url,
+            onValueChange = { url = it },
+            maxLines = 1,
+            label = { Text(text = "URL") },
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        // Import button
+        Button(
+            onClick = {
+                // Add your import logic here
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Import from URL")
+        }
+
+        // Image input
+        RequestContentPermission(onUriSelected = { uri -> imageUri = uri.toString() })
+
         // Title input
         TextField(
             value = title,
             onValueChange = { title = it },
             label = { Text(text = "Title") },
             maxLines = 1,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        // Kind of Meal input
+        TextField(
+            value = kindOfMeal,
+            onValueChange = { kindOfMeal = it },
+            label = { Text(text = "Kind of Meal") },
+            maxLines = 1,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        // Cooking Time input
+        TextField(
+            value = cookingTime.toString(),
+            onValueChange = { cookingTime = it.toIntOrNull() ?: 0 },
+            label = { Text(text = "Cooking Time") },
+            maxLines = 1,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        // Season input
+        TextField(
+            value = season,
+            onValueChange = { season = it },
+            label = { Text(text = "Season") },
+            maxLines = 1,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        // Tags input
+        TextField(
+            value = tags,
+            onValueChange = { tags = it },
+            label = { Text(text = "Tags") },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -321,8 +436,15 @@ fun EditRecipeScreen(
         Button(
             onClick = {
                 Log.d("PlanEat", "Save recipe: $title")
+
                 val recipe = Recipe(
                     title = title,
+                    url = if (url.isNotEmpty()) url else "recipe_${System.currentTimeMillis()}",
+                    image = imageUri,
+                    kindOfMeal = kindOfMeal,
+                    cookingTime = cookingTime,
+                    season = season,
+                    tags = tags.split("\n"),
                     ingredients = ingredients.split("\n"),
                     steps = steps.split("\n")
                 )

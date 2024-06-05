@@ -45,6 +45,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
@@ -145,7 +146,14 @@ fun RecipeListItem(
                     .aspectRatio(1f / .8f)
             ) {
                 AsyncImage(
-                    model = recipe.image,
+                    model = if (recipe.image.startsWith("http")) {
+                        recipe.image
+                    } else {
+                        Log.d("PlanEat", recipe.image)
+                        ImageRequest.Builder(LocalContext.current)
+                            .data(recipe.image)
+                            .build()
+                    },
                     contentDescription = recipe.title,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,

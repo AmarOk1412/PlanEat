@@ -269,10 +269,8 @@ fun PlanEatApp(
         } },
         recipes = model.recipes,
         ingredients = model.ingredients,
-        db = db,
         navigationType = navigationType,
         contentType = contentType,
-        displayFeatures = displayFeatures,
         navigationContentPosition = navigationContentPosition,
     )
 }
@@ -282,10 +280,8 @@ private fun NavigationWrapper(
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
     ingredients: List<String>,
-    db: RecipesDb,
     navigationType: PlanEatNavigationType,
     contentType: PlanEatContentType,
-    displayFeatures: List<DisplayFeature>,
     navigationContentPosition: PlanEatNavigationContentPosition,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -312,10 +308,8 @@ private fun NavigationWrapper(
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
                 ingredients = ingredients,
-                db = db,
                 navigationType = navigationType,
                 contentType = contentType,
-                displayFeatures = displayFeatures,
                 navigationContentPosition = navigationContentPosition,
                 navController = navController,
                 selectedDestination = selectedDestination,
@@ -342,10 +336,8 @@ private fun NavigationWrapper(
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
                 ingredients = ingredients,
-                db = db,
                 navigationType = navigationType,
                 contentType = contentType,
-                displayFeatures = displayFeatures,
                 navigationContentPosition = navigationContentPosition,
                 navController = navController,
                 selectedDestination = selectedDestination,
@@ -365,10 +357,8 @@ fun AppContent(
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
     ingredients: List<String>,
-    db: RecipesDb,
     navigationType: PlanEatNavigationType,
     contentType: PlanEatContentType,
-    displayFeatures: List<DisplayFeature>,
     navigationContentPosition: PlanEatNavigationContentPosition,
     navController: NavHostController,
     selectedDestination: String,
@@ -392,13 +382,11 @@ fun AppContent(
             NavHost(
                 navController = navController,
                 contentType = contentType,
-                displayFeatures = displayFeatures,
                 navigationType = navigationType,
                 modifier = Modifier.weight(1f),
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
                 ingredients = ingredients,
-                db = db,
             )
             AnimatedVisibility(visible = navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
                 PlanEatBottomNavigationBar(
@@ -414,13 +402,11 @@ fun AppContent(
 private fun NavHost(
     navController: NavHostController,
     contentType: PlanEatContentType,
-    displayFeatures: List<DisplayFeature>,
     navigationType: PlanEatNavigationType,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
     ingredients: List<String>,
-    db: RecipesDb,
 ) {
     NavHost(
         modifier = modifier,
@@ -434,10 +420,8 @@ private fun NavHost(
             RecipesScreen(
                 contentType = contentType,
                 navigationType = navigationType,
-                displayFeatures = displayFeatures,
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
-                db = db
             )
         }
         composable(PlanEatRoute.PANTRY) {
