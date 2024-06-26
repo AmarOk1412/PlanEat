@@ -134,6 +134,7 @@ fun ContentItem(
             recipesPlanned.value.forEach { recipeAgenda ->
                 RecipeListItem(recipe = recipeAgenda.recipe,
                     onRecipeSelected = {},
+                    onRecipeDeleted = {},
                     selectedDate = date.date,
                     agenda = recipeAgenda.agenda,
                     modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium))
@@ -164,7 +165,7 @@ fun addRecipeCard(
             .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp) // Set the width to 40% of the screen
             .height((LocalConfiguration.current.screenWidthDp * 0.55f).dp)
             .combinedClickable(
-                onClick = { 
+                onClick = {
                     updateDate(dataUi.copy(
                         selectedDate = date,
                         visibleDates = dataUi.visibleDates.map {

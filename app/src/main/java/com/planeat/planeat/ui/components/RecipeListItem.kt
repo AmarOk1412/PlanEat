@@ -76,6 +76,7 @@ import java.time.ZoneOffset
 fun RecipeListItem(
     recipe: Recipe,
     onRecipeSelected: (Recipe) -> Unit,
+    onRecipeDeleted: (Recipe) -> Unit,
     selectedDate: LocalDate,
     agenda: Agenda?,
     modifier: Modifier = Modifier,
@@ -172,12 +173,15 @@ fun RecipeListItem(
                                     RecipesDb::class.java, "RecipesDb"
                                 ).build()
                                 val exists = rdb.recipeDao().findById(recipe.recipeId)
+
                                 if (exists != null) {
                                     rdb.recipeDao().delete(recipe)
+                                    rdb.close()
+                                    onRecipeDeleted(recipe)
                                 } else {
                                     rdb.recipeDao().insertAll(recipe)
+                                    rdb.close()
                                 }
-                                rdb.close()
                             } catch (error: Exception) {
                                 Log.d("PlanEat", "Error: $error")
                             }

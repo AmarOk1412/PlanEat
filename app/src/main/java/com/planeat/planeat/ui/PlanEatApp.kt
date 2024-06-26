@@ -288,6 +288,8 @@ fun PlanEatApp(
         onQueryChanged = { value -> scope.launch {
             model.search(value)
         } },
+        onRecipeDeleted = {recipe -> model.recipes.remove(recipe)
+        },
         recipes = model.recipes,
         ingredients = model.ingredients,
         navigationType = navigationType,
@@ -301,6 +303,7 @@ fun PlanEatApp(
 private fun NavigationWrapper(
     model: AppModel,
     onQueryChanged: (String) -> Unit,
+    onRecipeDeleted: (Recipe) -> Unit,
     recipes: List<Recipe>,
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
@@ -330,6 +333,7 @@ private fun NavigationWrapper(
             AppContent(
                 model = model,
                 onQueryChanged = onQueryChanged,
+                onRecipeDeleted = onRecipeDeleted,
                 recipes = recipes,
                 ingredients = ingredients,
                 navigationType = navigationType,
@@ -359,6 +363,7 @@ private fun NavigationWrapper(
             AppContent(
                 model = model,
                 onQueryChanged = onQueryChanged,
+                onRecipeDeleted = onRecipeDeleted,
                 recipes = recipes,
                 ingredients = ingredients,
                 navigationType = navigationType,
@@ -383,6 +388,7 @@ fun AppContent(
     model: AppModel,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
+    onRecipeDeleted: (Recipe) -> Unit,
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
     contentType: PlanEatContentType,
@@ -413,6 +419,7 @@ fun AppContent(
                 navigationType = navigationType,
                 modifier = Modifier.weight(1f),
                 onQueryChanged = onQueryChanged,
+                onRecipeDeleted = onRecipeDeleted,
                 recipes = recipes,
                 ingredients = ingredients,
                 navigateToTopLevelDestination = navigateToTopLevelDestination
@@ -437,6 +444,7 @@ private fun NavHost(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
+    onRecipeDeleted: (Recipe) -> Unit,
     ingredients: List<String>,
     navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
 ) {
@@ -449,7 +457,7 @@ private fun NavHost(
         startDestination = PlanEatRoute.AGENDA,
     ) {
         composable(PlanEatRoute.AGENDA) {
-            AgendaScreen(dataSource = dataSource, dataUi = dataUi, 
+            AgendaScreen(dataSource = dataSource, dataUi = dataUi,
                          updateDate = { newUi ->
                             dataUi = newUi
                             val destination = PlanEatTopLevelDestination(
@@ -467,6 +475,9 @@ private fun NavHost(
                 navigationType = navigationType,
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
+                onRecipeDeleted = { r ->
+                    onRecipeDeleted(r)
+                },
                 dataUi = dataUi
             )
         }

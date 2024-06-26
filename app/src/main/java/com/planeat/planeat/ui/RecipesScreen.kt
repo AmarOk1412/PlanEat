@@ -19,6 +19,7 @@ package com.planeat.planeat.ui
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -100,6 +101,7 @@ fun RecipesScreen(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
+    onRecipeDeleted: (Recipe) -> Unit,
     dataUi: CalendarUiModel,
 ) {
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
@@ -138,10 +140,10 @@ fun RecipesScreen(
                                 ).build()
 
                                 val r = rdb.recipeDao().findById(recipe.recipeId)
-                                if (recipe.recipeId != 0.toLong()) {
-                                    rdb.recipeDao().update(recipe)
-                                } else {
+                                if (r == null) {
                                     rdb.recipeDao().insertAll(recipe)
+                                } else {
+                                    rdb.recipeDao().update(recipe)
                                 }
 
                                 rdb.close()
@@ -272,6 +274,7 @@ fun RecipesScreen(
                             RecipeListItem(
                                 recipe = recipes[index],
                                 onRecipeSelected = { r -> selectedRecipe = r },
+                                onRecipeDeleted = { r -> onRecipeDeleted(r) },
                                 agenda = null,
                                 selectedDate = dataUi.selectedDate.date,
                                 modifier = Modifier
@@ -320,9 +323,12 @@ fun RequestContentPermission(imageUri: Uri?, onUriSelected: (Uri) -> Unit) {
     if (imageUri != null) {
         val source = ImageDecoder
             .createSource(context.contentResolver, imageUri)
-        val bitmap = ImageDecoder.decodeBitmap(source)
-        if (bitmap != null) {
-            imageBitmap.value = bitmap.asImageBitmap()
+        val drawable = ImageDecoder.decodeDrawable(source)
+        if (drawable is BitmapDrawable) {
+            val bmp = drawable.bitmap
+            if (bmp != null) {
+                imageBitmap.value = bitmap.asImageBitmap()
+            }
         }
     }
 
@@ -332,7 +338,7 @@ fun RequestContentPermission(imageUri: Uri?, onUriSelected: (Uri) -> Unit) {
                 if (uri != null) {
                     Log.d("PlanEat", "XXX" + imageUri.toString())
                     onUriSelected(uri)
-                    
+
                     val source = ImageDecoder
                         .createSource(context.contentResolver, uri)
                     val bitmap = ImageDecoder.decodeBitmap(source)
@@ -352,7 +358,7 @@ fun RequestContentPermission(imageUri: Uri?, onUriSelected: (Uri) -> Unit) {
         Log.d("PlanEat", imageUri.toString())
         // TODO lagguy!
 
-        imageBitmap.value?.let {
+        imageBitmap.value.let {
             Image(bitmap = it,
                 contentDescription = null,
                 modifier = Modifier.size(400.dp))
