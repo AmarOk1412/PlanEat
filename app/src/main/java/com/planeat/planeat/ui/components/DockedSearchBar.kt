@@ -97,7 +97,7 @@ fun DockedSearchBar(
                 recipes.forEach { recipe ->
                     Text(
                         text = recipe.title,
-                        modifier = Modifier.padding(4.dp)
+                        modifier = Modifier.padding(4.dp).clickable { query = recipe.title },
                     )
                 }
             }

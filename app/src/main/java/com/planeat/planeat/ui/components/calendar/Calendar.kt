@@ -52,28 +52,28 @@ fun Calendar(
     modifier: Modifier = Modifier,
     dataSource: CalendarDataSource,
     dataUi: CalendarUiModel,
-    updateDate: (CalendarUiModel) -> Unit,
+    updateDate: (CalendarUiModel, Boolean) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         Header(
             dataUi = dataUi,
             onPrevClickListener = { startDate ->
                 val finalStartDate = startDate.minusDays(1)
-                updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date))
+                updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date), false)
             },
             onNextClickListener = { endDate ->
                 val finalStartDate = endDate.plusDays(2)
-                updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date))
+                updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date), false)
             }
         )
         Content(dataUi = dataUi,
                 onPrevClickListener = { startDate ->
                     val finalStartDate = startDate.minusDays(1)
-                    updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date))
+                    updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date), false)
                 },
                 onNextClickListener = { endDate ->
                     val finalStartDate = endDate.plusDays(2)
-                    updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date))
+                    updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date), false)
                 }
         ) { date ->
             updateDate(dataUi.copy(
@@ -83,7 +83,7 @@ fun Calendar(
                         isSelected = it.date.isEqual(date.date)
                     )
                 }
-            ))
+            ), false)
         }
     }
 }

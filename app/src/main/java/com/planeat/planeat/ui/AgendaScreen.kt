@@ -46,7 +46,7 @@ fun AgendaScreen(
     modifier: Modifier = Modifier,
     dataSource: CalendarDataSource,
     dataUi: CalendarUiModel,
-    updateDate: (CalendarUiModel) -> Unit,
+    updateDate: (CalendarUiModel, Boolean) -> Unit,
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {

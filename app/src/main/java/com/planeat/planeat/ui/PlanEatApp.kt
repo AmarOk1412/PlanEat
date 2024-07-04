@@ -57,6 +57,7 @@ import com.planeat.planeat.connectors.Ricardo
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.components.calendar.CalendarDataSource
+import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.navigation.ModalNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PermanentNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PlanEatBottomNavigationBar
@@ -458,14 +459,16 @@ private fun NavHost(
     ) {
         composable(PlanEatRoute.AGENDA) {
             AgendaScreen(dataSource = dataSource, dataUi = dataUi,
-                         updateDate = { newUi ->
+                         updateDate = { newUi: CalendarUiModel, changePage: Boolean ->
                             dataUi = newUi
-                            val destination = PlanEatTopLevelDestination(
-                                route = PlanEatRoute.RECIPES,
-                                icon = 0,
-                                iconTextId = 0
-                            )
-                            navigateToTopLevelDestination(destination)
+                            if (changePage) {
+                                val destination = PlanEatTopLevelDestination(
+                                    route = PlanEatRoute.RECIPES,
+                                    icon = 0,
+                                    iconTextId = 0
+                                )
+                                navigateToTopLevelDestination(destination)
+                            }
                         })
         }
         composable(PlanEatRoute.RECIPES) {

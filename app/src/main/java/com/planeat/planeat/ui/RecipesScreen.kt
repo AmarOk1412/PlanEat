@@ -114,180 +114,180 @@ fun RecipesScreen(
     LaunchedEffect(key1 = contentType) {
 
     }
-    Box(modifier = modifier.fillMaxSize()) {
-        Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
+    Box(modifier = modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars)) {
 
-            if (editRecipe) {
-                // Show the detail screen
-                // TODO separate the detail screen into a separate composable
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 16.dp),
-                ) {
-                    BackHandler {
-                        editRecipe = false
-                    }
-
-                    EditRecipeScreen(
-                        r = selectedRecipe ?: Recipe(),
-                        model = model,
-                        modifier = Modifier.fillMaxWidth(),
-                        onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
-                                val rdb = Room.databaseBuilder(
-                                    context,
-                                    RecipesDb::class.java, "RecipesDb"
-                                ).build()
-
-                                val r = rdb.recipeDao().findById(recipe.recipeId)
-                                if (r == null) {
-                                    rdb.recipeDao().insertAll(recipe)
-                                } else {
-                                    rdb.recipeDao().update(recipe)
-                                }
-
-                                rdb.close()
-                                editRecipe = false
-                            }
-                        }
-                    )
+        if (editRecipe) {
+            // Show the detail screen
+            // TODO separate the detail screen into a separate composable
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+            ) {
+                BackHandler {
+                    editRecipe = false
                 }
-            } else if (selectedRecipe != null) {
-                // Show the detail screen
-                // TODO separate the detail screen into a separate composable
-                Column(
+
+                EditRecipeScreen(
+                    r = selectedRecipe ?: Recipe(),
+                    model = model,
+                    modifier = Modifier.fillMaxWidth(),
+                    onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
+                            val rdb = Room.databaseBuilder(
+                                context,
+                                RecipesDb::class.java, "RecipesDb"
+                            ).build()
+
+                            val r = rdb.recipeDao().findById(recipe.recipeId)
+                            if (r == null) {
+                                rdb.recipeDao().insertAll(recipe)
+                            } else {
+                                rdb.recipeDao().update(recipe)
+                            }
+
+                            rdb.close()
+                            editRecipe = false
+                        }
+                    }
+                )
+            }
+        } else if (selectedRecipe != null) {
+            // Show the detail screen
+            // TODO separate the detail screen into a separate composable
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+            ) {
+                BackHandler {
+                    selectedRecipe = null
+                }
+                Text(
+                    text = selectedRecipe!!.title,
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                // TODO better icon/redesign
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                        .aspectRatio(1f / .8f)
                 ) {
-                    BackHandler {
-                        selectedRecipe = null
-                    }
-                    Text(
-                        text = selectedRecipe!!.title,
-                        style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                    AsyncImage(
+                        model = selectedRecipe!!.image,
+                        contentDescription = selectedRecipe!!.title,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
                     )
 
-                    // TODO better icon/redesign
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f / .8f)
+                            .fillMaxSize()
+                            .padding(8.dp)
                     ) {
-                        AsyncImage(
-                            model = selectedRecipe!!.image,
-                            contentDescription = selectedRecipe!!.title,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop,
-                        )
-
-                        Box(
+                        IconButton(
+                            onClick = { CoroutineScope(Dispatchers.IO).launch {
+                                try {
+                                    val rdb = Room.databaseBuilder(
+                                        context,
+                                        RecipesDb::class.java, "RecipesDb"
+                                    ).build()
+                                    rdb.recipeDao().delete(selectedRecipe!!)
+                                    rdb.close()
+                                    selectedRecipe = null
+                                } catch (error: Exception) {
+                                    Log.d("PlanEat", "Error: $error")
+                                }
+                            } },
                             modifier = Modifier
-                                .fillMaxSize()
-                                .padding(8.dp)
+                                .clip(CircleShape)
+                                .background(backgroundCardRecipe)
+                                .align(Alignment.TopEnd)
                         ) {
-                            IconButton(
-                                onClick = { CoroutineScope(Dispatchers.IO).launch {
-                                    try {
-                                        val rdb = Room.databaseBuilder(
-                                            context,
-                                            RecipesDb::class.java, "RecipesDb"
-                                        ).build()
-                                        rdb.recipeDao().delete(selectedRecipe!!)
-                                        rdb.close()
-                                        selectedRecipe = null
-                                    } catch (error: Exception) {
-                                        Log.d("PlanEat", "Error: $error")
-                                    }
-                                } },
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .background(backgroundCardRecipe)
-                                    .align(Alignment.TopEnd)
-                            ) {
-                                Icon(
-                                    imageVector = ImageVector.vectorResource(R.drawable.favorite),
-                                    contentDescription = stringResource(R.string.favorite),
-                                    tint = textCardRecipe,
-                                )
-                            }
+                            Icon(
+                                imageVector = ImageVector.vectorResource(R.drawable.favorite),
+                                contentDescription = stringResource(R.string.favorite),
+                                tint = textCardRecipe,
+                            )
                         }
-                    }
-
-                    Text(
-                        text = stringResource(id = R.string.ingredients),
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    selectedRecipe!!.ingredients.forEach {
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
-                    }
-
-                    Text(
-                        text = stringResource(id = R.string.steps),
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    selectedRecipe!!.steps.forEachIndexed { index, step ->
-                        Text(
-                            text = "${index + 1}. $step",
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
                     }
                 }
 
-            } else {
-                // Show the list screen
-                // TODO separate the list screen into a separate composable
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 16.dp),
-                ) {
-                    // Header element
+                Text(
+                    text = stringResource(id = R.string.ingredients),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                selectedRecipe!!.ingredients.forEach {
                     Text(
-                        text = stringResource(id = R.string.tab_recipes),
-                        style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        text = it,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
+                }
 
-                    DockedSearchBar(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        onQueryChanged,
-                        recipes
+                Text(
+                    text = stringResource(id = R.string.steps),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                selectedRecipe!!.steps.forEachIndexed { index, step ->
+                    Text(
+                        text = "${index + 1}. $step",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
-
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
-                        modifier = Modifier.padding(top = 8.dp)
-                    ) {
-                        items(count = recipes.size, key = {index -> index}, itemContent = { index ->
-                            RecipeListItem(
-                                recipe = recipes[index],
-                                onRecipeSelected = { r -> selectedRecipe = r },
-                                onRecipeDeleted = { r -> onRecipeDeleted(r) },
-                                agenda = null,
-                                selectedDate = dataUi.selectedDate.date,
-                                modifier = Modifier
-                                    .padding(8.dp)
-                                    .shadow(8.dp, shape = MaterialTheme.shapes.medium)
-                            )
-                        })
-                    }
                 }
             }
 
-            // When we have bottom navigation we show FAB at the bottom end.
-            if (navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
+        } else {
+            // Show the list screen
+            // TODO separate the list screen into a separate composable
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+            ) {
+                // Header element
+                Text(
+                    text = stringResource(id = R.string.tab_recipes),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                DockedSearchBar(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onQueryChanged,
+                    recipes
+                )
+
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
+                    items(count = recipes.size, key = {index -> index}, itemContent = { index ->
+                        RecipeListItem(
+                            recipe = recipes[index],
+                            onRecipeSelected = { r -> selectedRecipe = r },
+                            onRecipeDeleted = { r -> onRecipeDeleted(r) },
+                            agenda = null,
+                            selectedDate = dataUi.selectedDate.date,
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .shadow(8.dp, shape = MaterialTheme.shapes.medium)
+                        )
+                    })
+                }
+            }
+        }
+
+        // When we have bottom navigation we show FAB at the bottom end.
+        if (navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
+            if (!editRecipe) {
                 LargeFloatingActionButton(
                     onClick = { editRecipe = true },
                     modifier = Modifier
@@ -309,24 +309,28 @@ fun RecipesScreen(
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun RequestContentPermission(imageUri: Uri?, onUriSelected: (Uri) -> Unit) {
-    val context = LocalContext.current
+val context = LocalContext.current
 
-    val bitmap = Bitmap.createBitmap(
-        100,
-        100,
-        Bitmap.Config.ARGB_8888
-    )
+val bitmap = Bitmap.createBitmap(
+    100,
+    100,
+    Bitmap.Config.ARGB_8888
+)
 
-    val imageBitmap =  remember {
-        mutableStateOf<ImageBitmap>(bitmap.asImageBitmap())
-    }
-    if (imageUri != null) {
-        val source = ImageDecoder
-            .createSource(context.contentResolver, imageUri)
-        val drawable = ImageDecoder.decodeDrawable(source)
-        if (drawable is BitmapDrawable) {
-            val bmp = drawable.bitmap
+val imageBitmap =  remember {
+    mutableStateOf<ImageBitmap>(bitmap.asImageBitmap())
+}
+Log.d("PlanEat", "@@@" + imageUri.toString())
+if (imageUri != null) {
+Log.d("PlanEat", "@@@B" + imageUri.toString())
+    val source = ImageDecoder
+        .createSource(context.contentResolver, imageUri)
+    val drawable = ImageDecoder.decodeDrawable(source)
+    if (drawable is BitmapDrawable) {
+Log.d("PlanEat", "@@@A" + imageUri.toString())
+        val bmp = drawable.bitmap
             if (bmp != null) {
+    Log.d("PlanEat", "@@@X" + imageUri.toString())
                 imageBitmap.value = bitmap.asImageBitmap()
             }
         }
@@ -336,7 +340,7 @@ fun RequestContentPermission(imageUri: Uri?, onUriSelected: (Uri) -> Unit) {
     ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (imageUri != uri) {
                 if (uri != null) {
-                    Log.d("PlanEat", "XXX" + imageUri.toString())
+                    Log.d("PlanEat", "@@@D" + imageUri.toString())
                     onUriSelected(uri)
 
                     val source = ImageDecoder

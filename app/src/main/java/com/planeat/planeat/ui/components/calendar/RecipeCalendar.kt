@@ -60,7 +60,7 @@ fun RecipeCalendar(
     modifier: Modifier = Modifier,
     dataSource: CalendarDataSource,
     dataUi: CalendarUiModel,
-    updateDate: (CalendarUiModel) -> Unit,
+    updateDate: (CalendarUiModel, Boolean) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         dataUi.visibleDates.forEach{ visibleDate ->
@@ -84,7 +84,7 @@ data class RecipeAgenda (
 fun ContentItem(
     date: CalendarUiModel.Date,
     dataUi: CalendarUiModel,
-    updateDate: (CalendarUiModel) -> Unit,
+    updateDate: (CalendarUiModel, Boolean) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -157,7 +157,7 @@ fun addRecipeCard(
     modifier: Modifier = Modifier,
     date: CalendarUiModel.Date,
     dataUi: CalendarUiModel,
-    updateDate: (CalendarUiModel) -> Unit,
+    updateDate: (CalendarUiModel, Boolean) -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -173,7 +173,7 @@ fun addRecipeCard(
                                 isSelected = it.date.isEqual(date.date)
                             )
                         }
-                    ))
+                    ), true)
                 }
             )
             .clip(CardDefaults.shape),
