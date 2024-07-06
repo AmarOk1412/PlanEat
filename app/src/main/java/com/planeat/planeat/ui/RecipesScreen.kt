@@ -103,6 +103,7 @@ fun RecipesScreen(
     recipes: List<Recipe>,
     onRecipeDeleted: (Recipe) -> Unit,
     dataUi: CalendarUiModel,
+    goToAgenda: () -> Unit,
 ) {
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
     var editRecipe by remember { mutableStateOf(false) }
@@ -274,8 +275,10 @@ fun RecipesScreen(
                             recipe = recipes[index],
                             onRecipeSelected = { r -> selectedRecipe = r },
                             onRecipeDeleted = { r -> onRecipeDeleted(r) },
+                            onAgendaDeleted = {},
                             agenda = null,
                             selectedDate = dataUi.selectedDate.date,
+                            goToAgenda = goToAgenda,
                             modifier = Modifier
                                 .padding(8.dp)
                                 .shadow(8.dp, shape = MaterialTheme.shapes.medium)

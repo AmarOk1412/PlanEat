@@ -17,6 +17,8 @@
 package com.planeat.planeat.ui
 
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -26,10 +28,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
-import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -65,7 +64,6 @@ import com.planeat.planeat.ui.navigation.PlanEatRoute
 import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
 import com.planeat.planeat.ui.utils.DevicePosture
 import com.planeat.planeat.ui.utils.PlanEatContentType
-import com.planeat.planeat.ui.utils.PlanEatNavigationContentPosition
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import com.planeat.planeat.ui.utils.isBookPosture
 import com.planeat.planeat.ui.utils.isSeparating
@@ -261,22 +259,6 @@ fun PlanEatApp(
         }
     }
 
-    /**
-     * Content inside Navigation Rail/Drawer can also be positioned at top, bottom or center for
-     * ergonomics and reachability depending upon the height of the device.
-     */
-    val navigationContentPosition = when (windowSize.heightSizeClass) {
-        WindowHeightSizeClass.Compact -> {
-            PlanEatNavigationContentPosition.TOP
-        }
-        WindowHeightSizeClass.Medium,
-        WindowHeightSizeClass.Expanded -> {
-            PlanEatNavigationContentPosition.CENTER
-        }
-        else -> {
-            PlanEatNavigationContentPosition.TOP
-        }
-    }
 
     NavigationWrapper(
         model = model,
@@ -289,7 +271,6 @@ fun PlanEatApp(
         ingredients = model.ingredients,
         navigationType = navigationType,
         contentType = contentType,
-        navigationContentPosition = navigationContentPosition,
     )
 }
 
@@ -303,7 +284,6 @@ private fun NavigationWrapper(
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
     contentType: PlanEatContentType,
-    navigationContentPosition: PlanEatNavigationContentPosition,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -324,7 +304,6 @@ private fun NavigationWrapper(
         ingredients = ingredients,
         navigationType = navigationType,
         contentType = contentType,
-        navigationContentPosition = navigationContentPosition,
         navController = navController,
         selectedDestination = selectedDestination,
         navigateToTopLevelDestination = navigationActions::navigateTo,
@@ -346,7 +325,6 @@ fun AppContent(
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
     contentType: PlanEatContentType,
-    navigationContentPosition: PlanEatNavigationContentPosition,
     navController: NavHostController,
     selectedDestination: String,
     navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
@@ -403,6 +381,7 @@ private fun NavHost(
 ) {
     val dataSource by remember { mutableStateOf(CalendarDataSource()) }
     var dataUi by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
+    val context = LocalContext
 
     NavHost(
         modifier = modifier,
@@ -433,7 +412,18 @@ private fun NavHost(
                 onRecipeDeleted = { r ->
                     onRecipeDeleted(r)
                 },
-                dataUi = dataUi
+                dataUi = dataUi,
+                goToAgenda = {
+                    Handler(Looper.getMainLooper()).post {
+                        navigateToTopLevelDestination(
+                            PlanEatTopLevelDestination(
+                                PlanEatRoute.AGENDA,
+                                0,
+                                0
+                            )
+                        )
+                    }
+                }
             )
         }
         composable(PlanEatRoute.PANTRY) {

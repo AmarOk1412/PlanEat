@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -77,8 +79,10 @@ fun RecipeListItem(
     recipe: Recipe,
     onRecipeSelected: (Recipe) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
+    onAgendaDeleted: (Agenda) -> Unit,
     selectedDate: LocalDate,
     agenda: Agenda?,
+    goToAgenda: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -88,36 +92,7 @@ fun RecipeListItem(
             .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp) // Set the width to 40% of the screen
             .combinedClickable(
                 onClick = { onRecipeSelected(recipe) },
-                onLongClick = {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val agendaDb = Room
-                            .databaseBuilder(
-                                context,
-                                AgendaDb::class.java, "AgendaDb"
-                            )
-                            .build()
-                        Log.w("PlanEat", "Selected date: ${selectedDate}")
-                        val todayMiddayMillis = selectedDate
-                            .atTime(12, 0)
-                            .toInstant(ZoneOffset.UTC)
-                            .toEpochMilli()
-
-                        Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${todayMiddayMillis}")
-                        if (agenda != null) {
-                            agendaDb.agendaDao().delete(agenda)
-                        } else {
-                            agendaDb
-                                .agendaDao()
-                                .insertAll(
-                                    Agenda(
-                                        date = todayMiddayMillis,
-                                        recipeId = recipe.recipeId
-                                    )
-                                )
-                        }
-                        agendaDb.close()
-                    }
-                }
+                onLongClick = { }
             )
             .clip(CardDefaults.shape),
         elevation = CardDefaults.cardElevation(
@@ -168,7 +143,49 @@ fun RecipeListItem(
                     IconButton(
                         onClick = { CoroutineScope(Dispatchers.IO).launch {
                             try {
-                                val rdb = Room.databaseBuilder(
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    if (recipe.recipeId == 0.toLong()) {
+                                        Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
+                                        val rdb = Room.databaseBuilder(
+                                            context,
+                                            RecipesDb::class.java, "RecipesDb"
+                                        ).build()
+                                        rdb.recipeDao().insertAll(recipe)
+                                        rdb.close()
+                                    } else {
+                                        val agendaDb = Room
+                                            .databaseBuilder(
+                                                context,
+                                                AgendaDb::class.java, "AgendaDb"
+                                            )
+                                            .build()
+                                        Log.w("PlanEat", "Selected date: ${selectedDate}")
+                                        val todayMiddayMillis = selectedDate
+                                            .atTime(12, 0)
+                                            .toInstant(ZoneOffset.UTC)
+                                            .toEpochMilli()
+
+                                        Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${todayMiddayMillis}")
+                                        if (agenda != null) {
+                                            agendaDb.agendaDao().delete(agenda)
+                                            onAgendaDeleted(agenda)
+                                            agendaDb.close()
+                                        } else {
+                                            agendaDb
+                                                .agendaDao()
+                                                .insertAll(
+                                                    Agenda(
+                                                        date = todayMiddayMillis,
+                                                        recipeId = recipe.recipeId
+                                                    )
+                                                )
+                                            agendaDb.close()
+                                            goToAgenda()
+                                        }
+                                    }
+                                }
+
+                                /*val rdb = Room.databaseBuilder(
                                     context,
                                     RecipesDb::class.java, "RecipesDb"
                                 ).build()
@@ -181,7 +198,7 @@ fun RecipeListItem(
                                 } else {
                                     rdb.recipeDao().insertAll(recipe)
                                     rdb.close()
-                                }
+                                }*/
                             } catch (error: Exception) {
                                 Log.d("PlanEat", "Error: $error")
                             }
@@ -191,8 +208,17 @@ fun RecipeListItem(
                             .background(backgroundCardRecipe)
                             .align(Alignment.TopEnd)
                     ) {
+                        val icon = if (agenda != null) {
+                            Icons.Default.Close
+                        } else {
+                            if (recipe.recipeId == 0.toLong()) {
+                                ImageVector.vectorResource(R.drawable.favorite)
+                            } else {
+                                ImageVector.vectorResource(R.drawable.add)
+                            }
+                        }
                         Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.favorite),
+                            imageVector = icon,
                             contentDescription = stringResource(R.string.favorite),
                             tint = textCardRecipe,
                         )

@@ -108,8 +108,8 @@ fun ContentItem(
 
                 recipesPlannedDb.forEach {
                     val recipe = rdb.recipeDao().findById(it.recipeId)
-                    val ra = RecipeAgenda(recipe = recipe, agenda = it)
-                    if (recipe.recipeId != 0.toLong()) {
+                    if (recipe != null && recipe.recipeId != 0.toLong()) {
+                        val ra = RecipeAgenda(recipe = recipe, agenda = it)
                         recipesPlanned.value += ra
                     } else {
                         adb.agendaDao().delete(it)
@@ -137,7 +137,10 @@ fun ContentItem(
                     onRecipeDeleted = {},
                     selectedDate = date.date,
                     agenda = recipeAgenda.agenda,
-                    modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium))
+                    goToAgenda = {},
+                    onAgendaDeleted = {recipe -> recipesPlanned.value = recipesPlanned.value.filter { it != recipeAgenda }},
+                    modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium)
+                )
             }
 
             addRecipeCard(
