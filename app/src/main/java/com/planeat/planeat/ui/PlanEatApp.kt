@@ -58,8 +58,6 @@ import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.components.calendar.CalendarDataSource
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
-import com.planeat.planeat.ui.navigation.ModalNavigationDrawerContent
-import com.planeat.planeat.ui.navigation.PermanentNavigationDrawerContent
 import com.planeat.planeat.ui.navigation.PlanEatBottomNavigationBar
 import com.planeat.planeat.ui.navigation.PlanEatNavigationActions
 import com.planeat.planeat.ui.navigation.PlanEatNavigationRail
@@ -254,11 +252,7 @@ fun PlanEatApp(
             }
         }
         WindowWidthSizeClass.Expanded -> {
-            navigationType = if (foldingDevicePosture is DevicePosture.BookPosture) {
-                PlanEatNavigationType.NAVIGATION_RAIL
-            } else {
-                PlanEatNavigationType.PERMANENT_NAVIGATION_DRAWER
-            }
+            navigationType = PlanEatNavigationType.NAVIGATION_RAIL
             contentType = PlanEatContentType.DUAL_PANE
         }
         else -> {
@@ -322,62 +316,21 @@ private fun NavigationWrapper(
     val selectedDestination =
         navBackStackEntry?.destination?.route ?: PlanEatRoute.AGENDA
 
-    if (navigationType == PlanEatNavigationType.PERMANENT_NAVIGATION_DRAWER) {
-        // TODO check on custom width of PermanentNavigationDrawer: b/232495216
-        PermanentNavigationDrawer(drawerContent = {
-            PermanentNavigationDrawerContent(
-                selectedDestination = selectedDestination,
-                navigationContentPosition = navigationContentPosition,
-                navigateToTopLevelDestination = navigationActions::navigateTo,
-            )
-        }) {
-            AppContent(
-                model = model,
-                onQueryChanged = onQueryChanged,
-                onRecipeDeleted = onRecipeDeleted,
-                recipes = recipes,
-                ingredients = ingredients,
-                navigationType = navigationType,
-                contentType = contentType,
-                navigationContentPosition = navigationContentPosition,
-                navController = navController,
-                selectedDestination = selectedDestination,
-                navigateToTopLevelDestination = navigationActions::navigateTo,
-            )
-        }
-    } else {
-        ModalNavigationDrawer(
-            drawerContent = {
-                ModalNavigationDrawerContent(
-                    selectedDestination = selectedDestination,
-                    navigationContentPosition = navigationContentPosition,
-                    navigateToTopLevelDestination = navigationActions::navigateTo,
-                    onDrawerClicked = {
-                        scope.launch {
-                            drawerState.close()
-                        }
-                    }
-                )
-            },
-            drawerState = drawerState
-        ) {
-            AppContent(
-                model = model,
-                onQueryChanged = onQueryChanged,
-                onRecipeDeleted = onRecipeDeleted,
-                recipes = recipes,
-                ingredients = ingredients,
-                navigationType = navigationType,
-                contentType = contentType,
-                navigationContentPosition = navigationContentPosition,
-                navController = navController,
-                selectedDestination = selectedDestination,
-                navigateToTopLevelDestination = navigationActions::navigateTo,
-            ) {
-                scope.launch {
-                    drawerState.open()
-                }
-            }
+    AppContent(
+        model = model,
+        onQueryChanged = onQueryChanged,
+        onRecipeDeleted = onRecipeDeleted,
+        recipes = recipes,
+        ingredients = ingredients,
+        navigationType = navigationType,
+        contentType = contentType,
+        navigationContentPosition = navigationContentPosition,
+        navController = navController,
+        selectedDestination = selectedDestination,
+        navigateToTopLevelDestination = navigationActions::navigateTo,
+    ) {
+        scope.launch {
+            drawerState.open()
         }
     }
 }
@@ -403,7 +356,6 @@ fun AppContent(
         AnimatedVisibility(visible = navigationType == PlanEatNavigationType.NAVIGATION_RAIL) {
             PlanEatNavigationRail(
                 selectedDestination = selectedDestination,
-                navigationContentPosition = navigationContentPosition,
                 navigateToTopLevelDestination = navigateToTopLevelDestination,
                 onDrawerClicked = onDrawerClicked,
             )
