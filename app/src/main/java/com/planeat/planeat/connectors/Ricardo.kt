@@ -100,6 +100,7 @@ class Ricardo : Connector {
             }
 
             if (recipeData != null) {
+                Log.d("PlanEat", recipeData.toString())
                 val name = recipeData.getString("name")
                 var tags = emptyList<String>()
                 if (recipeData.has("recipeCuisine")) {
@@ -114,8 +115,21 @@ class Ricardo : Connector {
                 val duration = recipeData.getString("totalTime").replace("\\D".toRegex(), "").toInt()
                 val ingredients = recipeData.optJSONArray("recipeIngredient")?.toList()?.map { it.toString() } ?: emptyList()
                 val imageUrl = recipeData.getJSONArray("image").getString(0)
-                val steps = recipeData.optJSONArray("recipeInstructions")?.toList()?.map { (it as LinkedHashMap<*, *>).get("text").toString() } ?: emptyList()
-
+                val stepsListOpt = recipeData.optJSONArray("recipeInstructions")
+                var steps = emptyList<String>().toMutableList()
+                if (stepsListOpt?.length()!! >= 0 && (stepsListOpt.get(0) as JSONObject).optString("@type") == "HowToSection") {
+                    for (i in 0 until stepsListOpt.length()) {
+                        val stepsList = (stepsListOpt.get(i) as JSONObject)
+                        val items = stepsList.getJSONArray("itemListElement")
+                        for (j in 0 until items.length()) {
+                            val stepObj = items.get(j) as JSONObject
+                            steps += stepObj.getString("text")
+                        }
+                    }
+                } else {
+                    steps = stepsListOpt.toList().map { (it as LinkedHashMap<*, *>).get("text").toString() }
+                        .toMutableList()
+                }
                 recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags, cookingTime = duration, ingredients = ingredients, steps = steps)
             }
         } catch (error: Exception) {

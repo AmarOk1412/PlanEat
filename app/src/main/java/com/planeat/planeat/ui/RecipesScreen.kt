@@ -48,6 +48,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -133,6 +134,11 @@ fun RecipesScreen(
                     r = selectedRecipe ?: Recipe(),
                     model = model,
                     modifier = Modifier.fillMaxWidth(),
+                    onRecipeDeleted = {r ->
+                        editRecipe = false
+                        selectedRecipe = null
+                        onRecipeDeleted(r)
+                    },
                     onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
                             val rdb = Room.databaseBuilder(
                                 context,
@@ -158,6 +164,7 @@ fun RecipesScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
                     .padding(horizontal = 16.dp, vertical = 16.dp),
             ) {
                 BackHandler {
@@ -194,7 +201,11 @@ fun RecipesScreen(
                                         context,
                                         RecipesDb::class.java, "RecipesDb"
                                     ).build()
-                                    rdb.recipeDao().delete(selectedRecipe!!)
+                                    if (selectedRecipe!!.recipeId != 0L) {
+                                        rdb.recipeDao().delete(selectedRecipe!!)
+                                    } else {
+                                        rdb.recipeDao().insertAll(selectedRecipe!!)
+                                    }
                                     rdb.close()
                                     selectedRecipe = null
                                 } catch (error: Exception) {
@@ -206,8 +217,9 @@ fun RecipesScreen(
                                 .background(backgroundCardRecipe)
                                 .align(Alignment.TopEnd)
                         ) {
+                            val img = if (selectedRecipe!!.recipeId == 0L) ImageVector.vectorResource(R.drawable.favorite) else Icons.Filled.Favorite
                             Icon(
-                                imageVector = ImageVector.vectorResource(R.drawable.favorite),
+                                imageVector = img,
                                 contentDescription = stringResource(R.string.favorite),
                                 tint = textCardRecipe,
                             )
@@ -242,6 +254,8 @@ fun RecipesScreen(
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
+
+                Spacer(modifier = Modifier.height(120.dp))
             }
 
         } else {
@@ -379,7 +393,8 @@ fun EditRecipeScreen(
     r: Recipe,
     model: AppModel,
     modifier: Modifier = Modifier,
-    onSaved: (Recipe) -> Unit
+    onSaved: (Recipe) -> Unit,
+    onRecipeDeleted: (Recipe) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -533,6 +548,26 @@ fun EditRecipeScreen(
             }
         ) {
             Text(text = "Save")
+        }
+
+        if (recipe.recipeId != 0L) {
+            // Delete button
+            Button(
+                onClick = {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        Log.d("PlanEat", "Delete recipe: $recipe.title")
+                        val rdb = Room.databaseBuilder(
+                            context,
+                            RecipesDb::class.java, "RecipesDb"
+                        ).build()
+                        rdb.recipeDao().delete(recipe)
+                        rdb.close()
+                        onRecipeDeleted(recipe)
+                    }
+                }
+            ) {
+                Text(text = "Delete")
+            }
         }
     }
 }

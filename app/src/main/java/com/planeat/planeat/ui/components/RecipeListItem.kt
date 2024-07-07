@@ -21,7 +21,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -32,6 +34,9 @@ import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -86,6 +91,9 @@ fun RecipeListItem(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    val existId = remember { mutableLongStateOf(0.toLong()) }
+    val icon = remember { mutableStateOf(Icons.Default.Add) }
+    val outlinedFav = ImageVector.vectorResource(R.drawable.favorite)
     Card(
         modifier = modifier
             .clip(CardDefaults.shape)
@@ -113,7 +121,22 @@ fun RecipeListItem(
                     ).build()
                     val res = rdb.recipeDao().findByUrl(recipe.url)
                     rdb.close()
-                    res != null
+                    if (res != null) {
+                        existId.value = res.recipeId
+                    }
+                    icon.value = if (agenda != null) {
+                        Icons.Default.Close
+                    } else {
+                        if (recipe.recipeId == 0.toLong()) {
+                            if (existId.value != 0.toLong()) {
+                                Icons.Filled.Favorite
+                            } else {
+                                outlinedFav
+                            }
+                        } else {
+                            Icons.Default.Add
+                        }
+                    }
                 }
             }
 
@@ -145,13 +168,26 @@ fun RecipeListItem(
                             try {
                                 CoroutineScope(Dispatchers.IO).launch {
                                     if (recipe.recipeId == 0.toLong()) {
-                                        Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
                                         val rdb = Room.databaseBuilder(
                                             context,
                                             RecipesDb::class.java, "RecipesDb"
                                         ).build()
-                                        rdb.recipeDao().insertAll(recipe)
-                                        rdb.close()
+                                        if (existId.value == 0.toLong()) {
+                                            Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
+                                            rdb.recipeDao().insertAll(recipe)
+                                            val res = rdb.recipeDao().findByUrl(recipe.url)
+                                            existId.value = res.recipeId
+                                            icon.value = Icons.Filled.Favorite
+                                            rdb.close()
+                                        } else {
+                                            Log.w("PlanEat", "Delete recipe: ${recipe.title}")
+                                            var r = recipe
+                                            r.recipeId = existId.value
+                                            rdb.recipeDao().delete(r)
+                                            rdb.close()
+                                            existId.value = 0
+                                            icon.value = outlinedFav
+                                        }
                                     } else {
                                         val agendaDb = Room
                                             .databaseBuilder(
@@ -184,21 +220,6 @@ fun RecipeListItem(
                                         }
                                     }
                                 }
-
-                                /*val rdb = Room.databaseBuilder(
-                                    context,
-                                    RecipesDb::class.java, "RecipesDb"
-                                ).build()
-                                val exists = rdb.recipeDao().findById(recipe.recipeId)
-
-                                if (exists != null) {
-                                    rdb.recipeDao().delete(recipe)
-                                    rdb.close()
-                                    onRecipeDeleted(recipe)
-                                } else {
-                                    rdb.recipeDao().insertAll(recipe)
-                                    rdb.close()
-                                }*/
                             } catch (error: Exception) {
                                 Log.d("PlanEat", "Error: $error")
                             }
@@ -208,17 +229,8 @@ fun RecipeListItem(
                             .background(backgroundCardRecipe)
                             .align(Alignment.TopEnd)
                     ) {
-                        val icon = if (agenda != null) {
-                            Icons.Default.Close
-                        } else {
-                            if (recipe.recipeId == 0.toLong()) {
-                                ImageVector.vectorResource(R.drawable.favorite)
-                            } else {
-                                ImageVector.vectorResource(R.drawable.add)
-                            }
-                        }
                         Icon(
-                            imageVector = icon,
+                            imageVector = icon.value,
                             contentDescription = stringResource(R.string.favorite),
                             tint = textCardRecipe,
                         )
