@@ -87,7 +87,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         val marmiton = Marmiton(maxResult)
         val ricardo = Ricardo(maxResult)
         val chacuit = ChaCuit(maxResult)
-        connectors = listOf(/*chacuit,*/ ricardo, marmiton)
+        connectors = listOf(chacuit, ricardo, marmiton)
     }
     private var listJob: Job? = null
     private var currentSearchTerm: String = ""
