@@ -53,26 +53,29 @@ def parse_data(data):
         is_end = components.index(component) == len(components) - 1 or label == 'AND' or label == 'OR'
         if label != last_label or is_end:
             if last_label == 'QUANTITY' and quantity_str != "":
-                quantity.append({
-                    "text": quantity_str.strip(),
-                    "answer_start": quantity_pos
-                })
+                if len(quantity) == 0:
+                    quantity.append({
+                        "text": quantity_str.strip(),
+                        "answer_start": quantity_pos
+                    })
                 ####quantity += quantity_str.strip()
                 quantity_str = ""
                 buffer_str = ""
             if last_label == 'UNIT' and unit_str != "":
-                unit.append({
-                    "text": unit_str.strip(),
-                    "answer_start": unit_pos
-                })
+                if len(unit) == 0:
+                    unit.append({
+                        "text": unit_str.strip(),
+                        "answer_start": unit_pos
+                    })
                 ###unit += unit_str.strip()
                 unit_str = ""
                 buffer_str = ""
             if ingredient_str != "" and ((label != 'NONE' and last_label == 'INGREDIENT') or is_end):
-                ingredient.append({
-                    "text": ingredient_str.strip(),
-                    "answer_start": ingredient_pos
-                })
+                if len(ingredient) == 0:
+                    ingredient.append({
+                        "text": ingredient_str.strip(),
+                        "answer_start": ingredient_pos
+                    })
                 ###ingredient += ingredient_str.strip()
                 ingredient_str = ""
             if label != 'NONE':
@@ -93,47 +96,59 @@ def parse_data(data):
     global cnt
     cnt += 1
     id_str = str(cnt)
-    qas.append({
+    obj={
         "id": id_str,
         "question": "quantity?",
         "is_impossible": len(quantity) == 0,
         "answers": quantity
-    })
+    }
+    if len(quantity) == 0:
+        obj["plausible_answers"] = [{"text": context, "answer_start": 0}]
+    qas.append(obj)
     cnt += 1
     id_str = str(cnt)
-    qas.append({
+    obj={
         "id": id_str,
         "question": "unit?",
         "is_impossible": len(unit) == 0,
         "answers": unit
-    })
+    }
+    if len(unit) == 0:
+        obj["plausible_answers"] = [{"text": context, "answer_start": 0}]
+    if len(unit) > 1:
+        print(context)
+    qas.append(obj)
     cnt += 1
     id_str = str(cnt)
-    qas.append({
+    obj={
         "id": id_str,
         "question": "ingredient?",
         "is_impossible": len(ingredient) == 0,
         "answers": ingredient
-    })
+    }
+    if len(ingredient) == 0:
+        obj["plausible_answers"] = [{"text": context, "answer_start": 0}]
+    qas.append(obj)
     # Create the final output
     output = {
-        ##"paragraphs": [
-            ##{
+        "title": f"Recipe {id_str}",
+        "paragraphs": [
+            {
                 "context": context,
                 "qas": qas
             }
-        ##]
-    ##}
+        ]
+    }
 
     return json.dumps(output)
 
 def read_file():
     with open('final.json', 'w') as outf:
         with open('final_val.json', 'w') as outf_v:
-            ##outf.write('{"version":"v2.0","data":[\n')
-            ##outf_v.write('{"version":"v2.0","data":[\n')
-            outf.write('[\n')
-            outf_v.write('[\n')
+            outf.write('{"version":"v2.0","data":[\n')
+            outf_v.write('{"version":"v2.0","data":[\n')
+            ##outf.write('[\n')
+            ##outf_v.write('[\n')
             data = []
             with open('input.csv') as f:
                 last_context = ''
@@ -154,10 +169,10 @@ def read_file():
                     data.append(line.strip())
             outf.write(parse_data(data)) # Parse the last data
             outf_v.write(parse_data(data)) # Parse the last data
-            ##outf.write('\n]}')
-            ##outf_v.write('\n]}')
-            outf.write('\n]')
-            outf_v.write('\n]')
+            outf.write('\n]}')
+            outf_v.write('\n]}')
+            ##outf.write('\n]')
+            ##outf_v.write('\n]')
 
 
 

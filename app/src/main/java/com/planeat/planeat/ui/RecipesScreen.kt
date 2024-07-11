@@ -27,10 +27,14 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
@@ -54,6 +58,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SuggestionChip
+import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -73,6 +79,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.room.Room
@@ -80,10 +87,20 @@ import coil.compose.AsyncImage
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.data.Tags
 import com.planeat.planeat.ui.components.DockedSearchBar
 import com.planeat.planeat.ui.components.RecipeListItem
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.theme.backgroundCardRecipe
+import com.planeat.planeat.ui.theme.tagColor0
+import com.planeat.planeat.ui.theme.tagColor1
+import com.planeat.planeat.ui.theme.tagColor2
+import com.planeat.planeat.ui.theme.tagColor3
+import com.planeat.planeat.ui.theme.tagColor4
+import com.planeat.planeat.ui.theme.tagColor5
+import com.planeat.planeat.ui.theme.tagColor6
+import com.planeat.planeat.ui.theme.tagColor7
+import com.planeat.planeat.ui.theme.tagColor8
 import com.planeat.planeat.ui.theme.textCardRecipe
 import com.planeat.planeat.ui.utils.PlanEatContentType
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
@@ -105,6 +122,7 @@ fun RecipesScreen(
     onRecipeDeleted: (Recipe) -> Unit,
     dataUi: CalendarUiModel,
     goToAgenda: () -> Unit,
+    onFilterClicked: (Tags) -> Unit,
 ) {
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
     var editRecipe by remember { mutableStateOf(false) }
@@ -227,6 +245,50 @@ fun RecipesScreen(
                     }
                 }
 
+
+                Row(
+                    modifier = Modifier.padding(top = 12.dp, start = 8.dp).fillMaxWidth(),
+                ) {
+                    for (i in 0 until selectedRecipe!!.tags.size) {
+                        val tag = selectedRecipe!!.tags[i]
+                        var chipColor = tagColor0
+                        if (!tag.isEmpty()) {
+                            val colorIndex = tag.first().toInt() % 8
+                            chipColor = when (colorIndex) {
+                                0 -> tagColor0
+                                1 -> tagColor1
+                                2 -> tagColor2
+                                3 -> tagColor3
+                                4 -> tagColor4
+                                5 -> tagColor5
+                                6 -> tagColor6
+                                7 -> tagColor7
+                                else -> tagColor8
+                            }
+                        }
+
+                        SuggestionChip(
+                            onClick = { /*TODO*/ },
+                            label = { Text(
+                                text = tag,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.height(18.dp),
+
+                            ) },
+                            colors = SuggestionChipDefaults.suggestionChipColors(
+                                containerColor = chipColor.copy(alpha = 0.5f),
+                                labelColor = chipColor
+                            ),
+                            modifier = Modifier.padding(end = 8.dp).fillMaxWidth(0.5f).height(24.dp),
+                            border = BorderStroke(width = 1.dp, color = chipColor)
+                        )
+
+                    }
+                }
+
+
                 Text(
                     text = stringResource(id = R.string.ingredients),
                     style = MaterialTheme.typography.bodyMedium,
@@ -279,6 +341,25 @@ fun RecipesScreen(
                     onQueryChanged,
                     recipes
                 )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp).horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    val filters = Tags.entries.map { it }
+                    filters.forEach { filter ->
+                        Button(
+                            onClick = {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    onFilterClicked(filter)
+                                }
+                            },
+                            modifier = Modifier.padding(end = 8.dp)
+                        ) {
+                            Text(text = filter.toString())
+                        }
+                    }
+                }
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),

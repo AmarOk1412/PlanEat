@@ -55,6 +55,8 @@ import com.planeat.planeat.connectors.Marmiton
 import com.planeat.planeat.connectors.Ricardo
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.data.Tags
+import com.planeat.planeat.data.toTags
 import com.planeat.planeat.ui.components.calendar.CalendarDataSource
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.navigation.PlanEatBottomNavigationBar
@@ -79,7 +81,9 @@ import java.text.Normalizer
 
 class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHelper.AnswererListener {
     private val connectors: List<Connector>
-    val recipes = mutableStateListOf<Recipe>()
+    var recipesInDb = mutableListOf<Recipe>()
+    val recipesSearched = mutableListOf<Recipe>()
+    val recipesShown = mutableStateListOf<Recipe>()
     val ingredients = mutableStateListOf<String>()
     lateinit var bertQaHelper: BertQaHelper
 
@@ -125,6 +129,24 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         }
     }
 
+    fun filter(tag: Tags) {
+        val completeList = recipesInDb + recipesSearched
+        val newList = if (tag == Tags.All) {
+            completeList
+        } else {
+            completeList.filter { recipe -> toTags(recipe).contains(tag) }
+        }
+        recipesShown.clear()
+        for (r in newList) {
+            recipesShown.add(r)
+        }
+    }
+
+    fun remove(recipe: Recipe) {
+        recipesInDb.remove(recipe)
+        recipesShown.remove(recipe)
+    }
+
     suspend fun getRecipe(url: String, onRecipe: (Recipe) -> Unit) {
         coroutineScope {
             launch(Dispatchers.IO) {
@@ -142,15 +164,18 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
     suspend fun search(searchTerm: String): Boolean {
         currentSearchTerm = searchTerm
         listJob?.cancel()
-        recipes.clear()
+        recipesShown.clear()
         ingredients.clear()
         if (searchTerm.isEmpty()) {
             listJob = coroutineScope {
                 async(Dispatchers.IO) {
-                    for (recipe in db.recipeDao().getAll()) {
-                        recipes.add(recipe)
+                    if (recipesInDb.isEmpty()) {
+                        recipesInDb = db.recipeDao().getAll().toMutableList()
                     }
-                    gatherIngredients(recipes)
+                    for (recipe in recipesInDb) {
+                        recipesShown.add(recipe)
+                    }
+                    gatherIngredients(recipesShown)
                 }
             }
             return true
@@ -160,10 +185,12 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
                 connectors.map { connector ->
                     async(Dispatchers.IO) {
                         // TODO callback return false?
+                        // TODO filter recipesInDb
                         connector.search(searchTerm, onRecipe = { recipe ->
                             if (searchTerm == currentSearchTerm) {
                                 Log.w("PlanEat", "Adding recipe $recipe")
-                                recipes.add(recipe)
+                                recipesShown.add(recipe)
+                                recipesSearched.add(recipe)
                                 gatherIngredients(recipe)
                             }
                         })
@@ -265,9 +292,9 @@ fun PlanEatApp(
         onQueryChanged = { value -> scope.launch {
             model.search(value)
         } },
-        onRecipeDeleted = {recipe -> model.recipes.remove(recipe)
+        onRecipeDeleted = {recipe -> model.remove(recipe)
         },
-        recipes = model.recipes,
+        recipes = model.recipesShown,
         ingredients = model.ingredients,
         navigationType = navigationType,
         contentType = contentType,
@@ -411,6 +438,9 @@ private fun NavHost(
                 recipes = recipes,
                 onRecipeDeleted = { r ->
                     onRecipeDeleted(r)
+                },
+                onFilterClicked = { filter ->
+                    model.filter(filter)
                 },
                 dataUi = dataUi,
                 goToAgenda = {

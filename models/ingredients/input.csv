@@ -99,7 +99,7 @@ lait | 1 l de lait demi-ecreme @ INGREDIENT
 demi-ecreme | 1 l de lait demi-ecreme @ NONE
 3 | 3 cuilleres a soupe d'huile @ QUANTITY
 cuilleres | 3 cuilleres a soupe d'huile @ UNIT
-a | 3 cuilleres a soupe d'huile @ NONE
+a | 3 cuilleres a soupe d'huile @ UNIT
 soupe | 3 cuilleres a soupe d'huile @ UNIT
 d' | 3 cuilleres a soupe d'huile @ NONE
 huile | 3 cuilleres a soupe d'huile @ INGREDIENT
@@ -124,7 +124,7 @@ beurre | 50 g de beurre ou 3 cuilleres a soupe d'huile @ INGREDIENT
 ou | 50 g de beurre ou 3 cuilleres a soupe d'huile @ OR
 3 | 50 g de beurre ou 3 cuilleres a soupe d'huile @ QUANTITY
 cuilleres | 50 g de beurre ou 3 cuilleres a soupe d'huile @ UNIT
-a | 50 g de beurre ou 3 cuilleres a soupe d'huile @ NONE
+a | 50 g de beurre ou 3 cuilleres a soupe d'huile @ UNIT
 soupe | 50 g de beurre ou 3 cuilleres a soupe d'huile @ UNIT
 d' | 50 g de beurre ou 3 cuilleres a soupe d'huile @ NONE
 huile | 50 g de beurre ou 3 cuilleres a soupe d'huile @ INGREDIENT
@@ -141,7 +141,7 @@ d' | 1 gousses d'ail @ NONE
 ail | 1 gousses d'ail @ INGREDIENT
 2 | 2 cuilleres a soupe de farine @ QUANTITY
 cuilleres | 2 cuilleres a soupe de farine @ UNIT
-a | 2 cuilleres a soupe de farine @ NONE
+a | 2 cuilleres a soupe de farine @ UNIT
 soupe | 2 cuilleres a soupe de farine @ UNIT
 de | 2 cuilleres a soupe de farine @ NONE
 farine | 2 cuilleres a soupe de farine @ INGREDIENT
@@ -781,7 +781,7 @@ fraiche | 10 cl de creme fraiche @ NONE
 2 | 2 grosses cuilleres a soupe de farine @ QUANTITY
 grosses | 2 grosses cuilleres a soupe de farine @ NONE
 cuilleres | 2 grosses cuilleres a soupe de farine @ UNIT
-a | 2 grosses cuilleres a soupe de farine @ NONE
+a | 2 grosses cuilleres a soupe de farine @ UNIT
 soupe | 2 grosses cuilleres a soupe de farine @ UNIT
 de | 2 grosses cuilleres a soupe de farine @ NONE
 farine | 2 grosses cuilleres a soupe de farine @ INGREDIENT
@@ -816,7 +816,7 @@ boulangerie | 1 sachets de levure de boulangerie express @ INGREDIENT
 express | 1 sachets de levure de boulangerie express @ NONE
 1 | 1 cuilleres a cafe de sel @ QUANTITY
 cuilleres | 1 cuilleres a cafe de sel @ UNIT
-a | 1 cuilleres a cafe de sel @ NONE
+a | 1 cuilleres a cafe de sel @ UNIT
 cafe | 1 cuilleres a cafe de sel @ UNIT
 de | 1 cuilleres a cafe de sel @ NONE
 sel | 1 cuilleres a cafe de sel @ INGREDIENT
@@ -827,7 +827,7 @@ eau | 1/4 l d'eau tiede @ INGREDIENT
 tiede | 1/4 l d'eau tiede @ NONE
 1 | 1 cuilleres a cafe de sucre @ QUANTITY
 cuilleres | 1 cuilleres a cafe de sucre @ UNIT
-a | 1 cuilleres a cafe de sucre @ NONE
+a | 1 cuilleres a cafe de sucre @ UNIT
 cafe | 1 cuilleres a cafe de sucre @ UNIT
 de | 1 cuilleres a cafe de sucre @ NONE
 sucre | 1 cuilleres a cafe de sucre @ INGREDIENT
@@ -844,7 +844,7 @@ d' | 5 cl d'huile d'olive @ NONE
 olive | 5 cl d'huile d'olive @ NONE
 1/2 | 1/2 cuilleres a cafe de sel @ QUANTITY
 cuilleres | 1/2 cuilleres a cafe de sel @ UNIT
-a | 1/2 cuilleres a cafe de sel @ NONE
+a | 1/2 cuilleres a cafe de sel @ UNIT
 cafe | 1/2 cuilleres a cafe de sel @ UNIT
 de | 1/2 cuilleres a cafe de sel @ NONE
 sel | 1/2 cuilleres a cafe de sel @ INGREDIENT
@@ -1119,7 +1119,7 @@ de | 2 boites de concentre de tomates @ NONE
 tomates | 2 boites de concentre de tomates @ INGREDIENT
 3 | 3 cuilleres a soupe d'epices a couscous @ QUANTITY
 cuilleres | 3 cuilleres a soupe d'epices a couscous @ UNIT
-a | 3 cuilleres a soupe d'epices a couscous @ NONE
+a | 3 cuilleres a soupe d'epices a couscous @ UNIT
 soupe | 3 cuilleres a soupe d'epices a couscous @ UNIT
 d' | 3 cuilleres a soupe d'epices a couscous @ NONE
 epices | 3 cuilleres a soupe d'epices a couscous @ INGREDIENT
@@ -1127,7 +1127,7 @@ a | 3 cuilleres a soupe d'epices a couscous @ NONE
 couscous | 3 cuilleres a soupe d'epices a couscous @ INGREDIENT
 1 | 1 cuilleres a cafe de harissa @ QUANTITY
 cuilleres | 1 cuilleres a cafe de harissa @ UNIT
-a | 1 cuilleres a cafe de harissa @ NONE
+a | 1 cuilleres a cafe de harissa @ UNIT
 cafe | 1 cuilleres a cafe de harissa @ UNIT
 de | 1 cuilleres a cafe de harissa @ NONE
 harissa | 1 cuilleres a cafe de harissa @ INGREDIENT
@@ -1395,7 +1395,7 @@ au | ail au poudre @ NONE
 poudre | ail au poudre @ NONE
 4 | 4 cuilleres a soupe de sauce soja @ QUANTITY
 cuilleres | 4 cuilleres a soupe de sauce soja @ UNIT
-a | 4 cuilleres a soupe de sauce soja @ NONE
+a | 4 cuilleres a soupe de sauce soja @ UNIT
 soupe | 4 cuilleres a soupe de sauce soja @ UNIT
 de | 4 cuilleres a soupe de sauce soja @ NONE
 sauce | 4 cuilleres a soupe de sauce soja @ INGREDIENT
@@ -1406,7 +1406,7 @@ de | 4 brins de ciboulette @ NONE
 ciboulette | 4 brins de ciboulette @ INGREDIENT
 1 | 1 cuilleres a soupe d'huile d'olive @ QUANTITY
 cuilleres | 1 cuilleres a soupe d'huile d'olive @ UNIT
-a | 1 cuilleres a soupe d'huile d'olive @ NONE
+a | 1 cuilleres a soupe d'huile d'olive @ UNIT
 soupe | 1 cuilleres a soupe d'huile d'olive @ UNIT
 d'| 1 cuilleres a soupe d'huile d'olive @ NONE
 huile | 1 cuilleres a soupe d'huile d'olive @ INGREDIENT
@@ -1414,7 +1414,7 @@ d' | 1 cuilleres a soupe d'huile d'olive @ NONE
 olive | 1 cuilleres a soupe d'huile d'olive @ NONE
 1 | 1 cuilleres a cafe de curry @ QUANTITY
 cuilleres | 1 cuilleres a cafe de curry @ UNIT
-a | 1 cuilleres a cafe de curry @ NONE
+a | 1 cuilleres a cafe de curry @ UNIT
 cafe | 1 cuilleres a cafe de curry @ UNIT
 de | 1 cuilleres a cafe de curry @ NONE
 curry | 1 cuilleres a cafe de curry @ INGREDIENT
@@ -1569,14 +1569,13 @@ a | 5 ml ½ c. a the de sel @ NONE
 the | 5 ml ½ c. a the de sel @ NONE
 de | 5 ml ½ c. a the de sel @ NONE
 sel | 5 ml ½ c. a the de sel @ INGREDIENT
-½ | 5 ml ½ c. a the de sel @ QUANTITY
-c. | 5 ml ½ c. a the de sel @ UNIT
-a | 5 ml ½ c. a the de sel @ NONE
-the | 5 ml ½ c. a the de sel @ UNIT
+½ |  ½ c. a the 5 ml de sel @ QUANTITY
+a |  ½ c. a the 5 ml de sel @ UNIT
+the |  ½ c. a the 5 ml de sel @ UNIT
 5 | ½ c. a the 5 ml de sel @ NONE
-ml | 5 ml ½ c. a the de sel @ NONE
-de | 5 ml ½ c. a the de sel @ NONE
-sel | 5 ml ½ c. a the de sel @ INGREDIENT
+ml |  ½ c. a the 5 ml de sel @ NONE
+de |  ½ c. a the 5 ml de sel @ NONE
+sel |  ½ c. a the 5 ml de sel @ INGREDIENT
 12 | 12  pilons de poulet sans la peau @ QUANTITY
  | 12  pilons de poulet sans la peau @ NONE
 pilons | 12  pilons de poulet sans la peau @ NONE
@@ -1618,7 +1617,7 @@ d' | 1 petites gousses d'ail @ NONE
 ail | 1 petites gousses d'ail @ INGREDIENT
 1 | 1 cuilleres a soupe d'huile d'olive @ QUANTITY
 cuilleres | 1 cuilleres a soupe d'huile d'olive @ UNIT
-a | 1 cuilleres a soupe d'huile d'olive @ NONE
+a | 1 cuilleres a soupe d'huile d'olive @ UNIT
 soupe | 1 cuilleres a soupe d'huile d'olive @ UNIT
 d'| 1 cuilleres a soupe d'huile d'olive @ NONE
 huile | 1 cuilleres a soupe d'huile d'olive @ INGREDIENT
@@ -2028,9 +2027,9 @@ riz | 100 g de riz blanc rond @ INGREDIENT
 blanc | 100 g de riz blanc rond @ NONE
 rond | 100 g de riz blanc rond @ NONE
 5 | 5 cuilleres a soupe de sucre @ QUANTITY
-cuilleres | 5 cuilleres a soupe de sucre @ NONE
-a | 5 cuilleres a soupe de sucre @ NONE
-soupe | 5 cuilleres a soupe de sucre @ NONE
+cuilleres | 5 cuilleres a soupe de sucre @ UNIT
+a | 5 cuilleres a soupe de sucre @ UNIT
+soupe | 5 cuilleres a soupe de sucre @ UNIT
 de | 5 cuilleres a soupe de sucre @ NONE
 sucre | 5 cuilleres a soupe de sucre @ INGREDIENT
 1 | 1 sachets de sucre vanille @ QUANTITY
@@ -6450,7 +6449,7 @@ levure | 1 sachets de levure chimique @ INGREDIENT
 chimique | 1 sachets de levure chimique @ INGREDIENT
 1/2 | 1/2 cuilleres a cafe de cannelle @ QUANTITY
 cuilleres | 1/2 cuilleres a cafe de cannelle @ UNIT
-a | 1/2 cuilleres a cafe de cannelle @ NONE
+a | 1/2 cuilleres a cafe de cannelle @ UNIT
 cafe | 1/2 cuilleres a cafe de cannelle @ UNIT
 de | 1/2 cuilleres a cafe de cannelle @ NONE
 cannelle | 1/2 cuilleres a cafe de cannelle @ INGREDIENT

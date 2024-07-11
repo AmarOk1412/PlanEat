@@ -9,4 +9,7 @@ app/release
 /captures
 .externalNativeBuild
 .cxx
+.venv
+train.json
+test.json
 local.properties
