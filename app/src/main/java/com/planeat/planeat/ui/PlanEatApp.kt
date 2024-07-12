@@ -182,16 +182,22 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         }
         listJob = coroutineScope {
             launch {
+                for (recipe in recipesInDb) {
+                    if (recipe.title.contains(searchTerm, ignoreCase = true)) {
+                        recipesShown.add(recipe)
+                    }
+                }
                 connectors.map { connector ->
                     async(Dispatchers.IO) {
                         // TODO callback return false?
-                        // TODO filter recipesInDb
                         connector.search(searchTerm, onRecipe = { recipe ->
                             if (searchTerm == currentSearchTerm) {
                                 Log.w("PlanEat", "Adding recipe $recipe")
-                                recipesShown.add(recipe)
-                                recipesSearched.add(recipe)
-                                gatherIngredients(recipe)
+                                if (!recipesShown.any { it.url == recipe.url }) {
+                                    recipesShown.add(recipe)
+                                    recipesSearched.add(recipe)
+                                    gatherIngredients(recipe)
+                                }
                             }
                         })
                     }
