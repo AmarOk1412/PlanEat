@@ -16,10 +16,9 @@
 
 package com.planeat.planeat.ui
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -64,6 +63,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -109,6 +109,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -406,47 +408,13 @@ fun RecipesScreen(
 }
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun RequestContentPermission(imageUri: Uri?, onUriSelected: (Uri) -> Unit) {
-val context = LocalContext.current
-
-val bitmap = Bitmap.createBitmap(
-    100,
-    100,
-    Bitmap.Config.ARGB_8888
-)
-
-val imageBitmap =  remember {
-    mutableStateOf<ImageBitmap>(bitmap.asImageBitmap())
-}
-Log.d("PlanEat", "@@@" + imageUri.toString())
-if (imageUri != null) {
-Log.d("PlanEat", "@@@B" + imageUri.toString())
-    val source = ImageDecoder
-        .createSource(context.contentResolver, imageUri)
-    val drawable = ImageDecoder.decodeDrawable(source)
-    if (drawable is BitmapDrawable) {
-Log.d("PlanEat", "@@@A" + imageUri.toString())
-        val bmp = drawable.bitmap
-            if (bmp != null) {
-    Log.d("PlanEat", "@@@X" + imageUri.toString())
-                imageBitmap.value = bitmap.asImageBitmap()
-            }
-        }
-    }
-
+fun RequestContentPermission(imageBitmap: MutableState<ImageBitmap>, onUriSelected: (Uri) -> Unit) {
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
-            if (imageUri != uri) {
-                if (uri != null) {
-                    Log.d("PlanEat", "@@@D" + imageUri.toString())
-                    onUriSelected(uri)
-
-                    val source = ImageDecoder
-                        .createSource(context.contentResolver, uri)
-                    val bitmap = ImageDecoder.decodeBitmap(source)
-                    imageBitmap.value = bitmap.asImageBitmap()
-                }
-            }
+        if (uri != null) {
+            Log.d("PlanEat", "@@@D" + uri.toString())
+            onUriSelected(uri)
+        }
     }
     Column() {
         Button(onClick = {
@@ -457,18 +425,15 @@ Log.d("PlanEat", "@@@A" + imageUri.toString())
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Log.d("PlanEat", imageUri.toString())
-        // TODO lagguy!
-
-        imageBitmap.value.let {
-            Image(bitmap = it,
+        Image(bitmap = imageBitmap.value,
                 contentDescription = null,
                 modifier = Modifier.size(400.dp))
-        }
     }
 }
 
 
+@SuppressLint("CoroutineCreationDuringComposition")
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun EditRecipeScreen(
     r: Recipe,
@@ -494,16 +459,56 @@ fun EditRecipeScreen(
         var ingredients by remember { mutableStateOf(r.ingredients.joinToString("\n")) }
         var steps by remember { mutableStateOf(r.steps.joinToString("\n")) }
 
-
-        var imageUri by remember {
-            mutableStateOf<Uri?>(null)
+        val bitmap = Bitmap.createBitmap(
+            100,
+            100,
+            Bitmap.Config.ARGB_8888
+        )
+        val imageBitmap =  remember {
+            mutableStateOf<ImageBitmap>(bitmap.asImageBitmap())
         }
-        var imagePath by remember { mutableStateOf(r.image) }
-        // Image input
-        if (imagePath.startsWith("http")) {
-            imagePath = ""
-        } else if (imagePath.isNotEmpty()) {
-            imageUri = imagePath.toUri()
+
+        // For recipe.image = imagePath
+        LaunchedEffect(Unit) {
+            // For network operation
+            CoroutineScope(Dispatchers.IO).launch {
+                var imagePath = r.image
+                if (imagePath.startsWith("http")) {
+                    val imageUrl = URL(imagePath)
+                    val connection = imageUrl.openConnection() as HttpURLConnection
+                    connection.doInput = true
+                    connection.connect()
+                    val inputStream = connection.inputStream
+                    if (inputStream != null) {
+                        // TODO if recipe deleted, cache deleted
+                        if (imagePath.isEmpty()) {
+                            imagePath = "recipe_${System.currentTimeMillis()}"
+                        }
+                        val outputFile = File(context.cacheDir, imagePath)
+                        outputFile.parentFile?.mkdirs() // Create parent directories if they don't exist
+                        val outputStream = FileOutputStream(outputFile)
+                        val buffer = ByteArray(4 * 1024)
+                        var bytesRead: Int
+                        while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                            outputStream.write(buffer, 0, bytesRead)
+                        }
+                        outputStream.flush()
+                        outputStream.close()
+                        inputStream.close()
+                        imagePath = Uri.fromFile(outputFile).toString()
+                        recipe.image = imagePath
+                        val source = ImageDecoder
+                            .createSource(context.contentResolver, imagePath.toUri())
+                        val drawable = ImageDecoder.decodeBitmap(source)
+                        imageBitmap.value = drawable.asImageBitmap()
+                    }
+                } else if (imagePath.isNotEmpty()) {
+                    val source = ImageDecoder
+                        .createSource(context.contentResolver,  imagePath.toUri())
+                    val drawable = ImageDecoder.decodeBitmap(source)
+                    imageBitmap.value = drawable.asImageBitmap()
+                }
+            }
         }
 
         // URL input
@@ -533,11 +538,12 @@ fun EditRecipeScreen(
         }
 
         // Image input
-        RequestContentPermission(imageUri, onUriSelected = { uri ->
+        RequestContentPermission(imageBitmap, onUriSelected = { uri ->
             val cacheDir = context.cacheDir
             val inputStream = context.contentResolver.openInputStream(uri)
             if (inputStream != null) {
-                if (imagePath.isEmpty()) {
+                var imagePath = r.image
+                if (imagePath.isEmpty() || imagePath.startsWith("http")) {
                     imagePath = "recipe_${System.currentTimeMillis()}"
                 }
                 val outputFile = File(cacheDir, imagePath)
@@ -551,8 +557,11 @@ fun EditRecipeScreen(
                 outputStream.close()
                 inputStream.close()
                 imagePath = Uri.fromFile(outputFile).toString()
-                imageUri = imagePath.toUri()
                 recipe.image = imagePath
+                val source = ImageDecoder
+                    .createSource(context.contentResolver, imagePath.toUri())
+                val drawable = ImageDecoder.decodeBitmap(source)
+                imageBitmap.value = drawable.asImageBitmap()
             }
         })
 
