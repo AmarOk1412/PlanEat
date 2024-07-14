@@ -19,10 +19,12 @@ package com.planeat.planeat.ui
 import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,42 +33,60 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
-import com.planeat.planeat.ui.components.DockedSearchBar
 import com.planeat.planeat.ui.components.RecipeListItem
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.utils.PlanEatContentType
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecipesScreen(
@@ -158,9 +178,7 @@ fun RecipesScreen(
             // Show the list screen
             // TODO separate the list screen into a separate composable
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 16.dp)
             ) {
                 // Header element
                 Text(
@@ -169,18 +187,106 @@ fun RecipesScreen(
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                DockedSearchBar(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    onQueryChanged,
-                    recipes
-                )
+                var text by rememberSaveable { mutableStateOf("") }
+                var expanded by rememberSaveable { mutableStateOf(false) }
+                val filters = Tags.entries.map { it }
+
+                LaunchedEffect(text) {
+                    delay(300)
+                    onQueryChanged.invoke(text)
+                }
+
+                SearchBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                            query = text,
+                            onQueryChange = {
+                                text = it
+                            },
+                            onSearch = { expanded = false },
+                            expanded = expanded,
+                            onExpandedChange = { expanded = it },
+                            placeholder = { Text(stringResource(id = R.string.search_placeholder)) },
+                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                            trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
+                        )
+                    },
+                    expanded = expanded,
+                    onExpandedChange = { expanded = it },
+                ) {
+                    Column() {
+                        LazyColumn(
+                            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.semantics { traversalIndex = 1f },
+                        ) {
+
+                            items(count = recipes.size, key = {index -> index}, itemContent = { index ->
+                                val recipe = recipes[index]
+
+                                ListItem(
+                                    headlineContent = { Text(recipe.title) },
+                                    leadingContent = {
+                                        Box(
+                                            modifier = Modifier.size(48.dp)
+                                        ) {
+                                            AsyncImage(
+                                                model = if (recipe.image.startsWith("http")) {
+                                                    recipe.image
+                                                } else {
+                                                    ImageRequest.Builder(LocalContext.current)
+                                                        .data(recipe.image)
+                                                        .build()
+                                                },
+                                                contentDescription = recipe.title,
+                                                contentScale = ContentScale.Crop,
+                                            )
+                                        }
+                                    },
+                                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                                    modifier =
+                                        Modifier.clickable {
+                                                selectedRecipe = recipe
+                                                expanded = false
+                                            }
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 16.dp, vertical = 4.dp)
+                                )
+
+                            })
+                        }
+
+                        ListItem(
+                            headlineContent = { Text("Categories") },
+                            leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                            modifier =
+                                Modifier.fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 4.dp)
+                        )
+
+                        filters.forEach { filter ->
+                            ListItem(
+                                headlineContent = { Text(filter.toString()) },
+                                leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
+                                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                                modifier =
+                                    Modifier.clickable {
+                                            onFilterClicked(filter)
+                                            expanded = false
+                                        }
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 16.dp, vertical = 4.dp)
+                            )
+                        }
+                    }
+                }
 
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp).horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    val filters = Tags.entries.map { it }
                     filters.forEach { filter ->
                         Button(
                             onClick = {
