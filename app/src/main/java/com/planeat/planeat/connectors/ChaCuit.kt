@@ -66,8 +66,20 @@ class ChaCuit : Connector {
             val ingredients = mutableListOf<String>()
             val equipment = mutableListOf<String>()
 
+            val l = document.select("#ingrédients + ul li")
             // Extract ingredients
-            document.select("#ingrédients + ul li").forEach { element ->
+            val ingredientElements = document.select("#ingrédients + ul li")
+            if (ingredientElements.isEmpty()) {
+                // Check for optional h2 elements
+                val optionalH2Elements = document.select("#ingrédients + h2")
+                for (h2Element in optionalH2Elements) {
+                    val nextUlElement = h2Element.nextElementSibling()
+                    if (nextUlElement.tagName() == "ul") {
+                        ingredientElements.addAll(nextUlElement.select("li"))
+                    }
+                }
+            }
+            ingredientElements.forEach { element ->
                 val ingredient = element.text()
                 ingredients.add(ingredient)
             }

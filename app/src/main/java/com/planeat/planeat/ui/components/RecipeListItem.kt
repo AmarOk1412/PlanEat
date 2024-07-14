@@ -56,6 +56,7 @@ import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.data.toTags
 import com.planeat.planeat.ui.theme.backgroundCardRecipe
 import com.planeat.planeat.ui.theme.tagColor0
 import com.planeat.planeat.ui.theme.tagColor1
@@ -84,8 +85,10 @@ fun RecipeListItem(
     recipe: Recipe,
     onRecipeSelected: (Recipe) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
+    onRecipeAdded: (Recipe) -> Unit,
     onAgendaDeleted: (Agenda) -> Unit,
     selectedDate: LocalDate,
+    searching: Boolean=false,
     agenda: Agenda?,
     goToAgenda: () -> Unit,
     modifier: Modifier = Modifier,
@@ -127,7 +130,7 @@ fun RecipeListItem(
                     icon.value = if (agenda != null) {
                         Icons.Default.Close
                     } else {
-                        if (recipe.recipeId == 0.toLong()) {
+                        if (searching) {
                             if (existId.value != 0.toLong()) {
                                 Icons.Filled.Favorite
                             } else {
@@ -166,58 +169,55 @@ fun RecipeListItem(
                     IconButton(
                         onClick = { CoroutineScope(Dispatchers.IO).launch {
                             try {
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    if (recipe.recipeId == 0.toLong()) {
-                                        val rdb = Room.databaseBuilder(
-                                            context,
-                                            RecipesDb::class.java, "RecipesDb"
-                                        ).build()
-                                        if (existId.value == 0.toLong()) {
-                                            Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
-                                            rdb.recipeDao().insertAll(recipe)
-                                            val res = rdb.recipeDao().findByUrl(recipe.url)
-                                            existId.value = res.recipeId
-                                            icon.value = Icons.Filled.Favorite
-                                            rdb.close()
-                                        } else {
-                                            Log.w("PlanEat", "Delete recipe: ${recipe.title}")
-                                            var r = recipe
-                                            r.recipeId = existId.value
-                                            rdb.recipeDao().delete(r)
-                                            rdb.close()
-                                            existId.value = 0
-                                            icon.value = outlinedFav
-                                        }
+                                if (recipe.recipeId == 0.toLong()) {
+                                    val rdb = Room.databaseBuilder(
+                                        context,
+                                        RecipesDb::class.java, "RecipesDb"
+                                    ).build()
+                                    if (existId.value == 0.toLong()) {
+                                        onRecipeAdded(recipe)
+                                        val res = rdb.recipeDao().findByUrl(recipe.url)
+                                        rdb.close()
+                                        existId.value = res.recipeId
+                                        icon.value = Icons.Filled.Favorite
                                     } else {
-                                        val agendaDb = Room
-                                            .databaseBuilder(
-                                                context,
-                                                AgendaDb::class.java, "AgendaDb"
-                                            )
-                                            .build()
-                                        Log.w("PlanEat", "Selected date: ${selectedDate}")
-                                        val todayMiddayMillis = selectedDate
-                                            .atTime(12, 0)
-                                            .toInstant(ZoneOffset.UTC)
-                                            .toEpochMilli()
+                                        Log.w("PlanEat", "Delete recipe: ${recipe.title}")
+                                        var r = recipe
+                                        r.recipeId = existId.value
+                                        rdb.recipeDao().delete(r)
+                                        rdb.close()
+                                        existId.value = 0
+                                        icon.value = outlinedFav
+                                    }
+                                } else {
+                                    val agendaDb = Room
+                                        .databaseBuilder(
+                                            context,
+                                            AgendaDb::class.java, "AgendaDb"
+                                        )
+                                        .build()
+                                    Log.w("PlanEat", "Selected date: ${selectedDate}")
+                                    val todayMiddayMillis = selectedDate
+                                        .atTime(12, 0)
+                                        .toInstant(ZoneOffset.UTC)
+                                        .toEpochMilli()
 
-                                        Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${todayMiddayMillis}")
-                                        if (agenda != null) {
-                                            agendaDb.agendaDao().delete(agenda)
-                                            onAgendaDeleted(agenda)
-                                            agendaDb.close()
-                                        } else {
-                                            agendaDb
-                                                .agendaDao()
-                                                .insertAll(
-                                                    Agenda(
-                                                        date = todayMiddayMillis,
-                                                        recipeId = recipe.recipeId
-                                                    )
+                                    Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${todayMiddayMillis}")
+                                    if (agenda != null) {
+                                        agendaDb.agendaDao().delete(agenda)
+                                        onAgendaDeleted(agenda)
+                                        agendaDb.close()
+                                    } else {
+                                        agendaDb
+                                            .agendaDao()
+                                            .insertAll(
+                                                Agenda(
+                                                    date = todayMiddayMillis,
+                                                    recipeId = recipe.recipeId
                                                 )
-                                            agendaDb.close()
-                                            goToAgenda()
-                                        }
+                                            )
+                                        agendaDb.close()
+                                        goToAgenda()
                                     }
                                 }
                             } catch (error: Exception) {
@@ -249,8 +249,9 @@ fun RecipeListItem(
             Row(
                 modifier = Modifier.padding(top = 12.dp, start = 8.dp).fillMaxWidth(),
             ) {
-                for (i in 0 until minOf(recipe.tags.size, 2)) {
-                    val tag = recipe.tags[i]
+                val tags = toTags(recipe)
+                for (i in 0 until minOf(tags.size, 2)) {
+                    val tag = tags[i].toString()
                     var chipColor = tagColor0
                     if (!tag.isEmpty()) {
                         val colorIndex = tag.first().toInt() % 8

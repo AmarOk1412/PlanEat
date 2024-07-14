@@ -77,6 +77,7 @@ fun RecipesScreen(
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
     onRecipeDeleted: (Recipe) -> Unit,
+    onRecipeAdded: (Recipe) -> Unit,
     dataUi: CalendarUiModel,
     goToAgenda: () -> Unit,
     onFilterClicked: (Tags) -> Unit,
@@ -202,7 +203,9 @@ fun RecipesScreen(
                         RecipeListItem(
                             recipe = recipes[index],
                             onRecipeSelected = { r -> selectedRecipe = r },
-                            onRecipeDeleted = { r -> onRecipeDeleted(r) },
+                            onRecipeDeleted = onRecipeDeleted,
+                            onRecipeAdded = onRecipeAdded,
+                            searching = !model.currentSearchTerm.isEmpty(),
                             onAgendaDeleted = {},
                             agenda = null,
                             selectedDate = dataUi.selectedDate.date,

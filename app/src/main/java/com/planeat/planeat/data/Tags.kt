@@ -38,6 +38,10 @@ fun toTags(recipe: Recipe): List<Tags> {
         tags.add(Tags.Seafood)
     } else if (recipe.tags.contains("boisson") || recipe.tags.contains("concktail")) {
         tags.add(Tags.Drinks)
+    } else if (recipe.tags.contains("petit-déjeuner")) {
+        tags.add(Tags.Bakery)
+    } else if (recipe.tags.contains("pâtisserie")) {
+        tags.add(Tags.Desserts)
     }
 
     // TODO Create classification model

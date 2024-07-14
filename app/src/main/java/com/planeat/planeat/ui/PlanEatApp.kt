@@ -75,6 +75,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.tensorflow.lite.task.text.qa.QaAnswer
 import java.text.Normalizer
 
@@ -94,7 +95,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         connectors = listOf(chacuit, ricardo, marmiton)
     }
     private var listJob: Job? = null
-    private var currentSearchTerm: String = ""
+    var currentSearchTerm: String = ""
 
     fun gatherIngredients(recipe: Recipe) {
         // TODO Replace with IA
@@ -147,6 +148,14 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         recipesShown.remove(recipe)
     }
 
+    fun add(recipe: Recipe): Recipe {
+        Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
+        db.recipeDao().insertAll(recipe)
+        val res = db.recipeDao().findByUrl(recipe.url)
+        recipesInDb.add(res)
+        return res
+    }
+
     suspend fun getRecipe(url: String, onRecipe: (Recipe) -> Unit) {
         coroutineScope {
             launch(Dispatchers.IO) {
@@ -182,9 +191,11 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         }
         listJob = coroutineScope {
             launch {
-                for (recipe in recipesInDb) {
-                    if (recipe.title.contains(searchTerm, ignoreCase = true)) {
-                        recipesShown.add(recipe)
+                withContext(Dispatchers.IO) {
+                    for (recipe in recipesInDb) {
+                        if (recipe.title.contains(searchTerm, ignoreCase = true)) {
+                            recipesShown.add(recipe)
+                        }
                     }
                 }
                 connectors.map { connector ->
@@ -300,6 +311,8 @@ fun PlanEatApp(
         } },
         onRecipeDeleted = {recipe -> model.remove(recipe)
         },
+        onRecipeAdded = {recipe -> model.add(recipe)
+        },
         recipes = model.recipesShown,
         ingredients = model.ingredients,
         navigationType = navigationType,
@@ -313,6 +326,7 @@ private fun NavigationWrapper(
     model: AppModel,
     onQueryChanged: (String) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
+    onRecipeAdded: (Recipe) -> Unit,
     recipes: List<Recipe>,
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
@@ -333,6 +347,7 @@ private fun NavigationWrapper(
         model = model,
         onQueryChanged = onQueryChanged,
         onRecipeDeleted = onRecipeDeleted,
+        onRecipeAdded = onRecipeAdded,
         recipes = recipes,
         ingredients = ingredients,
         navigationType = navigationType,
@@ -355,6 +370,7 @@ fun AppContent(
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
     onRecipeDeleted: (Recipe) -> Unit,
+    onRecipeAdded: (Recipe) -> Unit,
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
     contentType: PlanEatContentType,
@@ -384,6 +400,7 @@ fun AppContent(
                 modifier = Modifier.weight(1f),
                 onQueryChanged = onQueryChanged,
                 onRecipeDeleted = onRecipeDeleted,
+                onRecipeAdded = onRecipeAdded,
                 recipes = recipes,
                 ingredients = ingredients,
                 navigateToTopLevelDestination = navigateToTopLevelDestination
@@ -409,6 +426,7 @@ private fun NavHost(
     onQueryChanged: (String) -> Unit,
     recipes: List<Recipe>,
     onRecipeDeleted: (Recipe) -> Unit,
+    onRecipeAdded: (Recipe) -> Unit,
     ingredients: List<String>,
     navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
 ) {
@@ -442,9 +460,8 @@ private fun NavHost(
                 navigationType = navigationType,
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
-                onRecipeDeleted = { r ->
-                    onRecipeDeleted(r)
-                },
+                onRecipeDeleted = onRecipeDeleted,
+                onRecipeAdded = onRecipeAdded,
                 onFilterClicked = { filter ->
                     model.filter(filter)
                 },
