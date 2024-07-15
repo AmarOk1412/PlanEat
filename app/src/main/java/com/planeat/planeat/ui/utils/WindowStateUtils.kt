@@ -63,10 +63,3 @@ enum class PlanEatNavigationType {
 enum class PlanEatNavigationContentPosition {
     TOP, CENTER
 }
-
-/**
- * App Content shown depending on device size and state.
- */
-enum class PlanEatContentType {
-    SINGLE_PANE, DUAL_PANE
-}

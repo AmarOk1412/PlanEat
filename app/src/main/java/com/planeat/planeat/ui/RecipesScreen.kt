@@ -37,7 +37,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
@@ -79,7 +78,6 @@ import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.ui.components.RecipeListItem
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
-import com.planeat.planeat.ui.utils.PlanEatContentType
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -91,7 +89,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun RecipesScreen(
     model: AppModel,
-    contentType: PlanEatContentType,
     navigationType: PlanEatNavigationType,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
@@ -100,19 +97,15 @@ fun RecipesScreen(
     onRecipeAdded: (Recipe) -> Unit,
     dataUi: CalendarUiModel,
     goToAgenda: () -> Unit,
+    goToDetails: (Recipe) -> Unit,
     onFilterClicked: (Tags) -> Unit,
 ) {
-    var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
     var editRecipe by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    /**
-     * When moving from LIST_AND_DETAIL page to LIST page clear the selection and user should see LIST screen.
-     */
-    LaunchedEffect(key1 = contentType) {
-
-    }
-    Box(modifier = modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars)) {
+    Box(modifier = modifier
+        .fillMaxSize()
+        .windowInsetsPadding(WindowInsets.statusBars)) {
 
         if (editRecipe) {
             // Show the detail screen
@@ -127,12 +120,12 @@ fun RecipesScreen(
                 }
 
                 EditRecipeScreen(
-                    r = selectedRecipe ?: Recipe(),
+                    r = model.openedRecipe.value ?: Recipe(),
                     model = model,
                     modifier = Modifier.fillMaxWidth(),
                     onRecipeDeleted = {r ->
                         editRecipe = false
-                        selectedRecipe = null
+                        model.openedRecipe.value = null
                         onRecipeDeleted(r)
                     },
                     onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
@@ -154,31 +147,13 @@ fun RecipesScreen(
                     }
                 )
             }
-        } else if (selectedRecipe != null) {
-            // Show the detail screen
-            // TODO separate the detail screen into a separate composable
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
-            ) {
-                BackHandler {
-                    selectedRecipe = null
-                }
-
-                RecipeDetailScreen(
-                    selectedRecipe = selectedRecipe!!,
-                    goBack = {
-                        selectedRecipe = null
-                    }
-                )
-            }
-
         } else {
             // Show the list screen
             // TODO separate the list screen into a separate composable
             Column(
-                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             ) {
                 // Header element
                 Text(
@@ -215,76 +190,83 @@ fun RecipesScreen(
                     expanded = expanded,
                     onExpandedChange = { expanded = it },
                 ) {
-                    Column() {
-                        LazyColumn(
-                            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                            modifier = Modifier.semantics { traversalIndex = 1f },
-                        ) {
+                    LazyColumn(
+                        contentPadding = PaddingValues(start = 0.dp, top = 16.dp, end = 0.dp, bottom = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier
+                            .semantics { traversalIndex = 1f },
+                    ) {
 
-                            items(count = recipes.size, key = {index -> index}, itemContent = { index ->
-                                val recipe = recipes[index]
+                        items(count = recipes.size, key = {index -> index}, itemContent = { index ->
+                            val recipe = recipes[index]
 
-                                ListItem(
-                                    headlineContent = { Text(recipe.title) },
-                                    leadingContent = {
-                                        Box(
-                                            modifier = Modifier.size(48.dp)
-                                        ) {
-                                            AsyncImage(
-                                                model = if (recipe.image.startsWith("http")) {
-                                                    recipe.image
-                                                } else {
-                                                    ImageRequest.Builder(LocalContext.current)
-                                                        .data(recipe.image)
-                                                        .build()
-                                                },
-                                                contentDescription = recipe.title,
-                                                contentScale = ContentScale.Crop,
-                                            )
-                                        }
-                                    },
-                                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                                    modifier =
-                                        Modifier.clickable {
-                                                selectedRecipe = recipe
-                                                expanded = false
-                                            }
-                                            .fillMaxWidth()
-                                            .padding(horizontal = 16.dp, vertical = 4.dp)
-                                )
-
-                            })
-                        }
-
-                        ListItem(
-                            headlineContent = { Text("Categories") },
-                            leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            modifier =
-                                Modifier.fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 4.dp)
-                        )
-
-                        filters.forEach { filter ->
                             ListItem(
-                                headlineContent = { Text(filter.toString()) },
+                                headlineContent = { Text(recipe.title) },
+                                leadingContent = {
+                                    Box(
+                                        modifier = Modifier.size(48.dp)
+                                    ) {
+                                        AsyncImage(
+                                            model = if (recipe.image.startsWith("http")) {
+                                                recipe.image
+                                            } else {
+                                                ImageRequest.Builder(LocalContext.current)
+                                                    .data(recipe.image)
+                                                    .build()
+                                            },
+                                            contentDescription = recipe.title,
+                                            contentScale = ContentScale.Crop,
+                                        )
+                                    }
+                                },
+                                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                                modifier =
+                                Modifier
+                                    .clickable {
+                                        goToDetails(recipe)
+                                    }
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 4.dp)
+                            )
+
+                        })
+
+                        item {
+
+                            ListItem(
+                                headlineContent = { Text("Categories") },
                                 leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
                                 colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                                 modifier =
-                                    Modifier.clickable {
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 4.dp)
+                            )
+
+                            filters.forEach { filter ->
+                                ListItem(
+                                    headlineContent = { Text(filter.toString()) },
+                                    leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
+                                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                                    modifier =
+                                    Modifier
+                                        .clickable {
                                             onFilterClicked(filter)
                                             expanded = false
                                         }
                                         .fillMaxWidth()
                                         .padding(horizontal = 16.dp, vertical = 4.dp)
-                            )
+                                )
+                            }
                         }
                     }
                 }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp).horizontalScroll(rememberScrollState()),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                        .horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     filters.forEach { filter ->
@@ -308,7 +290,9 @@ fun RecipesScreen(
                     items(count = recipes.size, key = {index -> index}, itemContent = { index ->
                         RecipeListItem(
                             recipe = recipes[index],
-                            onRecipeSelected = { r -> selectedRecipe = r },
+                            onRecipeSelected = { r ->
+                                goToDetails(r)
+                            },
                             onRecipeDeleted = onRecipeDeleted,
                             onRecipeAdded = onRecipeAdded,
                             searching = !model.currentSearchTerm.isEmpty(),

@@ -25,6 +25,7 @@ object PlanEatRoute {
     const val RECIPES = "Recipes"
     const val PANTRY = "Pantry"
     const val SHOPPING_LIST = "ShoppingList"
+    const val DETAILS = "Details"
 }
 
 data class PlanEatTopLevelDestination(

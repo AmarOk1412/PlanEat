@@ -65,7 +65,6 @@ import com.planeat.planeat.ui.navigation.PlanEatNavigationRail
 import com.planeat.planeat.ui.navigation.PlanEatRoute
 import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
 import com.planeat.planeat.ui.utils.DevicePosture
-import com.planeat.planeat.ui.utils.PlanEatContentType
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import com.planeat.planeat.ui.utils.isBookPosture
 import com.planeat.planeat.ui.utils.isSeparating
@@ -86,6 +85,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
     val recipesSearched = mutableListOf<Recipe>()
     val recipesShown = mutableStateListOf<Recipe>()
     val ingredients = mutableStateListOf<String>()
+    val openedRecipe = mutableStateOf<Recipe?>(null)
     lateinit var bertQaHelper: BertQaHelper
 
     init {
@@ -251,7 +251,6 @@ fun PlanEatApp(
      * fold state of the device.
      */
     val navigationType: PlanEatNavigationType
-    val contentType: PlanEatContentType
 
     val context = LocalContext.current
     val db = Room.databaseBuilder(
@@ -283,23 +282,15 @@ fun PlanEatApp(
     when (windowSize.widthSizeClass) {
         WindowWidthSizeClass.Compact -> {
             navigationType = PlanEatNavigationType.BOTTOM_NAVIGATION
-            contentType = PlanEatContentType.SINGLE_PANE
         }
         WindowWidthSizeClass.Medium -> {
             navigationType = PlanEatNavigationType.NAVIGATION_RAIL
-            contentType = if (foldingDevicePosture != DevicePosture.NormalPosture) {
-                PlanEatContentType.DUAL_PANE
-            } else {
-                PlanEatContentType.SINGLE_PANE
-            }
         }
         WindowWidthSizeClass.Expanded -> {
             navigationType = PlanEatNavigationType.NAVIGATION_RAIL
-            contentType = PlanEatContentType.DUAL_PANE
         }
         else -> {
             navigationType = PlanEatNavigationType.BOTTOM_NAVIGATION
-            contentType = PlanEatContentType.SINGLE_PANE
         }
     }
 
@@ -316,7 +307,6 @@ fun PlanEatApp(
         recipes = model.recipesShown,
         ingredients = model.ingredients,
         navigationType = navigationType,
-        contentType = contentType,
     )
 }
 
@@ -330,7 +320,6 @@ private fun NavigationWrapper(
     recipes: List<Recipe>,
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
-    contentType: PlanEatContentType,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -351,7 +340,6 @@ private fun NavigationWrapper(
         recipes = recipes,
         ingredients = ingredients,
         navigationType = navigationType,
-        contentType = contentType,
         navController = navController,
         selectedDestination = selectedDestination,
         navigateToTopLevelDestination = navigationActions::navigateTo,
@@ -373,7 +361,6 @@ fun AppContent(
     onRecipeAdded: (Recipe) -> Unit,
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
-    contentType: PlanEatContentType,
     navController: NavHostController,
     selectedDestination: String,
     navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
@@ -395,7 +382,6 @@ fun AppContent(
             NavHost(
                 model = model,
                 navController = navController,
-                contentType = contentType,
                 navigationType = navigationType,
                 modifier = Modifier.weight(1f),
                 onQueryChanged = onQueryChanged,
@@ -420,7 +406,6 @@ fun AppContent(
 private fun NavHost(
     model: AppModel,
     navController: NavHostController,
-    contentType: PlanEatContentType,
     navigationType: PlanEatNavigationType,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
@@ -441,22 +426,33 @@ private fun NavHost(
     ) {
         composable(PlanEatRoute.AGENDA) {
             AgendaScreen(dataSource = dataSource, dataUi = dataUi,
-                         updateDate = { newUi: CalendarUiModel, changePage: Boolean ->
-                            dataUi = newUi
-                            if (changePage) {
-                                val destination = PlanEatTopLevelDestination(
-                                    route = PlanEatRoute.RECIPES,
-                                    icon = 0,
-                                    iconTextId = 0
-                                )
-                                navigateToTopLevelDestination(destination)
-                            }
-                        })
+                updateDate = { newUi: CalendarUiModel, changePage: Boolean ->
+                    dataUi = newUi
+                    if (changePage) {
+                        val destination = PlanEatTopLevelDestination(
+                            route = PlanEatRoute.RECIPES,
+                            icon = 0,
+                            iconTextId = 0
+                        )
+                        navigateToTopLevelDestination(destination)
+                    }
+                },
+                goToDetails = { r ->
+                    model.openedRecipe.value = r
+                    Handler(Looper.getMainLooper()).post {
+                        navigateToTopLevelDestination(
+                            PlanEatTopLevelDestination(
+                                PlanEatRoute.DETAILS,
+                                0,
+                                0
+                            )
+                        )
+                    }
+                })
         }
         composable(PlanEatRoute.RECIPES) {
             RecipesScreen(
                 model = model,
-                contentType = contentType,
                 navigationType = navigationType,
                 onQueryChanged = onQueryChanged,
                 recipes = recipes,
@@ -476,6 +472,18 @@ private fun NavHost(
                             )
                         )
                     }
+                },
+                goToDetails = { r ->
+                    model.openedRecipe.value = r
+                    Handler(Looper.getMainLooper()).post {
+                        navigateToTopLevelDestination(
+                            PlanEatTopLevelDestination(
+                                PlanEatRoute.DETAILS,
+                                0,
+                                0
+                            )
+                        )
+                    }
                 }
             )
         }
@@ -485,6 +493,14 @@ private fun NavHost(
         composable(PlanEatRoute.SHOPPING_LIST) {
             ShoppingScreen(
                 ingredients = ingredients
+            )
+        }
+        composable(PlanEatRoute.DETAILS) {
+            RecipeDetailScreen(
+                selectedRecipe = model.openedRecipe.value!!,
+                goBack = {
+                    navController.popBackStack()
+                }
             )
         }
     }

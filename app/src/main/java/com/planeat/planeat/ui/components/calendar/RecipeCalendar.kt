@@ -46,7 +46,10 @@ import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.ui.AppModel
 import com.planeat.planeat.ui.components.RecipeListItem
+import com.planeat.planeat.ui.navigation.PlanEatRoute
+import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
 import com.planeat.planeat.ui.theme.backgroundCardRecipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -57,14 +60,15 @@ import java.time.format.DateTimeFormatter
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun RecipeCalendar(
+    goToDetails: (Recipe) -> Unit,
     modifier: Modifier = Modifier,
-    dataSource: CalendarDataSource,
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel, Boolean) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         dataUi.visibleDates.forEach{ visibleDate ->
             ContentItem(
+                goToDetails = goToDetails,
                 date = visibleDate,
                 dataUi = dataUi,
                 updateDate = updateDate
@@ -82,6 +86,7 @@ data class RecipeAgenda (
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun ContentItem(
+    goToDetails: (Recipe) -> Unit,
     date: CalendarUiModel.Date,
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel, Boolean) -> Unit,
@@ -133,7 +138,8 @@ fun ContentItem(
         ) {
             recipesPlanned.value.forEach { recipeAgenda ->
                 RecipeListItem(recipe = recipeAgenda.recipe,
-                    onRecipeSelected = {},
+                    onRecipeSelected = { r -> goToDetails(r)
+                    },
                     onRecipeDeleted = {},
                     onRecipeAdded = {},
                     selectedDate = date.date,
