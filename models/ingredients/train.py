@@ -13,10 +13,19 @@ tf.get_logger().setLevel('ERROR')
 
 spec = model_spec.get('mobilebert_qa_squad')
 
-train_data = DataLoader.from_squad(filename='train.json',model_spec=spec,is_training=True,version_2_with_negative=True)
-test_data = DataLoader.from_squad(filename='test.json',model_spec=spec,is_training=False,version_2_with_negative=True)
+train_data_path = tf.keras.utils.get_file(
+    fname='triviaqa-web-train-8000.json',
+    origin='https://storage.googleapis.com/download.tensorflow.org/models/tflite/dataset/triviaqa-web-train-8000.json')
+validation_data_path = tf.keras.utils.get_file(
+    fname='triviaqa-verified-web-dev.json',
+    origin='https://storage.googleapis.com/download.tensorflow.org/models/tflite/dataset/triviaqa-verified-web-dev.json')
+train_data = DataLoader.from_squad(train_data_path, spec, is_training=True)
+validation_data = DataLoader.from_squad(validation_data_path, spec, is_training=False)
 
-model = question_answer.create(train_data, model_spec=spec, epochs=2)
+#train_data = DataLoader.from_squad(filename='final.json',model_spec=spec,is_training=True,version_2_with_negative=True)
+#test_data = DataLoader.from_squad(filename='final_val.json',model_spec=spec,is_training=False,version_2_with_negative=True)
+
+model = question_answer.create(train_data, model_spec=spec, epochs=2, steps_per_epoch=50)
 
 print(model.summary())
 

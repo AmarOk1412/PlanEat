@@ -22,8 +22,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -56,18 +56,10 @@ import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
-import com.planeat.planeat.data.toTags
 import com.planeat.planeat.ui.theme.backgroundCardRecipe
-import com.planeat.planeat.ui.theme.tagColor0
-import com.planeat.planeat.ui.theme.tagColor1
-import com.planeat.planeat.ui.theme.tagColor2
-import com.planeat.planeat.ui.theme.tagColor3
-import com.planeat.planeat.ui.theme.tagColor4
-import com.planeat.planeat.ui.theme.tagColor5
-import com.planeat.planeat.ui.theme.tagColor6
-import com.planeat.planeat.ui.theme.tagColor7
-import com.planeat.planeat.ui.theme.tagColor8
+import com.planeat.planeat.ui.theme.tagColor
 import com.planeat.planeat.ui.theme.textCardRecipe
+import com.planeat.planeat.ui.theme.textColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -128,7 +120,7 @@ fun RecipeListItem(
                         existId.value = res.recipeId
                     }
                     icon.value = if (agenda != null) {
-                        Icons.Default.Close
+                        Icons.Default.MoreVert
                     } else {
                         if (searching) {
                             if (existId.value != 0.toLong()) {
@@ -137,7 +129,7 @@ fun RecipeListItem(
                                 outlinedFav
                             }
                         } else {
-                            Icons.Default.Add
+                            Icons.Default.MoreVert
                         }
                     }
                 }
@@ -146,7 +138,7 @@ fun RecipeListItem(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1f / .8f)
+                    .aspectRatio(1f / .5f)
             ) {
                 AsyncImage(
                     model = if (recipe.image.startsWith("http")) {
@@ -246,52 +238,26 @@ fun RecipeListItem(
                 maxLines = 1
             )
 
-            Row(
-                modifier = Modifier.padding(top = 12.dp, start = 8.dp).fillMaxWidth(),
-            ) {
-                val tags = toTags(recipe)
-                for (i in 0 until minOf(tags.size, 2)) {
-                    val tag = tags[i].toString()
-                    var chipColor = tagColor0
-                    if (!tag.isEmpty()) {
-                        val colorIndex = tag.first().toInt() % 8
-                        chipColor = when (colorIndex) {
-                            0 -> tagColor0
-                            1 -> tagColor1
-                            2 -> tagColor2
-                            3 -> tagColor3
-                            4 -> tagColor4
-                            5 -> tagColor5
-                            6 -> tagColor6
-                            7 -> tagColor7
-                            else -> tagColor8
-                        }
-                    }
+            SuggestionChip(
+                onClick = { /*TODO*/ },
+                label = { Text(
+                    text = recipe.ingredients.size.toString() + " ingrédients",
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.height(18.dp),
 
-                    SuggestionChip(
-                        onClick = { /*TODO*/ },
-                        label = { Text(
-                            text = tag,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1,
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.height(18.dp),
-
-                        ) },
-                        colors = SuggestionChipDefaults.suggestionChipColors(
-                            containerColor = chipColor.copy(alpha = 0.5f),
-                            labelColor = chipColor
-                        ),
-                        modifier = Modifier.padding(end = 8.dp).fillMaxWidth(0.5f).height(24.dp),
-                        border = BorderStroke(width = 1.dp, color = chipColor)
-                    )
-
-                }
-            }
-
+                ) },
+                colors = SuggestionChipDefaults.suggestionChipColors(
+                    containerColor = tagColor,
+                    labelColor = textColor
+                ),
+                modifier = Modifier.padding(8.dp).height(24.dp),
+                border = BorderStroke(width = 1.dp, color = tagColor)
+            )
 
             Row(
-                modifier = Modifier.padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
+                modifier = Modifier.padding(start = 8.dp, top = 0.dp, bottom = 12.dp),
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.schedule),

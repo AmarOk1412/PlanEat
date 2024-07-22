@@ -5,12 +5,14 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -41,6 +43,7 @@ import coil.compose.AsyncImage
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.ui.components.convertDuration
 import com.planeat.planeat.ui.theme.backgroundCardRecipe
 import com.planeat.planeat.ui.theme.textCardRecipe
 import kotlinx.coroutines.CoroutineScope
@@ -62,11 +65,6 @@ fun RecipeDetailScreen(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            Text(
-                text = selectedRecipe.title,
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
 
             // TODO better icon/redesign
             Box(
@@ -117,6 +115,35 @@ fun RecipeDetailScreen(
                         )
                     }
                 }
+            }
+
+            Text(
+                text = selectedRecipe.url,
+                style = MaterialTheme.typography.bodySmall,
+            )
+
+
+            Text(
+                text = selectedRecipe.title,
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(16.dp)
+            )
+
+
+            Row(
+                modifier = Modifier.padding(16.dp, top = 0.dp),
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.schedule),
+                    contentDescription = "Schedule",
+                    modifier = Modifier.size(18.dp)
+                )
+                Text(
+                    text = convertDuration(selectedRecipe.cookingTime),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(start = 8.dp),
+                    color = textCardRecipe
+                )
             }
 
             val tabs = listOf(
