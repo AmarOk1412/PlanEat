@@ -6,26 +6,25 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.PrimaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,23 +49,108 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeDetailScreen(
     selectedRecipe: Recipe,
     goBack: () -> Unit,
 ) {
-
     val context = LocalContext.current
-    Box(modifier = Modifier
-        .fillMaxSize()) {
+    val scaffoldState = rememberBottomSheetScaffoldState()
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
+    BottomSheetScaffold(
+        scaffoldState = scaffoldState,
+        sheetPeekHeight = 672.dp,
+        sheetContent = {
+            Column(Modifier.fillMaxWidth()) {
+                Text(
+                    text = selectedRecipe.url,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+
+                Text(
+                    text = selectedRecipe.title,
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+
+                Row(
+                    modifier = Modifier.padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.schedule),
+                        contentDescription = "Schedule",
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Text(
+                        text = convertDuration(selectedRecipe.cookingTime),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(start = 8.dp),
+                        color = textCardRecipe
+                    )
+                }
+
+                    val tabs = listOf(
+                        stringResource(id = R.string.ingredients),
+                        stringResource(id = R.string.steps)
+                    )
+
+                    val selectedTabIndex = remember { mutableStateOf(0) }
+
+                    TabRow(
+                        selectedTabIndex = selectedTabIndex.value,
+                        modifier = Modifier.fillMaxWidth(),
+                        indicator = { tabPositions ->
+                            PrimaryIndicator(
+                                modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex.value])
+                            )
+                        }
+                    ) {
+                        tabs.forEachIndexed { index, title ->
+                            Tab(
+                                selected = selectedTabIndex.value == index,
+                                onClick = { selectedTabIndex.value = index },
+                                text = { Text(text = title) }
+                            )
+                        }
+                    }
+
+                    when (selectedTabIndex.value) {
+                        0 -> {
+                            Column (
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                selectedRecipe.ingredients.forEach {
+                                    Text(
+                                        text = it,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        modifier = Modifier.padding(bottom = 8.dp)
+                                    )
+                                }
+                            }
+                        }
+                        1 -> {
+                            Column (
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                selectedRecipe.steps.forEachIndexed { index, step ->
+                                    Text(
+                                        text = "${index + 1}. $step",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        modifier = Modifier.padding(bottom = 8.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier.fillMaxSize().padding(innerPadding),
+            contentAlignment = Alignment.Center
         ) {
 
-            // TODO better icon/redesign
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -116,91 +200,7 @@ fun RecipeDetailScreen(
                     }
                 }
             }
-
-            Text(
-                text = selectedRecipe.url,
-                style = MaterialTheme.typography.bodySmall,
-            )
-
-
-            Text(
-                text = selectedRecipe.title,
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(16.dp)
-            )
-
-
-            Row(
-                modifier = Modifier.padding(16.dp, top = 0.dp),
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.schedule),
-                    contentDescription = "Schedule",
-                    modifier = Modifier.size(18.dp)
-                )
-                Text(
-                    text = convertDuration(selectedRecipe.cookingTime),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(start = 8.dp),
-                    color = textCardRecipe
-                )
-            }
-
-            val tabs = listOf(
-                stringResource(id = R.string.ingredients),
-                stringResource(id = R.string.steps)
-            )
-
-            val selectedTabIndex = remember { mutableStateOf(0) }
-
-            TabRow(
-                selectedTabIndex = selectedTabIndex.value,
-                modifier = Modifier.fillMaxWidth(),
-                indicator = { tabPositions ->
-                    TabRowDefaults.Indicator(
-                        modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex.value])
-                    )
-                }
-            ) {
-                tabs.forEachIndexed { index, title ->
-                    Tab(
-                        selected = selectedTabIndex.value == index,
-                        onClick = { selectedTabIndex.value = index },
-                        text = { Text(text = title) }
-                    )
-                }
-            }
-
-            when (selectedTabIndex.value) {
-                0 -> {
-                    Column (
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        selectedRecipe.ingredients.forEach {
-                            Text(
-                                text = it,
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(bottom = 8.dp)
-                            )
-                        }
-                    }
-                }
-                1 -> {
-                    Column (
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        selectedRecipe.steps.forEachIndexed { index, step ->
-                            Text(
-                                text = "${index + 1}. $step",
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(bottom = 8.dp)
-                            )
-                        }
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(120.dp))
         }
     }
+
 }

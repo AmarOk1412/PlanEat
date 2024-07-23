@@ -38,6 +38,6 @@
     <string name="tab_shopping_list">Shopping List</string>
     <string name="favorite">Favorite</string>
     <string name="ingredients">Ingredients</string>
-    <string name="steps">Steps</string>
+    <string name="steps">Instructions</string>
     <string name="add">add recipe</string>
 </resources>
