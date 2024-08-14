@@ -36,6 +36,8 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -197,9 +199,7 @@ fun RecipesScreen(
                             .semantics { traversalIndex = 1f },
                     ) {
 
-                        items(count = recipes.size, key = {index -> index}, itemContent = { index ->
-                            val recipe = recipes[index]
-
+                        items(recipes) { recipe ->
                             ListItem(
                                 headlineContent = { Text(recipe.title) },
                                 leadingContent = {
@@ -229,7 +229,7 @@ fun RecipesScreen(
                                     .padding(horizontal = 16.dp, vertical = 4.dp)
                             )
 
-                        })
+                        }
 
                         item {
 
@@ -287,9 +287,9 @@ fun RecipesScreen(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
-                    items(count = recipes.size, key = {index -> index}, itemContent = { index ->
+                    items(recipes) { recipe ->
                         RecipeListItem(
-                            recipe = recipes[index],
+                            recipe = recipe,
                             onRecipeSelected = { r ->
                                 goToDetails(r)
                             },
@@ -304,7 +304,7 @@ fun RecipesScreen(
                                 .padding(8.dp)
                                 .shadow(8.dp, shape = MaterialTheme.shapes.medium)
                         )
-                    })
+                    }
                 }
             }
         }
