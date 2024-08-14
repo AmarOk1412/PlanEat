@@ -16,6 +16,9 @@
 
 package com.planeat.planeat.ui.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -36,6 +39,7 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -45,6 +49,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.planeat.planeat.R
+import com.planeat.planeat.data.Recipe
 
 @Composable
 fun PlanEatNavigationRail(
@@ -113,28 +118,36 @@ fun PlanEatNavigationRail(
 @Composable
 fun PlanEatBottomNavigationBar(
     selectedDestination: String,
-    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
+    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
+    bottomBarState: MutableState<Recipe?>
 ) {
-    NavigationBar(modifier = Modifier.fillMaxWidth()) {
-        TOP_LEVEL_DESTINATIONS.forEach { planEatDestination ->
-            NavigationBarItem(
-                selected = selectedDestination == planEatDestination.route,
-                onClick = { navigateToTopLevelDestination(planEatDestination) },
-                icon = {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(planEatDestination.icon),
-                            contentDescription = stringResource(id = planEatDestination.iconTextId)
-                        )
-                        Text(
-                            text = stringResource(id = planEatDestination.iconTextId),
-                            textAlign = TextAlign.Center
-                        )
-                    }
+    AnimatedVisibility(
+        visible = bottomBarState.value == null,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
+        content = {
+            NavigationBar(modifier = Modifier.fillMaxWidth()) {
+                TOP_LEVEL_DESTINATIONS.forEach { planEatDestination ->
+                    NavigationBarItem(
+                        selected = selectedDestination == planEatDestination.route,
+                        onClick = { navigateToTopLevelDestination(planEatDestination) },
+                        icon = {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Icon(
+                                    imageVector = ImageVector.vectorResource(planEatDestination.icon),
+                                    contentDescription = stringResource(id = planEatDestination.iconTextId)
+                                )
+                                Text(
+                                    text = stringResource(id = planEatDestination.iconTextId),
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+                    )
                 }
-            )
+            }
         }
-    }
+    )
 }
 
 enum class LayoutType {

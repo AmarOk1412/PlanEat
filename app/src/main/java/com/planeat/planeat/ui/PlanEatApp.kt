@@ -47,7 +47,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import androidx.window.layout.DisplayFeature
-import androidx.window.layout.FoldingFeature
 import com.planeat.planeat.ai.client.BertQaHelper
 import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
@@ -64,10 +63,7 @@ import com.planeat.planeat.ui.navigation.PlanEatNavigationActions
 import com.planeat.planeat.ui.navigation.PlanEatNavigationRail
 import com.planeat.planeat.ui.navigation.PlanEatRoute
 import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
-import com.planeat.planeat.ui.utils.DevicePosture
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
-import com.planeat.planeat.ui.utils.isBookPosture
-import com.planeat.planeat.ui.utils.isSeparating
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -262,22 +258,6 @@ fun PlanEatApp(
     //model.bertQaHelper = BertQaHelper(context = context, answererListener = model)
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
-    /**
-     * We are using display's folding features to map the device postures a fold is in.
-     * In the state of folding device If it's half fold in BookPosture we want to avoid content
-     * at the crease/hinge
-     */
-    val foldingFeature = displayFeatures.filterIsInstance<FoldingFeature>().firstOrNull()
-
-    val foldingDevicePosture = when {
-        isBookPosture(foldingFeature) ->
-            DevicePosture.BookPosture(foldingFeature.bounds)
-
-        isSeparating(foldingFeature) ->
-            DevicePosture.Separating(foldingFeature.bounds, foldingFeature.orientation)
-
-        else -> DevicePosture.NormalPosture
-    }
 
     when (windowSize.widthSizeClass) {
         WindowWidthSizeClass.Compact -> {
@@ -394,7 +374,8 @@ fun AppContent(
             AnimatedVisibility(visible = navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
                 PlanEatBottomNavigationBar(
                     selectedDestination = selectedDestination,
-                    navigateToTopLevelDestination = navigateToTopLevelDestination
+                    navigateToTopLevelDestination = navigateToTopLevelDestination,
+                    bottomBarState = model.openedRecipe
                 )
             }
         }
@@ -417,7 +398,6 @@ private fun NavHost(
 ) {
     val dataSource by remember { mutableStateOf(CalendarDataSource()) }
     var dataUi by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
-    val context = LocalContext
 
     NavHost(
         modifier = modifier,
@@ -496,12 +476,15 @@ private fun NavHost(
             )
         }
         composable(PlanEatRoute.DETAILS) {
-            RecipeDetailScreen(
-                selectedRecipe = model.openedRecipe.value!!,
-                goBack = {
-                    navController.popBackStack()
-                }
-            )
+            if (model.openedRecipe.value != null) {
+                RecipeDetailScreen(
+                    selectedRecipe = model.openedRecipe.value!!,
+                    goBack = {
+                        model.openedRecipe.value = null
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 }
