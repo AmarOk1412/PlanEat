@@ -86,7 +86,13 @@ fun RecipeDetailScreen(
     val logo = when {
         selectedRecipe.url.contains("ricardo") -> R.drawable.ricardo
         selectedRecipe.url.contains("marmiton") -> R.drawable.marmiton
-        selectedRecipe.url.contains("cha-cu.it") -> R.drawable.marmiton // TODO cha-cu.it
+        selectedRecipe.url.contains("cha-cu.it") -> R.drawable.chacuit
+        else -> null
+    }
+    val description = when {
+        selectedRecipe.url.contains("ricardo") -> "Ricardo"
+        selectedRecipe.url.contains("marmiton") -> "Marmiton"
+        selectedRecipe.url.contains("cha-cu.it") -> "ChaCuit"
         else -> null
     }
 
@@ -145,14 +151,14 @@ fun RecipeDetailScreen(
 
         BottomSheetScaffold(
             scaffoldState = scaffoldState,
-            sheetPeekHeight = ((with(LocalDensity.current) { (LocalContext.current.resources.displayMetrics.heightPixels - peekHeightPx) / density } + 110).dp),
+            sheetPeekHeight = ((with(LocalDensity.current) { (LocalContext.current.resources.displayMetrics.heightPixels - peekHeightPx) / density } + 120).dp),
             sheetContent = {
                 Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
                     if (logo != null) {
                         Icon(
                             imageVector = ImageVector.vectorResource(id =logo),
-                            contentDescription = "Ricardo", // TODO
-                            modifier = Modifier.height(50.dp).width(88.dp).padding(start=16.dp, top=8.dp, bottom = 0.dp)
+                            contentDescription = description!!,
+                            modifier = Modifier.width(88.dp).padding(start=16.dp, top=8.dp, bottom = 0.dp)
                                 .clickable(onClick = {
                                     uriHandler.openUri(selectedRecipe.url)
                                 })

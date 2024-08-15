@@ -52,10 +52,15 @@ class ChaCuit : Connector {
 
             val name = document.select("meta[property=\"og:title\"]").attr("content")
 
-            val durationElement = document.select("h5:contains(\"Temps de préparation\")")
-            val durationText = durationElement.text()
-            val durationMatch = Regex("Temps de préparation : (\\d+)min").find(durationText)
-            val duration = durationMatch?.groupValues?.get(1)?.toIntOrNull() ?: 0
+            val durationText = document.text()
+            var durationMatch = Regex("Temps de préparation : (\\d+).*min").find(durationText)
+            var duration = durationMatch?.groupValues?.get(1)?.toIntOrNull() ?: 0
+            if (duration == 0) {
+                durationMatch = Regex("Temps de préparation : (\\d+)h.*(\\d+).*min").find(durationText)
+                val hours = durationMatch?.groupValues?.get(1)?.toIntOrNull() ?: 0
+                val minutes = durationMatch?.groupValues?.get(2)?.toIntOrNull() ?: 0
+                duration = hours * 60 + minutes
+            }
 
             val keywordsMeta = document.select("meta[itemprop=\"keywords\"]").attr("content")
             val tags = keywordsMeta.split(',')
