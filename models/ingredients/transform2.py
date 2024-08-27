@@ -71,11 +71,11 @@ def parse_data(data):
                 unit_str = ""
                 buffer_str = ""
             if ingredient_str != "" and ((label != 'NONE' and last_label == 'INGREDIENT') or is_end):
-                #if len(ingredient) == 0:
-                ingredient.append({
-                    "text": ingredient_str.strip(),
-                    "answer_start": ingredient_pos
-                })
+                if len(ingredient) == 0:
+                    ingredient.append({
+                        "text": ingredient_str.strip(),
+                        "answer_start": ingredient_pos
+                    })
                 ###ingredient += ingredient_str.strip()
                 ingredient_str = ""
             if label != 'NONE':
@@ -85,28 +85,68 @@ def parse_data(data):
         quantity = "None"
     if unit == "":
         unit = "None"
+    ###output = f'context is {context} , label is quantity , answers = {quantity}\n'
+    ###output += f'context is {context} , label is unit , answers = {unit}\n'
+    ###output += f'context is {context} , label is ingredient , answers = {ingredient}\n'
+###
+    ###return output
 
-    answer = []
-    for ing in ingredient:
-        answer.append({
-            "ingredient": ing["text"],
-            "quantity": quantity[0]["text"] if len(quantity) > 0 else "None",
-            "unit": unit[0]["text"] if len(unit) > 0 else "None"
-        })
-
+    # Create a question and answer
+    qas = []
+    global cnt
+    cnt += 1
+    id_str = str(cnt)
+    obj={
+        "id": id_str,
+        "question": "quantity?",
+        "is_impossible": len(quantity) == 0,
+        "answers": quantity
+    }
+    if len(quantity) == 0:
+        obj["plausible_answers"] = [{"text": context, "answer_start": 0}]
+    qas.append(obj)
+    cnt += 1
+    id_str = str(cnt)
+    obj={
+        "id": id_str,
+        "question": "unit?",
+        "is_impossible": len(unit) == 0,
+        "answers": unit
+    }
+    if len(unit) == 0:
+        obj["plausible_answers"] = [{"text": context, "answer_start": 0}]
+    if len(unit) > 1:
+        print(context)
+    qas.append(obj)
+    cnt += 1
+    id_str = str(cnt)
+    obj={
+        "id": id_str,
+        "question": "ingredient?",
+        "is_impossible": len(ingredient) == 0,
+        "answers": ingredient
+    }
+    if len(ingredient) == 0:
+        obj["plausible_answers"] = [{"text": context, "answer_start": 0}]
+    qas.append(obj)
+    # Create the final output
     output = {
-        "Context": context,
-        "Question": "parse",
-        "Answer": str(answer)
+        "title": f"Recipe {id_str}",
+        "paragraphs": [
+            {
+                "context": context,
+                "qas": qas
+            }
+        ]
     }
 
     return json.dumps(output)
 
 def read_file():
     with open('final.json', 'w') as outf:
-        ##with open('final_val.json', 'w') as outf_v:
-            outf.write('[\n')
-            ##outf_v.write('[\n')
+        with open('final_val.json', 'w') as outf_v:
+            outf.write('{"version":"v2.0","data":[\n')
+            outf_v.write('{"version":"v2.0","data":[\n')
             ##outf.write('[\n')
             ##outf_v.write('[\n')
             data = []
@@ -118,19 +158,19 @@ def read_file():
                     if last_context == '':
                         last_context = context.strip()
                     if last_context != context.strip():
-                        ##if random.random() < 0.3:
-                        ##    outf_v.write(parse_data(data))
-                        ##    outf_v.write(',\n')
-                        ##else:
-                        outf.write(parse_data(data))
-                        outf.write(',\n')
+                        if random.random() < 0.3:
+                            outf_v.write(parse_data(data))
+                            outf_v.write(',\n')
+                        else:
+                            outf.write(parse_data(data))
+                            outf.write(',\n')
                         data = []
                         last_context = context.strip()
                     data.append(line.strip())
             outf.write(parse_data(data)) # Parse the last data
-            #outf_v.write(parse_data(data)) # Parse the last data
-            outf.write('\n]')
-            #outf_v.write('\n]}')
+            outf_v.write(parse_data(data)) # Parse the last data
+            outf.write('\n]}')
+            outf_v.write('\n]}')
             ##outf.write('\n]')
             ##outf_v.write('\n]')
 

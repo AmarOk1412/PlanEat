@@ -26,12 +26,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -70,6 +72,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
 import coil.compose.AsyncImage
@@ -78,6 +81,7 @@ import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
+import com.planeat.planeat.data.toTagIcon
 import com.planeat.planeat.ui.components.RecipeListItem
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
@@ -246,7 +250,7 @@ fun RecipesScreen(
                             filters.forEach { filter ->
                                 ListItem(
                                     headlineContent = { Text(filter.toString()) },
-                                    leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
+                                    leadingContent = { toTagIcon(tag = filter) },
                                     colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                                     modifier =
                                     Modifier
@@ -270,6 +274,7 @@ fun RecipesScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     filters.forEach { filter ->
+
                         Button(
                             onClick = {
                                 CoroutineScope(Dispatchers.IO).launch {
@@ -278,7 +283,15 @@ fun RecipesScreen(
                             },
                             modifier = Modifier.padding(end = 8.dp)
                         ) {
-                            Text(text = filter.toString())
+                                Row(
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    toTagIcon(tag = filter)
+                                    Text(
+                                        text = filter.toString(),
+                                        modifier = Modifier.align(Alignment.CenterVertically).padding(start = 8.dp)
+                                    )
+                                }
                         }
                     }
                 }

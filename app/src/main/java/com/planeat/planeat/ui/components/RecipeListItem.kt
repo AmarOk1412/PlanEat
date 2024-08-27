@@ -26,6 +26,8 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -53,7 +55,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
-import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.theme.backgroundCardRecipe
@@ -65,7 +66,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
-import java.time.ZoneOffset
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -89,6 +89,9 @@ fun RecipeListItem(
     val existId = remember { mutableLongStateOf(0.toLong()) }
     val icon = remember { mutableStateOf(Icons.Default.Add) }
     val outlinedFav = ImageVector.vectorResource(R.drawable.favorite)
+
+    val showDialog = remember { mutableStateOf(false) }
+
     Card(
         modifier = modifier
             .clip(CardDefaults.shape)
@@ -159,7 +162,8 @@ fun RecipeListItem(
                         .padding(8.dp)
                 ) {
                     IconButton(
-                        onClick = { CoroutineScope(Dispatchers.IO).launch {
+                        onClick = {
+                            CoroutineScope(Dispatchers.IO).launch {
                             try {
                                 if (recipe.recipeId == 0.toLong()) {
                                     val rdb = Room.databaseBuilder(
@@ -182,7 +186,8 @@ fun RecipeListItem(
                                         icon.value = outlinedFav
                                     }
                                 } else {
-                                    val agendaDb = Room
+                                    showDialog.value = true
+                                    /*val agendaDb = Room
                                         .databaseBuilder(
                                             context,
                                             AgendaDb::class.java, "AgendaDb"
@@ -210,7 +215,7 @@ fun RecipeListItem(
                                             )
                                         agendaDb.close()
                                         goToAgenda()
-                                    }
+                                    }*/
                                 }
                             } catch (error: Exception) {
                                 Log.d("PlanEat", "Error: $error")
@@ -226,6 +231,47 @@ fun RecipeListItem(
                             contentDescription = stringResource(R.string.favorite),
                             tint = textCardRecipe,
                         )
+
+
+
+                        if (showDialog.value) {
+                            DropdownMenu(
+                                expanded = showDialog.value,
+                                onDismissRequest = { showDialog.value = false },
+                                modifier = Modifier.padding(end = 8.dp)
+                            ) {
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(text = "Plan it")
+                                    },
+                                    onClick = {
+                                        showDialog.value = false
+                                        // Handle "Plan it" button click
+                                        // Call the appropriate function or navigate to the desired screen
+                                    }
+                                )
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(text = "Edit recipe")
+                                    },
+                                    onClick = {
+                                        showDialog.value = false
+                                        // Handle "Edit recipe" button click
+                                        // Call the appropriate function or navigate to the desired screen
+                                    }
+                                )
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(text = "Remove recipe")
+                                    },
+                                    onClick = {
+                                        showDialog.value = false
+                                        // Handle "Edit recipe" button click
+                                        // Call the appropriate function or navigate to the desired screen
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -252,7 +298,9 @@ fun RecipeListItem(
                     containerColor = tagColor,
                     labelColor = textColor
                 ),
-                modifier = Modifier.padding(8.dp).height(24.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(24.dp),
                 border = BorderStroke(width = 1.dp, color = tagColor)
             )
 
