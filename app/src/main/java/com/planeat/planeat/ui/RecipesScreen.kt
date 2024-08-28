@@ -98,7 +98,6 @@ fun RecipesScreen(
     navigationType: PlanEatNavigationType,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
-    recipes: List<Recipe>,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     dataUi: CalendarUiModel,
@@ -203,7 +202,7 @@ fun RecipesScreen(
                             .semantics { traversalIndex = 1f },
                     ) {
 
-                        items(recipes) { recipe ->
+                        items(model.recipesShown) { recipe ->
                             ListItem(
                                 headlineContent = { Text(recipe.title) },
                                 leadingContent = {
@@ -300,7 +299,7 @@ fun RecipesScreen(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
-                    items(recipes) { recipe ->
+                    items(model.recipesShown) { recipe ->
                         RecipeListItem(
                             recipe = recipe,
                             onRecipeSelected = { r ->
@@ -318,26 +317,6 @@ fun RecipesScreen(
                                 .shadow(8.dp, shape = MaterialTheme.shapes.medium)
                         )
                     }
-                }
-            }
-        }
-
-        // When we have bottom navigation we show FAB at the bottom end.
-        if (navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
-            if (!editRecipe) {
-                LargeFloatingActionButton(
-                    onClick = { editRecipe = true },
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(16.dp),
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = stringResource(id = R.string.edit),
-                        modifier = Modifier.size(28.dp)
-                    )
                 }
             }
         }

@@ -5,9 +5,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,14 +51,13 @@ import androidx.compose.ui.unit.dp
 import androidx.room.Room
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.compose.onSecondaryContainerLight
+import com.example.compose.secondaryContainerLight
+import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
-import com.planeat.planeat.ui.theme.backgroundCardRecipe
-import com.planeat.planeat.ui.theme.tagColor
-import com.planeat.planeat.ui.theme.textCardRecipe
-import com.planeat.planeat.ui.theme.textColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -101,11 +98,8 @@ fun RecipeListItem(
                 onLongClick = { }
             )
             .clip(CardDefaults.shape),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
         colors = CardDefaults.cardColors(
-            containerColor = backgroundCardRecipe
+            containerColor = surfaceContainerLowestLight,
         ),
     ) {
         Column(
@@ -223,13 +217,11 @@ fun RecipeListItem(
                         } },
                         modifier = Modifier
                             .clip(CircleShape)
-                            .background(backgroundCardRecipe)
                             .align(Alignment.TopEnd)
                     ) {
                         Icon(
                             imageVector = icon.value,
                             contentDescription = stringResource(R.string.favorite),
-                            tint = textCardRecipe,
                         )
 
 
@@ -279,7 +271,6 @@ fun RecipeListItem(
                 text = recipe.title,
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(start = 8.dp, top = 12.dp, end = 8.dp, bottom = 0.dp),
-                color = textCardRecipe,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
             )
@@ -295,13 +286,12 @@ fun RecipeListItem(
 
                 ) },
                 colors = SuggestionChipDefaults.suggestionChipColors(
-                    containerColor = tagColor,
-                    labelColor = textColor
+                    containerColor = secondaryContainerLight,
+                    labelColor = onSecondaryContainerLight
                 ),
                 modifier = Modifier
                     .padding(8.dp)
                     .height(24.dp),
-                border = BorderStroke(width = 1.dp, color = tagColor)
             )
 
             Row(
@@ -316,7 +306,6 @@ fun RecipeListItem(
                     text = convertDuration(recipe.cookingTime),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = 8.dp),
-                    color = textCardRecipe
                 )
             }
 

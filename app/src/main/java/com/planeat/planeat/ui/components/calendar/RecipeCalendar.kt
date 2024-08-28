@@ -41,16 +41,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
+import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
-import com.planeat.planeat.ui.AppModel
 import com.planeat.planeat.ui.components.RecipeListItem
-import com.planeat.planeat.ui.navigation.PlanEatRoute
-import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
-import com.planeat.planeat.ui.theme.backgroundCardRecipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.ZoneOffset
@@ -190,12 +187,12 @@ fun addRecipeCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
-        colors = CardDefaults.cardColors(
-            containerColor = backgroundCardRecipe
-        ),
         border = BorderStroke(
             width = 1.dp,
             color = Color.Green,
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = surfaceContainerLowestLight,
         )
     ) {
         Box(

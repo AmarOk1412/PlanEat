@@ -1,37 +1,21 @@
-/*
- * Copyright 2022 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package com.planeat.planeat.ui.theme
+package com.example.compose
 import android.app.Activity
-import android.app.UiModeManager
-import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.example.ui.theme.AppTypography
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -261,61 +245,46 @@ private val highContrastDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
 
-fun isContrastAvailable(): Boolean {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
-}
+@Immutable
+data class ColorFamily(
+    val color: Color,
+    val onColor: Color,
+    val colorContainer: Color,
+    val onColorContainer: Color
+)
+
+val unspecified_scheme = ColorFamily(
+    Color.Unspecified, Color.Unspecified, Color.Unspecified, Color.Unspecified
+)
 
 @Composable
-fun selectSchemeForContrast(isDark: Boolean,): ColorScheme {
-    val context = LocalContext.current
-    var colorScheme = if (isDark) darkScheme else lightScheme
-    if (isContrastAvailable()) {
-        val uiModeManager = context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
-        val contrastLevel = uiModeManager.contrast
-
-        colorScheme = when (contrastLevel) {
-            in 0.0f..0.33f -> if (isDark)
-                darkScheme else lightScheme
-
-            in 0.34f..0.66f -> if (isDark)
-                mediumContrastDarkColorScheme else mediumContrastLightColorScheme
-
-            in 0.67f..1.0f -> if (isDark)
-                highContrastDarkColorScheme else highContrastLightColorScheme
-
-            else -> if (isDark) darkScheme else lightScheme
-        }
-        return colorScheme
-    } else return colorScheme
-}
-@Composable
-fun ContrastAwarePlanEatTheme(
+fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     content: @Composable() () -> Unit
 ) {
-    val planEatColorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+  val colorScheme = when {
+      dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+          val context = LocalContext.current
+          if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+      }
 
-        else -> selectSchemeForContrast(darkTheme)
+      darkTheme -> darkScheme
+      else -> lightScheme
+  }
+  val view = LocalView.current
+  if (!view.isInEditMode) {
+    SideEffect {
+      val window = (view.context as Activity).window
+      window.statusBarColor = colorScheme.primary.toArgb()
+      WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
     }
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = planEatColorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
-        }
-    }
+  }
 
-    MaterialTheme(
-        colorScheme = planEatColorScheme,
-        typography = planEatTypography,
-        shapes = shapes,
-        content = content
-    )
+  MaterialTheme(
+    colorScheme = colorScheme,
+    typography = AppTypography,
+    content = content
+  )
 }

@@ -66,8 +66,6 @@ import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.components.convertDuration
-import com.planeat.planeat.ui.theme.backgroundCardRecipe
-import com.planeat.planeat.ui.theme.textCardRecipe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -183,7 +181,6 @@ fun RecipeDetailScreen(
                             text = convertDuration(selectedRecipe.cookingTime),
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(start = 8.dp),
-                            color = textCardRecipe
                         )
                     }
 
@@ -230,9 +227,6 @@ fun RecipeDetailScreen(
                                             .clip(CardDefaults.shape),
                                         elevation = CardDefaults.cardElevation(
                                             defaultElevation = 6.dp
-                                        ),
-                                        colors = CardDefaults.cardColors(
-                                            containerColor = backgroundCardRecipe
                                         ),
                                     ) {
                                         Box(
@@ -318,14 +312,12 @@ fun RecipeDetailScreen(
                             } },
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(backgroundCardRecipe)
                                 .align(Alignment.TopEnd)
                         ) {
                             val img = if (selectedRecipe.recipeId == 0L) ImageVector.vectorResource(R.drawable.favorite) else Icons.Filled.Favorite
                             Icon(
                                 imageVector = img,
                                 contentDescription = stringResource(R.string.favorite),
-                                tint = textCardRecipe,
                             )
                         }
                     }

@@ -284,7 +284,6 @@ fun PlanEatApp(
         },
         onRecipeAdded = {recipe -> model.add(recipe)
         },
-        recipes = model.recipesShown,
         ingredients = model.ingredients,
         navigationType = navigationType,
     )
@@ -297,7 +296,6 @@ private fun NavigationWrapper(
     onQueryChanged: (String) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
-    recipes: List<Recipe>,
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
 ) {
@@ -317,7 +315,6 @@ private fun NavigationWrapper(
         onQueryChanged = onQueryChanged,
         onRecipeDeleted = onRecipeDeleted,
         onRecipeAdded = onRecipeAdded,
-        recipes = recipes,
         ingredients = ingredients,
         navigationType = navigationType,
         navController = navController,
@@ -336,7 +333,6 @@ fun AppContent(
     modifier: Modifier = Modifier,
     model: AppModel,
     onQueryChanged: (String) -> Unit,
-    recipes: List<Recipe>,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     ingredients: List<String>,
@@ -367,7 +363,6 @@ fun AppContent(
                 onQueryChanged = onQueryChanged,
                 onRecipeDeleted = onRecipeDeleted,
                 onRecipeAdded = onRecipeAdded,
-                recipes = recipes,
                 ingredients = ingredients,
                 navigateToTopLevelDestination = navigateToTopLevelDestination
             )
@@ -390,7 +385,6 @@ private fun NavHost(
     navigationType: PlanEatNavigationType,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
-    recipes: List<Recipe>,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     ingredients: List<String>,
@@ -435,7 +429,6 @@ private fun NavHost(
                 model = model,
                 navigationType = navigationType,
                 onQueryChanged = onQueryChanged,
-                recipes = recipes,
                 onRecipeDeleted = onRecipeDeleted,
                 onRecipeAdded = onRecipeAdded,
                 onFilterClicked = { filter ->

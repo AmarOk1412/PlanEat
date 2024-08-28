@@ -23,6 +23,6 @@ data class CalendarUiModel(
         val isToday: Boolean
     ) {
         @RequiresApi(Build.VERSION_CODES.O)
-        val day: String = date.format(DateTimeFormatter.ofPattern("E"))
+        val day: String = date.format(DateTimeFormatter.ofPattern("E")).replace(".", "")
     }
 }
