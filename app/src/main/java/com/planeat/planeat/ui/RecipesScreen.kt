@@ -41,12 +41,16 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
@@ -77,6 +81,7 @@ import androidx.compose.ui.unit.dp
 import androidx.room.Room
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
@@ -280,6 +285,12 @@ fun RecipesScreen(
                                     onFilterClicked(filter)
                                 }
                             },
+                            shape = RoundedCornerShape(100.dp),
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 6.dp
+                            ),
+                            contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = surfaceContainerLowestLight, contentColor = Color.Black),
                             modifier = Modifier.padding(end = 8.dp)
                         ) {
                                 Row(
@@ -288,6 +299,9 @@ fun RecipesScreen(
                                     toTagIcon(tag = filter)
                                     Text(
                                         text = filter.toString(),
+                                        fontSize = with(LocalDensity.current) {
+                                            14.dp.toSp()
+                                        },
                                         modifier = Modifier.align(Alignment.CenterVertically).padding(start = 8.dp)
                                     )
                                 }

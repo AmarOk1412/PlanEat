@@ -140,5 +140,7 @@ dependencies {
 
     api("org.jsoup:jsoup:1.17.2")
 
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

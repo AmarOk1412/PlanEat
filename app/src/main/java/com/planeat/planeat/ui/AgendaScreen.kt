@@ -55,12 +55,12 @@ fun AgendaScreen(
             Column(
                 modifier = modifier
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                    .padding(vertical = 16.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.tab_agenda),
                     style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = 16.dp, start = 16.dp)
                 )
 
                 Calendar(
@@ -72,7 +72,7 @@ fun AgendaScreen(
 
                 RecipeCalendar(
                     goToDetails,
-                    modifier.fillMaxWidth(),
+                    modifier.fillMaxWidth().padding(horizontal = 16.dp),
                     dataUi,
                     updateDate = updateDate
                 )

@@ -31,8 +31,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import com.example.compose.onPrimaryLight
-import com.example.compose.primaryLight
+import com.example.compose.primaryContainerLight
+import com.example.compose.surfaceContainerLowestLight
+import com.example.compose.onSurfaceVariantLight
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -87,7 +90,7 @@ fun Header(
     onPrevClickListener: (LocalDate) -> Unit,
     onNextClickListener: (LocalDate) -> Unit,
 ) {
-    Row {
+    Row (modifier = Modifier.padding(start=16.dp)) {
         Text(
             text = if (dataUi.selectedDate.isToday) {
                 "Today"
@@ -181,13 +184,13 @@ fun ContentItem(
         shape = RoundedCornerShape(18.dp),
         contentPadding = PaddingValues(0.dp),
         colors = ButtonDefaults.buttonColors(containerColor = if (date.isSelected) {
-            primaryLight
+            Color(0xFF599E39) // TODO not in exported theme? primaryContainerLight
         } else {
-            onPrimaryLight
+            surfaceContainerLowestLight
         }, contentColor = if (date.isSelected) {
             onPrimaryLight
         } else {
-            primaryLight
+            Color(0xFF687466) // TODO onSurfaceVariantLight
         })
     ) {
         Column(

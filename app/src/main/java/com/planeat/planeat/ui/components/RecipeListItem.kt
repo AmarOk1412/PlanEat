@@ -6,6 +6,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -217,6 +218,7 @@ fun RecipeListItem(
                         } },
                         modifier = Modifier
                             .clip(CircleShape)
+                            .background(surfaceContainerLowestLight)
                             .align(Alignment.TopEnd)
                     ) {
                         Icon(
