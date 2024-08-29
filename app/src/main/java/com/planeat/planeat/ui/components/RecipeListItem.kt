@@ -22,11 +22,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Today
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +45,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -48,6 +53,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
 import coil.compose.AsyncImage
@@ -74,6 +80,7 @@ import java.time.LocalDate
 fun RecipeListItem(
     recipe: Recipe,
     onRecipeSelected: (Recipe) -> Unit,
+    onEditRecipe: (Recipe) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     onAgendaDeleted: (Agenda) -> Unit,
@@ -226,42 +233,42 @@ fun RecipeListItem(
                             contentDescription = stringResource(R.string.favorite),
                         )
 
-
-
                         if (showDialog.value) {
                             DropdownMenu(
+                                containerColor = surfaceContainerLowestLight,
+                                offset = DpOffset(0.dp, 8.dp),
                                 expanded = showDialog.value,
                                 onDismissRequest = { showDialog.value = false },
-                                modifier = Modifier.padding(end = 8.dp)
                             ) {
                                 DropdownMenuItem(
+                                    leadingIcon = { Icon(Icons.Filled.Today, contentDescription = null) },
                                     text = {
-                                        Text(text = "Plan it")
+                                        Text(text = "Add to agenda")
                                     },
                                     onClick = {
                                         showDialog.value = false
-                                        // Handle "Plan it" button click
                                         // Call the appropriate function or navigate to the desired screen
                                     }
                                 )
                                 DropdownMenuItem(
+                                    leadingIcon = { Icon(Icons.Filled.Edit, contentDescription = null) },
                                     text = {
-                                        Text(text = "Edit recipe")
+                                        Text(text = "Edit")
                                     },
                                     onClick = {
                                         showDialog.value = false
-                                        // Handle "Edit recipe" button click
-                                        // Call the appropriate function or navigate to the desired screen
+                                        onEditRecipe(recipe)
                                     }
                                 )
+                                HorizontalDivider()
                                 DropdownMenuItem(
+                                    leadingIcon = { Icon(Icons.Filled.Delete, contentDescription = null, tint = Color.Red) },
                                     text = {
-                                        Text(text = "Remove recipe")
+                                        Text(text = "Delete", color = Color.Red)
                                     },
                                     onClick = {
                                         showDialog.value = false
-                                        // Handle "Edit recipe" button click
-                                        // Call the appropriate function or navigate to the desired screen
+                                        onRecipeDeleted(recipe)
                                     }
                                 )
                             }
@@ -278,7 +285,6 @@ fun RecipeListItem(
             )
 
             SuggestionChip(
-                onClick = { /*TODO*/ },
                 label = { Text(
                     text = recipe.ingredients.size.toString() + " ingrédients",
                     overflow = TextOverflow.Ellipsis,
@@ -287,6 +293,8 @@ fun RecipeListItem(
                     modifier = Modifier.height(18.dp),
 
                 ) },
+                onClick = {},
+                border = null,
                 colors = SuggestionChipDefaults.suggestionChipColors(
                     containerColor = secondaryContainerLight,
                     labelColor = onSecondaryContainerLight

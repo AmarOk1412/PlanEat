@@ -48,6 +48,7 @@ import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.components.RecipeListItem
+import dashedBorder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.ZoneOffset
@@ -139,6 +140,7 @@ fun ContentItem(
                     },
                     onRecipeDeleted = {},
                     onRecipeAdded = {},
+                    onEditRecipe = {},
                     selectedDate = date.date,
                     agenda = recipeAgenda.agenda,
                     goToAgenda = {},
@@ -171,6 +173,11 @@ fun addRecipeCard(
             .clip(CardDefaults.shape)
             .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp) // Set the width to 40% of the screen
             .height((LocalConfiguration.current.screenWidthDp * 0.41f).dp)
+            .dashedBorder(
+                width = 2.dp,
+                color = Color(0xFF00AF45),
+                shape = MaterialTheme.shapes.medium, on = 8.dp, off = 8.dp
+            )
             .combinedClickable(
                 onClick = {
                     updateDate(dataUi.copy(
@@ -187,10 +194,7 @@ fun addRecipeCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
-        border = BorderStroke(
-            width = 1.dp,
-            color = Color.Green,
-        ),
+        border = null,
         colors = CardDefaults.cardColors(
             containerColor = surfaceContainerLowestLight,
         )
@@ -208,7 +212,7 @@ fun addRecipeCard(
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.add),
                     contentDescription = "Add recipe",
-                    tint = Color.Green,
+                    tint = Color(0xFF00AF45),
                     modifier = Modifier.size(40.dp)
                 )
                 Text(

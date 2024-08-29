@@ -110,14 +110,14 @@ fun RecipesScreen(
     goToDetails: (Recipe) -> Unit,
     onFilterClicked: (Tags) -> Unit,
 ) {
-    var editRecipe by remember { mutableStateOf(false) }
+    var editRecipe by remember { mutableStateOf<Recipe?>(null) }
     val context = LocalContext.current
 
     Box(modifier = modifier
         .fillMaxSize()
         .windowInsetsPadding(WindowInsets.statusBars)) {
 
-        if (editRecipe) {
+        if (editRecipe != null) {
             // Show the detail screen
             // TODO separate the detail screen into a separate composable
             Column(
@@ -126,16 +126,15 @@ fun RecipesScreen(
                     .padding(horizontal = 16.dp, vertical = 16.dp),
             ) {
                 BackHandler {
-                    editRecipe = false
+                    editRecipe = null
                 }
 
                 EditRecipeScreen(
-                    r = model.openedRecipe.value ?: Recipe(),
+                    r = editRecipe ?: Recipe(),
                     model = model,
                     modifier = Modifier.fillMaxWidth(),
                     onRecipeDeleted = {r ->
-                        editRecipe = false
-                        model.openedRecipe.value = null
+                        editRecipe = null
                         onRecipeDeleted(r)
                     },
                     onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
@@ -145,14 +144,14 @@ fun RecipesScreen(
                             ).build()
 
                             val r = rdb.recipeDao().findById(recipe.recipeId)
-                            if (r == null) {
+                            if (r.recipeId == 0.toLong()) {
                                 rdb.recipeDao().insertAll(recipe)
                             } else {
                                 rdb.recipeDao().update(recipe)
                             }
 
                             rdb.close()
-                            editRecipe = false
+                            editRecipe= null
                         }
                     }
                 )
@@ -163,13 +162,12 @@ fun RecipesScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             ) {
                 // Header element
                 Text(
                     text = stringResource(id = R.string.tab_recipes),
                     style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(start=16.dp, bottom = 16.dp)
                 )
 
                 var text by rememberSaveable { mutableStateOf("") }
@@ -182,7 +180,10 @@ fun RecipesScreen(
                 }
 
                 SearchBar(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal=16.dp),
+                    colors = SearchBarDefaults.colors(
+                        containerColor = surfaceContainerLowestLight,
+                    ),
                     inputField = {
                         SearchBarDefaults.InputField(
                             query = text,
@@ -277,6 +278,8 @@ fun RecipesScreen(
                         .horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Spacer(modifier = Modifier.width(8.dp))
+
                     filters.forEach { filter ->
 
                         Button(
@@ -311,7 +314,7 @@ fun RecipesScreen(
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(start=16.dp, end=16.dp, top = 8.dp)
                 ) {
                     items(model.recipesShown) { recipe ->
                         RecipeListItem(
@@ -319,9 +322,12 @@ fun RecipesScreen(
                             onRecipeSelected = { r ->
                                 goToDetails(r)
                             },
+                            onEditRecipe = { r ->
+                                editRecipe = r
+                            },
                             onRecipeDeleted = onRecipeDeleted,
                             onRecipeAdded = onRecipeAdded,
-                            searching = !model.currentSearchTerm.isEmpty(),
+                            searching = model.currentSearchTerm.isNotEmpty(),
                             onAgendaDeleted = {},
                             agenda = null,
                             selectedDate = dataUi.selectedDate.date,
