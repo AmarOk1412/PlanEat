@@ -17,6 +17,7 @@
 package com.planeat.planeat.ui
 
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
@@ -42,27 +43,30 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeFloatingActionButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -73,34 +77,39 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
+import com.planeat.planeat.data.Agenda
+import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.data.toTagIcon
 import com.planeat.planeat.ui.components.RecipeListItem
+import com.planeat.planeat.ui.components.calendar.CalendarDataSource
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecipesScreen(
     model: AppModel,
-    navigationType: PlanEatNavigationType,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
@@ -180,7 +189,9 @@ fun RecipesScreen(
                 }
 
                 SearchBar(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal=16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
                     colors = SearchBarDefaults.colors(
                         containerColor = surfaceContainerLowestLight,
                     ),
@@ -278,7 +289,7 @@ fun RecipesScreen(
                         .horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
 
                     filters.forEach { filter ->
 
@@ -305,12 +316,20 @@ fun RecipesScreen(
                                         fontSize = with(LocalDensity.current) {
                                             14.dp.toSp()
                                         },
-                                        modifier = Modifier.align(Alignment.CenterVertically).padding(start = 8.dp)
+                                        modifier = Modifier
+                                            .align(Alignment.CenterVertically)
+                                            .padding(start = 8.dp)
                                     )
                                 }
                         }
                     }
                 }
+
+                var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+                var skipPartiallyExpanded by rememberSaveable { mutableStateOf(false) }
+                val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
+                var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
+
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
@@ -325,6 +344,10 @@ fun RecipesScreen(
                             onEditRecipe = { r ->
                                 editRecipe = r
                             },
+                            onPlanRecipe = { r ->
+                                toPlanRecipe = r
+                                openBottomSheet = true
+                            },
                             onRecipeDeleted = onRecipeDeleted,
                             onRecipeAdded = onRecipeAdded,
                             searching = model.currentSearchTerm.isNotEmpty(),
@@ -338,7 +361,147 @@ fun RecipesScreen(
                         )
                     }
                 }
+
+                if (openBottomSheet) {
+
+
+                    val selectedSource by remember { mutableStateOf(CalendarDataSource()) }
+                    var selectedUi by remember { mutableStateOf(selectedSource.getData(lastSelectedDate = selectedSource.today)) }
+                    val selectedDates = remember { mutableStateListOf<LocalDate>(dataUi.selectedDate.date) }
+
+                    ModalBottomSheet(
+                        onDismissRequest = { openBottomSheet = false },
+                        sheetState = bottomSheetState,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                        ) {
+
+                            Text(
+                                text = "Choose a date",
+                                style = MaterialTheme.typography.titleLarge,
+                            )
+
+
+                            DateHeader(
+                                dataUi = selectedUi,
+                                onPrevClickListener = { startDate ->
+                                    val finalStartDate = startDate.minusDays(1)
+                                    selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
+                                },
+                                onNextClickListener = { endDate ->
+                                    val finalStartDate = endDate.plusDays(2)
+                                    selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
+                                }
+                            )
+
+                            selectedUi.visibleDates.forEach{ date ->
+
+                                Row(
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(
+                                        text = date.date.format(
+                                            DateTimeFormatter.ofPattern("EEEE d")
+                                        ),
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                    Checkbox(
+                                        checked = selectedDates.contains(date.date),
+                                        onCheckedChange = { isChecked ->
+                                            if (isChecked) {
+                                                selectedDates.add(date.date)
+                                            } else {
+                                                selectedDates.remove(date.date)
+                                            }
+                                        }
+                                    )
+                                }
+
+
+                            }
+
+                            Button(
+                                onClick = {
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        val agendaDb = Room
+                                            .databaseBuilder(
+                                                context,
+                                                AgendaDb::class.java, "AgendaDb"
+                                            )
+                                            .build()
+                                        for (d in selectedDates) {
+                                            Log.w("PlanEat", "Selected date: ${d}")
+                                            val dateMidday = d
+                                                .atTime(12, 0)
+                                                .toInstant(ZoneOffset.UTC)
+                                                .toEpochMilli()
+
+                                            Log.w("PlanEat", "Recipe: ${toPlanRecipe!!.recipeId}, Date: ${dateMidday}")
+                                            agendaDb
+                                                .agendaDao()
+                                                .insertAll(
+                                                    Agenda(
+                                                        date = dateMidday,
+                                                        recipeId = toPlanRecipe!!.recipeId
+                                                    )
+                                                )
+                                        }
+                                        agendaDb.close()
+                                        openBottomSheet = false
+                                        goToAgenda()
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(text = "Plan it")
+                            }
+                        }
+                    }
+                }
             }
+        }
+    }
+}
+
+@Composable
+@RequiresApi(Build.VERSION_CODES.O)
+fun DateHeader(
+    dataUi: CalendarUiModel,
+    onPrevClickListener: (LocalDate) -> Unit,
+    onNextClickListener: (LocalDate) -> Unit,
+) {
+    Row (modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp)) {
+        IconButton(onClick = {
+            onPrevClickListener(dataUi.startDate.date)
+        }) {
+            Icon(
+                imageVector = Icons.Filled.ChevronLeft,
+                contentDescription = "Back"
+            )
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Text(text = dataUi.startDate.date.format(
+                DateTimeFormatter.ofPattern("MMMM yyyy")
+            ), modifier = Modifier.align(Alignment.CenterVertically))
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        IconButton(onClick = {
+            onNextClickListener(dataUi.endDate.date)
+        }) {
+            Icon(
+                imageVector = Icons.Filled.ChevronRight,
+                contentDescription = "Next"
+            )
         }
     }
 }

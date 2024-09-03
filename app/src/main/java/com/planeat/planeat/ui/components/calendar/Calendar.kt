@@ -156,6 +156,7 @@ fun Content(
 
         dataUi.scrollDates.forEach{ visibleDate ->
             ContentItem(
+                dataUi = dataUi,
                 date = visibleDate,
                 onDateClickListener
             )
@@ -166,9 +167,22 @@ fun Content(
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun ContentItem(
+    dataUi: CalendarUiModel,
     date: CalendarUiModel.Date,
     onClickListener: (CalendarUiModel.Date) -> Unit,
 ) {
+    var contentColor by remember { mutableStateOf(Color.White) }
+    var containerColor by remember { mutableStateOf(Color.White) }
+
+    LaunchedEffect(dataUi) {
+        if (date == dataUi.selectedDate) {
+            contentColor = onPrimaryLight
+            containerColor = Color(0xFF599E39) // TODO not in exported theme? primaryContainerLight
+        } else {
+            contentColor = Color(0xFF687466) // TODO onSurfaceVariantLight
+            containerColor = surfaceContainerLowestLight
+        }
+    }
 
     Button(
         modifier = Modifier
@@ -183,15 +197,7 @@ fun ContentItem(
         ),
         shape = RoundedCornerShape(18.dp),
         contentPadding = PaddingValues(0.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = if (date.isSelected) {
-            Color(0xFF599E39) // TODO not in exported theme? primaryContainerLight
-        } else {
-            surfaceContainerLowestLight
-        }, contentColor = if (date.isSelected) {
-            onPrimaryLight
-        } else {
-            Color(0xFF687466) // TODO onSurfaceVariantLight
-        })
+        colors = ButtonDefaults.buttonColors(containerColor = containerColor, contentColor = contentColor)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),

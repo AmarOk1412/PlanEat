@@ -139,9 +139,19 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         }
     }
 
-    fun remove(recipe: Recipe) {
+    suspend fun remove(recipe: Recipe) {
         recipesInDb.remove(recipe)
         recipesShown.remove(recipe)
+
+        coroutineScope {
+            async(Dispatchers.IO) {
+                try {
+                    db.recipeDao().delete(recipe)
+                } catch (error: Exception) {
+                    Log.d("PlanEat", "Error: $error")
+                }
+            }
+        }
     }
 
     fun add(recipe: Recipe): Recipe {
@@ -280,8 +290,9 @@ fun PlanEatApp(
         onQueryChanged = { value -> scope.launch {
             model.search(value)
         } },
-        onRecipeDeleted = {recipe -> model.remove(recipe)
-        },
+        onRecipeDeleted = {recipe -> scope.launch {
+            model.remove(recipe)
+        } },
         onRecipeAdded = {recipe -> model.add(recipe)
         },
         ingredients = model.ingredients,
@@ -358,7 +369,6 @@ fun AppContent(
             NavHost(
                 model = model,
                 navController = navController,
-                navigationType = navigationType,
                 modifier = Modifier.weight(1f),
                 onQueryChanged = onQueryChanged,
                 onRecipeDeleted = onRecipeDeleted,
@@ -382,7 +392,6 @@ fun AppContent(
 private fun NavHost(
     model: AppModel,
     navController: NavHostController,
-    navigationType: PlanEatNavigationType,
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
@@ -427,7 +436,6 @@ private fun NavHost(
         composable(PlanEatRoute.RECIPES) {
             RecipesScreen(
                 model = model,
-                navigationType = navigationType,
                 onQueryChanged = onQueryChanged,
                 onRecipeDeleted = onRecipeDeleted,
                 onRecipeAdded = onRecipeAdded,

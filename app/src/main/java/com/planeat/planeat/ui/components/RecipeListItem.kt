@@ -81,6 +81,7 @@ fun RecipeListItem(
     recipe: Recipe,
     onRecipeSelected: (Recipe) -> Unit,
     onEditRecipe: (Recipe) -> Unit,
+    onPlanRecipe: (Recipe) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     onAgendaDeleted: (Agenda) -> Unit,
@@ -247,7 +248,7 @@ fun RecipeListItem(
                                     },
                                     onClick = {
                                         showDialog.value = false
-                                        // Call the appropriate function or navigate to the desired screen
+                                        onPlanRecipe(recipe)
                                     }
                                 )
                                 DropdownMenuItem(

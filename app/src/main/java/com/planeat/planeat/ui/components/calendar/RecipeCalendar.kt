@@ -141,6 +141,7 @@ fun ContentItem(
                     onRecipeDeleted = {},
                     onRecipeAdded = {},
                     onEditRecipe = {},
+                    onPlanRecipe = {},
                     selectedDate = date.date,
                     agenda = recipeAgenda.agenda,
                     goToAgenda = {},
