@@ -27,9 +27,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -66,12 +69,18 @@ fun RecipeCalendar(
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel, Boolean) -> Unit,
 ) {
+    var refresh by remember { mutableIntStateOf(0) }
     Column(modifier = modifier.fillMaxSize()) {
         dataUi.visibleDates.forEach{ visibleDate ->
             ContentItem(
                 goToDetails = goToDetails,
                 goToEdition = goToEdition,
-                onRecipeDeleted = onRecipeDeleted,
+                onRecipeDeleted = { r ->
+                    onRecipeDeleted(r)
+                    refresh += 1
+                    updateDate(dataUi, false) // Force refresh
+                },
+                refresh,
                 date = visibleDate,
                 dataUi = dataUi,
                 updateDate = updateDate
@@ -92,6 +101,7 @@ fun ContentItem(
     goToDetails: (Recipe) -> Unit,
     goToEdition: (Recipe) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
+    refresh: Int,
     date: CalendarUiModel.Date,
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel, Boolean) -> Unit,
@@ -99,9 +109,9 @@ fun ContentItem(
     Column(modifier = Modifier.fillMaxSize()) {
 
         val context = LocalContext.current
-        var recipesPlanned = remember {mutableStateOf(listOf<RecipeAgenda>())}
+        val recipesPlanned = remember {mutableStateOf(listOf<RecipeAgenda>())}
 
-        LaunchedEffect(date.date) {
+        LaunchedEffect(date.date, refresh) {
             recipesPlanned.value = emptyList()
             withContext(Dispatchers.IO) {
                 val adb = Room.databaseBuilder(
@@ -186,7 +196,7 @@ fun ContentItem(
                 )
             }
 
-            addRecipeCard(
+            AddRecipeCard(
                 modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium),
                 date = date,
                 dataUi = dataUi,
@@ -199,7 +209,7 @@ fun ContentItem(
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun addRecipeCard(
+fun AddRecipeCard(
     modifier: Modifier = Modifier,
     date: CalendarUiModel.Date,
     dataUi: CalendarUiModel,
