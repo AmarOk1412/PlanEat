@@ -154,6 +154,18 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         }
     }
 
+    suspend fun update(recipe: Recipe) {
+        coroutineScope {
+            async(Dispatchers.IO) {
+                try {
+                    db.recipeDao().update(recipe)
+                } catch (error: Exception) {
+                    Log.d("PlanEat", "Error: $error")
+                }
+            }
+        }
+    }
+
     fun add(recipe: Recipe): Recipe {
         Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
         db.recipeDao().insertAll(recipe)
@@ -293,6 +305,9 @@ fun PlanEatApp(
         onRecipeDeleted = {recipe -> scope.launch {
             model.remove(recipe)
         } },
+        onRecipeUpdated = {recipe -> scope.launch {
+            model.update(recipe)
+        } },
         onRecipeAdded = {recipe -> model.add(recipe)
         },
         ingredients = model.ingredients,
@@ -306,6 +321,7 @@ private fun NavigationWrapper(
     model: AppModel,
     onQueryChanged: (String) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
+    onRecipeUpdated: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
@@ -325,6 +341,7 @@ private fun NavigationWrapper(
         model = model,
         onQueryChanged = onQueryChanged,
         onRecipeDeleted = onRecipeDeleted,
+        onRecipeUpdated = onRecipeUpdated,
         onRecipeAdded = onRecipeAdded,
         ingredients = ingredients,
         navigationType = navigationType,
@@ -345,6 +362,7 @@ fun AppContent(
     model: AppModel,
     onQueryChanged: (String) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
+    onRecipeUpdated: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     ingredients: List<String>,
     navigationType: PlanEatNavigationType,
@@ -372,6 +390,7 @@ fun AppContent(
                 modifier = Modifier.weight(1f),
                 onQueryChanged = onQueryChanged,
                 onRecipeDeleted = onRecipeDeleted,
+                onRecipeUpdated = onRecipeUpdated,
                 onRecipeAdded = onRecipeAdded,
                 ingredients = ingredients,
                 navigateToTopLevelDestination = navigateToTopLevelDestination
@@ -396,6 +415,7 @@ private fun NavHost(
     onQueryChanged: (String) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
+    onRecipeUpdated: (Recipe) -> Unit,
     ingredients: List<String>,
     navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
 ) {
@@ -431,7 +451,20 @@ private fun NavHost(
                             )
                         )
                     }
-                })
+                },
+                goToEdition = { r ->
+                    model.openedRecipe.value = r
+                    Handler(Looper.getMainLooper()).post {
+                        navigateToTopLevelDestination(
+                            PlanEatTopLevelDestination(
+                                PlanEatRoute.EDITION,
+                                0,
+                                0
+                            )
+                        )
+                    }
+                },
+                onRecipeDeleted = onRecipeDeleted)
         }
         composable(PlanEatRoute.RECIPES) {
             RecipesScreen(
@@ -465,6 +498,18 @@ private fun NavHost(
                             )
                         )
                     }
+                },
+                goToEdition = { r ->
+                    model.openedRecipe.value = r
+                    Handler(Looper.getMainLooper()).post {
+                        navigateToTopLevelDestination(
+                            PlanEatTopLevelDestination(
+                                PlanEatRoute.EDITION,
+                                0,
+                                0
+                            )
+                        )
+                    }
                 }
             )
         }
@@ -480,6 +525,27 @@ private fun NavHost(
             if (model.openedRecipe.value != null) {
                 RecipeDetailScreen(
                     selectedRecipe = model.openedRecipe.value!!,
+                    goBack = {
+                        model.openedRecipe.value = null
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
+        composable(PlanEatRoute.EDITION) {
+            if (model.openedRecipe.value != null) {
+                EditRecipeScreen(
+                    model = model,
+                    onRecipeUpdated = { r ->
+                        onRecipeUpdated(r)
+                        model.openedRecipe.value = null
+                        navController.popBackStack()
+                    },
+                    onRecipeDeleted = { r ->
+                        onRecipeDeleted(r)
+                        model.openedRecipe.value = null
+                        navController.popBackStack()
+                    },
                     goBack = {
                         model.openedRecipe.value = null
                         navController.popBackStack()

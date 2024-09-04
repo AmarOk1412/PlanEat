@@ -7,6 +7,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -77,12 +78,19 @@ fun RequestContentPermission(imageBitmap: MutableState<ImageBitmap>, onUriSelect
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun EditRecipeScreen(
-    r: Recipe,
     model: AppModel,
+    goBack: () -> Unit,
     modifier: Modifier = Modifier,
-    onSaved: (Recipe) -> Unit,
+    onRecipeUpdated: (Recipe) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit
 ) {
+
+
+    BackHandler {
+        goBack()
+    }
+
+    val r = model.openedRecipe.value!!
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -275,7 +283,7 @@ fun EditRecipeScreen(
                 recipe.ingredients = ingredients.split("\n")
                 recipe.steps = steps.split("\n")
                 recipe.url = if (url.isNotEmpty()) url else "recipe_${System.currentTimeMillis()}"
-                onSaved(recipe)
+                onRecipeUpdated(recipe)
             }
         ) {
             Text(text = "Save")
@@ -285,16 +293,7 @@ fun EditRecipeScreen(
             // Delete button
             Button(
                 onClick = {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        Log.d("PlanEat", "Delete recipe: $recipe.title")
-                        val rdb = Room.databaseBuilder(
-                            context,
-                            RecipesDb::class.java, "RecipesDb"
-                        ).build()
-                        rdb.recipeDao().delete(recipe)
-                        rdb.close()
-                        onRecipeDeleted(recipe)
-                    }
+                    onRecipeDeleted(recipe)
                 }
             ) {
                 Text(text = "Delete")

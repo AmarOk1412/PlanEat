@@ -45,10 +45,12 @@ import com.planeat.planeat.ui.components.calendar.RecipeCalendar
 @Composable
 fun AgendaScreen(
     modifier: Modifier = Modifier,
+    onRecipeDeleted: (Recipe) -> Unit,
     dataSource: CalendarDataSource,
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel, Boolean) -> Unit,
-    goToDetails: (Recipe) -> Unit
+    goToDetails: (Recipe) -> Unit,
+    goToEdition: (Recipe) -> Unit,
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
@@ -72,6 +74,8 @@ fun AgendaScreen(
 
                 RecipeCalendar(
                     goToDetails,
+                    goToEdition,
+                    onRecipeDeleted = onRecipeDeleted,
                     modifier.fillMaxWidth().padding(horizontal = 16.dp),
                     dataUi,
                     updateDate = updateDate

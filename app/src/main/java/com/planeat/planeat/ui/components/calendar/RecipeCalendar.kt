@@ -59,6 +59,8 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 fun RecipeCalendar(
     goToDetails: (Recipe) -> Unit,
+    goToEdition: (Recipe) -> Unit,
+    onRecipeDeleted: (Recipe) -> Unit,
     modifier: Modifier = Modifier,
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel, Boolean) -> Unit,
@@ -67,6 +69,8 @@ fun RecipeCalendar(
         dataUi.visibleDates.forEach{ visibleDate ->
             ContentItem(
                 goToDetails = goToDetails,
+                goToEdition = goToEdition,
+                onRecipeDeleted = onRecipeDeleted,
                 date = visibleDate,
                 dataUi = dataUi,
                 updateDate = updateDate
@@ -85,6 +89,8 @@ data class RecipeAgenda (
 @RequiresApi(Build.VERSION_CODES.O)
 fun ContentItem(
     goToDetails: (Recipe) -> Unit,
+    goToEdition: (Recipe) -> Unit,
+    onRecipeDeleted: (Recipe) -> Unit,
     date: CalendarUiModel.Date,
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel, Boolean) -> Unit,
@@ -136,16 +142,12 @@ fun ContentItem(
         ) {
             recipesPlanned.value.forEach { recipeAgenda ->
                 RecipeListItem(recipe = recipeAgenda.recipe,
-                    onRecipeSelected = { r -> goToDetails(r)
-                    },
-                    onRecipeDeleted = {},
+                    onRecipeSelected = { r -> goToDetails(r) },
+                    onRecipeDeleted = { r -> onRecipeDeleted(r) },
                     onRecipeAdded = {},
-                    onEditRecipe = {},
+                    onEditRecipe = { r -> goToEdition(r) },
                     onPlanRecipe = {},
-                    selectedDate = date.date,
                     agenda = recipeAgenda.agenda,
-                    goToAgenda = {},
-                    onAgendaDeleted = {recipe -> recipesPlanned.value = recipesPlanned.value.filter { it != recipeAgenda }},
                     modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium)
                 )
             }

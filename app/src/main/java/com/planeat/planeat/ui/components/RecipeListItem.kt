@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Today
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -37,6 +38,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableLongStateOf
@@ -84,11 +86,8 @@ fun RecipeListItem(
     onPlanRecipe: (Recipe) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
-    onAgendaDeleted: (Agenda) -> Unit,
-    selectedDate: LocalDate,
     searching: Boolean=false,
     agenda: Agenda?,
-    goToAgenda: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -97,6 +96,7 @@ fun RecipeListItem(
     val outlinedFav = ImageVector.vectorResource(R.drawable.favorite)
 
     val showDialog = remember { mutableStateOf(false) }
+    var showDeleteDialog = remember { mutableStateOf(false) }
 
     Card(
         modifier = modifier
@@ -190,35 +190,6 @@ fun RecipeListItem(
                                     }
                                 } else {
                                     showDialog.value = true
-                                    /*val agendaDb = Room
-                                        .databaseBuilder(
-                                            context,
-                                            AgendaDb::class.java, "AgendaDb"
-                                        )
-                                        .build()
-                                    Log.w("PlanEat", "Selected date: ${selectedDate}")
-                                    val todayMiddayMillis = selectedDate
-                                        .atTime(12, 0)
-                                        .toInstant(ZoneOffset.UTC)
-                                        .toEpochMilli()
-
-                                    Log.w("PlanEat", "Recipe: ${recipe.recipeId}, Date: ${todayMiddayMillis}")
-                                    if (agenda != null) {
-                                        agendaDb.agendaDao().delete(agenda)
-                                        onAgendaDeleted(agenda)
-                                        agendaDb.close()
-                                    } else {
-                                        agendaDb
-                                            .agendaDao()
-                                            .insertAll(
-                                                Agenda(
-                                                    date = todayMiddayMillis,
-                                                    recipeId = recipe.recipeId
-                                                )
-                                            )
-                                        agendaDb.close()
-                                        goToAgenda()
-                                    }*/
                                 }
                             } catch (error: Exception) {
                                 Log.d("PlanEat", "Error: $error")
@@ -269,10 +240,47 @@ fun RecipeListItem(
                                     },
                                     onClick = {
                                         showDialog.value = false
-                                        onRecipeDeleted(recipe)
+                                        showDeleteDialog.value = true
                                     }
                                 )
                             }
+                        }
+
+                        if (showDeleteDialog.value) {
+                            AlertDialog(
+                                icon = {
+                                    Icon(Icons.Filled.Delete, contentDescription = null)
+                                },
+                                title = {
+                                    Text(text = "Confirm deletion")
+                                },
+                                text = {
+                                    Text(text = "This will remove the recipe from your agenda and recipe list.")
+                                },
+                                onDismissRequest = {
+                                    showDeleteDialog.value = false
+                                },
+                                confirmButton = {
+                                    TextButton(
+                                        onClick = {
+                                            showDeleteDialog.value = false
+                                            onRecipeDeleted(recipe)
+                                        }
+                                    ) {
+                                        Text("Confirm")
+                                    }
+                                },
+                                dismissButton = {
+                                    TextButton(
+                                        onClick = {
+                                            showDeleteDialog.value = false
+                                        }
+                                    ) {
+                                        Text("Dismiss")
+                                    }
+                                }
+                            )
+
                         }
                     }
                 }

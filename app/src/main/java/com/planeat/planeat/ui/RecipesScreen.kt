@@ -53,6 +53,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -117,349 +118,306 @@ fun RecipesScreen(
     dataUi: CalendarUiModel,
     goToAgenda: () -> Unit,
     goToDetails: (Recipe) -> Unit,
+    goToEdition: (Recipe) -> Unit,
     onFilterClicked: (Tags) -> Unit,
 ) {
-    var editRecipe by remember { mutableStateOf<Recipe?>(null) }
     val context = LocalContext.current
 
     Box(modifier = modifier
         .fillMaxSize()
         .windowInsetsPadding(WindowInsets.statusBars)) {
 
-        if (editRecipe != null) {
-            // Show the detail screen
-            // TODO separate the detail screen into a separate composable
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
-            ) {
-                BackHandler {
-                    editRecipe = null
-                }
+        // Show the list screen
+        // TODO separate the list screen into a separate composable
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            // Header element
+            Text(
+                text = stringResource(id = R.string.tab_recipes),
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(start=16.dp, bottom = 16.dp)
+            )
 
-                EditRecipeScreen(
-                    r = editRecipe ?: Recipe(),
-                    model = model,
-                    modifier = Modifier.fillMaxWidth(),
-                    onRecipeDeleted = {r ->
-                        editRecipe = null
-                        onRecipeDeleted(r)
-                    },
-                    onSaved = { recipe -> CoroutineScope(Dispatchers.IO).launch {
-                            val rdb = Room.databaseBuilder(
-                                context,
-                                RecipesDb::class.java, "RecipesDb"
-                            ).build()
+            var text by rememberSaveable { mutableStateOf("") }
+            var expanded by rememberSaveable { mutableStateOf(false) }
+            val filters = Tags.entries.map { it }
 
-                            val r = rdb.recipeDao().findById(recipe.recipeId)
-                            if (r.recipeId == 0.toLong()) {
-                                rdb.recipeDao().insertAll(recipe)
-                            } else {
-                                rdb.recipeDao().update(recipe)
-                            }
-
-                            rdb.close()
-                            editRecipe= null
-                        }
-                    }
-                )
+            LaunchedEffect(text) {
+                delay(300)
+                onQueryChanged.invoke(text)
             }
-        } else {
-            // Show the list screen
-            // TODO separate the list screen into a separate composable
-            Column(
+
+            SearchBar(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                colors = SearchBarDefaults.colors(
+                    containerColor = surfaceContainerLowestLight,
+                ),
+                inputField = {
+                    SearchBarDefaults.InputField(
+                        query = text,
+                        onQueryChange = {
+                            text = it
+                        },
+                        onSearch = { expanded = false },
+                        expanded = expanded,
+                        onExpandedChange = { expanded = it },
+                        placeholder = { Text(stringResource(id = R.string.search_placeholder)) },
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                        trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
+                    )
+                },
+                expanded = expanded,
+                onExpandedChange = { expanded = it },
             ) {
-                // Header element
-                Text(
-                    text = stringResource(id = R.string.tab_recipes),
-                    style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.padding(start=16.dp, bottom = 16.dp)
-                )
-
-                var text by rememberSaveable { mutableStateOf("") }
-                var expanded by rememberSaveable { mutableStateOf(false) }
-                val filters = Tags.entries.map { it }
-
-                LaunchedEffect(text) {
-                    delay(300)
-                    onQueryChanged.invoke(text)
-                }
-
-                SearchBar(
+                LazyColumn(
+                    contentPadding = PaddingValues(start = 0.dp, top = 16.dp, end = 0.dp, bottom = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    colors = SearchBarDefaults.colors(
-                        containerColor = surfaceContainerLowestLight,
-                    ),
-                    inputField = {
-                        SearchBarDefaults.InputField(
-                            query = text,
-                            onQueryChange = {
-                                text = it
-                            },
-                            onSearch = { expanded = false },
-                            expanded = expanded,
-                            onExpandedChange = { expanded = it },
-                            placeholder = { Text(stringResource(id = R.string.search_placeholder)) },
-                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                            trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
-                        )
-                    },
-                    expanded = expanded,
-                    onExpandedChange = { expanded = it },
+                        .semantics { traversalIndex = 1f },
                 ) {
-                    LazyColumn(
-                        contentPadding = PaddingValues(start = 0.dp, top = 16.dp, end = 0.dp, bottom = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier
-                            .semantics { traversalIndex = 1f },
-                    ) {
 
-                        items(model.recipesShown) { recipe ->
+                    items(model.recipesShown) { recipe ->
+                        ListItem(
+                            headlineContent = { Text(recipe.title) },
+                            leadingContent = {
+                                Box(
+                                    modifier = Modifier.size(48.dp)
+                                ) {
+                                    AsyncImage(
+                                        model = if (recipe.image.startsWith("http")) {
+                                            recipe.image
+                                        } else {
+                                            ImageRequest.Builder(LocalContext.current)
+                                                .data(recipe.image)
+                                                .build()
+                                        },
+                                        contentDescription = recipe.title,
+                                        contentScale = ContentScale.Crop,
+                                    )
+                                }
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                            modifier =
+                            Modifier
+                                .clickable {
+                                    goToDetails(recipe)
+                                }
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 4.dp)
+                        )
+
+                    }
+
+                    item {
+
+                        ListItem(
+                            headlineContent = { Text("Categories") },
+                            leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                            modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 4.dp)
+                        )
+
+                        filters.forEach { filter ->
                             ListItem(
-                                headlineContent = { Text(recipe.title) },
-                                leadingContent = {
-                                    Box(
-                                        modifier = Modifier.size(48.dp)
-                                    ) {
-                                        AsyncImage(
-                                            model = if (recipe.image.startsWith("http")) {
-                                                recipe.image
-                                            } else {
-                                                ImageRequest.Builder(LocalContext.current)
-                                                    .data(recipe.image)
-                                                    .build()
-                                            },
-                                            contentDescription = recipe.title,
-                                            contentScale = ContentScale.Crop,
-                                        )
-                                    }
-                                },
+                                headlineContent = { Text(filter.toString()) },
+                                leadingContent = { toTagIcon(tag = filter) },
                                 colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                                 modifier =
                                 Modifier
                                     .clickable {
-                                        goToDetails(recipe)
+                                        onFilterClicked(filter)
+                                        expanded = false
                                     }
                                     .fillMaxWidth()
                                     .padding(horizontal = 16.dp, vertical = 4.dp)
                             )
-
-                        }
-
-                        item {
-
-                            ListItem(
-                                headlineContent = { Text("Categories") },
-                                leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
-                                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                                modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 4.dp)
-                            )
-
-                            filters.forEach { filter ->
-                                ListItem(
-                                    headlineContent = { Text(filter.toString()) },
-                                    leadingContent = { toTagIcon(tag = filter) },
-                                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                                    modifier =
-                                    Modifier
-                                        .clickable {
-                                            onFilterClicked(filter)
-                                            expanded = false
-                                        }
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 16.dp, vertical = 4.dp)
-                                )
-                            }
                         }
                     }
                 }
+            }
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                        .horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.SpaceBetween
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Spacer(modifier = Modifier.width(16.dp))
+
+                filters.forEach { filter ->
+
+                    Button(
+                        onClick = {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                onFilterClicked(filter)
+                            }
+                        },
+                        shape = RoundedCornerShape(100.dp),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 6.dp
+                        ),
+                        contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = surfaceContainerLowestLight, contentColor = Color.Black),
+                        modifier = Modifier.padding(end = 8.dp)
+                    ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                toTagIcon(tag = filter)
+                                Text(
+                                    text = filter.toString(),
+                                    fontSize = with(LocalDensity.current) {
+                                        14.dp.toSp()
+                                    },
+                                    modifier = Modifier
+                                        .align(Alignment.CenterVertically)
+                                        .padding(start = 8.dp)
+                                )
+                            }
+                    }
+                }
+            }
+
+            var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+            var skipPartiallyExpanded by rememberSaveable { mutableStateOf(false) }
+            val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
+            var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
+
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.padding(start=16.dp, end=16.dp, top = 8.dp)
+            ) {
+                items(model.recipesShown) { recipe ->
+                    RecipeListItem(
+                        recipe = recipe,
+                        onRecipeSelected = { r ->
+                            goToDetails(r)
+                        },
+                        onEditRecipe = { r ->
+                            goToEdition(r)
+                        },
+                        onPlanRecipe = { r ->
+                            toPlanRecipe = r
+                            openBottomSheet = true
+                        },
+                        onRecipeDeleted = onRecipeDeleted,
+                        onRecipeAdded = onRecipeAdded,
+                        searching = model.currentSearchTerm.isNotEmpty(),
+                        agenda = null,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .shadow(8.dp, shape = MaterialTheme.shapes.medium)
+                    )
+                }
+            }
+
+            if (openBottomSheet) {
+
+                val selectedSource by remember { mutableStateOf(CalendarDataSource()) }
+                var selectedUi by remember { mutableStateOf(selectedSource.getData(lastSelectedDate = selectedSource.today)) }
+                val selectedDates = remember { mutableStateListOf<LocalDate>(dataUi.selectedDate.date) }
+
+                ModalBottomSheet(
+                    onDismissRequest = { openBottomSheet = false },
+                    sheetState = bottomSheetState,
                 ) {
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
 
-                    filters.forEach { filter ->
+                        Text(
+                            text = "Choose a date",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+
+
+                        DateHeader(
+                            dataUi = selectedUi,
+                            onPrevClickListener = { startDate ->
+                                val finalStartDate = startDate.minusDays(1)
+                                selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
+                            },
+                            onNextClickListener = { endDate ->
+                                val finalStartDate = endDate.plusDays(2)
+                                selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
+                            }
+                        )
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+
+                        selectedUi.visibleDates.forEach{ date ->
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = date.date.format(
+                                        DateTimeFormatter.ofPattern("EEEE d")
+                                    ),
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.weight(1f),
+                                )
+                                Checkbox(
+                                    checked = selectedDates.contains(date.date),
+                                    onCheckedChange = { isChecked ->
+                                        if (isChecked) {
+                                            selectedDates.add(date.date)
+                                        } else {
+                                            selectedDates.remove(date.date)
+                                        }
+                                    }
+                                )
+                            }
+
+
+                        }
 
                         Button(
                             onClick = {
                                 CoroutineScope(Dispatchers.IO).launch {
-                                    onFilterClicked(filter)
-                                }
-                            },
-                            shape = RoundedCornerShape(100.dp),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 6.dp
-                            ),
-                            contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = surfaceContainerLowestLight, contentColor = Color.Black),
-                            modifier = Modifier.padding(end = 8.dp)
-                        ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    toTagIcon(tag = filter)
-                                    Text(
-                                        text = filter.toString(),
-                                        fontSize = with(LocalDensity.current) {
-                                            14.dp.toSp()
-                                        },
-                                        modifier = Modifier
-                                            .align(Alignment.CenterVertically)
-                                            .padding(start = 8.dp)
-                                    )
-                                }
-                        }
-                    }
-                }
+                                    val agendaDb = Room
+                                        .databaseBuilder(
+                                            context,
+                                            AgendaDb::class.java, "AgendaDb"
+                                        )
+                                        .build()
+                                    for (d in selectedDates) {
+                                        Log.w("PlanEat", "Selected date: ${d}")
+                                        val dateMidday = d
+                                            .atTime(12, 0)
+                                            .toInstant(ZoneOffset.UTC)
+                                            .toEpochMilli()
 
-                var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-                var skipPartiallyExpanded by rememberSaveable { mutableStateOf(false) }
-                val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
-                var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
-
-
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier.padding(start=16.dp, end=16.dp, top = 8.dp)
-                ) {
-                    items(model.recipesShown) { recipe ->
-                        RecipeListItem(
-                            recipe = recipe,
-                            onRecipeSelected = { r ->
-                                goToDetails(r)
-                            },
-                            onEditRecipe = { r ->
-                                editRecipe = r
-                            },
-                            onPlanRecipe = { r ->
-                                toPlanRecipe = r
-                                openBottomSheet = true
-                            },
-                            onRecipeDeleted = onRecipeDeleted,
-                            onRecipeAdded = onRecipeAdded,
-                            searching = model.currentSearchTerm.isNotEmpty(),
-                            onAgendaDeleted = {},
-                            agenda = null,
-                            selectedDate = dataUi.selectedDate.date,
-                            goToAgenda = goToAgenda,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .shadow(8.dp, shape = MaterialTheme.shapes.medium)
-                        )
-                    }
-                }
-
-                if (openBottomSheet) {
-
-
-                    val selectedSource by remember { mutableStateOf(CalendarDataSource()) }
-                    var selectedUi by remember { mutableStateOf(selectedSource.getData(lastSelectedDate = selectedSource.today)) }
-                    val selectedDates = remember { mutableStateListOf<LocalDate>(dataUi.selectedDate.date) }
-
-                    ModalBottomSheet(
-                        onDismissRequest = { openBottomSheet = false },
-                        sheetState = bottomSheetState,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 16.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                        ) {
-
-                            Text(
-                                text = "Choose a date",
-                                style = MaterialTheme.typography.titleLarge,
-                            )
-
-
-                            DateHeader(
-                                dataUi = selectedUi,
-                                onPrevClickListener = { startDate ->
-                                    val finalStartDate = startDate.minusDays(1)
-                                    selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
-                                },
-                                onNextClickListener = { endDate ->
-                                    val finalStartDate = endDate.plusDays(2)
-                                    selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
-                                }
-                            )
-
-                            selectedUi.visibleDates.forEach{ date ->
-
-                                Row(
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text(
-                                        text = date.date.format(
-                                            DateTimeFormatter.ofPattern("EEEE d")
-                                        ),
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        modifier = Modifier.weight(1f),
-                                    )
-                                    Checkbox(
-                                        checked = selectedDates.contains(date.date),
-                                        onCheckedChange = { isChecked ->
-                                            if (isChecked) {
-                                                selectedDates.add(date.date)
-                                            } else {
-                                                selectedDates.remove(date.date)
-                                            }
-                                        }
-                                    )
-                                }
-
-
-                            }
-
-                            Button(
-                                onClick = {
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        val agendaDb = Room
-                                            .databaseBuilder(
-                                                context,
-                                                AgendaDb::class.java, "AgendaDb"
-                                            )
-                                            .build()
-                                        for (d in selectedDates) {
-                                            Log.w("PlanEat", "Selected date: ${d}")
-                                            val dateMidday = d
-                                                .atTime(12, 0)
-                                                .toInstant(ZoneOffset.UTC)
-                                                .toEpochMilli()
-
-                                            Log.w("PlanEat", "Recipe: ${toPlanRecipe!!.recipeId}, Date: ${dateMidday}")
-                                            agendaDb
-                                                .agendaDao()
-                                                .insertAll(
-                                                    Agenda(
-                                                        date = dateMidday,
-                                                        recipeId = toPlanRecipe!!.recipeId
-                                                    )
+                                        Log.w("PlanEat", "Recipe: ${toPlanRecipe!!.recipeId}, Date: ${dateMidday}")
+                                        agendaDb
+                                            .agendaDao()
+                                            .insertAll(
+                                                Agenda(
+                                                    date = dateMidday,
+                                                    recipeId = toPlanRecipe!!.recipeId
                                                 )
-                                        }
-                                        agendaDb.close()
-                                        openBottomSheet = false
-                                        goToAgenda()
+                                            )
                                     }
-                                },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text(text = "Plan it")
-                            }
+                                    agendaDb.close()
+                                    openBottomSheet = false
+                                    goToAgenda()
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "Plan it")
                         }
                     }
                 }
