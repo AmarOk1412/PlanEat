@@ -18,7 +18,6 @@ package com.planeat.planeat.ui
 
 import android.os.Build
 import android.util.Log
-import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -91,13 +90,11 @@ import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
-import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.data.toTagIcon
 import com.planeat.planeat.ui.components.RecipeListItem
 import com.planeat.planeat.ui.components.calendar.CalendarDataSource
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
-import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -287,7 +284,7 @@ fun RecipesScreen(
             }
 
             var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-            var skipPartiallyExpanded by rememberSaveable { mutableStateOf(false) }
+            val skipPartiallyExpanded by rememberSaveable { mutableStateOf(false) }
             val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
             var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
 
@@ -309,6 +306,7 @@ fun RecipesScreen(
                             toPlanRecipe = r
                             openBottomSheet = true
                         },
+                        onRemoveFromAgenda = {},
                         onRecipeDeleted = onRecipeDeleted,
                         onRecipeAdded = onRecipeAdded,
                         searching = model.currentSearchTerm.isNotEmpty(),

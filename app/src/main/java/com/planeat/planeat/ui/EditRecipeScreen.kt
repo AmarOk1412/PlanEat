@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,9 +37,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.room.Room
 import com.planeat.planeat.data.Recipe
-import com.planeat.planeat.data.RecipesDb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,7 +53,6 @@ fun RequestContentPermission(imageBitmap: MutableState<ImageBitmap>, onUriSelect
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
         if (uri != null) {
-            Log.d("PlanEat", "@@@D" + uri.toString())
             onUriSelected(uri)
         }
     }
@@ -85,7 +83,6 @@ fun EditRecipeScreen(
     onRecipeDeleted: (Recipe) -> Unit
 ) {
 
-
     BackHandler {
         goBack()
     }
@@ -103,7 +100,7 @@ fun EditRecipeScreen(
         var title by remember { mutableStateOf(r.title) }
         var kindOfMeal by remember { mutableStateOf(r.kindOfMeal) }
         var season by remember { mutableStateOf(r.season) }
-        var cookingTime by remember { mutableStateOf(r.cookingTime) }
+        var cookingTime by remember { mutableIntStateOf(r.cookingTime) }
         var tags by remember { mutableStateOf(r.tags.joinToString(", ")) }
         var ingredients by remember { mutableStateOf(r.ingredients.joinToString("\n")) }
         var steps by remember { mutableStateOf(r.steps.joinToString("\n")) }

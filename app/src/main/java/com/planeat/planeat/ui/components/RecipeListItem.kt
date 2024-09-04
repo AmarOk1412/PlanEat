@@ -21,9 +21,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Today
 import androidx.compose.material3.AlertDialog
@@ -71,7 +71,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -84,6 +83,7 @@ fun RecipeListItem(
     onRecipeSelected: (Recipe) -> Unit,
     onEditRecipe: (Recipe) -> Unit,
     onPlanRecipe: (Recipe) -> Unit,
+    onRemoveFromAgenda: () -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     searching: Boolean=false,
@@ -123,13 +123,13 @@ fun RecipeListItem(
                     val res = rdb.recipeDao().findByUrl(recipe.url)
                     rdb.close()
                     if (res != null) {
-                        existId.value = res.recipeId
+                        existId.longValue = res.recipeId
                     }
                     icon.value = if (agenda != null) {
                         Icons.Default.MoreVert
                     } else {
                         if (searching) {
-                            if (existId.value != 0.toLong()) {
+                            if (existId.longValue != 0.toLong()) {
                                 Icons.Filled.Favorite
                             } else {
                                 outlinedFav
@@ -173,19 +173,19 @@ fun RecipeListItem(
                                         context,
                                         RecipesDb::class.java, "RecipesDb"
                                     ).build()
-                                    if (existId.value == 0.toLong()) {
+                                    if (existId.longValue == 0.toLong()) {
                                         onRecipeAdded(recipe)
                                         val res = rdb.recipeDao().findByUrl(recipe.url)
                                         rdb.close()
-                                        existId.value = res.recipeId
+                                        existId.longValue = res.recipeId
                                         icon.value = Icons.Filled.Favorite
                                     } else {
                                         Log.w("PlanEat", "Delete recipe: ${recipe.title}")
-                                        var r = recipe
-                                        r.recipeId = existId.value
+                                        val r = recipe
+                                        r.recipeId = existId.longValue
                                         rdb.recipeDao().delete(r)
                                         rdb.close()
-                                        existId.value = 0
+                                        existId.longValue = 0
                                         icon.value = outlinedFav
                                     }
                                 } else {
@@ -215,11 +215,15 @@ fun RecipeListItem(
                                 DropdownMenuItem(
                                     leadingIcon = { Icon(Icons.Filled.Today, contentDescription = null) },
                                     text = {
-                                        Text(text = "Add to agenda")
+                                        Text(text = if (agenda != null) "Remove from agenda" else "Add to agenda")
                                     },
                                     onClick = {
                                         showDialog.value = false
-                                        onPlanRecipe(recipe)
+                                        if (agenda != null) {
+                                            onRemoveFromAgenda()
+                                        } else {
+                                            onPlanRecipe(recipe)
+                                        }
                                     }
                                 )
                                 DropdownMenuItem(

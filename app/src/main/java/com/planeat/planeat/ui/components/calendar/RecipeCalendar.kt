@@ -2,7 +2,6 @@ package com.planeat.planeat.ui.components.calendar
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
@@ -30,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +50,7 @@ import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.components.RecipeListItem
 import dashedBorder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -140,13 +141,46 @@ fun ContentItem(
         Row(
             modifier = Modifier.horizontalScroll(rememberScrollState()).height(IntrinsicSize.Min)
         ) {
+            val scope = rememberCoroutineScope()
+
             recipesPlanned.value.forEach { recipeAgenda ->
-                RecipeListItem(recipe = recipeAgenda.recipe,
+                val recipe = recipeAgenda.recipe
+                RecipeListItem(
+                    recipe = recipe,
                     onRecipeSelected = { r -> goToDetails(r) },
                     onRecipeDeleted = { r -> onRecipeDeleted(r) },
                     onRecipeAdded = {},
                     onEditRecipe = { r -> goToEdition(r) },
                     onPlanRecipe = {},
+                    onRemoveFromAgenda = { scope.launch {
+                        // TODO better animation?
+                        withContext(Dispatchers.IO) {
+                            recipesPlanned.value = emptyList()
+                            val adb = Room.databaseBuilder(
+                                context,
+                                AgendaDb::class.java, "AgendaDb"
+                            ).build()
+                            val rdb = Room.databaseBuilder(
+                                context,
+                                RecipesDb::class.java, "RecipesDb"
+                            ).build()
+                            val recipesPlannedDb = adb.agendaDao().findByDate(date.date.atTime(12, 0)
+                                .toInstant(ZoneOffset.UTC)
+                                .toEpochMilli())
+
+                            recipesPlannedDb.forEach {
+                                val recipeDb = rdb.recipeDao().findById(it.recipeId)
+                                if (recipe != recipeDb) {
+                                    val ra = RecipeAgenda(recipe = recipeDb, agenda = it)
+                                    recipesPlanned.value += ra
+                                } else {
+                                    adb.agendaDao().delete(it)
+                                }
+                            }
+                            adb.close()
+                            rdb.close()
+                        }
+                    } },
                     agenda = recipeAgenda.agenda,
                     modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium)
                 )
