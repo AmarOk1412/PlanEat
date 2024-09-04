@@ -43,30 +43,22 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -93,15 +85,12 @@ import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.data.toTagIcon
 import com.planeat.planeat.ui.components.RecipeListItem
-import com.planeat.planeat.ui.components.calendar.CalendarDataSource
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -140,6 +129,11 @@ fun RecipesScreen(
             var text by rememberSaveable { mutableStateOf("") }
             var expanded by rememberSaveable { mutableStateOf(false) }
             val filters = Tags.entries.map { it }
+
+            LaunchedEffect(Unit) {
+                text = ""
+                expanded = false
+            }
 
             LaunchedEffect(text) {
                 delay(300)
@@ -284,10 +278,7 @@ fun RecipesScreen(
             }
 
             var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-            val skipPartiallyExpanded by rememberSaveable { mutableStateOf(false) }
-            val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
             var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
-
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
@@ -347,145 +338,16 @@ fun RecipesScreen(
             }
 
             if (openBottomSheet) {
-
-                val selectedSource by remember { mutableStateOf(CalendarDataSource()) }
-                var selectedUi by remember { mutableStateOf(selectedSource.getData(lastSelectedDate = selectedSource.today)) }
-                val selectedDates = remember { mutableStateListOf<LocalDate>(dataUi.selectedDate.date) }
-
-                ModalBottomSheet(
+                BottomPlanifier(
                     onDismissRequest = { openBottomSheet = false },
-                    sheetState = bottomSheetState,
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-
-                        Text(
-                            text = "Choose a date",
-                            style = MaterialTheme.typography.titleLarge,
-                        )
-
-
-                        DateHeader(
-                            dataUi = selectedUi,
-                            onPrevClickListener = { startDate ->
-                                val finalStartDate = startDate.minusDays(1)
-                                selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
-                            },
-                            onNextClickListener = { endDate ->
-                                val finalStartDate = endDate.plusDays(2)
-                                selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
-                            }
-                        )
-
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
-
-                        selectedUi.visibleDates.forEach{ date ->
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text(
-                                    text = date.date.format(
-                                        DateTimeFormatter.ofPattern("EEEE d")
-                                    ),
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    modifier = Modifier.weight(1f),
-                                )
-                                Checkbox(
-                                    checked = selectedDates.contains(date.date),
-                                    onCheckedChange = { isChecked ->
-                                        if (isChecked) {
-                                            selectedDates.add(date.date)
-                                        } else {
-                                            selectedDates.remove(date.date)
-                                        }
-                                    }
-                                )
-                            }
-
-
-                        }
-
-                        Button(
-                            onClick = {
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    val agendaDb = Room
-                                        .databaseBuilder(
-                                            context,
-                                            AgendaDb::class.java, "AgendaDb"
-                                        )
-                                        .build()
-                                    for (d in selectedDates) {
-                                        Log.w("PlanEat", "Selected date: ${d}")
-                                        val dateMidday = d
-                                            .atTime(12, 0)
-                                            .toInstant(ZoneOffset.UTC)
-                                            .toEpochMilli()
-
-                                        Log.w("PlanEat", "Recipe: ${toPlanRecipe!!.recipeId}, Date: ${dateMidday}")
-                                        agendaDb
-                                            .agendaDao()
-                                            .insertAll(
-                                                Agenda(
-                                                    date = dateMidday,
-                                                    recipeId = toPlanRecipe!!.recipeId
-                                                )
-                                            )
-                                    }
-                                    agendaDb.close()
-                                    openBottomSheet = false
-                                    goToAgenda()
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(text = "Plan it")
-                        }
+                    dataUi = dataUi,
+                    toPlanRecipe = toPlanRecipe!!,
+                    goToAgenda = {
+                        openBottomSheet = false
+                        goToAgenda()
                     }
-                }
+                )
             }
-        }
-    }
-}
-
-@Composable
-@RequiresApi(Build.VERSION_CODES.O)
-fun DateHeader(
-    dataUi: CalendarUiModel,
-    onPrevClickListener: (LocalDate) -> Unit,
-    onNextClickListener: (LocalDate) -> Unit,
-) {
-    Row (modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 16.dp)) {
-        IconButton(onClick = {
-            onPrevClickListener(dataUi.startDate.date)
-        }) {
-            Icon(
-                imageVector = Icons.Filled.ChevronLeft,
-                contentDescription = "Back"
-            )
-        }
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Text(text = dataUi.startDate.date.format(
-                DateTimeFormatter.ofPattern("MMMM yyyy")
-            ), modifier = Modifier.align(Alignment.CenterVertically))
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        IconButton(onClick = {
-            onNextClickListener(dataUi.endDate.date)
-        }) {
-            Icon(
-                imageVector = Icons.Filled.ChevronRight,
-                contentDescription = "Next"
-            )
         }
     }
 }

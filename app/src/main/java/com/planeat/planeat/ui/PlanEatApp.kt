@@ -168,12 +168,15 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         }
     }
 
-    fun add(recipe: Recipe): Recipe {
-        Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
-        db.recipeDao().insertAll(recipe)
-        val res = db.recipeDao().findByUrl(recipe.url)
-        recipesInDb.add(res)
-        return res
+    suspend fun add(recipe: Recipe) {
+        coroutineScope {
+            launch(Dispatchers.IO) {
+                Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
+                db.recipeDao().insertAll(recipe)
+                val res = db.recipeDao().findByUrl(recipe.url)
+                recipesInDb.add(res)
+            }
+        }
     }
 
     suspend fun getRecipe(url: String, onRecipe: (Recipe) -> Unit) {
@@ -310,8 +313,7 @@ fun PlanEatApp(
         onRecipeUpdated = {recipe -> scope.launch {
             model.update(recipe)
         } },
-        onRecipeAdded = {recipe -> model.add(recipe)
-        },
+        onRecipeAdded = {recipe -> scope.launch { model.add(recipe) } },
         ingredients = model.ingredients,
         navigationType = navigationType,
     )
@@ -532,6 +534,32 @@ private fun NavHost(
             if (model.openedRecipe.value != null) {
                 RecipeDetailScreen(
                     selectedRecipe = model.openedRecipe.value!!,
+                    dataUi = dataUi,
+                    model = model,
+                    goToAgenda = {
+                        model.openedRecipe.value = null
+                        Handler(Looper.getMainLooper()).post {
+                            navigateToTopLevelDestination(
+                                PlanEatTopLevelDestination(
+                                    PlanEatRoute.AGENDA,
+                                    0,
+                                    0
+                                )
+                            )
+                        }
+                    },
+                    goToEdition = { r ->
+                        model.openedRecipe.value = r
+                        Handler(Looper.getMainLooper()).post {
+                            navigateToTopLevelDestination(
+                                PlanEatTopLevelDestination(
+                                    PlanEatRoute.EDITION,
+                                    0,
+                                    0
+                                )
+                            )
+                        }
+                    },
                     goBack = {
                         model.openedRecipe.value = null
                         navController.popBackStack()

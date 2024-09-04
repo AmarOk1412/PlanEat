@@ -2,8 +2,10 @@
 package com.planeat.planeat.ui
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.util.Log
 import androidx.activity.compose.BackHandler
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,6 +48,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,16 +68,22 @@ import coil.compose.AsyncImage
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.components.convertDuration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun RecipeDetailScreen(
     selectedRecipe: Recipe,
+    model: AppModel,
+    dataUi: CalendarUiModel,
+    goToAgenda: () -> Unit,
+    goToEdition: (Recipe) -> Unit,
     goBack: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -94,7 +103,10 @@ fun RecipeDetailScreen(
         else -> null
     }
 
-    var peekHeightPx by remember { mutableStateOf(0) }
+    var peekHeightPx by remember { mutableIntStateOf(0) }
+
+    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
 
     BackHandler {
         goBack()
@@ -112,32 +124,24 @@ fun RecipeDetailScreen(
             ) {
                 OutlinedButton(
                     onClick = {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            try {
-                                val rdb = Room.databaseBuilder(
-                                    context,
-                                    RecipesDb::class.java, "RecipesDb"
-                                ).build()
-                                if (selectedRecipe.recipeId != 0L) {
-                                    rdb.recipeDao().delete(selectedRecipe)
-                                } else {
-                                    rdb.recipeDao().insertAll(selectedRecipe)
-                                }
-                                rdb.close()
-                                goBack()
-                            } catch (error: Exception) {
-                                Log.d("PlanEat", "Error: $error")
+                        if (selectedRecipe.recipeId == 0L) {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                model.add(selectedRecipe)
                             }
+                            goBack()
+                        } else {
+                            goToEdition(selectedRecipe)
                         }
                     },
                     modifier = Modifier.weight(1f).padding(8.dp)
                 ) {
-                    Text(text = "Add to recipes")
+                    Text(text = if (selectedRecipe.recipeId == 0L) "Add to recipes" else "Edit recipe")
                 }
 
                 Button(
                     onClick = {
-                        // TODO
+                        toPlanRecipe = selectedRecipe
+                        openBottomSheet = true
                     },
                     modifier = Modifier.weight(1f).padding(8.dp)
                 ) {
@@ -324,6 +328,20 @@ fun RecipeDetailScreen(
                 }
             }
         }
+    }
+
+
+
+    if (openBottomSheet) {
+        BottomPlanifier(
+            onDismissRequest = { openBottomSheet = false },
+            dataUi = dataUi,
+            toPlanRecipe = toPlanRecipe!!,
+            goToAgenda = {
+                openBottomSheet = false
+                goToAgenda()
+            }
+        )
     }
 
 }
