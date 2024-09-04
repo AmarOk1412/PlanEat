@@ -73,6 +73,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.tensorflow.lite.task.text.qa.QaAnswer
 import java.text.Normalizer
+import java.time.LocalDate
 
 
 class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHelper.AnswererListener {
@@ -82,6 +83,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
     val recipesShown = mutableStateListOf<Recipe>()
     val ingredients = mutableStateListOf<String>()
     val openedRecipe = mutableStateOf<Recipe?>(null)
+    var selectedDate = mutableStateOf<LocalDate?>(null)
     lateinit var bertQaHelper: BertQaHelper
 
     init {
@@ -371,11 +373,15 @@ fun AppContent(
     navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
     onDrawerClicked: () -> Unit = {}
 ) {
+    val navTo : (PlanEatTopLevelDestination) -> Unit = { it ->
+        model.selectedDate.value = null
+        navigateToTopLevelDestination(it)
+    }
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == PlanEatNavigationType.NAVIGATION_RAIL) {
             PlanEatNavigationRail(
                 selectedDestination = selectedDestination,
-                navigateToTopLevelDestination = navigateToTopLevelDestination,
+                navigateToTopLevelDestination = navTo,
                 onDrawerClicked = onDrawerClicked,
             )
         }
@@ -393,12 +399,12 @@ fun AppContent(
                 onRecipeUpdated = onRecipeUpdated,
                 onRecipeAdded = onRecipeAdded,
                 ingredients = ingredients,
-                navigateToTopLevelDestination = navigateToTopLevelDestination
+                navigateToTopLevelDestination = navTo
             )
             AnimatedVisibility(visible = navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
                 PlanEatBottomNavigationBar(
                     selectedDestination = selectedDestination,
-                    navigateToTopLevelDestination = navigateToTopLevelDestination,
+                    navigateToTopLevelDestination = navTo,
                     bottomBarState = model.openedRecipe
                 )
             }
@@ -439,6 +445,7 @@ private fun NavHost(
                         )
                         navigateToTopLevelDestination(destination)
                     }
+                    model.selectedDate.value = newUi.selectedDate.date
                 },
                 goToDetails = { r ->
                     model.openedRecipe.value = r

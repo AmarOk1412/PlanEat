@@ -297,7 +297,35 @@ fun RecipesScreen(
                     RecipeListItem(
                         recipe = recipe,
                         onRecipeSelected = { r ->
-                            goToDetails(r)
+                            if (model.selectedDate.value == null) {
+                                goToDetails(r)
+                            } else {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    val agendaDb = Room
+                                        .databaseBuilder(
+                                            context,
+                                            AgendaDb::class.java, "AgendaDb"
+                                        )
+                                        .build()
+                                    Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
+                                    val dateMidday = model.selectedDate.value!!
+                                        .atTime(12, 0)
+                                        .toInstant(ZoneOffset.UTC)
+                                        .toEpochMilli()
+
+                                    Log.w("PlanEat", "Recipe: ${r.recipeId}, Date: ${dateMidday}")
+                                    agendaDb
+                                        .agendaDao()
+                                        .insertAll(
+                                            Agenda(
+                                                date = dateMidday,
+                                                recipeId = r.recipeId
+                                            )
+                                        )
+                                    agendaDb.close()
+                                    goToAgenda()
+                                }
+                            }
                         },
                         onEditRecipe = { r ->
                             goToEdition(r)
