@@ -47,11 +47,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import androidx.window.layout.DisplayFeature
-import com.planeat.planeat.ai.client.BertQaHelper
 import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
 import com.planeat.planeat.connectors.Ricardo
+import com.planeat.planeat.data.IngredientItem
+import com.planeat.planeat.data.ParsedIngredient
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
@@ -71,12 +72,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.tensorflow.lite.task.text.qa.QaAnswer
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import org.jsoup.Connection
+import org.jsoup.Jsoup
 import java.text.Normalizer
 import java.time.LocalDate
 
 
-class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHelper.AnswererListener {
+class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     private val connectors: List<Connector>
     var recipesInDb = mutableListOf<Recipe>()
     val recipesSearched = mutableListOf<Recipe>()
@@ -84,7 +88,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
     val ingredients = mutableStateListOf<String>()
     val openedRecipe = mutableStateOf<Recipe?>(null)
     var selectedDate = mutableStateOf<LocalDate?>(null)
-    lateinit var bertQaHelper: BertQaHelper
 
     init {
         val marmiton = Marmiton(maxResult)
@@ -95,7 +98,58 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
     private var listJob: Job? = null
     var currentSearchTerm: String = ""
 
-    fun gatherIngredients(recipe: Recipe) {
+    fun parseQuantity(qty: String?): Float {
+        return qty?.let {
+            try {
+                // Handle fractions like "3/4"
+                if (it.contains("/")) {
+                    val parts = it.split("/")
+                    parts[0].toFloat() / parts[1].toFloat()
+                } else {
+                    it.toFloat()
+                }
+            } catch (e: NumberFormatException) {
+                1.0f // Default to 1.0 if parsing fails
+            }
+        } ?: 1.0f  // Default to 1.0 if qty is absent or null
+    }
+
+    fun postIngredients(ingredientsData: String): List<IngredientItem> {
+        // Use Jsoup to send a POST request
+        val response = Jsoup.connect("https://cha-cu.it/parse")
+            .method(Connection.Method.POST)
+            .header("Content-Type", "text/plain")
+            .requestBody(ingredientsData)
+            .ignoreContentType(true) // We want to handle the JSON response
+            .execute()
+
+        // Get the response body as a string (JSON)
+        val jsonResponse = response.body()
+
+        val json = Json { ignoreUnknownKeys = true }
+
+        // Decode the JSON response to a List of ParsedIngredient
+        val parsedIngredients = json.decodeFromString<List<ParsedIngredient>>(jsonResponse)
+
+        // Convert ParsedIngredient to List<IngredientItem> with the necessary transformations
+        return parsedIngredients.mapNotNull { parsedIngredient ->
+            parsedIngredient.name?.let { // Ignore if name is absent
+                IngredientItem(
+                    quantity = parseQuantity(parsedIngredient.qty),
+                    unit = parsedIngredient.unit ?: "",  // Default to empty string if unit is null
+                    name = it
+                )
+            }
+        }
+    }
+
+    suspend fun gatherIngredients(recipe: Recipe) {
+        if (recipe.parsed_ingredients.isEmpty()) {
+            val ingredientsData = recipe.ingredients.joinToString("\n")
+            recipe.parsed_ingredients = postIngredients(ingredientsData)
+            update(recipe)
+            return
+        }
         // TODO Replace with IA
         val units = listOf("g", "gram[a-zA-Z]*", "kg", "kilo[a-zA-Z]*", "ml", "cl", "dl", "L", "litres?", "boite", "cups", "c[a-zA-Z]* a cafe", "c[a-zA-Z]* a soupe", "paquets?", "verres?", "brins?")
         val unitsPattern = units.joinToString(separator = "|") { "\\b$it\\b" } // Join the units with the OR operator
@@ -109,11 +163,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
             val matchResult = ingredientPattern.find(normalizedIngredient)
             if (matchResult != null) {
                 var (quantity, _, unit, _, ingredientName) = matchResult.destructured
-               // val words = normalizedIngredient.split(" ")
-               // for (word in words) {
-               //     Log.d("PlanEat", "@@@ $word | $normalizedIngredient | $quantity | $unit | $ingredientName")
-               // }
-
                 quantity = quantity.ifEmpty { "1" }
                 ingredients.add("Quantity: $quantity, Unit: $unit, Ingredient: $ingredientName")
             } else {
@@ -122,7 +171,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         }
     }
 
-    fun gatherIngredients(recipes: List<Recipe>) {
+    suspend fun gatherIngredients(recipes: List<Recipe>) {
         recipes.forEach { recipe ->
             gatherIngredients(recipe)
         }
@@ -230,7 +279,8 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
                                 if (!recipesShown.any { it.url == recipe.url }) {
                                     recipesShown.add(recipe)
                                     recipesSearched.add(recipe)
-                                    gatherIngredients(recipe)
+                                    val scope = CoroutineScope(Job() + Dispatchers.Main)
+                                    scope.launch { gatherIngredients(recipe) }
                                 }
                             }
                         })
@@ -249,17 +299,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) : BertQaHe
         }
         return true
     }
-
-    override fun onError(error: String) {
-        Log.e("PlanEat", error)
-    }
-
-    override fun onResults(contextOfQuestion: String, question: String, results: List<QaAnswer>?, inferenceTime: Long) {
-        results?.first()?.let {
-            Log.d("PlanEat", it.text)
-        }
-        Log.d("PlanEat", inferenceTime.toString())
-    }
 }
 
 
@@ -276,10 +315,7 @@ fun PlanEatApp(
     val navigationType: PlanEatNavigationType
 
     val context = LocalContext.current
-    val db = Room.databaseBuilder(
-        context,
-        RecipesDb::class.java, "RecipesDb"
-    ).build()
+    val db = RecipesDb.getDatabase(context)
     val model = AppModel(3, db);
 
     //model.bertQaHelper = BertQaHelper(context = context, answererListener = model)

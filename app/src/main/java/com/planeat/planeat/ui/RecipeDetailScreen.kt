@@ -219,30 +219,61 @@ fun RecipeDetailScreen(
                                 modifier = Modifier.padding(16.dp),
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                selectedRecipe.ingredients.forEach {
-                                    Card(
-                                        modifier = Modifier
-                                            .clip(CardDefaults.shape)
-                                            .fillMaxWidth()
-                                            .combinedClickable(
-                                                onClick = {  },
-                                                onLongClick = { }
-                                            )
-                                            .clip(CardDefaults.shape),
-                                        elevation = CardDefaults.cardElevation(
-                                            defaultElevation = 6.dp
-                                        ),
-                                    ) {
-                                        Box(
+                                if (selectedRecipe.parsed_ingredients.isNotEmpty()) {
+                                    selectedRecipe.parsed_ingredients.forEach {
+                                        // TODO!!!
+                                        Card(
                                             modifier = Modifier
+                                                .clip(CardDefaults.shape)
                                                 .fillMaxWidth()
-                                                .padding(8.dp)
+                                                .combinedClickable(
+                                                    onClick = {  },
+                                                    onLongClick = { }
+                                                )
+                                                .clip(CardDefaults.shape),
+                                            elevation = CardDefaults.cardElevation(
+                                                defaultElevation = 6.dp
+                                            ),
                                         ) {
-                                            Text(
-                                                text = it,
-                                                style = MaterialTheme.typography.bodyMedium,
-                                                modifier = Modifier.padding(bottom = 8.dp)
-                                            )
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(8.dp)
+                                            ) {
+                                                Text(
+                                                    text = it.name,
+                                                    style = MaterialTheme.typography.bodyMedium,
+                                                    modifier = Modifier.padding(bottom = 8.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    selectedRecipe.ingredients.forEach {
+                                        Card(
+                                            modifier = Modifier
+                                                .clip(CardDefaults.shape)
+                                                .fillMaxWidth()
+                                                .combinedClickable(
+                                                    onClick = {  },
+                                                    onLongClick = { }
+                                                )
+                                                .clip(CardDefaults.shape),
+                                            elevation = CardDefaults.cardElevation(
+                                                defaultElevation = 6.dp
+                                            ),
+                                        ) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(8.dp)
+                                            ) {
+                                                Text(
+                                                    text = it,
+                                                    style = MaterialTheme.typography.bodyMedium,
+                                                    modifier = Modifier.padding(bottom = 8.dp)
+                                                )
+                                            }
                                         }
                                     }
                                 }
@@ -299,10 +330,7 @@ fun RecipeDetailScreen(
                         IconButton(
                             onClick = { CoroutineScope(Dispatchers.IO).launch {
                                 try {
-                                    val rdb = Room.databaseBuilder(
-                                        context,
-                                        RecipesDb::class.java, "RecipesDb"
-                                    ).build()
+                                    val rdb = RecipesDb.getDatabase(context)
                                     if (selectedRecipe.recipeId != 0L) {
                                         rdb.recipeDao().delete(selectedRecipe)
                                     } else {

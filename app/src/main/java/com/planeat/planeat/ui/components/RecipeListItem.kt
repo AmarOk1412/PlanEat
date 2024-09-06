@@ -116,10 +116,7 @@ fun RecipeListItem(
         ) {
             LaunchedEffect(Unit) {
                 withContext(Dispatchers.IO) {
-                    val rdb = Room.databaseBuilder(
-                        context,
-                        RecipesDb::class.java, "RecipesDb"
-                    ).build()
+                    val rdb = RecipesDb.getDatabase(context)
                     val res = rdb.recipeDao().findByUrl(recipe.url)
                     rdb.close()
                     if (res != null) {
@@ -169,10 +166,7 @@ fun RecipeListItem(
                             CoroutineScope(Dispatchers.IO).launch {
                             try {
                                 if (recipe.recipeId == 0.toLong()) {
-                                    val rdb = Room.databaseBuilder(
-                                        context,
-                                        RecipesDb::class.java, "RecipesDb"
-                                    ).build()
+                                    val rdb = RecipesDb.getDatabase(context)
                                     if (existId.longValue == 0.toLong()) {
                                         onRecipeAdded(recipe)
                                         val res = rdb.recipeDao().findByUrl(recipe.url)

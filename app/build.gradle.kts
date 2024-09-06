@@ -19,6 +19,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
 
     kotlin("kapt") version "1.9.20"
+
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.20"
+    kotlin("plugin.serialization") version "2.0.20"
 }
 
 android {
@@ -33,6 +36,12 @@ android {
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments.put("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     signingConfigs {
@@ -125,9 +134,7 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
 
-    implementation("org.tensorflow:tensorflow-lite:2.4.4")
-    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
-    implementation("org.tensorflow:tensorflow-lite-task-text:0.4.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
     val room_version = "2.6.1"
 

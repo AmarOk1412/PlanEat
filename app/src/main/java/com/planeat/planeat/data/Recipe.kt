@@ -6,7 +6,8 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
 
 class Converters {
     @TypeConverter
@@ -17,6 +18,17 @@ class Converters {
     @TypeConverter
     fun toListString(list: List<String>): String {
         return list.joinToString(",")
+    }
+
+
+    @TypeConverter
+    fun fromIngredientItemList(ingredients: List<IngredientItem>): String {
+        return Json.encodeToString(ListSerializer(IngredientItem.serializer()), ingredients)
+    }
+
+    @TypeConverter
+    fun toIngredientItemList(data: String): List<IngredientItem> {
+        return Json.decodeFromString(ListSerializer(IngredientItem.serializer()), data)
     }
 }
 
@@ -39,4 +51,6 @@ data class Recipe(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var recipeId: Long = 0
+
+    @ColumnInfo(name = "parsed_ingredients") var parsed_ingredients: List<IngredientItem> = emptyList()
 }

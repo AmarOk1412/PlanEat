@@ -117,11 +117,8 @@ fun ContentItem(
                 val adb = Room.databaseBuilder(
                     context,
                     AgendaDb::class.java, "AgendaDb"
-                ).build()
-                val rdb = Room.databaseBuilder(
-                    context,
-                    RecipesDb::class.java, "RecipesDb"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
+                val rdb = RecipesDb.getDatabase(context)
                 val recipesPlannedDb = adb.agendaDao().findByDate(date.date.atTime(12, 0)
                     .toInstant(ZoneOffset.UTC)
                     .toEpochMilli())
@@ -170,10 +167,7 @@ fun ContentItem(
                                 context,
                                 AgendaDb::class.java, "AgendaDb"
                             ).build()
-                            val rdb = Room.databaseBuilder(
-                                context,
-                                RecipesDb::class.java, "RecipesDb"
-                            ).build()
+                            val rdb = RecipesDb.getDatabase(context)
                             val recipesPlannedDb = adb.agendaDao().findByDate(date.date.atTime(12, 0)
                                 .toInstant(ZoneOffset.UTC)
                                 .toEpochMilli())
