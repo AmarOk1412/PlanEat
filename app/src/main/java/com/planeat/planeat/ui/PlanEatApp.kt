@@ -213,6 +213,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
             async(Dispatchers.IO) {
                 try {
                     db.recipeDao().update(recipe)
+                    gatherIngredients(recipe)
                 } catch (error: Exception) {
                     Log.d("PlanEat", "Error: $error")
                 }
@@ -227,6 +228,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                 db.recipeDao().insertAll(recipe)
                 val res = db.recipeDao().findByUrl(recipe.url)
                 recipesInDb.add(res)
+                gatherIngredients(res)
             }
         }
     }
@@ -259,7 +261,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                     for (recipe in recipesInDb) {
                         recipesShown.add(recipe)
                     }
-                    gatherIngredients(recipesShown)
                 }
             }
             return true
@@ -282,8 +283,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                                 if (!recipesShown.any { it.url == recipe.url }) {
                                     recipesShown.add(recipe)
                                     recipesSearched.add(recipe)
-                                    val scope = CoroutineScope(Job() + Dispatchers.Main)
-                                    scope.launch { gatherIngredients(recipe) }
                                 }
                             }
                         })

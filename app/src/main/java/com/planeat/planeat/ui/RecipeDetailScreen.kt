@@ -50,6 +50,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -111,6 +112,17 @@ fun RecipeDetailScreen(
 
     BackHandler {
         goBack()
+    }
+
+    var ingredients by remember { mutableStateOf(selectedRecipe.parsed_ingredients) }
+
+    LaunchedEffect(selectedRecipe) {
+        if (selectedRecipe.parsed_ingredients.isEmpty()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                model.gatherIngredients(selectedRecipe)
+                ingredients = selectedRecipe.parsed_ingredients
+            }
+        }
     }
 
 
@@ -234,8 +246,8 @@ fun RecipeDetailScreen(
                                     .background(color = surfaceContainerLowestLight),
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                if (selectedRecipe.parsed_ingredients.isNotEmpty()) {
-                                    selectedRecipe.parsed_ingredients.forEach {
+                                if (ingredients.isNotEmpty()) {
+                                    ingredients.forEach {
                                         val quantity = if (it.quantity.toInt().toFloat() != it.quantity) it.quantity.toString() else it.quantity.toInt().toString()
                                         ListItem(
                                             headlineContent = { Text(it.name.replaceFirstChar(Char::titlecase)) },

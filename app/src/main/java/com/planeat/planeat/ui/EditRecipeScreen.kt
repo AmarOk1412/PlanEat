@@ -278,6 +278,7 @@ fun EditRecipeScreen(
                 recipe.cookingTime = cookingTime
                 recipe.tags = tags.split(", ")
                 recipe.ingredients = ingredients.split("\n")
+                recipe.parsed_ingredients = emptyList()
                 recipe.steps = steps.split("\n")
                 recipe.url = if (url.isNotEmpty()) url else "recipe_${System.currentTimeMillis()}"
                 onRecipeUpdated(recipe)
