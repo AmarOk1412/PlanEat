@@ -133,7 +133,6 @@ fun ContentItem(
                     }
                 }
                 adb.close()
-                rdb.close()
             }
         }
 
@@ -182,7 +181,6 @@ fun ContentItem(
                                 }
                             }
                             adb.close()
-                            rdb.close()
                         }
                     } },
                     agenda = recipeAgenda.agenda,

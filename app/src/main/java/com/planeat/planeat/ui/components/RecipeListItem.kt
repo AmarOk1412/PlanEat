@@ -57,7 +57,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.room.Room
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.compose.onSecondaryContainerLight
@@ -116,24 +115,28 @@ fun RecipeListItem(
         ) {
             LaunchedEffect(Unit) {
                 withContext(Dispatchers.IO) {
-                    val rdb = RecipesDb.getDatabase(context)
-                    val res = rdb.recipeDao().findByUrl(recipe.url)
-                    rdb.close()
-                    if (res != null) {
-                        existId.longValue = res.recipeId
-                    }
-                    icon.value = if (agenda != null) {
-                        Icons.Default.MoreVert
-                    } else {
-                        if (searching) {
-                            if (existId.longValue != 0.toLong()) {
-                                Icons.Filled.Favorite
-                            } else {
-                                outlinedFav
-                            }
-                        } else {
-                            Icons.Default.MoreVert
+                    try {
+                        val rdb = RecipesDb.getDatabase(context)
+                        val res = rdb.recipeDao().findByUrl(recipe.url)
+                        // rdb.close()
+                        if (res != null) {
+                            existId.longValue = res.recipeId
                         }
+                        icon.value = if (agenda != null) {
+                            Icons.Default.MoreVert
+                        } else {
+                            if (searching) {
+                                if (existId.longValue != 0.toLong()) {
+                                    Icons.Filled.Favorite
+                                } else {
+                                    outlinedFav
+                                }
+                            } else {
+                                Icons.Default.MoreVert
+                            }
+                        }
+                    } catch (error: Exception) {
+                        Log.w("PlanEat", "Error: $error")
                     }
                 }
             }
@@ -170,7 +173,6 @@ fun RecipeListItem(
                                     if (existId.longValue == 0.toLong()) {
                                         onRecipeAdded(recipe)
                                         val res = rdb.recipeDao().findByUrl(recipe.url)
-                                        rdb.close()
                                         existId.longValue = res.recipeId
                                         icon.value = Icons.Filled.Favorite
                                     } else {
@@ -178,7 +180,6 @@ fun RecipeListItem(
                                         val r = recipe
                                         r.recipeId = existId.longValue
                                         rdb.recipeDao().delete(r)
-                                        rdb.close()
                                         existId.longValue = 0
                                         icon.value = outlinedFav
                                     }

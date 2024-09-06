@@ -117,10 +117,11 @@ fun BottomPlanifier(
     val selectedSource by remember { mutableStateOf(CalendarDataSource()) }
     var selectedUi by remember { mutableStateOf(selectedSource.getData(lastSelectedDate = selectedSource.today)) }
     val selectedDates = remember { mutableStateListOf<LocalDate>(dataUi.selectedDate.date) }
-    val skipPartiallyExpanded by rememberSaveable { mutableStateOf(false) }
+    val skipPartiallyExpanded by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
 
     ModalBottomSheet(
+        containerColor = surfaceContainerLowestLight,
         onDismissRequest = onDismissRequest,
         sheetState = bottomSheetState,
     ) {

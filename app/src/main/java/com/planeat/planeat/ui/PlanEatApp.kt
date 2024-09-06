@@ -45,7 +45,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
 import androidx.window.layout.DisplayFeature
 import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
@@ -72,7 +71,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.jsoup.Connection
 import org.jsoup.Jsoup
@@ -115,31 +113,36 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     }
 
     fun postIngredients(ingredientsData: String): List<IngredientItem> {
-        // Use Jsoup to send a POST request
-        val response = Jsoup.connect("https://cha-cu.it/parse")
-            .method(Connection.Method.POST)
-            .header("Content-Type", "text/plain")
-            .requestBody(ingredientsData)
-            .ignoreContentType(true) // We want to handle the JSON response
-            .execute()
+        try {
+            // Use Jsoup to send a POST request
+            val response = Jsoup.connect("https://cha-cu.it/parse")
+                .method(Connection.Method.POST)
+                .header("Content-Type", "text/plain")
+                .requestBody(ingredientsData)
+                .ignoreContentType(true) // We want to handle the JSON response
+                .execute()
 
-        // Get the response body as a string (JSON)
-        val jsonResponse = response.body()
+            // Get the response body as a string (JSON)
+            val jsonResponse = response.body()
 
-        val json = Json { ignoreUnknownKeys = true }
+            val json = Json { ignoreUnknownKeys = true }
 
-        // Decode the JSON response to a List of ParsedIngredient
-        val parsedIngredients = json.decodeFromString<List<ParsedIngredient>>(jsonResponse)
+            // Decode the JSON response to a List of ParsedIngredient
+            val parsedIngredients = json.decodeFromString<List<ParsedIngredient>>(jsonResponse)
 
-        // Convert ParsedIngredient to List<IngredientItem> with the necessary transformations
-        return parsedIngredients.mapNotNull { parsedIngredient ->
-            parsedIngredient.name?.let { // Ignore if name is absent
-                IngredientItem(
-                    quantity = parseQuantity(parsedIngredient.qty),
-                    unit = parsedIngredient.unit ?: "",  // Default to empty string if unit is null
-                    name = it
-                )
+            // Convert ParsedIngredient to List<IngredientItem> with the necessary transformations
+            return parsedIngredients.mapNotNull { parsedIngredient ->
+                parsedIngredient.name?.let { // Ignore if name is absent
+                    IngredientItem(
+                        quantity = parseQuantity(parsedIngredient.qty),
+                        unit = parsedIngredient.unit ?: "",  // Default to empty string if unit is null
+                        name = it
+                    )
+                }
             }
+        } catch(error: Exception) {
+            Log.d("PlanEat", "Error: $error")
+            return emptyList()
         }
     }
 
@@ -286,15 +289,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                         })
                     }
                 }//.awaitAll()
-
-                //bertQaHelper.answer("3 verres de genepi bien agrumé au gout", "ingredient?")
-                //bertQaHelper.answer("3 verres de genepi bien agrumé au gout", "quantity?")
-                //bertQaHelper.answer("sel et poivre", "ingredient?")
-                //bertQaHelper.answer("sel et poivre", "quantity?")
-
-                //var text = "sucre | 50 g de sucre en poudre"
-                //var results = client!!.classify(text)
-                //Log.d("PlanEat", "@@@ ${text} -> ${results}");
             }
         }
         return true

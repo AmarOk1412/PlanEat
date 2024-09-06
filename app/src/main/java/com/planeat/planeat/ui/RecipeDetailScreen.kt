@@ -9,7 +9,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,11 +28,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
+import androidx.compose.foundation.Image
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -63,11 +63,12 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import androidx.room.Room
 import coil.compose.AsyncImage
+import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.data.toIngredientIcon
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.components.convertDuration
 import kotlinx.coroutines.CoroutineScope
@@ -115,6 +116,7 @@ fun RecipeDetailScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        containerColor = surfaceContainerLowestLight,
         bottomBar = {
             Row(
                 modifier = Modifier
@@ -133,7 +135,9 @@ fun RecipeDetailScreen(
                             goToEdition(selectedRecipe)
                         }
                     },
-                    modifier = Modifier.weight(1f).padding(8.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(8.dp)
                 ) {
                     Text(text = if (selectedRecipe.recipeId == 0L) "Add to recipes" else "Edit recipe")
                 }
@@ -143,7 +147,9 @@ fun RecipeDetailScreen(
                         toPlanRecipe = selectedRecipe
                         openBottomSheet = true
                     },
-                    modifier = Modifier.weight(1f).padding(8.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(8.dp)
                 ) {
                     Text(text = "Plan it")
                 }
@@ -152,15 +158,22 @@ fun RecipeDetailScreen(
     ) {
 
         BottomSheetScaffold(
+            containerColor = surfaceContainerLowestLight,
             scaffoldState = scaffoldState,
             sheetPeekHeight = ((with(LocalDensity.current) { (LocalContext.current.resources.displayMetrics.heightPixels - peekHeightPx) / density } + 120).dp),
             sheetContent = {
-                Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .background(color = surfaceContainerLowestLight)
+                        .verticalScroll(rememberScrollState())) {
                     if (logo != null) {
                         Icon(
                             imageVector = ImageVector.vectorResource(id =logo),
                             contentDescription = description!!,
-                            modifier = Modifier.width(88.dp).padding(start=16.dp, top=8.dp, bottom = 0.dp)
+                            modifier = Modifier
+                                .width(88.dp)
+                                .padding(start = 16.dp, top = 8.dp, bottom = 0.dp)
                                 .clickable(onClick = {
                                     uriHandler.openUri(selectedRecipe.url)
                                 })
@@ -198,6 +211,7 @@ fun RecipeDetailScreen(
                     TabRow(
                         selectedTabIndex = selectedTabIndex.intValue,
                         modifier = Modifier.fillMaxWidth(),
+                        containerColor = surfaceContainerLowestLight,
                         indicator = { tabPositions ->
                             PrimaryIndicator(
                                 modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex.intValue])
@@ -216,65 +230,32 @@ fun RecipeDetailScreen(
                     when (selectedTabIndex.intValue) {
                         0 -> {
                             Column (
-                                modifier = Modifier.padding(16.dp),
+                                modifier = Modifier
+                                    .background(color = surfaceContainerLowestLight),
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 if (selectedRecipe.parsed_ingredients.isNotEmpty()) {
                                     selectedRecipe.parsed_ingredients.forEach {
-                                        // TODO!!!
-                                        Card(
-                                            modifier = Modifier
-                                                .clip(CardDefaults.shape)
-                                                .fillMaxWidth()
-                                                .combinedClickable(
-                                                    onClick = {  },
-                                                    onLongClick = { }
-                                                )
-                                                .clip(CardDefaults.shape),
-                                            elevation = CardDefaults.cardElevation(
-                                                defaultElevation = 6.dp
-                                            ),
-                                        ) {
-                                            Box(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(8.dp)
-                                            ) {
-                                                Text(
-                                                    text = it.name,
-                                                    style = MaterialTheme.typography.bodyMedium,
-                                                    modifier = Modifier.padding(bottom = 8.dp)
-                                                )
-                                            }
-                                        }
+                                        val quantity = if (it.quantity.toInt().toFloat() != it.quantity) it.quantity.toString() else it.quantity.toInt().toString()
+                                        ListItem(
+                                            headlineContent = { Text(it.name.replaceFirstChar(Char::titlecase)) },
+                                            supportingContent = { if (quantity != "1") Text(quantity + " " + it.unit) },
+                                            leadingContent = {
+                                                toIngredientIcon(it.name.lowercase())?.let { it1 ->
+                                                    Image(painter = it1,
+                                                        contentDescription = null,
+                                                        modifier = Modifier.size(26.dp))
+                                                }
+                                            },
+                                            colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
+                                        )
                                     }
                                 } else {
                                     selectedRecipe.ingredients.forEach {
-                                        Card(
-                                            modifier = Modifier
-                                                .clip(CardDefaults.shape)
-                                                .fillMaxWidth()
-                                                .combinedClickable(
-                                                    onClick = {  },
-                                                    onLongClick = { }
-                                                )
-                                                .clip(CardDefaults.shape),
-                                            elevation = CardDefaults.cardElevation(
-                                                defaultElevation = 6.dp
-                                            ),
-                                        ) {
-                                            Box(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(8.dp)
-                                            ) {
-                                                Text(
-                                                    text = it,
-                                                    style = MaterialTheme.typography.bodyMedium,
-                                                    modifier = Modifier.padding(bottom = 8.dp)
-                                                )
-                                            }
-                                        }
+                                        ListItem(
+                                            headlineContent = { Text(it) },
+                                            colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
+                                        )
                                     }
                                 }
                             }
@@ -301,7 +282,9 @@ fun RecipeDetailScreen(
             }
         ) { innerPadding ->
             Box(
-                modifier = Modifier.fillMaxSize().padding(innerPadding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
                 contentAlignment = Alignment.TopStart
             ) {
 
@@ -314,11 +297,13 @@ fun RecipeDetailScreen(
                     AsyncImage(
                         model = selectedRecipe.image,
                         contentDescription = selectedRecipe.title,
-                        modifier = Modifier.fillMaxSize().onGloballyPositioned {
-                            if (index++ == 0) {
-                                peekHeightPx = it.size.height.toInt()
-                            }
-                        },
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .onGloballyPositioned {
+                                if (index++ == 0) {
+                                    peekHeightPx = it.size.height.toInt()
+                                }
+                            },
                         contentScale = ContentScale.Crop,
                     )
 
@@ -336,7 +321,7 @@ fun RecipeDetailScreen(
                                     } else {
                                         rdb.recipeDao().insertAll(selectedRecipe)
                                     }
-                                    rdb.close()
+                                   // rdb.close()
                                     goBack()
                                 } catch (error: Exception) {
                                     Log.d("PlanEat", "Error: $error")
