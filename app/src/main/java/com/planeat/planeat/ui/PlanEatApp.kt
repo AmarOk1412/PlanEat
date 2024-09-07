@@ -38,6 +38,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -81,11 +82,14 @@ import java.time.LocalDate
 class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     private val connectors: List<Connector>
     var recipesInDb = mutableListOf<Recipe>()
+    var recipesInDbShown = mutableStateListOf<Recipe>()
     val recipesSearched = mutableListOf<Recipe>()
-    val recipesShown = mutableStateListOf<Recipe>()
-    val ingredients = mutableStateListOf<String>()
+    val recipesSearchedShown = mutableStateListOf<Recipe>()
+
     val openedRecipe = mutableStateOf<Recipe?>(null)
     var selectedDate = mutableStateOf<LocalDate?>(null)
+
+    var searchJobs = mutableListOf<Job>()
 
     init {
         val marmiton = Marmiton(maxResult)
@@ -153,25 +157,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
             update(recipe)
             return
         }
-        // TODO Replace with IA
-        val units = listOf("g", "gram[a-zA-Z]*", "kg", "kilo[a-zA-Z]*", "ml", "cl", "dl", "L", "litres?", "boite", "cups", "c[a-zA-Z]* a cafe", "c[a-zA-Z]* a soupe", "paquets?", "verres?", "brins?")
-        val unitsPattern = units.joinToString(separator = "|") { "\\b$it\\b" } // Join the units with the OR operator
-        val ingredientPattern = """(\d+(\.\d+)?)?\s*($unitsPattern)?\s*(de|d')?\s*(.+)""".toRegex(RegexOption.IGNORE_CASE)
-
-        recipe.ingredients.forEach { ingredient ->
-            var normalizedIngredient = Normalizer.normalize(ingredient, Normalizer.Form.NFD).replace("\\p{M}".toRegex(), "")
-            normalizedIngredient = normalizedIngredient.replace("(", "")
-            normalizedIngredient = normalizedIngredient.replace(")", "")
-            normalizedIngredient = normalizedIngredient.replace("\t", " ")
-            val matchResult = ingredientPattern.find(normalizedIngredient)
-            if (matchResult != null) {
-                var (quantity, _, unit, _, ingredientName) = matchResult.destructured
-                quantity = quantity.ifEmpty { "1" }
-                ingredients.add("Quantity: $quantity, Unit: $unit, Ingredient: $ingredientName")
-            } else {
-                ingredients.add("Ingredient: $ingredient")
-            }
-        }
     }
 
     suspend fun gatherIngredients(recipes: List<Recipe>) {
@@ -181,21 +166,31 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     }
 
     fun filter(tag: Tags) {
-        val completeList = recipesInDb + recipesSearched
-        val newList = if (tag == Tags.All) {
-            completeList
+        // Update my recipes
+        var newList = if (tag == Tags.All) {
+            recipesInDb
         } else {
-            completeList.filter { recipe -> toTags(recipe).contains(tag) }
+            recipesInDb.filter { recipe -> toTags(recipe).contains(tag) }
         }
-        recipesShown.clear()
+        recipesInDbShown.clear()
         for (r in newList) {
-            recipesShown.add(r)
+            recipesInDbShown.add(r)
+        }
+        // Update results
+        newList = if (tag == Tags.All) {
+            recipesSearched
+        } else {
+            recipesSearched.filter { recipe -> toTags(recipe).contains(tag) }
+        }
+        recipesSearchedShown.clear()
+        for (r in newList) {
+            recipesSearchedShown.add(r)
         }
     }
 
     suspend fun remove(recipe: Recipe) {
         recipesInDb.remove(recipe)
-        recipesShown.remove(recipe)
+        recipesInDbShown.remove(recipe)
 
         coroutineScope {
             async(Dispatchers.IO) {
@@ -229,6 +224,11 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                 val res = db.recipeDao().findByUrl(recipe.url)
                 recipesInDb.add(res)
                 gatherIngredients(res)
+                // Update visibiliy
+                if (recipesSearchedShown.any { it.url == recipe.url }) {
+                    recipesSearchedShown.remove(recipe)
+                }
+                recipesInDbShown.add(res)
             }
         }
     }
@@ -248,10 +248,14 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     }
 
     suspend fun search(searchTerm: String): Boolean {
+        // Cancel current search and refresh recipesShown()
         currentSearchTerm = searchTerm
         listJob?.cancel()
-        recipesShown.clear()
-        ingredients.clear()
+        searchJobs.forEach { it.cancel() }
+        searchJobs.clear()
+        recipesInDbShown.clear()
+        recipesSearchedShown.clear()
+        // If empty show recipes in database
         if (searchTerm.isEmpty()) {
             listJob = coroutineScope {
                 async(Dispatchers.IO) {
@@ -259,35 +263,36 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                         recipesInDb = db.recipeDao().getAll().toMutableList()
                     }
                     for (recipe in recipesInDb) {
-                        recipesShown.add(recipe)
+                        recipesInDbShown.add((recipe))
                     }
                 }
             }
             return true
         }
+        // Else perform a search
         listJob = coroutineScope {
             launch {
                 withContext(Dispatchers.IO) {
                     for (recipe in recipesInDb) {
                         if (recipe.title.contains(searchTerm, ignoreCase = true)) {
-                            recipesShown.add(recipe)
+                            recipesInDbShown.add(recipe)
                         }
                     }
                 }
                 connectors.map { connector ->
-                    async(Dispatchers.IO) {
-                        // TODO callback return false?
+                    searchJobs += launch(Dispatchers.IO) {
                         connector.search(searchTerm, onRecipe = { recipe ->
                             if (searchTerm == currentSearchTerm) {
                                 Log.w("PlanEat", "Adding recipe $recipe")
-                                if (!recipesShown.any { it.url == recipe.url }) {
-                                    recipesShown.add(recipe)
+                                // Add new recipes to results
+                                if (!recipesInDbShown.any { it.url == recipe.url }) {
+                                    recipesSearchedShown.add(recipe)
                                     recipesSearched.add(recipe)
                                 }
                             }
                         })
                     }
-                }//.awaitAll()
+                }
             }
         }
         return true

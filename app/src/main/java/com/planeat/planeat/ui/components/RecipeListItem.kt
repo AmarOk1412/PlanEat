@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Today
+import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -79,14 +80,13 @@ import kotlinx.coroutines.withContext
 @Composable
 fun RecipeListItem(
     recipe: Recipe,
-    onRecipeSelected: (Recipe) -> Unit,
-    onEditRecipe: (Recipe) -> Unit,
-    onPlanRecipe: (Recipe) -> Unit,
-    onRemoveFromAgenda: () -> Unit,
-    onRecipeDeleted: (Recipe) -> Unit,
-    onRecipeAdded: (Recipe) -> Unit,
-    searching: Boolean=false,
-    agenda: Agenda?,
+    onRecipeSelected: (Recipe) -> Unit = {},
+    onEditRecipe: (Recipe) -> Unit = {},
+    onPlanRecipe: (Recipe) -> Unit = {},
+    onRemoveFromAgenda: () -> Unit = {},
+    onRecipeDeleted: (Recipe) -> Unit = {},
+    onRecipeAdded: (Recipe) -> Unit = {},
+    agenda: Agenda? = null,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -122,18 +122,10 @@ fun RecipeListItem(
                         if (res != null) {
                             existId.longValue = res.recipeId
                         }
-                        icon.value = if (agenda != null) {
-                            Icons.Default.MoreVert
+                        icon.value = if (existId.longValue == 0.toLong()) {
+                            Icons.Outlined.BookmarkAdd
                         } else {
-                            if (searching) {
-                                if (existId.longValue != 0.toLong()) {
-                                    Icons.Filled.Favorite
-                                } else {
-                                    outlinedFav
-                                }
-                            } else {
-                                Icons.Default.MoreVert
-                            }
+                            Icons.Default.MoreVert
                         }
                     } catch (error: Exception) {
                         Log.w("PlanEat", "Error: $error")
@@ -217,7 +209,17 @@ fun RecipeListItem(
                                         if (agenda != null) {
                                             onRemoveFromAgenda()
                                         } else {
-                                            onPlanRecipe(recipe)
+                                            if (recipe.recipeId == 0.toLong()) {
+                                                val rdb = RecipesDb.getDatabase(context)
+                                                if (existId.longValue == 0.toLong()) {
+                                                    // If a search result, add it to recipes first
+                                                    onRecipeAdded(recipe)
+                                                    val res = rdb.recipeDao().findByUrl(recipe.url)
+                                                    onPlanRecipe(res)
+                                                }
+                                            } else {
+                                                onPlanRecipe(recipe)
+                                            }
                                         }
                                     }
                                 )

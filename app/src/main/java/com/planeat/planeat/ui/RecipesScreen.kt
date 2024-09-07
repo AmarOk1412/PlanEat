@@ -19,7 +19,6 @@ package com.planeat.planeat.ui
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,27 +30,22 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
@@ -67,21 +61,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
+import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.data.toTagIcon
 import com.planeat.planeat.ui.components.RecipeListItem
@@ -147,92 +137,23 @@ fun RecipesScreen(
                 colors = SearchBarDefaults.colors(
                     containerColor = surfaceContainerLowestLight,
                 ),
+                expanded = false,
+                onExpandedChange = { },
                 inputField = {
                     SearchBarDefaults.InputField(
                         query = text,
                         onQueryChange = {
                             text = it
                         },
-                        onSearch = { expanded = false },
                         expanded = expanded,
                         onExpandedChange = { expanded = it },
+                        onSearch = { expanded = false },
                         placeholder = { Text(stringResource(id = R.string.search_placeholder)) },
                         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                        trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
+                        trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) }
                     )
-                },
-                expanded = expanded,
-                onExpandedChange = { expanded = it },
-            ) {
-                LazyColumn(
-                    contentPadding = PaddingValues(start = 0.dp, top = 16.dp, end = 0.dp, bottom = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier
-                        .semantics { traversalIndex = 1f },
-                ) {
-
-                    items(model.recipesShown) { recipe ->
-                        ListItem(
-                            headlineContent = { Text(recipe.title) },
-                            leadingContent = {
-                                Box(
-                                    modifier = Modifier.size(48.dp)
-                                ) {
-                                    AsyncImage(
-                                        model = if (recipe.image.startsWith("http")) {
-                                            recipe.image
-                                        } else {
-                                            ImageRequest.Builder(LocalContext.current)
-                                                .data(recipe.image)
-                                                .build()
-                                        },
-                                        contentDescription = recipe.title,
-                                        contentScale = ContentScale.Crop,
-                                    )
-                                }
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            modifier =
-                            Modifier
-                                .clickable {
-                                    goToDetails(recipe)
-                                }
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 4.dp)
-                        )
-
-                    }
-
-                    item {
-
-                        ListItem(
-                            headlineContent = { Text("Categories") },
-                            leadingContent = { Icon(Icons.Filled.Star, contentDescription = null) },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 4.dp)
-                        )
-
-                        filters.forEach { filter ->
-                            ListItem(
-                                headlineContent = { Text(filter.toString()) },
-                                leadingContent = { toTagIcon(tag = filter) },
-                                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                                modifier =
-                                Modifier
-                                    .clickable {
-                                        onFilterClicked(filter)
-                                        expanded = false
-                                    }
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 4.dp)
-                            )
-                        }
-                    }
                 }
-            }
+            ) {}
 
             Row(
                 modifier = Modifier
@@ -282,58 +203,40 @@ fun RecipesScreen(
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.padding(start=16.dp, end=16.dp, top = 8.dp)
+                modifier = Modifier.padding(start=16.dp, end=16.dp)
             ) {
-                items(model.recipesShown) { recipe ->
-                    RecipeListItem(
-                        recipe = recipe,
-                        onRecipeSelected = { r ->
-                            if (model.selectedDate.value == null) {
-                                goToDetails(r)
-                            } else {
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    val agendaDb = Room
-                                        .databaseBuilder(
-                                            context,
-                                            AgendaDb::class.java, "AgendaDb"
-                                        )
-                                        .build()
-                                    Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
-                                    val dateMidday = model.selectedDate.value!!
-                                        .atTime(12, 0)
-                                        .toInstant(ZoneOffset.UTC)
-                                        .toEpochMilli()
-
-                                    Log.w("PlanEat", "Recipe: ${r.recipeId}, Date: ${dateMidday}")
-                                    agendaDb
-                                        .agendaDao()
-                                        .insertAll(
-                                            Agenda(
-                                                date = dateMidday,
-                                                recipeId = r.recipeId
-                                            )
-                                        )
-                                    agendaDb.close()
-                                    goToAgenda()
-                                }
-                            }
-                        },
-                        onEditRecipe = { r ->
-                            goToEdition(r)
-                        },
-                        onPlanRecipe = { r ->
+                if (model.recipesInDbShown.size > 0) {
+                    if (model.recipesSearchedShown.size > 0) {
+                        item(span = { GridItemSpan(2) }) {
+                            Text(
+                                text = "My recipes",
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = Modifier.padding(vertical = 16.dp)
+                            )
+                        }
+                    }
+                    items(model.recipesInDbShown) { recipe ->
+                        RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                             toPlanRecipe = r
                             openBottomSheet = true
-                        },
-                        onRemoveFromAgenda = {},
-                        onRecipeDeleted = onRecipeDeleted,
-                        onRecipeAdded = onRecipeAdded,
-                        searching = model.currentSearchTerm.isNotEmpty(),
-                        agenda = null,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .shadow(8.dp, shape = MaterialTheme.shapes.medium)
-                    )
+                        })
+                    }
+
+                    if (model.recipesSearchedShown.size > 0) {
+                        item(span = { GridItemSpan(2) }) {
+                            Text(
+                                text = "Search results",
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = Modifier.padding(vertical = 16.dp)
+                            )
+                        }
+                        items(model.recipesSearchedShown) { recipe ->
+                            RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
+                                toPlanRecipe = r
+                                openBottomSheet = true
+                            })
+                        }
+                    }
                 }
             }
 
@@ -350,4 +253,67 @@ fun RecipesScreen(
             }
         }
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
+               goToAgenda: () -> Unit,
+               goToEdition: (Recipe) -> Unit,
+               onRecipeDeleted: (Recipe) -> Unit,
+               onRecipeAdded: (Recipe) -> Unit,
+               onPlanRecipe: (Recipe) -> Unit) {
+    val context = LocalContext.current
+    RecipeListItem(
+        recipe = recipe,
+        onRecipeSelected = { r ->
+            if (model.selectedDate.value == null) {
+                goToDetails(r)
+            } else {
+                CoroutineScope(Dispatchers.IO).launch {
+                    // If id == 0, recipe is not in db yet, add it first
+                    var id = r.recipeId
+                    if (id == 0.toLong()) {
+                        val rdb = RecipesDb.getDatabase(context)
+                        // If a search result, add it to recipes first
+                        model.add(recipe)
+                        val res = rdb.recipeDao().findByUrl(recipe.url)
+                        id = res.recipeId
+                    }
+                    // Then add it to agenda
+
+                    val agendaDb = Room
+                        .databaseBuilder(
+                            context,
+                            AgendaDb::class.java, "AgendaDb"
+                        )
+                        .build()
+                    Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
+                    val dateMidday = model.selectedDate.value!!
+                        .atTime(12, 0)
+                        .toInstant(ZoneOffset.UTC)
+                        .toEpochMilli()
+
+                    Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
+                    agendaDb
+                        .agendaDao()
+                        .insertAll(
+                            Agenda(
+                                date = dateMidday,
+                                recipeId = id
+                            )
+                        )
+                    agendaDb.close()
+                    goToAgenda()
+                }
+            }
+        },
+        onEditRecipe = goToEdition,
+        onPlanRecipe = onPlanRecipe,
+        onRecipeDeleted = onRecipeDeleted,
+        onRecipeAdded = onRecipeAdded,
+        modifier = Modifier
+            .padding(8.dp)
+            .shadow(8.dp, shape = MaterialTheme.shapes.medium)
+    )
 }

@@ -82,7 +82,8 @@ fun ShoppingScreen(
 
             recipesPlannedDb.forEach {
                 val recipe = rdb.recipeDao().findById(it.recipeId)
-                ingredients += recipe.parsed_ingredients
+                if (recipe != null)
+                    ingredients += recipe.parsed_ingredients
             }
         }
     }
