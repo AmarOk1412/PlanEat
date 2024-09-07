@@ -294,7 +294,11 @@ fun RecipeListItem(
 
             SuggestionChip(
                 label = { Text(
-                    text = recipe.ingredients.size.toString() + " ingrédients",
+                    text = if (recipe.parsed_ingredients.isNotEmpty()) {
+                        recipe.parsed_ingredients.size.toString() + " ingrédients"
+                    } else {
+                        recipe.ingredients.size.toString() + " ingrédients"
+                    },
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = MaterialTheme.typography.bodyMedium,
