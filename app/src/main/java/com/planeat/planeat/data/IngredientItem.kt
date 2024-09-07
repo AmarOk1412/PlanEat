@@ -246,7 +246,7 @@ fun fetchIconForIngredient(ingredient_name: String): Int? {
     else if (ingredient_name.contains("shrimp")) {
         return R.drawable.fried_shrimp_3d
     }
-    else if (ingredient_name.contains("garlic")) {
+    else if (ingredient_name.contains("garlic") || ingredient_name.contains("shallot")) {
         return R.drawable.garlic_3d
     }
     else if (ingredient_name.contains("milk")) {
@@ -408,7 +408,7 @@ fun fetchIconForIngredient(ingredient_name: String): Int? {
     else if (ingredient_name.contains("soft_ice_cream")) {
         return R.drawable.soft_ice_cream_3d
     }
-    else if (ingredient_name.contains("spaghetti") || ingredient_name.contains("pasta")) {
+    else if (ingredient_name.contains("spaghetti") || ingredient_name.contains("pasta") || ingredient_name.contains("noodle")) {
         return R.drawable.spaghetti_3d
     }
     else if (ingredient_name.contains("spoon")) {
@@ -464,6 +464,24 @@ fun fetchIconForIngredient(ingredient_name: String): Int? {
     }
     else if (ingredient_name.contains("wine_glass")) {
         return R.drawable.wine_glass_3d
+    }
+    else if (ingredient_name.contains("chicken")) {
+        return R.drawable.chicken_3d
+    }
+    else if (ingredient_name.contains("beef")) {
+        return R.drawable.beef_3d
+    }
+    else if (ingredient_name.contains("duck")) {
+        return R.drawable.duck_3d
+    }
+    else if (ingredient_name.contains("lamb")) {
+        return R.drawable.lamb_3d
+    }
+    else if (ingredient_name.contains("pork")) {
+        return R.drawable.pork_3d
+    }
+    else if (ingredient_name.contains("rabbit")) {
+        return R.drawable.rabbit_3d
     }
 
     return 0

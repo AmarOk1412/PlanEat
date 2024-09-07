@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme(dynamicColor=false) {
+            AppTheme(dynamicColor=false, darkTheme=false) {
                 val windowSize = calculateWindowSizeClass(this)
                 val displayFeatures = calculateDisplayFeatures(this)
 
@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun PlanEatAppPreview() {
-    AppTheme(dynamicColor=false) {
+    AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(400.dp, 900.dp)),
             displayFeatures = emptyList(),
@@ -66,7 +66,7 @@ fun PlanEatAppPreview() {
 @Preview(showBackground = true, widthDp = 700, heightDp = 500)
 @Composable
 fun PlanEatAppPreviewTablet() {
-    AppTheme(dynamicColor=false) {
+    AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(700.dp, 500.dp)),
             displayFeatures = emptyList(),
@@ -78,7 +78,7 @@ fun PlanEatAppPreviewTablet() {
 @Preview(showBackground = true, widthDp = 500, heightDp = 700)
 @Composable
 fun PlanEatAppPreviewTabletPortrait() {
-    AppTheme(dynamicColor=false) {
+    AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(500.dp, 700.dp)),
             displayFeatures = emptyList(),
@@ -90,7 +90,7 @@ fun PlanEatAppPreviewTabletPortrait() {
 @Preview(showBackground = true, widthDp = 1100, heightDp = 600)
 @Composable
 fun PlanEatAppPreviewDesktop() {
-    AppTheme(dynamicColor=false) {
+    AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(1100.dp, 600.dp)),
             displayFeatures = emptyList(),
@@ -102,7 +102,7 @@ fun PlanEatAppPreviewDesktop() {
 @Preview(showBackground = true, widthDp = 600, heightDp = 1100)
 @Composable
 fun PlanEatAppPreviewDesktopPortrait() {
-    AppTheme(dynamicColor=false) {
+    AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(600.dp, 1100.dp)),
             displayFeatures = emptyList(),

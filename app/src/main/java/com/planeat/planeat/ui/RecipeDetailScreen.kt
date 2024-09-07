@@ -33,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.foundation.Image
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -170,6 +171,7 @@ fun RecipeDetailScreen(
     ) {
 
         BottomSheetScaffold(
+            sheetContainerColor = surfaceContainerLowestLight,
             containerColor = surfaceContainerLowestLight,
             scaffoldState = scaffoldState,
             sheetPeekHeight = ((with(LocalDensity.current) { (LocalContext.current.resources.displayMetrics.heightPixels - peekHeightPx) / density } + 120).dp),
@@ -277,11 +279,21 @@ fun RecipeDetailScreen(
                                 modifier = Modifier.padding(16.dp)
                             ) {
                                 selectedRecipe.steps.forEachIndexed { index, step ->
+
                                     Text(
-                                        text = "${index + 1}. $step",
+                                        text = "Step ${index + 1}",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        modifier = Modifier.padding(bottom = 8.dp)
+                                    )
+
+                                    Text(
+                                        text = step,
                                         style = MaterialTheme.typography.bodyMedium,
                                         modifier = Modifier.padding(bottom = 8.dp)
                                     )
+
+                                    HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+
                                 }
                             }
                         }
