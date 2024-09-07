@@ -299,7 +299,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
 @Composable
 fun PlanEatApp(
     windowSize: WindowSizeClass,
-    displayFeatures: List<DisplayFeature>,
 ) {
     /**
      * This will help us select type of navigation and content type depending on window size and
@@ -343,7 +342,6 @@ fun PlanEatApp(
             model.update(recipe)
         } },
         onRecipeAdded = {recipe -> scope.launch { model.add(recipe) } },
-        ingredients = model.ingredients,
         navigationType = navigationType,
     )
 }
@@ -356,7 +354,6 @@ private fun NavigationWrapper(
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeUpdated: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
-    ingredients: List<String>,
     navigationType: PlanEatNavigationType,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -376,7 +373,6 @@ private fun NavigationWrapper(
         onRecipeDeleted = onRecipeDeleted,
         onRecipeUpdated = onRecipeUpdated,
         onRecipeAdded = onRecipeAdded,
-        ingredients = ingredients,
         navigationType = navigationType,
         navController = navController,
         selectedDestination = selectedDestination,
@@ -397,7 +393,6 @@ fun AppContent(
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeUpdated: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
-    ingredients: List<String>,
     navigationType: PlanEatNavigationType,
     navController: NavHostController,
     selectedDestination: String,
@@ -429,7 +424,6 @@ fun AppContent(
                 onRecipeDeleted = onRecipeDeleted,
                 onRecipeUpdated = onRecipeUpdated,
                 onRecipeAdded = onRecipeAdded,
-                ingredients = ingredients,
                 navigateToTopLevelDestination = navTo
             )
             AnimatedVisibility(visible = navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
@@ -453,7 +447,6 @@ private fun NavHost(
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     onRecipeUpdated: (Recipe) -> Unit,
-    ingredients: List<String>,
     navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
 ) {
     val dataSource by remember { mutableStateOf(CalendarDataSource()) }
@@ -556,7 +549,6 @@ private fun NavHost(
         }
         composable(PlanEatRoute.SHOPPING_LIST) {
             ShoppingScreen(
-                ingredients = ingredients
             )
         }
         composable(PlanEatRoute.DETAILS) {

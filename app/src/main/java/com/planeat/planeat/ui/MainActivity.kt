@@ -39,11 +39,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme(dynamicColor=false, darkTheme=false) {
                 val windowSize = calculateWindowSizeClass(this)
-                val displayFeatures = calculateDisplayFeatures(this)
 
                 PlanEatApp(
                     windowSize = windowSize,
-                    displayFeatures = displayFeatures,
                 )
             }
         }
@@ -57,7 +55,6 @@ fun PlanEatAppPreview() {
     AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(400.dp, 900.dp)),
-            displayFeatures = emptyList(),
         )
     }
 }
@@ -69,7 +66,6 @@ fun PlanEatAppPreviewTablet() {
     AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(700.dp, 500.dp)),
-            displayFeatures = emptyList(),
         )
     }
 }
@@ -81,7 +77,6 @@ fun PlanEatAppPreviewTabletPortrait() {
     AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(500.dp, 700.dp)),
-            displayFeatures = emptyList(),
         )
     }
 }
@@ -93,7 +88,6 @@ fun PlanEatAppPreviewDesktop() {
     AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(1100.dp, 600.dp)),
-            displayFeatures = emptyList(),
         )
     }
 }
@@ -105,7 +99,6 @@ fun PlanEatAppPreviewDesktopPortrait() {
     AppTheme(dynamicColor=false, darkTheme=false) {
         PlanEatApp(
             windowSize = WindowSizeClass.calculateFromSize(DpSize(600.dp, 1100.dp)),
-            displayFeatures = emptyList(),
         )
     }
 }

@@ -14,6 +14,8 @@ interface AgendaDao {
     @Query("SELECT * FROM agenda WHERE date IN (:date)")
     fun findByDate(date: Long): List<Agenda>
 
+    @Query("SELECT * FROM agenda WHERE date BETWEEN :startDate AND :endDate")
+    fun findBetweenDates(startDate: Long, endDate: Long): List<Agenda>
 
     @Transaction
     @Insert
