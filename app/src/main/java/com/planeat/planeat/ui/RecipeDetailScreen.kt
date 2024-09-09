@@ -3,10 +3,10 @@ package com.planeat.planeat.ui
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,18 +22,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
-import androidx.compose.foundation.Image
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -45,20 +40,18 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
@@ -69,7 +62,6 @@ import coil.compose.AsyncImage
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
-import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.toIngredientIcon
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.components.convertDuration
@@ -89,7 +81,6 @@ fun RecipeDetailScreen(
     goToEdition: (Recipe) -> Unit,
     goBack: () -> Unit,
 ) {
-    val context = LocalContext.current
     val scaffoldState = rememberBottomSheetScaffoldState()
     val uriHandler = LocalUriHandler.current
 
@@ -105,8 +96,6 @@ fun RecipeDetailScreen(
         selectedRecipe.url.contains("cha-cu.it") -> "ChaCuit"
         else -> null
     }
-
-    var peekHeightPx by remember { mutableIntStateOf(0) }
 
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
@@ -174,7 +163,7 @@ fun RecipeDetailScreen(
             sheetContainerColor = surfaceContainerLowestLight,
             containerColor = surfaceContainerLowestLight,
             scaffoldState = scaffoldState,
-            sheetPeekHeight = ((with(LocalDensity.current) { (LocalContext.current.resources.displayMetrics.heightPixels - peekHeightPx) / density } + 120).dp),
+            sheetPeekHeight = ((with(LocalDensity.current) { (LocalContext.current.resources.displayMetrics.heightPixels * .8) / density }).dp),
             sheetContent = {
                 Column(
                     Modifier
@@ -322,46 +311,9 @@ fun RecipeDetailScreen(
                         model = selectedRecipe.image,
                         contentDescription = selectedRecipe.title,
                         modifier = Modifier
-                            .fillMaxSize()
-                            .onGloballyPositioned {
-                                if (index++ == 0) {
-                                    peekHeightPx = it.size.height.toInt()
-                                }
-                            },
+                            .fillMaxSize(),
                         contentScale = ContentScale.Crop,
                     )
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(8.dp)
-                    ) {
-                        IconButton(
-                            onClick = { CoroutineScope(Dispatchers.IO).launch {
-                                try {
-                                    val rdb = RecipesDb.getDatabase(context)
-                                    if (selectedRecipe.recipeId != 0L) {
-                                        rdb.recipeDao().delete(selectedRecipe)
-                                    } else {
-                                        rdb.recipeDao().insertAll(selectedRecipe)
-                                    }
-                                   // rdb.close()
-                                    goBack()
-                                } catch (error: Exception) {
-                                    Log.d("PlanEat", "Error: $error")
-                                }
-                            } },
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .align(Alignment.TopEnd)
-                        ) {
-                            val img = if (selectedRecipe.recipeId == 0L) ImageVector.vectorResource(R.drawable.favorite) else Icons.Filled.Favorite
-                            Icon(
-                                imageVector = img,
-                                contentDescription = stringResource(R.string.favorite),
-                            )
-                        }
-                    }
                 }
             }
         }
