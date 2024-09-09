@@ -211,7 +211,7 @@ fun AddRecipeCard(
         modifier = modifier
             .clip(CardDefaults.shape)
             .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp) // Set the width to 40% of the screen
-            .height((LocalConfiguration.current.screenWidthDp * 0.41f).dp)
+            .height((LocalConfiguration.current.screenWidthDp * 0.4f).dp)
             .dashedBorder(
                 width = 2.dp,
                 color = Color(0xFF00AF45),

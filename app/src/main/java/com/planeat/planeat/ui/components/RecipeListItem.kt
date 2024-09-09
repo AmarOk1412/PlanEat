@@ -10,13 +10,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -60,8 +58,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.compose.onSecondaryContainerLight
-import com.example.compose.secondaryContainerLight
+import com.example.compose.onSurfaceVariantLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
@@ -100,7 +97,8 @@ fun RecipeListItem(
     Card(
         modifier = modifier
             .clip(CardDefaults.shape)
-            .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp) // Set the width to 40% of the screen
+            .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp)
+            .height((LocalConfiguration.current.screenWidthDp * 0.4f).dp)// Set the width to 40% of the screen
             .combinedClickable(
                 onClick = { onRecipeSelected(recipe) },
                 onLongClick = { }
@@ -294,6 +292,13 @@ fun RecipeListItem(
                 maxLines = 1
             )
 
+            Text(
+                text = convertDuration(recipe.cookingTime),
+                style = MaterialTheme.typography.bodySmall,
+                color = onSurfaceVariantLight,
+                modifier = Modifier.padding(start=8.dp, top = 0.dp, bottom = 0.dp),
+            )
+
             SuggestionChip(
                 label = { Text(
                     text = if (recipe.parsed_ingredients.isNotEmpty()) {
@@ -310,28 +315,16 @@ fun RecipeListItem(
                 onClick = {},
                 border = null,
                 colors = SuggestionChipDefaults.suggestionChipColors(
+                    containerColor = Color(0xFFfff4df),
+                    labelColor = Color(0xFF664a02)
+                )/* TODO SuggestionChipDefaults.suggestionChipColors(
                     containerColor = secondaryContainerLight,
                     labelColor = onSecondaryContainerLight
-                ),
+                )*/,
                 modifier = Modifier
                     .padding(8.dp)
                     .height(24.dp),
             )
-
-            Row(
-                modifier = Modifier.padding(start = 8.dp, top = 0.dp, bottom = 12.dp),
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.schedule),
-                    contentDescription = "Schedule",
-                    modifier = Modifier.size(18.dp)
-                )
-                Text(
-                    text = convertDuration(recipe.cookingTime),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(start = 8.dp),
-                )
-            }
 
         }
     }
