@@ -554,6 +554,18 @@ private fun NavHost(
         }
         composable(PlanEatRoute.SHOPPING_LIST) {
             ShoppingScreen(
+                onRecipeSelected = { r ->
+                    model.openedRecipe.value = r
+                    Handler(Looper.getMainLooper()).post {
+                        navigateToTopLevelDestination(
+                            PlanEatTopLevelDestination(
+                                PlanEatRoute.DETAILS,
+                                0,
+                                0
+                            )
+                        )
+                    }
+                }
             )
         }
         composable(PlanEatRoute.DETAILS) {
