@@ -103,7 +103,7 @@ fun EditRecipeScreen(
         var cookingTime by remember { mutableIntStateOf(r.cookingTime) }
         var tags by remember { mutableStateOf(r.tags.joinToString(", ")) }
         var ingredients by remember { mutableStateOf(r.ingredients.joinToString("\n")) }
-        var steps by remember { mutableStateOf(r.steps.joinToString("\n")) }
+        var steps by remember { mutableStateOf(r.steps.joinToString("\n@@@\n")) }
 
         val bitmap = Bitmap.createBitmap(
             100,
@@ -279,7 +279,7 @@ fun EditRecipeScreen(
                 recipe.tags = tags.split(", ")
                 recipe.ingredients = ingredients.split("\n")
                 recipe.parsed_ingredients = emptyList()
-                recipe.steps = steps.split("\n")
+                recipe.steps = steps.split("\n@@@\n")
                 recipe.url = if (url.isNotEmpty()) url else "recipe_${System.currentTimeMillis()}"
                 onRecipeUpdated(recipe)
             }

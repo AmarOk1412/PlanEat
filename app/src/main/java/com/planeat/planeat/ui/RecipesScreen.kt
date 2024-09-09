@@ -205,37 +205,35 @@ fun RecipesScreen(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.padding(start=16.dp, end=16.dp)
             ) {
-                if (model.recipesInDbShown.size > 0) {
-                    if (model.recipesSearchedShown.size > 0) {
-                        item(span = { GridItemSpan(2) }) {
-                            Text(
-                                text = "My recipes",
-                                style = MaterialTheme.typography.titleLarge,
-                                modifier = Modifier.padding(vertical = 16.dp)
-                            )
-                        }
+                if (model.recipesSearchedShown.size > 0 && model.recipesInDbShown.size > 0) {
+                    item(span = { GridItemSpan(2) }) {
+                        Text(
+                            text = "My recipes",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(vertical = 16.dp)
+                        )
                     }
-                    items(model.recipesInDbShown) { recipe ->
+                }
+                items(model.recipesInDbShown) { recipe ->
+                    RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
+                        toPlanRecipe = r
+                        openBottomSheet = true
+                    })
+                }
+
+                if (model.recipesSearchedShown.size > 0) {
+                    item(span = { GridItemSpan(2) }) {
+                        Text(
+                            text = "Search results",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(vertical = 16.dp)
+                        )
+                    }
+                    items(model.recipesSearchedShown) { recipe ->
                         RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                             toPlanRecipe = r
                             openBottomSheet = true
                         })
-                    }
-
-                    if (model.recipesSearchedShown.size > 0) {
-                        item(span = { GridItemSpan(2) }) {
-                            Text(
-                                text = "Search results",
-                                style = MaterialTheme.typography.titleLarge,
-                                modifier = Modifier.padding(vertical = 16.dp)
-                            )
-                        }
-                        items(model.recipesSearchedShown) { recipe ->
-                            RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
-                                toPlanRecipe = r
-                                openBottomSheet = true
-                            })
-                        }
                     }
                 }
             }

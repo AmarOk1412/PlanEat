@@ -12,12 +12,12 @@ import kotlinx.serialization.json.Json
 class Converters {
     @TypeConverter
     fun fromString(data: String): List<String> {
-        return listOf(*data.split(",").map { it }.toTypedArray())
+        return listOf(*data.split("\n@@@\n").map { it }.toTypedArray())
     }
 
     @TypeConverter
     fun toListString(list: List<String>): String {
-        return list.joinToString(",")
+        return list.joinToString("\n@@@\n")
     }
 
 
