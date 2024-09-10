@@ -467,37 +467,26 @@ private fun NavHost(
                 updateDate = { newUi: CalendarUiModel, changePage: Boolean ->
                     dataUi = newUi
                     if (changePage) {
-                        val destination = PlanEatTopLevelDestination(
-                            route = PlanEatRoute.RECIPES,
-                            icon = 0,
-                            iconTextId = 0
+                        navigateToTopLevelDestination(
+                            PlanEatTopLevelDestination(
+                                PlanEatRoute.RECIPES,
+                                0,
+                                0
+                            )
                         )
-                        navigateToTopLevelDestination(destination)
                     }
                     model.selectedDate.value = newUi.selectedDate.date
                 },
                 goToDetails = { r ->
                     model.openedRecipe.value = r
                     Handler(Looper.getMainLooper()).post {
-                        navigateToTopLevelDestination(
-                            PlanEatTopLevelDestination(
-                                PlanEatRoute.DETAILS,
-                                0,
-                                0
-                            )
-                        )
+                        navController.navigate(PlanEatRoute.DETAILS)
                     }
                 },
                 goToEdition = { r ->
                     model.openedRecipe.value = r
                     Handler(Looper.getMainLooper()).post {
-                        navigateToTopLevelDestination(
-                            PlanEatTopLevelDestination(
-                                PlanEatRoute.EDITION,
-                                0,
-                                0
-                            )
-                        )
+                        navController.navigate(PlanEatRoute.EDITION)
                     }
                 },
                 onRecipeDeleted = onRecipeDeleted)
@@ -526,25 +515,13 @@ private fun NavHost(
                 goToDetails = { r ->
                     model.openedRecipe.value = r
                     Handler(Looper.getMainLooper()).post {
-                        navigateToTopLevelDestination(
-                            PlanEatTopLevelDestination(
-                                PlanEatRoute.DETAILS,
-                                0,
-                                0
-                            )
-                        )
+                        navController.navigate(PlanEatRoute.DETAILS)
                     }
                 },
                 goToEdition = { r ->
                     model.openedRecipe.value = r
                     Handler(Looper.getMainLooper()).post {
-                        navigateToTopLevelDestination(
-                            PlanEatTopLevelDestination(
-                                PlanEatRoute.EDITION,
-                                0,
-                                0
-                            )
-                        )
+                        navController.navigate(PlanEatRoute.EDITION)
                     }
                 }
             )
@@ -557,13 +534,7 @@ private fun NavHost(
                 onRecipeSelected = { r ->
                     model.openedRecipe.value = r
                     Handler(Looper.getMainLooper()).post {
-                        navigateToTopLevelDestination(
-                            PlanEatTopLevelDestination(
-                                PlanEatRoute.DETAILS,
-                                0,
-                                0
-                            )
-                        )
+                        navController.navigate(PlanEatRoute.DETAILS)
                     }
                 }
             )
@@ -589,13 +560,7 @@ private fun NavHost(
                     goToEdition = { r ->
                         model.openedRecipe.value = r
                         Handler(Looper.getMainLooper()).post {
-                            navigateToTopLevelDestination(
-                                PlanEatTopLevelDestination(
-                                    PlanEatRoute.EDITION,
-                                    0,
-                                    0
-                                )
-                            )
+                            navController.navigate(PlanEatRoute.EDITION)
                         }
                     },
                     goBack = {
