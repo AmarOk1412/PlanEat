@@ -98,6 +98,12 @@ android {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 
+    // Specify tflite file should not be compressed for the app apk
+    aaptOptions {
+        noCompress("tflite")
+    }
+
+
 }
 
 dependencies {
@@ -119,6 +125,15 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation("com.google.accompanist:accompanist-adaptive:0.26.2-beta")
     implementation("androidx.compose.material3:material3:1.3.0-beta04")
+
+    implementation("org.tensorflow:tensorflow-lite:2.13.0")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.0")
+    implementation("org.tensorflow:tensorflow-lite-select-tf-ops:2.13.0")
+
+    // Import the Task Vision Library dependency
+    implementation("org.tensorflow:tensorflow-lite-task-text:0.4.4")
+    // Import the GPU delegate plugin Library for GPU inference
+    implementation("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.4")
 
     implementation(libs.androidx.compose.materialWindow)
     implementation(libs.androidx.compose.material.iconsExtended)

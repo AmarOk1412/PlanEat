@@ -1,27 +1,20 @@
 package com.planeat.planeat.data
 
 import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import com.planeat.planeat.R
-import com.planeat.planeat.data.IngredientsDb
-import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
+import com.planeat.planeat.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
+import org.tensorflow.lite.examples.textclassification.client.IngredientClassifier
 
 @Serializable
 data class ParsedIngredient(
@@ -31,11 +24,20 @@ data class ParsedIngredient(
 )
 
 @Serializable
-data class IngredientItem(
-    var quantity: Float = 1.0f,  // Default to 1.0 if qty is absent
-    var unit: String = "",       // Default to empty string if unit is absent
-    var name: String = "" // This should always be present
-)
+class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit: String = "", var category: String = "") {
+
+    fun addQuantity(other: IngredientItem) {
+        if ((this.unit == other.unit)
+            || (this.unit == "piece" && other.unit == "clove")
+            || (this.unit == "clove" && other.unit == "piece")
+        ) {
+            this.quantity += other.quantity
+        } else {
+            // Handle unit conversion or throw an error
+            Log.e("PlanEat", "@@@ TODO convert ${other.unit} to ${this.unit}")
+        }
+    }
+}
 
 @Composable
 fun toIngredientIcon(ingredientName: String): Painter? {
@@ -68,6 +70,36 @@ fun toIngredientIcon(ingredientName: String): Painter? {
 
     // Return the ImageVector in the composable context
     return iconResId?.let { painterResource(id=it) }
+}
+
+suspend fun toIngredientCategory(
+    ingredientName: String,
+    ic: IngredientClassifier,
+    db: IngredientsDb
+): String {
+    var category: String? = null
+
+    withContext(Dispatchers.IO) {
+        val ingredient = db.ingredientDao().findByName(ingredientName)
+        if (ingredient != null && ingredient.category.isNotEmpty()) {
+            category = ingredient.category
+
+            Log.d("PlanEat", "@@@ => ${ingredient.category}")
+        } else if (ingredient != null) {
+            category = ic.classify(ingredientName.lowercase())
+
+            try {
+                ingredient.category = category!!
+                db.ingredientDao().update(ingredient)
+            } catch (error: Exception) {
+                Log.w("PlanEat", "Error: $error")
+            }
+        } else {
+            category = ""
+        }
+    }
+
+    return category ?: ""
 }
 
 fun fetchIconForIngredient(ingredient_name: String): Int? {

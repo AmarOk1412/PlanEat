@@ -4,10 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.json.Json
 
 @Entity(
     tableName = "ingredients",
@@ -17,6 +14,7 @@ import kotlinx.serialization.json.Json
 data class Ingredient(
     @ColumnInfo(name = "name") var name: String = "",
     @ColumnInfo(name = "icon") var icon: Int = 0,
+    @ColumnInfo(name = "category") var category: String = ""
 )  {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
