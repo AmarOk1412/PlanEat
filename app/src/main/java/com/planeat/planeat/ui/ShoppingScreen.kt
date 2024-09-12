@@ -18,6 +18,7 @@ package com.planeat.planeat.ui
 
 import android.annotation.SuppressLint
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -41,6 +42,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -52,16 +56,22 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -72,10 +82,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.room.Room
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.AgendaDb
+import com.planeat.planeat.data.Ingredient
 import com.planeat.planeat.data.IngredientItem
 import com.planeat.planeat.data.IngredientsDb
 import com.planeat.planeat.data.Recipe
@@ -107,9 +119,13 @@ fun ShoppingScreen(
         mutableStateOf("")
     }
 
+    var searchItem by remember {
+        mutableStateOf(false)
+    }
 
     // Fetch data in LaunchedEffect and update state
     LaunchedEffect(Unit) {
+        searchItem = false
         withContext(Dispatchers.IO) {
             val adb = Room.databaseBuilder(
                 context,
@@ -136,125 +152,187 @@ fun ShoppingScreen(
         }
     }
 
-    // UI section that uses the planned recipes and ingredient data
-    Scaffold(
-        modifier = modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars),
-        contentWindowInsets = WindowInsets(0.dp),
-        floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ },
-                containerColor = Color(0xFF01AA44),
-                contentColor = Color(0xFFFFFFFF),
-                shape = RoundedCornerShape(100.dp),
-                modifier = Modifier.padding(end = 8.dp)) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add ingredient"
-                )
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End,
-        content = {
-            if (shoppingList != null) {
-                Column(
-                    modifier = modifier
-                        .verticalScroll(rememberScrollState())
-                        .padding(horizontal = 16.dp, vertical = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    // Shopping List Header
-                    Text(
-                        text = stringResource(id = R.string.tab_shopping_list),
-                        style = MaterialTheme.typography.headlineLarge,
+    if (searchItem == false) {
+        // UI section that uses the planned recipes and ingredient data
+        Scaffold(
+            modifier = modifier
+                .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.statusBars),
+            contentWindowInsets = WindowInsets(0.dp),
+            floatingActionButton = {
+                FloatingActionButton(onClick = { searchItem = true },
+                    containerColor = Color(0xFF01AA44),
+                    contentColor = Color(0xFFFFFFFF),
+                    shape = RoundedCornerShape(100.dp),
+                    modifier = Modifier.padding(end = 8.dp)) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add ingredient"
                     )
-
-                    // Display number of planned recipes
-                    Text(
-                        text = "${shoppingList!!.plannedRecipes.size} recipes",
-                        style = MaterialTheme.typography.titleSmall
-                    )
-
-                    // Row for the planned recipes
-                    Row(
-                        modifier = Modifier
-                            .height(100.dp)
-                            .horizontalScroll(rememberScrollState()),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                }
+            },
+            floatingActionButtonPosition = FabPosition.End,
+            content = {
+                if (shoppingList != null) {
+                    Column(
+                        modifier = modifier
+                            .verticalScroll(rememberScrollState())
+                            .padding(horizontal = 16.dp, vertical = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        shoppingList!!.plannedRecipes.forEach { recipe ->
-                            MinimalRecipeItemList(recipe = recipe, onRecipeSelected = onRecipeSelected)
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-
-                        // Display the total number of ingredients
+                        // Shopping List Header
                         Text(
-                            text = "${shoppingList!!.ingredientsPerCategory.values.sumOf { it.keys.size } + shoppingList!!.customIngredients.size} items",
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.align(Alignment.CenterVertically)
+                            text = stringResource(id = R.string.tab_shopping_list),
+                            style = MaterialTheme.typography.headlineLarge,
                         )
 
-                        Spacer(modifier = Modifier.weight(1.0f))
-
+                        // Display number of planned recipes
                         Text(
-                            text = "Sort by:",
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.align(Alignment.CenterVertically)
+                            text = "${shoppingList!!.plannedRecipes.size} recipes",
+                            style = MaterialTheme.typography.titleSmall
                         )
 
-                        var showDialog = remember { mutableStateOf(false) }
-
-                        ElevatedButton(onClick = { showDialog.value = true }, colors = ButtonDefaults.elevatedButtonColors(
-                            containerColor = Color(0xFFFFFFFF),
-                            contentColor = Color(0xFF000000)
-                        ), modifier = Modifier.padding(start = 8.dp),
-                            contentPadding = PaddingValues(horizontal = 16.dp)
+                        // Row for the planned recipes
+                        Row(
+                            modifier = Modifier
+                                .height(100.dp)
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Row {
-                                Text(text = shoppingList!!.sortingMethod, modifier = Modifier.align(Alignment.CenterVertically))
-
-                                Icon(Icons.Filled.KeyboardArrowDown, tint = Color(0xFF949494), contentDescription = null)
+                            shoppingList!!.plannedRecipes.forEach { recipe ->
+                                MinimalRecipeItemList(recipe = recipe, onRecipeSelected = onRecipeSelected)
                             }
+                        }
 
-                            if (showDialog.value) {
-                                DropdownMenu(
-                                    containerColor = surfaceContainerLowestLight,
-                                    offset = DpOffset(0.dp, 8.dp),
-                                    expanded = showDialog.value,
-                                    onDismissRequest = { showDialog.value = false },
-                                ) {
-                                    DropdownMenuItem(
-                                        text = {
-                                            Text(text = "Aisle")
-                                        },
-                                        onClick = {
-                                            shoppingList!!.changeSortingMethod("Aisle")
-                                            sortingMethod = "Aisle"
-                                            showDialog.value = false
-                                        }
-                                    )
-                                    DropdownMenuItem(
-                                        text = {
-                                            Text(text = "Recipe")
-                                        },
-                                        onClick = {
-                                            shoppingList!!.changeSortingMethod("Recipe")
-                                            sortingMethod = "Recipe"
-                                            showDialog.value = false
-                                        }
-                                    )
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+
+                            // Display the total number of ingredients
+                            Text(
+                                text = "${shoppingList!!.ingredientsPerCategory.values.sumOf { it.keys.size } + shoppingList!!.customIngredients.size} items",
+                                style = MaterialTheme.typography.titleSmall,
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+
+                            Spacer(modifier = Modifier.weight(1.0f))
+
+                            Text(
+                                text = "Sort by:",
+                                style = MaterialTheme.typography.titleSmall,
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+
+                            var showDialog = remember { mutableStateOf(false) }
+
+                            ElevatedButton(onClick = { showDialog.value = true }, colors = ButtonDefaults.elevatedButtonColors(
+                                containerColor = Color(0xFFFFFFFF),
+                                contentColor = Color(0xFF000000)
+                            ), modifier = Modifier.padding(start = 8.dp),
+                                contentPadding = PaddingValues(horizontal = 16.dp)
+                            ) {
+                                Row {
+                                    Text(text = shoppingList!!.sortingMethod, modifier = Modifier.align(Alignment.CenterVertically))
+
+                                    Icon(Icons.Filled.KeyboardArrowDown, tint = Color(0xFF949494), contentDescription = null)
+                                }
+
+                                if (showDialog.value) {
+                                    DropdownMenu(
+                                        containerColor = surfaceContainerLowestLight,
+                                        offset = DpOffset(0.dp, 8.dp),
+                                        expanded = showDialog.value,
+                                        onDismissRequest = { showDialog.value = false },
+                                    ) {
+                                        DropdownMenuItem(
+                                            text = {
+                                                Text(text = "Aisle")
+                                            },
+                                            onClick = {
+                                                shoppingList!!.changeSortingMethod("Aisle")
+                                                sortingMethod = "Aisle"
+                                                showDialog.value = false
+                                            }
+                                        )
+                                        DropdownMenuItem(
+                                            text = {
+                                                Text(text = "Recipe")
+                                            },
+                                            onClick = {
+                                                shoppingList!!.changeSortingMethod("Recipe")
+                                                sortingMethod = "Recipe"
+                                                showDialog.value = false
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if (sortingMethod == "Aisle") {
-                        // Ingredients grouped by category
-                        shoppingList!!.ingredientsPerCategory.forEach { (key, ingredients) ->
+                        if (sortingMethod == "Aisle") {
+                            // Ingredients grouped by category
+                            shoppingList!!.ingredientsPerCategory.forEach { (key, ingredients) ->
+                                Card(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    shape = RoundedCornerShape(12.dp),
+                                    elevation = CardDefaults.cardElevation(
+                                        defaultElevation = 6.dp
+                                    ),
+                                    colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+                                ) {
+                                    Column() {
+                                        Text(
+                                            text = key.replaceFirstChar(Char::titlecase),
+                                            fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                                            modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+                                        )
+
+                                        ingredients.forEach { (ingredientName, ingredient) ->
+                                            IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
+                                                // Force refresh by creating a new copy
+                                                shoppingList = shoppingList?.let {
+                                                    it.checkIngredient(ingredientName.lowercase(), checked)
+                                                    it.copy() // Update shoppingList to a new copy
+                                                }
+                                            })
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            // Ingredients grouped by category
+                            shoppingList!!.ingredientsPerRecipes.forEach { (key, ingredients) ->
+                                Card(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    shape = RoundedCornerShape(12.dp),
+                                    elevation = CardDefaults.cardElevation(
+                                        defaultElevation = 6.dp
+                                    ),
+                                    colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+                                ) {
+                                    Column() {
+                                        shoppingList!!.plannedRecipes.find { it.recipeId == key }?.title?.let { it1 ->
+                                            Text(
+                                                text = it1,
+                                                fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                                                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+                                            )
+                                        }
+
+                                        ingredients.forEach { (ingredientName, ingredient) ->
+                                            IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
+                                                shoppingList = shoppingList?.let {
+                                                    it.checkIngredient(ingredientName.lowercase(), checked)
+                                                    it.copy() // Update shoppingList to a new copy
+                                                }
+                                            })
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (shoppingList!!.customIngredients.isNotEmpty()) {
                             Card(
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(12.dp),
@@ -265,44 +343,12 @@ fun ShoppingScreen(
                             ) {
                                 Column() {
                                     Text(
-                                        text = key.replaceFirstChar(Char::titlecase),
+                                        text = "Custom",
                                         fontSize = MaterialTheme.typography.labelMedium.fontSize,
                                         modifier = Modifier.padding(start = 16.dp, top = 8.dp)
                                     )
 
-                                    ingredients.forEach { (ingredientName, ingredient) ->
-                                        IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
-                                            // Force refresh by creating a new copy
-                                            shoppingList = shoppingList?.let {
-                                                it.checkIngredient(ingredientName.lowercase(), checked)
-                                                it.copy() // Update shoppingList to a new copy
-                                            }
-                                        })
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        // Ingredients grouped by category
-                        shoppingList!!.ingredientsPerRecipes.forEach { (key, ingredients) ->
-                            Card(
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(12.dp),
-                                elevation = CardDefaults.cardElevation(
-                                    defaultElevation = 6.dp
-                                ),
-                                colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
-                            ) {
-                                Column() {
-                                    shoppingList!!.plannedRecipes.find { it.recipeId == key }?.title?.let { it1 ->
-                                        Text(
-                                            text = it1,
-                                            fontSize = MaterialTheme.typography.labelMedium.fontSize,
-                                            modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                                        )
-                                    }
-
-                                    ingredients.forEach { (ingredientName, ingredient) ->
+                                    shoppingList!!.customIngredients.forEach { (ingredientName, ingredient) ->
                                         IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
                                             shoppingList = shoppingList?.let {
                                                 it.checkIngredient(ingredientName.lowercase(), checked)
@@ -313,41 +359,87 @@ fun ShoppingScreen(
                                 }
                             }
                         }
+
+                        Spacer(modifier = Modifier.height(42.dp))
                     }
+                }
+            }
+        )
+    } else {
+        BackHandler {
+            searchItem = false
+        }
+        Column(modifier=Modifier.verticalScroll(rememberScrollState())) {
+            var ingredients by remember {
+                mutableStateOf<List<Ingredient>>(emptyList())
+            }
+            var filtered by remember {
+                mutableStateOf<List<Ingredient>>(emptyList())
+            }
+            LaunchedEffect(Unit) {
+                withContext(Dispatchers.IO) {
+                    val ingredientsDb = IngredientsDb.getDatabase(context)
+                    ingredients = ingredientsDb.ingredientDao().selectAll()
+                    filtered = ingredients
+                }
+            }
+            var text by remember {
+                mutableStateOf("")
+            }
+            var expanded by rememberSaveable { mutableStateOf(false) }
+            SearchBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                colors = SearchBarDefaults.colors(
+                    containerColor = surfaceContainerLowestLight,
+                ),
+                expanded = false,
+                onExpandedChange = { },
+                inputField = {
+                    SearchBarDefaults.InputField(
+                        query = text,
+                        onQueryChange = {
+                            text = it
+                            filtered = ingredients.filter { ingredient -> ingredient.name.contains(text) }
+                        },
+                        expanded = expanded,
+                        onExpandedChange = { expanded = it },
+                        onSearch = { expanded = false },
+                        placeholder = { Text("Carrots, Eggs, Chocolate…") },
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                        trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) }
+                    )
+                }
+            ) {}
 
-                    if (shoppingList!!.customIngredients.isNotEmpty()) {
-                        Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(12.dp),
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 6.dp
-                            ),
-                            colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
-                        ) {
-                            Column() {
-                                Text(
-                                    text = "Custom",
-                                    fontSize = MaterialTheme.typography.labelMedium.fontSize,
-                                    modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                                )
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                shape = RoundedCornerShape(12.dp),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 6.dp
+                ),
+                colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+            ) {
+                Column() {
+                    IngredientToAdd(ingredient = Ingredient(), onIngredientAdded = {
+                        shoppingList!!.addIngredient(it)
+                        searchItem = false
+                    })
 
-                                shoppingList!!.customIngredients.forEach { (ingredientName, ingredient) ->
-                                    IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
-                                        shoppingList = shoppingList?.let {
-                                            it.checkIngredient(ingredientName.lowercase(), checked)
-                                            it.copy() // Update shoppingList to a new copy
-                                        }
-                                    })
-                                }
-                            }
-                        }
+                    filtered.forEach {
+                        IngredientToAdd(ingredient = it, onIngredientAdded = {
+                            shoppingList!!.addIngredient(it)
+                            searchItem = false
+                        })
                     }
-
-                    Spacer(modifier = Modifier.height(42.dp))
                 }
             }
         }
-    )
+    }
+
 }
 
 @Composable
@@ -388,4 +480,106 @@ fun IngredientCheckbox(ingredient: IngredientItem, ingredientName: String, onChe
         },
         colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
     )
+}
+
+@Composable
+fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) -> Unit) {
+    var showDialog = remember { mutableStateOf(false) }
+
+    ListItem(
+        modifier = Modifier.clickable {
+            showDialog.value = true
+        },
+        headlineContent = {
+            Text(
+                text = if (ingredient.name.isNotEmpty()) {
+                           ingredient.name.replaceFirstChar(Char::titlecase)
+                       } else {
+                           "Add a new ingredient"
+                       }
+            )
+        },
+        leadingContent = {
+            if (ingredient.name.isNotEmpty()) {
+                toIngredientIcon(ingredient.name.lowercase())?.let { icon ->
+                    Image(
+                        painter = icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(26.dp)
+                    )
+                }
+            }
+        },
+        trailingContent = {
+            IconButton(onClick = { showDialog.value = true },
+                colors = IconButtonDefaults.iconButtonColors(
+                            containerColor = Color(0xFF01AA44),
+                            contentColor = Color(0xFFFFFFFF)
+                        )) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add ingredient"
+                )
+            }
+        },
+        colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
+    )
+
+    if (showDialog.value) {
+        Dialog(
+            onDismissRequest = {
+                showDialog.value = false
+            }
+        ) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+
+                    var ingredientName by remember { mutableStateOf(ingredient.name) }
+                    var category by remember { mutableStateOf(ingredient.category) }
+                    var quantity by remember { mutableStateOf(1.0f.toString()) }
+                    var unit by remember { mutableStateOf("g") }
+                    TextField(
+                        value = ingredientName,
+                        onValueChange = { ingredientName = it },
+                        label = { Text(text = "Name") },
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                    TextField(
+                        value = category,
+                        onValueChange = { category = it },
+                        label = { Text(text = "Category") },
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                    TextField(
+                        value = quantity,
+                        onValueChange = { quantity = it },
+                        label = { Text(text = "Quantity") },
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                    TextField(
+                        value = unit,
+                        onValueChange = { unit = it },
+                        label = { Text(text = "Unit") },
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    Button(
+                        onClick = {
+                            onIngredientAdded(IngredientItem(ingredientName, quantity.toFloat(), unit, category))
+                        }
+                    ) {
+                        Text(text = "Add")
+                    }
+
+                }
+            }
+        }
+
+    }
+
 }

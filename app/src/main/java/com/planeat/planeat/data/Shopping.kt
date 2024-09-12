@@ -317,4 +317,21 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
         }
     }
 
+    fun addIngredient(it: IngredientItem) {
+        val key = it.name.lowercase()
+        if (key.isEmpty())
+            return
+        if (customIngredients.containsKey(key)) {
+            customIngredients[key]!!.addQuantity(it)
+        } else {
+            customIngredients[key] = it
+        }
+        val shoppingJson = JSONObject()
+        shoppingJson.put("planned", plannedId)
+        shoppingJson.put("checkedIngredients", JSONArray(checkedIngredients))
+        shoppingJson.put("customIngredients", customIngredients)
+        shoppingJson.put("sortingMethod", sortingMethod)
+        writeToDisk("shoppingList.json", shoppingJson)
+    }
+
 }
