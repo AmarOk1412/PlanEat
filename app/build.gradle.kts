@@ -32,7 +32,7 @@ android {
         applicationId = "com.planeat.planeat"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = 34
-        versionCode = 4
+        versionCode = 5
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

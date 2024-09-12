@@ -1,11 +1,7 @@
-from numpy.random import RandomState
 import pandas as pd
 
 from tflite_model_maker import model_spec
 from tflite_model_maker import text_classifier
-from tflite_model_maker.config import ExportFormat
-from tflite_model_maker.config import QuantizationConfig
-from tflite_model_maker.text_classifier import AverageWordVecSpec
 from tflite_model_maker.text_classifier import DataLoader
 
 import tensorflow as tf

@@ -5,7 +5,7 @@ Interesting in contributing? Awesome!
 
 ## Non technical ways to contribute
 
-TODO
+Improve designs or share ideas by opening tickets is always welcome
 
 ## Write documentation
 
@@ -13,4 +13,5 @@ The documentation is an endless process. The documentation is in the differents 
 
 ## Develop
 
-TODO
+Feel free to add features to PlanEat or help other developers do stuff.
+You can just ping @AmarOk1412 on the issue tracker or by mail.
