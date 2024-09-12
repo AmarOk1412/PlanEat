@@ -63,11 +63,11 @@ fun toIngredientIcon(ingredientName: String): Painter? {
                 if (ingredient.icon != 0) {
                     iconResId = ingredient.icon
                 } else {
-
                     val res = fetchIconForIngredient(ingredientName.lowercase())
                     if (res != 0) {
                         var newIngredient = ingredient.copy()
                         newIngredient.icon = res!!
+                        iconResId = res
                         try {
                             db.ingredientDao().update(newIngredient)
                         } catch (error: Exception) {

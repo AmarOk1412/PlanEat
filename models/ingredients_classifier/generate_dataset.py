@@ -42,7 +42,7 @@ categories = {
         "Frozen Tofu", "Frozen Meatloaf", "Frozen Salmon Fillets", "Frozen Scallops", "Frozen Fish Sticks", "Frozen Crab Cakes", "Frozen Roasted Vegetables", "Frozen Mashed Potatoes", "Frozen Alfredo Sauce", "Frozen Meat Sauce"
     ],
     "Pantry": [
-        "Canned Beans", "Pasta", "Rice", "Canned Tomatoes", "Peanut Butter", "Canned Soup", "Olive Oil", "Vinegar", "Dried Herbs", "Cereal",
+        "Canned Beans", "Pasta", "Parboiled rice", "Rice", "Canned Tomatoes", "Peanut Butter", "Canned Soup", "Olive Oil", "Vinegar", "Dried Herbs", "Cereal",
         "Cooking Spray", "Sugar", "Flour", "Baking Powder", "Tomato Sauce", "Brown sugar", "White sugar",
         "Canned Vegetables", "Canned Fruit", "Canned Tuna", "Canned Chicken", "Dried Pasta", "Dried Lentils", "Canned Chili", "Evaporated Milk", "Condensed Milk", "Powdered Sugar", "dark chocolate", "no sugar chocolate", "chicken stock cubes",
         "Molasses", "Agave Syrup", "Soy Milk", "Coconut Milk", "Broth", "Stock Cubes", "Bouillon", "Cooking Wine", "Rice Vinegar", "Red Wine Vinegar",
@@ -66,10 +66,10 @@ categories = {
     ],
     "Vegetables": [
         "Carrots", "Broccoli", "Spinach", "Bell Peppers", "Tomatoes", "Lettuce", "Onion", "Onions", "Garlic", "Cucumbers", "Zucchini",
-        "Potatoes", "Sweet Potatoes", "Corn", "Green Beans", "Mushrooms", "Asparagus", "Brussels Sprouts", "Cauliflower", "Celery", "Radishes",
+        "Potatoes", "Sweet Potatoes", "Potato", "Corn", "Green Beans", "Mushrooms", "Asparagus", "Brussels Sprouts", "Cauliflower", "Celery", "Radishes",
         "Beets", "Squash", "Pumpkin", "Artichokes", "Fennel", "Kale", "Swiss Chard", "Leeks", "Shallots", "Chili Peppers",
         "Okra", "Turnips", "Parsnips", "Daikon", "Kohlrabi", "Celery Root", "Endive", "Bok Choy", "Arugula", "Napa Cabbage",
-        "Radicchio", "Rutabaga", "Jicama", "Dandelion Greens", "Seaweed", "Celeriac", "Sunchokes", "Yams", "Oregano", "Thyme",
+        "Radicchio", "Rutabaga", "Jicama", "Dandelion Greens", "Seaweed", "Celeriac", "Sunchokes", "Yams", "Oregano", "Thyme", "Red bell pepper", "Green bell pepper","Orange bell pepper","Yellow bell pepper", "Italian tomatoes"
         "Pumpkin", "Butternut Squash", "Acorn Squash", "Spaghetti Squash", "Chayote", "Taro", "Mizuna", "Watercress", "Snow Peas", "Snap Peas", "Hot pepper"
     ],
     "Fruits": [
@@ -93,7 +93,7 @@ categories = {
     "Condiments": [
         "Ketchup", "Mustard", "Mayonnaise", "Soy Sauce", "Hot Sauce", "BBQ Sauce", "Vinegar", "Relish", "Salsa", "Soy Sauce",
         "Chili Sauce", "Ranch Dressing", "Italian Dressing", "Tartar Sauce", "Buffalo Sauce", "Worcestershire Sauce", "Teriyaki Sauce", "Hoisin Sauce", "Sriracha", "Miso Paste", "Salt", "Pepper", "Soy Sauce", "Honey", "Maple Syrup",
-        "Tahini", "Agave Syrup", "Molasses", "Soy Milk", "Rice Vinegar", "Red Wine Vinegar", "Balsamic Vinegar", "Apple Cider Vinegar", "Cooking Wine", "Dijon Mustard",
+        "Tahini", "Agave Syrup", "Molasses", "Soy Milk", "Rice Vinegar", "Red Wine Vinegar", "Balsamic Vinegar", "Apple Cider Vinegar", "Cooking Wine", "Dijon Mustard", "saffron", "paprika",
         "Whole Grain Mustard", "Yellow Mustard", "Hot English Mustard", "Sweet Pickle Relish", "Spicy Pickle Relish", "Cranberry Sauce", "Chimichurri", "Tzatziki", "Pesto", "Buffalo Sauce",
         "Honey Mustard", "Mango Chutney", "Plum Sauce", "Piri Piri Sauce", "Hollandaise Sauce", "Remoulade", "Aioli", "Tapenade", "Harissa", "Caper Sauce",
         "Demi-Glace", "Hollandaise", "Bearnaise", "Curry Sauce", "Cucumber Sauce", "Lemon Aioli", "Mole", "Katsu Sauce", "Lemon Butter Sauce", "Tomato Jam"

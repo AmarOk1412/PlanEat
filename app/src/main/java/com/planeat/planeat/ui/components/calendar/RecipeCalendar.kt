@@ -114,11 +114,8 @@ fun ContentItem(
         LaunchedEffect(date.date, refresh) {
             recipesPlanned.value = emptyList()
             withContext(Dispatchers.IO) {
-                val adb = Room.databaseBuilder(
-                    context,
-                    AgendaDb::class.java, "AgendaDb"
-                ).fallbackToDestructiveMigration().build()
                 val rdb = RecipesDb.getDatabase(context)
+                val adb = AgendaDb.getDatabase(context)
                 val recipesPlannedDb = adb.agendaDao().findByDate(date.date.atTime(12, 0)
                     .toInstant(ZoneOffset.UTC)
                     .toEpochMilli())
@@ -132,7 +129,6 @@ fun ContentItem(
                         adb.agendaDao().delete(it)
                     }
                 }
-                adb.close()
             }
         }
 
@@ -162,11 +158,8 @@ fun ContentItem(
                         // TODO better animation?
                         withContext(Dispatchers.IO) {
                             recipesPlanned.value = emptyList()
-                            val adb = Room.databaseBuilder(
-                                context,
-                                AgendaDb::class.java, "AgendaDb"
-                            ).build()
                             val rdb = RecipesDb.getDatabase(context)
+                            val adb = AgendaDb.getDatabase(context)
                             val recipesPlannedDb = adb.agendaDao().findByDate(date.date.atTime(12, 0)
                                 .toInstant(ZoneOffset.UTC)
                                 .toEpochMilli())
@@ -180,7 +173,6 @@ fun ContentItem(
                                     adb.agendaDao().delete(it)
                                 }
                             }
-                            adb.close()
                         }
                     } },
                     agenda = recipeAgenda.agenda,

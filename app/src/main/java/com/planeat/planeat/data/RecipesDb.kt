@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [Recipe::class], version = 2,
+@Database(entities = [Recipe::class], version = 3,
           exportSchema = true // Ensure that the schema is exported
 )
 abstract class RecipesDb : RoomDatabase() {
@@ -26,12 +26,19 @@ abstract class RecipesDb : RoomDatabase() {
                         database.execSQL("ALTER TABLE recipes ADD COLUMN parsed_ingredients TEXT")
                     }
                 }
+                val MIGRATION_2_3 = object : Migration(2, 3) {
+                    override fun migrate(database: SupportSQLiteDatabase) {
+                        // Add the new column that allows NULL values
+                        database.execSQL("ALTER TABLE recipes ADD COLUMN planified INTEGER DEFAULT(0)")
+                    }
+                }
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     RecipesDb::class.java,
                     "recipes_database"
                 )
                 .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_2_3)
                 .build()
                 INSTANCE = instance
                 instance

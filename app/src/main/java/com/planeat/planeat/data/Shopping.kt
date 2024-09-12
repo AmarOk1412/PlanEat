@@ -35,6 +35,8 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
         } catch (e: JSONException) {
             e.printStackTrace()
             JSONArray() // Return an empty JSONArray if there is an issue
+        } catch (e: Exception) {
+            JSONArray() // Return an empty JSONArray if there is an issue
         }
 
         // Convert JSONArray to List<Long>
@@ -115,8 +117,8 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
         var shoppingJson = loadShoppingJson("shoppingList.json")
         if (shoppingJson == null) {
             shoppingJson = JSONObject()
-            shoppingJson.put("planned", emptyList<Long>())
-            shoppingJson.put("checkedIngredients", emptyList<String>())
+            shoppingJson.put("planned", JSONArray())
+            shoppingJson.put("checkedIngredients", JSONArray())
             shoppingJson.put("customIngredients", customIngredients)
             shoppingJson.put("sortingMethod", sortingMethod)
         }
@@ -273,7 +275,7 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
         }
 
         val shoppingJson = JSONObject()
-        shoppingJson.put("planned", plannedId)
+        shoppingJson.put("planned", JSONArray(plannedId))
         shoppingJson.put("checkedIngredients", JSONArray(checkedIngredients))
         shoppingJson.put("customIngredients", customIngredients)
         shoppingJson.put("sortingMethod", sortingMethod)
@@ -327,7 +329,7 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
             customIngredients[key] = it
         }
         val shoppingJson = JSONObject()
-        shoppingJson.put("planned", plannedId)
+        shoppingJson.put("planned", JSONArray(plannedId))
         shoppingJson.put("checkedIngredients", JSONArray(checkedIngredients))
         shoppingJson.put("customIngredients", customIngredients)
         shoppingJson.put("sortingMethod", sortingMethod)

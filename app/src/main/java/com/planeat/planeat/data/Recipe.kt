@@ -43,6 +43,7 @@ data class Recipe(
     @ColumnInfo(name = "image") var image: String = "",
     @ColumnInfo(name = "kindOfMeal") var kindOfMeal: String = "",
     @ColumnInfo(name = "cookingTime") var cookingTime: Int = 0,
+    @ColumnInfo(name = "planified") var planified: Int = 0,
     @ColumnInfo(name = "season") var season: String = "",
     @ColumnInfo(name = "tags") var tags: List<String> = emptyList(),
     @ColumnInfo(name = "ingredients") var ingredients: List<String> = emptyList(),

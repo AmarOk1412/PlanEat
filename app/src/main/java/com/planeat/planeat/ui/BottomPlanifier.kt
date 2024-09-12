@@ -142,12 +142,7 @@ fun BottomPlanifier(
             Button(
                 onClick = {
                     CoroutineScope(Dispatchers.IO).launch {
-                        val agendaDb = Room
-                            .databaseBuilder(
-                                context,
-                                AgendaDb::class.java, "AgendaDb"
-                            )
-                            .build()
+                        val agendaDb = AgendaDb.getDatabase(context)
                         for (d in selectedDates) {
                             Log.w("PlanEat", "Selected date: ${d}")
                             val dateMidday = d
@@ -165,7 +160,6 @@ fun BottomPlanifier(
                                     )
                                 )
                         }
-                        agendaDb.close()
                         goToAgenda()
                     }
                 },

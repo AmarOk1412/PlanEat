@@ -38,7 +38,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -46,7 +45,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.window.layout.DisplayFeature
 import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
@@ -75,7 +73,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import org.jsoup.Connection
 import org.jsoup.Jsoup
-import java.text.Normalizer
 import java.time.LocalDate
 
 
@@ -223,6 +220,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                 db.recipeDao().insertAll(recipe)
                 val res = db.recipeDao().findByUrl(recipe.url)
                 recipesInDb.add(res)
+                recipesInDb.sortWith(compareBy({ it.planified }, { it.title }))
                 gatherIngredients(res)
                 // Update visibiliy
                 if (recipesSearchedShown.any { it.url == recipe.url }) {
@@ -261,6 +259,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                 async(Dispatchers.IO) {
                     if (recipesInDb.isEmpty()) {
                         recipesInDb = db.recipeDao().getAll().toMutableList()
+                        recipesInDb.sortWith(compareBy({ it.planified }, { it.title }))
                     }
                     for (recipe in recipesInDb) {
                         recipesInDbShown.add((recipe))

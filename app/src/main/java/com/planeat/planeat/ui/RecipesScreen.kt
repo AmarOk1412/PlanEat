@@ -277,15 +277,12 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
                         model.add(recipe)
                         val res = rdb.recipeDao().findByUrl(recipe.url)
                         id = res.recipeId
+                        // Increment planified value
+                        res.planified += 1
+                        rdb.recipeDao().update(res)
                     }
                     // Then add it to agenda
-
-                    val agendaDb = Room
-                        .databaseBuilder(
-                            context,
-                            AgendaDb::class.java, "AgendaDb"
-                        )
-                        .build()
+                    val adb = AgendaDb.getDatabase(context)
                     Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
                     val dateMidday = model.selectedDate.value!!
                         .atTime(12, 0)
@@ -293,15 +290,13 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
                         .toEpochMilli()
 
                     Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
-                    agendaDb
-                        .agendaDao()
+                    adb.agendaDao()
                         .insertAll(
                             Agenda(
                                 date = dateMidday,
                                 recipeId = id
                             )
                         )
-                    agendaDb.close()
                     goToAgenda()
                 }
             }

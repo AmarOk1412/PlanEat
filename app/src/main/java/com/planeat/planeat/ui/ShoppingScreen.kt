@@ -127,10 +127,7 @@ fun ShoppingScreen(
     LaunchedEffect(Unit) {
         searchItem = false
         withContext(Dispatchers.IO) {
-            val adb = Room.databaseBuilder(
-                context,
-                AgendaDb::class.java, "AgendaDb"
-            ).fallbackToDestructiveMigration().build()
+            val adb = AgendaDb.getDatabase(context)
             val rdb = RecipesDb.getDatabase(context)
             val today = LocalDate.now()
             val inTwoWeeks = LocalDate.now().plusWeeks(2)
@@ -142,7 +139,6 @@ fun ShoppingScreen(
                     .toInstant(ZoneOffset.UTC)
                     .toEpochMilli()
             )
-            adb.close()
             val ingredientsDb = IngredientsDb.getDatabase(context)
 
             val sh = ShoppingList(planned, rdb, ingredientsDb, ic, context)
