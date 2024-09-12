@@ -13,7 +13,7 @@ def parse_line(line):
     else:
         return f"{word} | {words} | UNKNOWN"
 
-with open('data.csv', 'r') as file:
+with open('input.csv', 'r') as file:
     reader = csv.reader(file, delimiter='|')
     for row in reader:
         print(parse_line(row))
