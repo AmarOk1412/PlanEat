@@ -16,14 +16,17 @@
 
 package com.planeat.planeat.ui
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,12 +38,24 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -48,9 +63,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.room.Room
 import com.example.compose.surfaceContainerLowestLight
@@ -60,7 +80,7 @@ import com.planeat.planeat.data.IngredientItem
 import com.planeat.planeat.data.IngredientsDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
-import com.planeat.planeat.data.toIngredientCategory
+import com.planeat.planeat.data.ShoppingList
 import com.planeat.planeat.data.toIngredientIcon
 import com.planeat.planeat.ui.components.MinimalRecipeItemList
 import kotlinx.coroutines.Dispatchers
@@ -69,6 +89,8 @@ import org.tensorflow.lite.examples.textclassification.client.IngredientClassifi
 import java.time.LocalDate
 import java.time.ZoneOffset
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ShoppingScreen(
@@ -76,12 +98,15 @@ fun ShoppingScreen(
     onRecipeSelected: (Recipe) -> Unit,
 ) {
     val context = LocalContext.current
-    var ingredientsPerCategory by remember { mutableStateOf<Map<String, Map<String, IngredientItem>>>(emptyMap()) }
-    var planned by remember {
-        mutableStateOf<List<Recipe>>(emptyList())
+    val ic = IngredientClassifier(context)
+
+    var shoppingList by remember {
+        mutableStateOf<ShoppingList?>(null)
+    }
+    var sortingMethod by remember {
+        mutableStateOf("")
     }
 
-    val ic = IngredientClassifier(context)
 
     // Fetch data in LaunchedEffect and update state
     LaunchedEffect(Unit) {
@@ -93,7 +118,7 @@ fun ShoppingScreen(
             val rdb = RecipesDb.getDatabase(context)
             val today = LocalDate.now()
             val inTwoWeeks = LocalDate.now().plusWeeks(2)
-            val plannedRecipes = adb.agendaDao().findBetweenDates(
+            val planned = adb.agendaDao().findBetweenDates(
                 today.atTime(12, 0)
                     .toInstant(ZoneOffset.UTC)
                     .toEpochMilli(),
@@ -104,134 +129,263 @@ fun ShoppingScreen(
             adb.close()
             val ingredientsDb = IngredientsDb.getDatabase(context)
 
-            plannedRecipes.forEach { agendaItem ->
-                val recipe = rdb.recipeDao().findById(agendaItem.recipeId)
-                if (recipe != null) {
-                    // Update planned recipes and ingredient count in UI state
-                    planned = planned + recipe
-                    recipe.parsed_ingredients.forEach { ingredient ->
-                        val ingredientName = ingredient.name.lowercase()
-                        val pluralIngredientName = if (ingredientName.endsWith("s")) ingredientName.dropLast(1) else ingredientName + "s"
-                        val category = toIngredientCategory(ingredientName, ic, ingredientsDb)
-
-                        // Get or create a mutable copy of the category's ingredient map
-                        val updatedCategoryMap = ingredientsPerCategory.toMutableMap()
-                        val innerMap = updatedCategoryMap[category]?.toMutableMap() ?: mutableMapOf()
-
-                        // Check for singular and plural forms and update quantities accordingly
-                        val existingIngredientName = when {
-                            innerMap.containsKey(ingredientName) -> ingredientName
-                            innerMap.containsKey(pluralIngredientName) -> pluralIngredientName
-                            else -> null
-                        }
-
-                        if (existingIngredientName != null) {
-                            // Get the existing ingredient and update its quantity
-                            val oldIngredient = innerMap[existingIngredientName]!!
-                            oldIngredient.addQuantity(ingredient)
-                            innerMap[existingIngredientName] = oldIngredient
-                        } else {
-                            // If the ingredient doesn't exist, add it to the inner map
-                            innerMap[ingredientName] = ingredient
-                        }
-
-                        // Update the outer map with the modified inner map
-                        updatedCategoryMap[category] = innerMap
-
-                        // Update the state with the modified map
-                        ingredientsPerCategory = updatedCategoryMap
-                    }
-                }
-            }
+            val sh = ShoppingList(planned, rdb, ingredientsDb, ic, context)
+            sh.saveLoadFromDisk()
+            shoppingList = sh
+            sortingMethod = shoppingList!!.sortingMethod
         }
     }
 
     // UI section that uses the planned recipes and ingredient data
-    Box(
+    Scaffold(
         modifier = modifier
             .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars)
-    ) {
-        Column(
-            modifier = modifier
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            // Shopping List Header
-            Text(
-                text = stringResource(id = R.string.tab_shopping_list),
-                style = MaterialTheme.typography.headlineLarge,
-            )
-
-            // Display number of planned recipes
-            Text(
-                text = "${planned.size} recipes",
-                style = MaterialTheme.typography.titleSmall
-            )
-
-            // Row for the planned recipes
-            Row(
-                modifier = Modifier
-                    .height(100.dp)
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                planned.forEach { recipe ->
-                    MinimalRecipeItemList(recipe = recipe, onRecipeSelected = onRecipeSelected)
-                }
+            .windowInsetsPadding(WindowInsets.statusBars),
+        contentWindowInsets = WindowInsets(0.dp),
+        floatingActionButton = {
+            FloatingActionButton(onClick = { /*TODO*/ },
+                containerColor = Color(0xFF01AA44),
+                contentColor = Color(0xFFFFFFFF),
+                shape = RoundedCornerShape(100.dp),
+                modifier = Modifier.padding(end = 8.dp)) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add ingredient"
+                )
             }
-
-            // Display the total number of ingredients
-            Text(
-                text = "${ingredientsPerCategory.values.sumOf { it.keys.size }} items",
-                style = MaterialTheme.typography.titleSmall
-            )
-
-            // Ingredients grouped by category
-            ingredientsPerCategory.forEach { (key, ingredients) ->
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        content = {
+            if (shoppingList != null) {
+                Column(
+                    modifier = modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Column() {
-                        Text(
-                            text = key.replaceFirstChar(Char::titlecase),
-                            fontSize = MaterialTheme.typography.labelMedium.fontSize,
-                            modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                        )
+                    // Shopping List Header
+                    Text(
+                        text = stringResource(id = R.string.tab_shopping_list),
+                        style = MaterialTheme.typography.headlineLarge,
+                    )
 
-                        ingredients.forEach { (ingredientName, ingredient) ->
-                            val quantity = if (ingredient.quantity.toInt()
-                                    .toFloat() != ingredient.quantity
-                            ) ingredient.quantity.toString() else ingredient.quantity.toInt().toString()
+                    // Display number of planned recipes
+                    Text(
+                        text = "${shoppingList!!.plannedRecipes.size} recipes",
+                        style = MaterialTheme.typography.titleSmall
+                    )
 
-                            ListItem(
-                                headlineContent = {
-                                    Text(
-                                        ingredientName.replaceFirstChar(Char::titlecase)
-                                    )
-                                },
-                                supportingContent = { if (quantity != "1") Text("$quantity ${ingredient.unit}") },
-                                leadingContent = {
-                                    toIngredientIcon(ingredientName.lowercase())?.let { icon ->
-                                        Image(
-                                            painter = icon,
-                                            contentDescription = null,
-                                            modifier = Modifier.size(26.dp)
-                                        )
-                                    }
-                                },
-                                trailingContent = {
-                                    Checkbox(checked = false, onCheckedChange = {})
-                                },
-                                colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
-                            )
+                    // Row for the planned recipes
+                    Row(
+                        modifier = Modifier
+                            .height(100.dp)
+                            .horizontalScroll(rememberScrollState()),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        shoppingList!!.plannedRecipes.forEach { recipe ->
+                            MinimalRecipeItemList(recipe = recipe, onRecipeSelected = onRecipeSelected)
                         }
                     }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+
+                        // Display the total number of ingredients
+                        Text(
+                            text = "${shoppingList!!.ingredientsPerCategory.values.sumOf { it.keys.size } + shoppingList!!.customIngredients.size} items",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.align(Alignment.CenterVertically)
+                        )
+
+                        Spacer(modifier = Modifier.weight(1.0f))
+
+                        Text(
+                            text = "Sort by:",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.align(Alignment.CenterVertically)
+                        )
+
+                        var showDialog = remember { mutableStateOf(false) }
+
+                        ElevatedButton(onClick = { showDialog.value = true }, colors = ButtonDefaults.elevatedButtonColors(
+                            containerColor = Color(0xFFFFFFFF),
+                            contentColor = Color(0xFF000000)
+                        ), modifier = Modifier.padding(start = 8.dp),
+                            contentPadding = PaddingValues(horizontal = 16.dp)
+                        ) {
+                            Row {
+                                Text(text = shoppingList!!.sortingMethod, modifier = Modifier.align(Alignment.CenterVertically))
+
+                                Icon(Icons.Filled.KeyboardArrowDown, tint = Color(0xFF949494), contentDescription = null)
+                            }
+
+                            if (showDialog.value) {
+                                DropdownMenu(
+                                    containerColor = surfaceContainerLowestLight,
+                                    offset = DpOffset(0.dp, 8.dp),
+                                    expanded = showDialog.value,
+                                    onDismissRequest = { showDialog.value = false },
+                                ) {
+                                    DropdownMenuItem(
+                                        text = {
+                                            Text(text = "Aisle")
+                                        },
+                                        onClick = {
+                                            shoppingList!!.changeSortingMethod("Aisle")
+                                            sortingMethod = "Aisle"
+                                            showDialog.value = false
+                                        }
+                                    )
+                                    DropdownMenuItem(
+                                        text = {
+                                            Text(text = "Recipe")
+                                        },
+                                        onClick = {
+                                            shoppingList!!.changeSortingMethod("Recipe")
+                                            sortingMethod = "Recipe"
+                                            showDialog.value = false
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    if (sortingMethod == "Aisle") {
+                        // Ingredients grouped by category
+                        shoppingList!!.ingredientsPerCategory.forEach { (key, ingredients) ->
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                elevation = CardDefaults.cardElevation(
+                                    defaultElevation = 6.dp
+                                ),
+                                colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+                            ) {
+                                Column() {
+                                    Text(
+                                        text = key.replaceFirstChar(Char::titlecase),
+                                        fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                                        modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+                                    )
+
+                                    ingredients.forEach { (ingredientName, ingredient) ->
+                                        IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
+                                            // Force refresh by creating a new copy
+                                            shoppingList = shoppingList?.let {
+                                                it.checkIngredient(ingredientName.lowercase(), checked)
+                                                it.copy() // Update shoppingList to a new copy
+                                            }
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        // Ingredients grouped by category
+                        shoppingList!!.ingredientsPerRecipes.forEach { (key, ingredients) ->
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                elevation = CardDefaults.cardElevation(
+                                    defaultElevation = 6.dp
+                                ),
+                                colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+                            ) {
+                                Column() {
+                                    shoppingList!!.plannedRecipes.find { it.recipeId == key }?.title?.let { it1 ->
+                                        Text(
+                                            text = it1,
+                                            fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                                            modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+                                        )
+                                    }
+
+                                    ingredients.forEach { (ingredientName, ingredient) ->
+                                        IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
+                                            shoppingList = shoppingList?.let {
+                                                it.checkIngredient(ingredientName.lowercase(), checked)
+                                                it.copy() // Update shoppingList to a new copy
+                                            }
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (shoppingList!!.customIngredients.isNotEmpty()) {
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 6.dp
+                            ),
+                            colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+                        ) {
+                            Column() {
+                                Text(
+                                    text = "Custom",
+                                    fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                                    modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+                                )
+
+                                shoppingList!!.customIngredients.forEach { (ingredientName, ingredient) ->
+                                    IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
+                                        shoppingList = shoppingList?.let {
+                                            it.checkIngredient(ingredientName.lowercase(), checked)
+                                            it.copy() // Update shoppingList to a new copy
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(42.dp))
                 }
             }
         }
-    }
+    )
+}
+
+@Composable
+fun IngredientCheckbox(ingredient: IngredientItem, ingredientName: String, onCheckedChange: (Boolean) -> Unit) {
+    val quantity = if (ingredient.quantity.toInt().toFloat() != ingredient.quantity) ingredient.quantity.toString() else ingredient.quantity.toInt().toString()
+
+    ListItem(
+        modifier = Modifier.clickable {
+            onCheckedChange(!ingredient.checked)
+        },
+        headlineContent = {
+            Text(
+                text = ingredientName.replaceFirstChar(Char::titlecase),
+                style = if (ingredient.checked) {
+                    TextStyle(textDecoration = TextDecoration.LineThrough)
+                } else {
+                    TextStyle()
+                }
+            )
+        },
+        supportingContent = { if (quantity != "1") Text("$quantity ${ingredient.unit}") },
+        leadingContent = {
+            toIngredientIcon(ingredientName.lowercase())?.let { icon ->
+                Image(
+                    painter = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(26.dp)
+                )
+            }
+        },
+        trailingContent = {
+            Checkbox(
+                checked = ingredient.checked,
+                onCheckedChange = {
+                    onCheckedChange(it)
+                }
+            )
+        },
+        colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
+    )
 }

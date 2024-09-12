@@ -24,7 +24,7 @@ data class ParsedIngredient(
 )
 
 @Serializable
-class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit: String = "", var category: String = "") {
+class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit: String = "", var category: String = "", var checked: Boolean = false) {
 
     fun addQuantity(other: IngredientItem) {
         if ((this.unit == other.unit)
@@ -36,6 +36,16 @@ class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit
             // Handle unit conversion or throw an error
             Log.e("PlanEat", "@@@ TODO convert ${other.unit} to ${this.unit}")
         }
+    }
+
+    fun copy(): IngredientItem {
+        return IngredientItem(
+            name = this.name,
+            quantity = this.quantity,
+            unit = this.unit,
+            category = this.category,
+            checked = this.checked
+        )
     }
 }
 
@@ -50,7 +60,23 @@ fun toIngredientIcon(ingredientName: String): Painter? {
         withContext(Dispatchers.IO) {
             val ingredient = db.ingredientDao().findByName(ingredientName)
             if (ingredient != null) {
-                iconResId = ingredient.icon
+                if (ingredient.icon != 0) {
+                    iconResId = ingredient.icon
+                } else {
+
+                    val res = fetchIconForIngredient(ingredientName.lowercase())
+                    if (res != 0) {
+                        var newIngredient = ingredient.copy()
+                        newIngredient.icon = res!!
+                        try {
+                            db.ingredientDao().update(newIngredient)
+                        } catch (error: Exception) {
+                            Log.w("PlanEat", "Error: $error")
+                        }
+                    } else {
+                        iconResId = R.drawable.bagel_3d
+                    }
+                }
             } else {
                 val res = fetchIconForIngredient(ingredientName.lowercase())
                 if (res != 0) {
@@ -72,30 +98,35 @@ fun toIngredientIcon(ingredientName: String): Painter? {
     return iconResId?.let { painterResource(id=it) }
 }
 
-suspend fun toIngredientCategory(
+fun toIngredientCategory(
     ingredientName: String,
     ic: IngredientClassifier,
     db: IngredientsDb
 ): String {
     var category: String? = null
 
-    withContext(Dispatchers.IO) {
-        val ingredient = db.ingredientDao().findByName(ingredientName)
-        if (ingredient != null && ingredient.category.isNotEmpty()) {
-            category = ingredient.category
+    val ingredient = db.ingredientDao().findByName(ingredientName)
+    if (ingredient != null && ingredient.category.isNotEmpty()) {
+        category = ingredient.category
+        Log.e("PlanEat", "@@@ $ingredient FIND $category")
+    } else if (ingredient != null) {
+        category = ic.classify(ingredientName.lowercase())
 
-            Log.d("PlanEat", "@@@ => ${ingredient.category}")
-        } else if (ingredient != null) {
-            category = ic.classify(ingredientName.lowercase())
-
-            try {
-                ingredient.category = category!!
-                db.ingredientDao().update(ingredient)
-            } catch (error: Exception) {
-                Log.w("PlanEat", "Error: $error")
-            }
-        } else {
-            category = ""
+        Log.e("PlanEat", "@@@ $ingredient -> $category")
+        try {
+            ingredient.category = category!!
+            db.ingredientDao().update(ingredient)
+        } catch (error: Exception) {
+            Log.w("PlanEat", "Error: $error")
+        }
+    } else {
+        Log.e("PlanEat", "@@@ $ingredient - $ingredientName")
+        category = ic.classify(ingredientName.lowercase())
+        val ingredient = Ingredient(name=ingredientName, category=category)
+        try {
+            db.ingredientDao().insertAll(ingredient)
+        } catch (error: Exception) {
+            Log.w("PlanEat", "Error: $error")
         }
     }
 
@@ -473,9 +504,6 @@ fun fetchIconForIngredient(ingredient_name: String): Int? {
     else if (ingredient_name.contains("tangerine")) {
         return R.drawable.tangerine_3d
     }
-    else if (ingredient_name.contains("tea")) {
-        return R.drawable.teacup_without_handle_3d
-    }
     else if (ingredient_name.contains("teapot")) {
         return R.drawable.teapot_3d
     }
@@ -514,6 +542,9 @@ fun fetchIconForIngredient(ingredient_name: String): Int? {
     }
     else if (ingredient_name.contains("rabbit")) {
         return R.drawable.rabbit_3d
+    }
+    else if (ingredient_name.contains("tea")) {
+        return R.drawable.teacup_without_handle_3d
     }
 
     return 0

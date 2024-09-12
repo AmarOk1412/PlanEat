@@ -14,7 +14,7 @@ categories = {
         "Rum Runner", "Mai Tai", "Zombie", "Long Island Iced Tea", "Aperol Spritz", "Mimosa", "Dark 'n' Stormy", "Caipirinha", "Gimlet", "Rob Roy",
         "Amaretto Sour", "Brandy Alexander", "Clover Club", "Corpse Reviver #2", "French 75", "Ginger Beer", "Pisco Sour", "Ramos Gin Fizz", "Mai Tai", "Sazerac",
         "Vesper Martini", "Boulevardier", "Tommy's Margarita", "Pimm's Cup", "Clover Club", "Aviation", "Boulevardier", "Paloma", "Rum Punch", "Ginger Ale",
-        "Chardonnay", "Pinot Noir", "Merlot", "Cabernet Sauvignon", "Zinfandel", "Riesling", "Sauvignon Blanc", "Syrah", "Malbec", "Chianti", "red wine", "white wine", "Liquid"
+        "Chardonnay", "Pinot Noir", "Merlot", "Cabernet Sauvignon", "Zinfandel", "Riesling", "Sauvignon Blanc", "Syrah", "Malbec", "Chianti", "red wine", "white wine", "Jura white wine"
     ],
     "Soda": [
         "Cola", "Lemonade", "Orange Soda", "Root Beer", "Ginger Ale", "Club Soda", "Tonic Water", "Cream Soda", "Diet Soda", "Sparkling Water",
@@ -22,7 +22,7 @@ categories = {
         "Sprite", "7-Up", "Fanta", "Sunkist", "A&W Root Beer", "Barq's Root Beer", "Mug Root Beer", "Mello Yello", "Pibbs", "Squirt",
         "Red Bull", "Monster Energy", "Rockstar", "Gatorade", "Powerade", "Vitaminwater", "Snapple", "Ice Tea", "Hires Root Beer", "Diet Coke", "Sierra Mist",
         "Bubly", "LaCroix", "Zevia", "Spindrift", "Polar Seltzer", "Canada Dry", "Peach Soda", "Mango Soda", "Tamarind Soda", "Jamaican Ginger Beer",
-        "Cranberry Soda", "Black Cherry Soda", "Key Lime Soda", "Diet Dr. Pepper", "Diet Mountain Dew", "Cherry Vanilla Coke", "Cherry Pepsi", "Mango Pepsi", "Orange Vanilla Coke",  "LaCroix", "Raspberry Lemonade", "Lemon Lime Gatorade", "Orange Gatorade"
+        "Cranberry Soda", "Black Cherry Soda", "Key Lime Soda", "Diet Dr. Pepper", "Diet Mountain Dew", "Cherry Vanilla Coke", "Cherry Pepsi", "Mango Pepsi", "Orange Vanilla Coke",  "LaCroix", "Raspberry Lemonade", "Lemon Lime Gatorade", "Orange Gatorade", "liquid"
     ],
     "Baked Good": [
         "Bread", "Muffins", "Cookies", "Cake", "Brownies", "Bagels", "Donuts", "Croissants", "Pie", "Pastries",
@@ -107,7 +107,7 @@ categories = {
         "Pork Tenderloin", "Pork Ribs", "Pork Sausages", "Pork Chops", "Chicken Wings", "Chicken Drumsticks", "Chicken Liver", "Chicken Giblets", "Chicken Feet", "Duck Breast"
     ],
     "Cheese": [
-        "Cheddar", "Mozzarella", "Parmesan", "Swiss", "Brie", "Gorgonzola", "Camembert", "Feta", "Goat Cheese", "Provolone",
+        "Cheddar", "Mont d'or" "Mozzarella", "Parmesan", "Swiss", "Brie", "Gorgonzola", "Camembert", "Feta", "Goat Cheese", "Provolone",
         "Ricotta", "Mascarpone", "Pecorino", "Roquefort", "Gruyere", "American", "Colby", "Monterey Jack", "Havarti", "Asiago",
         "Blue Cheese", "Emmental", "Fontina", "Gouda", "Manchego", "Paneer", "Queso Fresco", "Cotija", "Burrata", "Humboldt Fog",
         "Stinking Bishop", "Comté", "Cantal", "Cheshire", "Lancashire", "Double Gloucester", "Neufchâtel", "Reblochon", "Taleggio", "Bechamel Cheese",
