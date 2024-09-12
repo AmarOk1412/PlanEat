@@ -220,7 +220,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                 db.recipeDao().insertAll(recipe)
                 val res = db.recipeDao().findByUrl(recipe.url)
                 recipesInDb.add(res)
-                recipesInDb.sortWith(compareBy({ it.planified }, { it.title }))
+                recipesInDb.sortWith(compareBy({ -it.planified }, { it.title }))
                 gatherIngredients(res)
                 // Update visibiliy
                 if (recipesSearchedShown.any { it.url == recipe.url }) {
@@ -259,7 +259,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
                 async(Dispatchers.IO) {
                     if (recipesInDb.isEmpty()) {
                         recipesInDb = db.recipeDao().getAll().toMutableList()
-                        recipesInDb.sortWith(compareBy({ it.planified }, { it.title }))
+                        recipesInDb.sortWith(compareBy({ -it.planified }, { it.title }))
                     }
                     for (recipe in recipesInDb) {
                         recipesInDbShown.add((recipe))

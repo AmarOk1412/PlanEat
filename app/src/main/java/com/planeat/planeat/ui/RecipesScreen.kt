@@ -271,16 +271,20 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
                 CoroutineScope(Dispatchers.IO).launch {
                     // If id == 0, recipe is not in db yet, add it first
                     var id = r.recipeId
+                    val rdb = RecipesDb.getDatabase(context)
+                    val newRecipe = r
+                    newRecipe.planified += 1
                     if (id == 0.toLong()) {
-                        val rdb = RecipesDb.getDatabase(context)
                         // If a search result, add it to recipes first
                         model.add(recipe)
                         val res = rdb.recipeDao().findByUrl(recipe.url)
                         id = res.recipeId
-                        // Increment planified value
-                        res.planified += 1
-                        rdb.recipeDao().update(res)
+                        newRecipe.recipeId = res.recipeId
                     }
+
+                    // Increment planified value
+                    rdb.recipeDao().update(newRecipe)
+                    val res2 = rdb.recipeDao().findByUrl(recipe.url)
                     // Then add it to agenda
                     val adb = AgendaDb.getDatabase(context)
                     Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
