@@ -18,6 +18,8 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
     var plannedRecipes: List<Recipe> = emptyList()
     var plannedId: MutableList<Long> = mutableListOf()
     var checkedIngredients: List<String> = emptyList()
+    // This list stores checked ingredients (1 sec after they are checked)
+    var validatedIngredients: MutableMap<String, IngredientItem> = mutableMapOf()
 
     private fun jsonToLongList(jsonObject: JSONObject, key: String): List<Long> {
         val jsonArray: JSONArray = try {
@@ -163,6 +165,9 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
                 var ingredient = item
                 Log.d("PlanEat", "${item.name} vs ${checkedIngredients}")
                 ingredient.checked = checkedIngredients.contains(item.name)
+                if (ingredient.checked) {
+                    validatedIngredients.put(ingredient.name, ingredient)
+                }
                 ingredientsPerRecipes.getOrPut(recipe.recipeId) { mutableMapOf() }[item.name] = ingredient
             }
 
@@ -272,6 +277,9 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
             }
         } else {
             checkedIngredients = checkedIngredients.filter { it != ingredientName }
+            validatedIngredients = validatedIngredients.filterNot { (key, _) ->
+                ingredientName == key
+            }.toMutableMap()
         }
 
         val shoppingJson = JSONObject()
@@ -280,6 +288,10 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
         shoppingJson.put("customIngredients", customIngredients)
         shoppingJson.put("sortingMethod", sortingMethod)
         writeToDisk("shoppingList.json", shoppingJson)
+    }
+
+    fun addValidated(ingredient: IngredientItem) {
+        validatedIngredients.put(ingredient.name, ingredient)
     }
 
     fun copy(): ShoppingList {
@@ -300,6 +312,7 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
 
         // Deep copy customIngredients
         val copiedCustomIngredients = customIngredients.mapValues { it.value.copy() }.toMutableMap()
+        val copiedValidatedIngredients = validatedIngredients.mapValues { it.value.copy() }.toMutableMap()
 
         // Create a new ShoppingList instance
         return ShoppingList(
@@ -316,6 +329,7 @@ class ShoppingList(val planned: List<Agenda>, val rdb: RecipesDb, val ingredient
             plannedRecipes = copiedPlannedRecipes
             plannedId = copiedPlannedId
             checkedIngredients = copiedCheckedIngredients
+            validatedIngredients = copiedValidatedIngredients
         }
     }
 

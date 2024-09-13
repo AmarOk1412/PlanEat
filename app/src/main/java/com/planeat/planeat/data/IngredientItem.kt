@@ -108,11 +108,8 @@ fun toIngredientCategory(
     val ingredient = db.ingredientDao().findByName(ingredientName)
     if (ingredient != null && ingredient.category.isNotEmpty()) {
         category = ingredient.category
-        Log.e("PlanEat", "@@@ $ingredient FIND $category")
     } else if (ingredient != null) {
         category = ic.classify(ingredientName.lowercase())
-
-        Log.e("PlanEat", "@@@ $ingredient -> $category")
         try {
             ingredient.category = category!!
             db.ingredientDao().update(ingredient)
@@ -120,7 +117,6 @@ fun toIngredientCategory(
             Log.w("PlanEat", "Error: $error")
         }
     } else {
-        Log.e("PlanEat", "@@@ $ingredient - $ingredientName")
         category = ic.classify(ingredientName.lowercase())
         val ingredient = Ingredient(name=ingredientName, category=category)
         try {

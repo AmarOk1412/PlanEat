@@ -4,6 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -59,6 +64,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -81,6 +87,7 @@ import com.planeat.planeat.data.ShoppingList
 import com.planeat.planeat.data.toIngredientIcon
 import com.planeat.planeat.ui.components.MinimalRecipeItemList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import org.tensorflow.lite.examples.textclassification.client.IngredientClassifier
 import java.time.LocalDate
@@ -250,9 +257,127 @@ fun ShoppingScreen(
                             }
                         }
 
+                        var resetAllHidden by remember {
+                            mutableStateOf(false)
+                        }
+
                         if (sortingMethod == "Aisle") {
                             // Ingredients grouped by category
                             shoppingList!!.ingredientsPerCategory.forEach { (key, ingredients) ->
+                                var areAllHidden by remember { mutableStateOf(false) }
+                                LaunchedEffect(resetAllHidden) {
+                                    delay(1000)
+                                    areAllHidden = false
+                                }
+                                if (!areAllHidden) {
+                                    Card(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        shape = RoundedCornerShape(12.dp),
+                                        elevation = CardDefaults.cardElevation(
+                                            defaultElevation = 6.dp
+                                        ),
+                                        colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+                                    ) {
+                                        Column() {
+                                            Text(
+                                                text = key.replaceFirstChar(Char::titlecase),
+                                                fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                                                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+                                            )
+
+                                            val ingredientVisibilityList = ingredients.map { (ingredientName, ingredient) ->
+                                                var isVisible = remember { mutableStateOf(true) }
+                                                IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
+                                                    // Force refresh by creating a new copy
+                                                    shoppingList = shoppingList?.let {
+                                                        it.checkIngredient(ingredientName.lowercase(), checked)
+                                                        it.copy() // Update shoppingList to a new copy
+                                                    }
+                                                }, onAddValidated = {
+                                                    shoppingList = shoppingList?.let {
+                                                        it.addValidated(ingredient)
+                                                        it.copy()
+                                                    }
+                                                },
+                                                onVisibilityChange = { visible ->
+                                                    isVisible.value = visible // Track visibility for each checkbox
+                                                }, resetVisibility = resetAllHidden)
+                                                isVisible.value // Collect visibility state for all checkboxes
+                                            }
+                                            areAllHidden = ingredientVisibilityList.all { !it }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            // Ingredients grouped by category
+                            shoppingList!!.ingredientsPerRecipes.forEach { (key, ingredients) ->
+                                var areAllHidden by remember { mutableStateOf(false) }
+                                LaunchedEffect(resetAllHidden) {
+                                    delay(1000)
+                                    areAllHidden = false
+                                }
+                                if (!areAllHidden) {
+                                    Card(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        shape = RoundedCornerShape(12.dp),
+                                        elevation = CardDefaults.cardElevation(
+                                            defaultElevation = 6.dp
+                                        ),
+                                        colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+                                    ) {
+                                        Column() {
+                                            shoppingList!!.plannedRecipes.find { it.recipeId == key }?.title?.let { it1 ->
+                                                Text(
+                                                    text = it1,
+                                                    fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                                                    modifier = Modifier.padding(
+                                                        start = 16.dp,
+                                                        top = 8.dp
+                                                    )
+                                                )
+                                            }
+
+                                            val ingredientVisibilityList =
+                                                ingredients.map { (ingredientName, ingredient) ->
+                                                    var isVisible =
+                                                        remember { mutableStateOf(true) }
+
+                                                    IngredientCheckbox(ingredient,
+                                                        ingredientName,
+                                                        onCheckedChange = { checked ->
+                                                            shoppingList = shoppingList?.let {
+                                                                it.checkIngredient(
+                                                                    ingredientName.lowercase(),
+                                                                    checked
+                                                                )
+                                                                it.copy() // Update shoppingList to a new copy
+                                                            }
+                                                        },
+                                                        onAddValidated = {
+                                                            shoppingList!!.addValidated(ingredient)
+                                                            shoppingList!!.copy()
+                                                        },
+                                                        onVisibilityChange = { visible ->
+                                                            isVisible.value =
+                                                                visible // Track visibility for each checkbox
+                                                        }, resetVisibility = resetAllHidden)
+                                                    isVisible.value // Collect visibility state for all checkboxes
+                                                }
+                                            areAllHidden = ingredientVisibilityList.all { !it }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (shoppingList!!.customIngredients.isNotEmpty()) {
+                            var areAllHidden by remember { mutableStateOf(false) }
+                            LaunchedEffect(resetAllHidden) {
+                                delay(1000)
+                                areAllHidden = false
+                            }
+                            if (!areAllHidden) {
                                 Card(
                                     modifier = Modifier.fillMaxWidth(),
                                     shape = RoundedCornerShape(12.dp),
@@ -263,57 +388,37 @@ fun ShoppingScreen(
                                 ) {
                                     Column() {
                                         Text(
-                                            text = key.replaceFirstChar(Char::titlecase),
+                                            text = "Custom",
                                             fontSize = MaterialTheme.typography.labelMedium.fontSize,
                                             modifier = Modifier.padding(start = 16.dp, top = 8.dp)
                                         )
 
-                                        ingredients.forEach { (ingredientName, ingredient) ->
-                                            IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
-                                                // Force refresh by creating a new copy
-                                                shoppingList = shoppingList?.let {
-                                                    it.checkIngredient(ingredientName.lowercase(), checked)
-                                                    it.copy() // Update shoppingList to a new copy
-                                                }
-                                            })
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            // Ingredients grouped by category
-                            shoppingList!!.ingredientsPerRecipes.forEach { (key, ingredients) ->
-                                Card(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(12.dp),
-                                    elevation = CardDefaults.cardElevation(
-                                        defaultElevation = 6.dp
-                                    ),
-                                    colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
-                                ) {
-                                    Column() {
-                                        shoppingList!!.plannedRecipes.find { it.recipeId == key }?.title?.let { it1 ->
-                                            Text(
-                                                text = it1,
-                                                fontSize = MaterialTheme.typography.labelMedium.fontSize,
-                                                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                                            )
-                                        }
+                                        val ingredientVisibilityList = shoppingList!!.customIngredients.map { (ingredientName, ingredient) ->
+                                            val isVisible = remember { mutableStateOf(true) }
 
-                                        ingredients.forEach { (ingredientName, ingredient) ->
                                             IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
                                                 shoppingList = shoppingList?.let {
                                                     it.checkIngredient(ingredientName.lowercase(), checked)
                                                     it.copy() // Update shoppingList to a new copy
                                                 }
-                                            })
+                                            }, onAddValidated = {
+                                                shoppingList = shoppingList?.let {
+                                                    it.addValidated(ingredient)
+                                                    it.copy()
+                                                }
+                                            },
+                                            onVisibilityChange = { visible ->
+                                                isVisible.value = visible // Track visibility for each checkbox
+                                            }, resetVisibility = resetAllHidden)
+                                            isVisible.value
                                         }
+                                        areAllHidden = ingredientVisibilityList.all { !it }
                                     }
                                 }
                             }
                         }
 
-                        if (shoppingList!!.customIngredients.isNotEmpty()) {
+                        if (shoppingList!!.validatedIngredients.isNotEmpty()) {
                             Card(
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(12.dp),
@@ -324,24 +429,25 @@ fun ShoppingScreen(
                             ) {
                                 Column() {
                                     Text(
-                                        text = "Custom",
+                                        text = "Validated items",
                                         fontSize = MaterialTheme.typography.labelMedium.fontSize,
                                         modifier = Modifier.padding(start = 16.dp, top = 8.dp)
                                     )
 
-                                    shoppingList!!.customIngredients.forEach { (ingredientName, ingredient) ->
+                                    shoppingList!!.validatedIngredients.forEach { (ingredientName, ingredient) ->
                                         IngredientCheckbox(ingredient, ingredientName, onCheckedChange = { checked ->
                                             shoppingList = shoppingList?.let {
                                                 it.checkIngredient(ingredientName.lowercase(), checked)
                                                 it.copy() // Update shoppingList to a new copy
                                             }
-                                        })
+                                            resetAllHidden = !resetAllHidden
+                                        }, showWhenChecked = true)
                                     }
                                 }
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(42.dp))
+                        Spacer(modifier = Modifier.height(64.dp))
                     }
                 }
             }
@@ -428,43 +534,95 @@ fun ShoppingScreen(
 }
 
 @Composable
-fun IngredientCheckbox(ingredient: IngredientItem, ingredientName: String, onCheckedChange: (Boolean) -> Unit) {
+fun IngredientCheckbox(
+    ingredient: IngredientItem,
+    ingredientName: String,
+    onCheckedChange: (Boolean) -> Unit,
+    onAddValidated: () -> Unit = {},
+    showWhenChecked: Boolean = false,
+    onVisibilityChange: (Boolean) -> Unit = {},
+    resetVisibility: Boolean = false
+) {
     val quantity = if (ingredient.quantity.toInt().toFloat() != ingredient.quantity) ingredient.quantity.toString() else ingredient.quantity.toInt().toString()
 
-    ListItem(
+    var isVisible by remember { mutableStateOf(!ingredient.checked || showWhenChecked) }
+    var isClicked by remember { mutableStateOf(false) }
+
+    LaunchedEffect(resetVisibility) {
+        isVisible = !ingredient.checked || showWhenChecked
+    }
+
+    LaunchedEffect(isVisible) {
+        onVisibilityChange(isVisible)
+    }
+
+    LaunchedEffect(isClicked) {
+        if (isClicked) {
+            delay(1000) // Wait for 1 second before starting the animation
+            isVisible = false // Trigger the fade-out and shrink animation
+            onAddValidated()
+        }
+    }
+
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = fadeIn(animationSpec = tween(1000)), // Conditional fadeIn
+        exit = fadeOut(animationSpec = tween(1000)) + shrinkVertically(animationSpec = tween(1000)),
         modifier = Modifier.clickable {
             onCheckedChange(!ingredient.checked)
-        },
-        headlineContent = {
-            Text(
-                text = ingredientName.replaceFirstChar(Char::titlecase),
-                style = if (ingredient.checked) {
-                    TextStyle(textDecoration = TextDecoration.LineThrough)
-                } else {
-                    TextStyle()
-                }
-            )
-        },
-        supportingContent = { if (quantity != "1") Text("$quantity ${ingredient.unit}") },
-        leadingContent = {
-            toIngredientIcon(ingredientName.lowercase())?.let { icon ->
-                Image(
-                    painter = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(26.dp)
+            isClicked = ingredient.checked // Trigger fade-out and shrink
+        }
+    ) {
+        ListItem(
+            modifier = Modifier.fillMaxWidth(),
+            headlineContent = {
+                Text(
+                    text = ingredientName.replaceFirstChar(Char::titlecase),
+                    style = if (ingredient.checked) {
+                        TextStyle(textDecoration = TextDecoration.LineThrough)
+                    } else {
+                        TextStyle()
+                    }
                 )
-            }
-        },
-        trailingContent = {
-            Checkbox(
-                checked = ingredient.checked,
-                onCheckedChange = {
-                    onCheckedChange(it)
+            },
+            supportingContent = {
+                if (quantity != "1") Text(
+                    "$quantity ${ingredient.unit}", style = if (ingredient.checked) {
+                        TextStyle(textDecoration = TextDecoration.LineThrough)
+                    } else {
+                        TextStyle()
+                    }
+                )
+            },
+            leadingContent = {
+                toIngredientIcon(ingredientName.lowercase())?.let { icon ->
+                    Image(
+                        painter = icon,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(26.dp)
+                            .alpha(
+                                if (ingredient.checked) {
+                                    0.5f
+                                } else {
+                                    1.0f
+                                }
+                            )
+                    )
                 }
-            )
-        },
-        colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
-    )
+            },
+            trailingContent = {
+                Checkbox(
+                    checked = ingredient.checked,
+                    onCheckedChange = {
+                        onCheckedChange(it)
+                        isClicked = it
+                    }
+                )
+            },
+            colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
+        )
+    }
 }
 
 @Composable
