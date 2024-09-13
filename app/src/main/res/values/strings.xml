@@ -11,7 +11,7 @@
 <resources>
     <string name="app_name">PlanEat</string>
     <string name="navigation_drawer">Navigation Drawer</string>
-    <string name="tab_recipes">Recipes</string>
+    <string name="tab_search">Search</string>
     <string name="tab_agenda">Agenda</string>
     <string name="tab_dm">Direct Messages</string>
     <string name="tab_groups">Groups</string>
@@ -34,7 +34,7 @@
     <string name="search_placeholder">Tartiflette, Ramen, Crêpes…</string>
     <string name="no_item_found">No item found</string>
     <string name="no_search_history">No search history</string>
-    <string name="tab_pantry">Pantry</string>
+    <string name="tab_saved">Saved</string>
     <string name="tab_shopping_list">Shopping List</string>
     <string name="favorite">Favorite</string>
     <string name="ingredients">Ingredients</string>

@@ -6,8 +6,8 @@ import com.planeat.planeat.R
 
 object PlanEatRoute {
     const val AGENDA = "Agenda"
-    const val RECIPES = "Recipes"
-    const val PANTRY = "Pantry"
+    const val SEARCH = "Recipes"
+    const val SAVED = "Pantry"
     const val SHOPPING_LIST = "ShoppingList"
     const val DETAILS = "Details"
     const val EDITION = "Edition"
@@ -45,14 +45,14 @@ val TOP_LEVEL_DESTINATIONS = listOf(
         iconTextId = R.string.tab_agenda
     ),
     PlanEatTopLevelDestination(
-        route = PlanEatRoute.RECIPES,
-        icon = R.drawable.icon_recipes,
-        iconTextId = R.string.tab_recipes
+        route = PlanEatRoute.SEARCH,
+        icon = R.drawable.icon_search,
+        iconTextId = R.string.tab_search
     ),
     PlanEatTopLevelDestination(
-        route = PlanEatRoute.PANTRY,
-        icon = R.drawable.icon_pantry,
-        iconTextId = R.string.tab_pantry
+        route = PlanEatRoute.SAVED,
+        icon = R.drawable.favorite,
+        iconTextId = R.string.tab_saved
     ),
     PlanEatTopLevelDestination(
         route = PlanEatRoute.SHOPPING_LIST,

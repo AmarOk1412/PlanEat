@@ -452,7 +452,7 @@ private fun NavHost(
                     if (changePage) {
                         navigateToTopLevelDestination(
                             PlanEatTopLevelDestination(
-                                PlanEatRoute.RECIPES,
+                                PlanEatRoute.SEARCH,
                                 0,
                                 0
                             )
@@ -474,7 +474,7 @@ private fun NavHost(
                 },
                 onRecipeDeleted = onRecipeDeleted)
         }
-        composable(PlanEatRoute.RECIPES) {
+        composable(PlanEatRoute.SEARCH) {
             RecipesScreen(
                 model = model,
                 onQueryChanged = onQueryChanged,
@@ -509,8 +509,7 @@ private fun NavHost(
                 }
             )
         }
-        composable(PlanEatRoute.PANTRY) {
-            EmptyComingSoon()
+        composable(PlanEatRoute.SAVED) {
         }
         composable(PlanEatRoute.SHOPPING_LIST) {
             ShoppingScreen(

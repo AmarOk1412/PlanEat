@@ -49,7 +49,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.room.Room
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
@@ -95,7 +94,7 @@ fun RecipesScreen(
         ) {
             // Header element
             Text(
-                text = stringResource(id = R.string.tab_recipes),
+                text = stringResource(id = R.string.tab_search),
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(start=16.dp, bottom = 16.dp)
             )
