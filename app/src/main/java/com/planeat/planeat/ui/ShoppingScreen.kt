@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -24,16 +25,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -54,7 +55,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -74,7 +75,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import com.example.compose.primaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.AgendaDb
@@ -456,75 +457,94 @@ fun ShoppingScreen(
         BackHandler {
             searchItem = false
         }
-        Column(modifier=Modifier.verticalScroll(rememberScrollState())) {
-            var ingredients by remember {
-                mutableStateOf<List<Ingredient>>(emptyList())
-            }
-            var filtered by remember {
-                mutableStateOf<List<Ingredient>>(emptyList())
-            }
-            val focusRequester = remember { FocusRequester() }
 
-            LaunchedEffect(Unit) {
-                withContext(Dispatchers.IO) {
-                    val ingredientsDb = IngredientsDb.getDatabase(context)
-                    ingredients = ingredientsDb.ingredientDao().selectAll()
-                    filtered = ingredients
+        Scaffold(
+            topBar = {
+                TopAppBar(title = { Text("Add an item") },
+                    navigationIcon = {
+                        IconButton(onClick = { searchItem = false }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Go back"
+                            )
+                        }
+                    }
+                )
+            }
+        ) { Column(modifier=Modifier.padding(top=64.dp).verticalScroll(rememberScrollState())) {
+                var ingredients by remember {
+                    mutableStateOf<List<Ingredient>>(emptyList())
                 }
-                focusRequester.requestFocus()
-            }
-            var text by remember {
-                mutableStateOf("")
-            }
-            var expanded by rememberSaveable { mutableStateOf(false) }
-            SearchBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                colors = SearchBarDefaults.colors(
-                    containerColor = surfaceContainerLowestLight,
-                ),
-                expanded = false,
-                onExpandedChange = { },
-                inputField = {
-                    SearchBarDefaults.InputField(
-                        modifier = Modifier.focusRequester(focusRequester),
-                        query = text,
-                        onQueryChange = {
-                            text = it
-                            filtered = ingredients.filter { ingredient -> ingredient.name.contains(text) }
-                        },
-                        expanded = expanded,
-                        onExpandedChange = { expanded = it },
-                        onSearch = { expanded = false },
-                        placeholder = { Text("Carrots, Eggs, Chocolate…") },
-                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                        trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) }
-                    )
+                var filtered by remember {
+                    mutableStateOf<List<Ingredient>>(emptyList())
                 }
-            ) {}
+                val focusRequester = remember { FocusRequester() }
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                shape = RoundedCornerShape(12.dp),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 6.dp
-                ),
-                colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
-            ) {
-                Column() {
-                    IngredientToAdd(ingredient = Ingredient(), onIngredientAdded = {
-                        shoppingList!!.addIngredient(it)
-                        searchItem = false
-                    })
+                LaunchedEffect(Unit) {
+                    withContext(Dispatchers.IO) {
+                        val ingredientsDb = IngredientsDb.getDatabase(context)
+                        ingredients = ingredientsDb.ingredientDao().selectAll()
+                        filtered = ingredients
+                    }
+                    focusRequester.requestFocus()
+                }
+                var text by remember {
+                    mutableStateOf("")
+                }
+                var expanded by rememberSaveable { mutableStateOf(false) }
+                SearchBar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    colors = SearchBarDefaults.colors(
+                        containerColor = surfaceContainerLowestLight,
+                    ),
+                    expanded = false,
+                    onExpandedChange = { },
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                            modifier = Modifier.focusRequester(focusRequester)
+                                                .border(2.dp, if (expanded) Color(0xFF00AF45) else primaryContainerLight, RoundedCornerShape(100.dp))
+                                                .padding(start=8.dp),
+                            query = text,
+                            onQueryChange = {
+                                text = it
+                                filtered = ingredients.filter { ingredient -> ingredient.name.contains(text) }
+                            },
+                            expanded = expanded,
+                            onExpandedChange = { expanded = it },
+                            onSearch = { expanded = false },
+                            placeholder = { Text("Carrots, Eggs, Chocolate…") },
+                            trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
+                        )
+                    }
+                ) {}
 
-                    filtered.forEach {
-                        IngredientToAdd(ingredient = it, onIngredientAdded = {
-                            shoppingList!!.addIngredient(it)
-                            searchItem = false
-                        })
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 6.dp
+                    ),
+                    colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
+                ) {
+                    Column() {
+                        val matchingIngredient = filtered.find { it.name == text }
+                        if (matchingIngredient == null && text.isNotEmpty()) {
+                            IngredientToAdd(ingredient = Ingredient(text), onIngredientAdded = {
+                                shoppingList!!.addIngredient(it)
+                                searchItem = false
+                            })
+                        }
+
+                        filtered.forEach {
+                            IngredientToAdd(ingredient = it, onIngredientAdded = {
+                                shoppingList!!.addIngredient(it)
+                                searchItem = false
+                            })
+                        }
                     }
                 }
             }
@@ -627,19 +647,13 @@ fun IngredientCheckbox(
 
 @Composable
 fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) -> Unit) {
-    var showDialog = remember { mutableStateOf(false) }
-
     ListItem(
         modifier = Modifier.clickable {
-            showDialog.value = true
-        },
+            onIngredientAdded(IngredientItem(ingredient.name))
+        }.padding(horizontal = 12.dp),
         headlineContent = {
             Text(
-                text = if (ingredient.name.isNotEmpty()) {
-                           ingredient.name.replaceFirstChar(Char::titlecase)
-                       } else {
-                           "Add a new ingredient"
-                       }
+                text = ingredient.name.replaceFirstChar(Char::titlecase)
             )
         },
         leadingContent = {
@@ -651,78 +665,26 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
                         modifier = Modifier.size(26.dp)
                     )
                 }
+            } else {
+                Spacer(modifier = Modifier.width(26.dp))
             }
         },
         trailingContent = {
-            IconButton(onClick = { showDialog.value = true },
+            IconButton(
+                modifier = Modifier.size(28.dp),
+                onClick = { onIngredientAdded(IngredientItem(ingredient.name))},
                 colors = IconButtonDefaults.iconButtonColors(
-                            containerColor = Color(0xFF01AA44),
+                            containerColor = Color(0xFF599e39),// TODO primaryContainerLight,
                             contentColor = Color(0xFFFFFFFF)
                         )) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = "Add ingredient"
+                    contentDescription = "Add ingredient",
+                    modifier = Modifier.size(18.dp)
                 )
             }
         },
         colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
     )
-
-    if (showDialog.value) {
-        Dialog(
-            onDismissRequest = {
-                showDialog.value = false
-            }
-        ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-            ) {
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-
-                    var ingredientName by remember { mutableStateOf(ingredient.name) }
-                    var category by remember { mutableStateOf(ingredient.category) }
-                    var quantity by remember { mutableStateOf(1.0f.toString()) }
-                    var unit by remember { mutableStateOf("g") }
-                    TextField(
-                        value = ingredientName,
-                        onValueChange = { ingredientName = it },
-                        label = { Text(text = "Name") },
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-                    TextField(
-                        value = category,
-                        onValueChange = { category = it },
-                        label = { Text(text = "Category") },
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-                    TextField(
-                        value = quantity,
-                        onValueChange = { quantity = it },
-                        label = { Text(text = "Quantity") },
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-                    TextField(
-                        value = unit,
-                        onValueChange = { unit = it },
-                        label = { Text(text = "Unit") },
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Button(
-                        onClick = {
-                            onIngredientAdded(IngredientItem(ingredientName, quantity.toFloat(), unit, category))
-                        }
-                    ) {
-                        Text(text = "Add")
-                    }
-
-                }
-            }
-        }
-
-    }
 
 }
