@@ -107,62 +107,33 @@ android {
 }
 
 dependencies {
+    // Classify ingredients
+    implementation(libs.tensorflow.lite.task.text)
+    // FOR RELEASE KEEP THIS
     implementation(libs.androidx.room.common)
     implementation(libs.room.ktx)
     implementation(libs.transport.runtime)
-    implementation(libs.compose.material)
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.android)
-
+    implementation(libs.error.prone.annotations)
+    // Database
+    implementation(libs.androidx.room.runtime.v261)
+    annotationProcessor(libs.room.compiler.v261)
+    kapt(libs.room.compiler.v261)
+    implementation(libs.kotlinx.serialization.json)
+    // Parsing
+    api(libs.jsoup)
+    // Compose UI
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.compose.material)
     implementation(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
-
-    implementation(libs.androidx.compose.material3)
-    implementation("com.google.accompanist:accompanist-adaptive:0.26.2-beta")
-    implementation("androidx.compose.material3:material3:1.3.0-beta04")
-
-    implementation("org.tensorflow:tensorflow-lite:2.13.0")
-    implementation("org.tensorflow:tensorflow-lite-support:0.4.0")
-    implementation("org.tensorflow:tensorflow-lite-select-tf-ops:2.13.0")
-
-    // Import the Task Vision Library dependency
-    implementation("org.tensorflow:tensorflow-lite-task-text:0.4.4")
-    // Import the GPU delegate plugin Library for GPU inference
-    implementation("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.4")
-
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose) // navigation.compose.NavHost
     implementation(libs.androidx.compose.materialWindow)
     implementation(libs.androidx.compose.material.iconsExtended)
-
-    implementation(libs.androidx.lifecycle.runtime)
-    implementation(libs.androidx.lifecycle.viewModelCompose)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.navigation.compose)
-
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.window)
-
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
-    implementation("io.coil-kt:coil-compose:2.6.0")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
-
-    val room_version = "2.6.1"
-
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-    implementation("com.google.errorprone:error_prone_annotations:2.9.0")
-
-    // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:$room_version")
-
-    api("org.jsoup:jsoup:1.17.2")
-
-    implementation("androidx.core:core-splashscreen:1.0.0")
-
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.accompanist.adaptive.v0262beta)
+    // Async image
+    implementation(libs.coil.compose.v260)
 }
