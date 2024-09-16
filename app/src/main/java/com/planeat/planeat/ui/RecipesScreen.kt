@@ -24,13 +24,17 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
@@ -80,89 +84,100 @@ fun RecipesScreen(
     goToEdition: (Recipe) -> Unit,
     onFilterClicked: (Tags) -> Unit,
 ) {
-    val context = LocalContext.current
-
-    Box(modifier = modifier
-        .fillMaxSize()
-        .windowInsetsPadding(WindowInsets.statusBars)) {
-
-        // Show the list screen
-        // TODO separate the list screen into a separate composable
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            // Header element
-            Text(
-                text = stringResource(id = R.string.tab_search),
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(start=16.dp, bottom = 16.dp)
-            )
-
-            var text by rememberSaveable { mutableStateOf("") }
-            var expanded by rememberSaveable { mutableStateOf(false) }
-            val filters = Tags.entries.map { it }
-
-            LaunchedEffect(Unit) {
-                text = ""
-                expanded = false
+    Scaffold(
+        modifier = modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.statusBars),
+        contentWindowInsets = WindowInsets(0.dp),
+        floatingActionButton = {
+            FloatingActionButton(onClick = { goToEdition(Recipe()) },
+                containerColor = Color(0xFF01AA44),
+                contentColor = Color(0xFFFFFFFF),
+                shape = RoundedCornerShape(100.dp),
+                modifier = Modifier.padding(end = 8.dp)) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "New Recipe"
+                )
             }
-
-            LaunchedEffect(text) {
-                delay(300)
-                onQueryChanged.invoke(text)
-            }
-
-            SearchBar(
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        content = {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                colors = SearchBarDefaults.colors(
-                    containerColor = surfaceContainerLowestLight,
-                ),
-                expanded = false,
-                onExpandedChange = { },
-                inputField = {
-                    SearchBarDefaults.InputField(
-                        query = text,
-                        onQueryChange = {
-                            text = it
-                        },
-                        expanded = expanded,
-                        onExpandedChange = { expanded = it },
-                        onSearch = { expanded = false },
-                        placeholder = { Text(stringResource(id = R.string.search_placeholder)) },
-                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                        trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) }
-                    )
-                }
-            ) {}
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Spacer(modifier = Modifier.width(16.dp))
+                // Header element
+                Text(
+                    text = stringResource(id = R.string.tab_search),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(start=16.dp, bottom = 16.dp)
+                )
 
-                filters.forEach { filter ->
+                var text by rememberSaveable { mutableStateOf("") }
+                var expanded by rememberSaveable { mutableStateOf(false) }
+                val filters = Tags.entries.map { it }
 
-                    Button(
-                        onClick = {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                onFilterClicked(filter)
-                            }
-                        },
-                        shape = RoundedCornerShape(100.dp),
-                        elevation = ButtonDefaults.buttonElevation(
-                            defaultElevation = 6.dp
-                        ),
-                        contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = surfaceContainerLowestLight, contentColor = Color.Black),
-                        modifier = Modifier.padding(end = 8.dp)
-                    ) {
+                LaunchedEffect(Unit) {
+                    text = ""
+                    expanded = false
+                }
+
+                LaunchedEffect(text) {
+                    delay(300)
+                    onQueryChanged.invoke(text)
+                }
+
+                SearchBar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    colors = SearchBarDefaults.colors(
+                        containerColor = surfaceContainerLowestLight,
+                    ),
+                    expanded = false,
+                    onExpandedChange = { },
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                            query = text,
+                            onQueryChange = {
+                                text = it
+                            },
+                            expanded = expanded,
+                            onExpandedChange = { expanded = it },
+                            onSearch = { expanded = false },
+                            placeholder = { Text(stringResource(id = R.string.search_placeholder)) },
+                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                            trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) }
+                        )
+                    }
+                ) {}
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    filters.forEach { filter ->
+
+                        Button(
+                            onClick = {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    onFilterClicked(filter)
+                                }
+                            },
+                            shape = RoundedCornerShape(100.dp),
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 6.dp
+                            ),
+                            contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = surfaceContainerLowestLight, contentColor = Color.Black),
+                            modifier = Modifier.padding(end = 8.dp)
+                        ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
@@ -177,63 +192,64 @@ fun RecipesScreen(
                                         .padding(start = 8.dp)
                                 )
                             }
+                        }
                     }
                 }
-            }
 
-            var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-            var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
+                var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+                var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = Modifier.padding(start=16.dp, end=16.dp)
-            ) {
-                if (model.recipesSearchedShown.size > 0 && model.recipesInDbShown.size > 0) {
-                    item(span = { GridItemSpan(2) }) {
-                        Text(
-                            text = "My recipes",
-                            style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.padding(vertical = 16.dp)
-                        )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.padding(start=16.dp, end=16.dp)
+                ) {
+                    if (model.recipesSearchedShown.size > 0 && model.recipesInDbShown.size > 0) {
+                        item(span = { GridItemSpan(2) }) {
+                            Text(
+                                text = "My recipes",
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = Modifier.padding(vertical = 16.dp)
+                            )
+                        }
                     }
-                }
-                items(model.recipesInDbShown) { recipe ->
-                    RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
-                        toPlanRecipe = r
-                        openBottomSheet = true
-                    })
-                }
-
-                if (model.recipesSearchedShown.size > 0) {
-                    item(span = { GridItemSpan(2) }) {
-                        Text(
-                            text = "Search results",
-                            style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.padding(vertical = 16.dp)
-                        )
-                    }
-                    items(model.recipesSearchedShown) { recipe ->
+                    items(model.recipesInDbShown) { recipe ->
                         RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                             toPlanRecipe = r
                             openBottomSheet = true
                         })
                     }
+
+                    if (model.recipesSearchedShown.size > 0) {
+                        item(span = { GridItemSpan(2) }) {
+                            Text(
+                                text = "Search results",
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = Modifier.padding(vertical = 16.dp)
+                            )
+                        }
+                        items(model.recipesSearchedShown) { recipe ->
+                            RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
+                                toPlanRecipe = r
+                                openBottomSheet = true
+                            })
+                        }
+                    }
+                }
+
+                if (openBottomSheet) {
+                    BottomPlanifier(
+                        onDismissRequest = { openBottomSheet = false },
+                        dataUi = dataUi,
+                        toPlanRecipe = toPlanRecipe!!,
+                        goToAgenda = {
+                            openBottomSheet = false
+                            goToAgenda()
+                        }
+                    )
                 }
             }
-
-            if (openBottomSheet) {
-                BottomPlanifier(
-                    onDismissRequest = { openBottomSheet = false },
-                    dataUi = dataUi,
-                    toPlanRecipe = toPlanRecipe!!,
-                    goToAgenda = {
-                        openBottomSheet = false
-                        goToAgenda()
-                    }
-                )
-            }
         }
-    }
+    )
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

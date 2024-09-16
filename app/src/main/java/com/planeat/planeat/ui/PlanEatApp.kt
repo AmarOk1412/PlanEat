@@ -1,5 +1,6 @@
 package com.planeat.planeat.ui
 
+import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -54,13 +55,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import org.jsoup.Connection
 import org.jsoup.Jsoup
+import java.io.File
 import java.time.LocalDate
 
 
-class AppModel(private val maxResult: Int, private val db: RecipesDb) {
+class AppModel(private val maxResult: Int, private val db: RecipesDb, private val context: Context) {
     private val connectors: List<Connector>
     var recipesInDb = mutableListOf<Recipe>()
     var recipesInDbShown = mutableStateListOf<Recipe>()
@@ -72,6 +75,57 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     var selectedDate = mutableStateOf<LocalDate?>(null)
 
     var searchJobs = mutableListOf<Job>()
+
+
+    fun writeRecipesToFile(recipes: List<Recipe>, fileName: String) {
+        try {
+            // Convert the list to JSON string
+            val jsonString = Json.encodeToString(ListSerializer(Recipe.serializer()), recipes)
+
+            // Write the JSON string to a file
+            context.openFileOutput(fileName, Context.MODE_PRIVATE).use { outputStream ->
+                outputStream.write(jsonString.toByteArray())
+            }
+        } catch (e: Exception) {
+            e.printStackTrace() // Handle any errors
+        }
+    }
+
+    fun loadRecipesFromFile(fileName: String): List<Recipe>? {
+        return try {
+            // Read the JSON string from the file
+            val jsonString = context.openFileInput(fileName).bufferedReader().use { it.readText() }
+
+            // Convert the JSON string back into a list of Recipe objects
+            Json.decodeFromString<List<Recipe>>(jsonString)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null // Return null if there's an error
+        }
+    }
+
+    // Function to get the last modified time of the file
+    fun getLastModifiedTime(fileName: String): Long {
+        val file = File(context.filesDir, fileName)
+
+        // Check if the file exists
+        if (file.exists()) {
+            return file.lastModified() // Return the last modified time in milliseconds
+        }
+        return 0L // Return 0 if the file doesn't exist
+    }
+
+    fun isMoreThanOneWeekSinceLastModified(fileName: String): Boolean {
+        val lastModifiedTime = getLastModifiedTime(fileName)
+        val currentTime = System.currentTimeMillis()
+
+        // A week in milliseconds
+        val oneWeekInMillis = 7 * 24 * 60 * 60 * 1000
+
+        // Check if more than one week has passed
+        return (currentTime - lastModifiedTime) > oneWeekInMillis
+    }
+
 
     init {
         val marmiton = Marmiton(maxResult)
@@ -189,8 +243,12 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
         coroutineScope {
             async(Dispatchers.IO) {
                 try {
-                    db.recipeDao().update(recipe)
-                    gatherIngredients(recipe)
+                    if (recipe.recipeId == 0.toLong()) {
+                        add(recipe)
+                    } else {
+                        db.recipeDao().update(recipe)
+                        gatherIngredients(recipe)
+                    }
                 } catch (error: Exception) {
                     Log.d("PlanEat", "Error: $error")
                 }
@@ -230,7 +288,49 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
         }
     }
 
-    suspend fun search(searchTerm: String): Boolean {
+    suspend fun initSuggestions() {
+        coroutineScope {
+            launch {
+                if (suggestedRecipes.isEmpty()) {
+                    if (!isMoreThanOneWeekSinceLastModified(
+                            "suggestions.json"
+                        )
+                    ) {
+                        val suggestions =
+                            loadRecipesFromFile("suggestions.json")
+                        Log.e("PlanEat", "@@@!!!")
+                        suggestions?.forEach { recipe ->
+                            if (!recipesInDbShown.any { it.url == recipe.url }) {
+                                suggestedRecipes.add(recipe)
+                            }
+                        }
+                    }
+                    // If nothing cached
+                    if (suggestedRecipes.isEmpty()) {
+                        connectors.map { connector ->
+                            searchJobs += launch(Dispatchers.IO) {
+                                // If no suggestions, find new one
+                                Log.e("PlanEat", "@@@!!!")
+                                connector.suggest(onRecipe = { recipe ->
+                                    // Add new recipes to results
+                                    if (!recipesInDbShown.any { it.url == recipe.url }) {
+                                        suggestedRecipes.add(recipe)
+                                    }
+                                })
+                                // Cache it
+                                writeRecipesToFile(
+                                    suggestedRecipes,
+                                    "suggestions.json"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    suspend fun search(searchTerm: String, context: Context): Boolean {
         // Cancel current search and refresh recipesShown()
         currentSearchTerm = searchTerm
         listJob?.cancel()
@@ -241,22 +341,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
         // If empty show recipes in database
         if (searchTerm.isEmpty()) {
             listJob = coroutineScope {
-                if (suggestedRecipes.isEmpty()) {
-                    // TODO serialize
-                    connectors.map { connector ->
-                        searchJobs += launch(Dispatchers.IO) {
-                            connector.suggest(onRecipe = { recipe ->
-                                if (searchTerm == currentSearchTerm) {
-                                    Log.w("PlanEat", "Adding recipe $recipe")
-                                    // Add new recipes to results
-                                    if (!recipesInDbShown.any { it.url == recipe.url }) {
-                                        suggestedRecipes.add(recipe)
-                                    }
-                                }
-                            })
-                        }
-                    }
-                }
                 async(Dispatchers.IO) {
                     if (recipesInDb.isEmpty()) {
                         recipesInDb = db.recipeDao().getAll().toMutableList()
@@ -313,11 +397,14 @@ fun PlanEatApp(
 
     val context = LocalContext.current
     val db = RecipesDb.getDatabase(context)
-    val model = AppModel(3, db);
+    val model = AppModel(3, db, context);
 
     //model.bertQaHelper = BertQaHelper(context = context, answererListener = model)
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
+    scope.launch {
+        model.initSuggestions()
+    }
 
     when (windowSize.widthSizeClass) {
         WindowWidthSizeClass.Compact -> {
@@ -338,7 +425,7 @@ fun PlanEatApp(
     NavigationWrapper(
         model = model,
         onQueryChanged = { value -> scope.launch {
-            model.search(value)
+            model.search(value, context)
         } },
         onRecipeDeleted = {recipe -> scope.launch {
             model.remove(recipe)

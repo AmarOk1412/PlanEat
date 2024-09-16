@@ -6,6 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
@@ -37,6 +38,7 @@ class Converters {
     indices = [Index("id"), Index(value = ["url"], unique = true)]
 )
 @TypeConverters(Converters::class)
+@Serializable
 data class Recipe(
     @ColumnInfo(name = "title") var title: String = "",
     @ColumnInfo(name = "url") var url: String = "",
