@@ -16,10 +16,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -205,6 +207,8 @@ fun DiscoverScreen(
                     }
                 }
             } else {
+
+
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.padding(start=16.dp, end=16.dp)
@@ -212,23 +216,35 @@ fun DiscoverScreen(
                     if (model.recipesSearchedShown.size > 0 && model.recipesInDbShown.size > 0) {
                         item(span = { GridItemSpan(2) }) {
                             Text(
-                                text = "My recipes",
+                                text = "My favorites",
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = Modifier.padding(vertical = 16.dp)
                             )
                         }
                     }
-                    items(model.recipesInDbShown, key = { recipe -> recipe.url }) { recipe ->
-                        RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
-                            toPlanRecipe = r
-                            openBottomSheet = true
-                        })
+                    item(span = { GridItemSpan(2) }) {
+                        LazyRow {
+                            items(model.recipesInDbShown, key = { recipe -> recipe.url }) { recipe ->
+                                RecipeItem(
+                                    recipe,
+                                    model,
+                                    goToDetails,
+                                    goToAgenda,
+                                    goToEdition,
+                                    onRecipeDeleted,
+                                    onRecipeAdded,
+                                    onPlanRecipe = { r ->
+                                        toPlanRecipe = r
+                                        openBottomSheet = true
+                                    })
+                            }
+                        }
                     }
 
                     if (model.recipesSearchedShown.size > 0) {
                         item(span = { GridItemSpan(2) }) {
                             Text(
-                                text = "Search results",
+                                text = "New recipes",
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = Modifier.padding(vertical = 16.dp)
                             )

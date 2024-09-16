@@ -155,6 +155,27 @@ fun RecipeListItem(
                         .fillMaxSize()
                         .padding(8.dp)
                 ) {
+
+                    if (!recipe.url.startsWith("http")) {
+                        SuggestionChip(
+                            label = { Text(
+                                text = "My recipe",
+                                maxLines = 1,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.height(18.dp),
+                            ) },
+                            onClick = {},
+                            border = null,
+                            colors = SuggestionChipDefaults.suggestionChipColors(
+                                containerColor = Color(0xCCFFFFFF),
+                                labelColor = onSurfaceVariantLight
+                            ),
+                            modifier = Modifier
+                                .align(Alignment.TopStart)
+                                .height(24.dp),
+                        )
+                    }
+
                     IconButton(
                         onClick = {
                             CoroutineScope(Dispatchers.IO).launch {

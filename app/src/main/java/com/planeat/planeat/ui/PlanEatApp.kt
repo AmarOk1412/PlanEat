@@ -65,6 +65,7 @@ import java.time.LocalDate
 
 class AppModel(private val maxResult: Int, private val db: RecipesDb, private val context: Context) {
     private val connectors: List<Connector>
+
     var recipesInDb = mutableListOf<Recipe>()
     var recipesInDbShown = mutableStateListOf<Recipe>()
     val recipesSearched = mutableListOf<Recipe>()
@@ -268,6 +269,9 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                 // Update visibiliy
                 if (recipesSearchedShown.any { it.url == recipe.url }) {
                     recipesSearchedShown.remove(recipe)
+                }
+                if (suggestedRecipes.any { it.url == recipe.url }) {
+                    suggestedRecipes.remove(recipe)
                 }
                 recipesInDbShown.add(res)
             }
