@@ -66,6 +66,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
     var recipesInDbShown = mutableStateListOf<Recipe>()
     val recipesSearched = mutableListOf<Recipe>()
     val recipesSearchedShown = mutableStateListOf<Recipe>()
+    val suggestedRecipes = mutableListOf<Recipe>()
 
     val openedRecipe = mutableStateOf<Recipe?>(null)
     var selectedDate = mutableStateOf<LocalDate?>(null)
@@ -240,6 +241,22 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb) {
         // If empty show recipes in database
         if (searchTerm.isEmpty()) {
             listJob = coroutineScope {
+                if (suggestedRecipes.isEmpty()) {
+                    // TODO serialize
+                    connectors.map { connector ->
+                        searchJobs += launch(Dispatchers.IO) {
+                            connector.suggest(onRecipe = { recipe ->
+                                if (searchTerm == currentSearchTerm) {
+                                    Log.w("PlanEat", "Adding recipe $recipe")
+                                    // Add new recipes to results
+                                    if (!recipesInDbShown.any { it.url == recipe.url }) {
+                                        suggestedRecipes.add(recipe)
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
                 async(Dispatchers.IO) {
                     if (recipesInDb.isEmpty()) {
                         recipesInDb = db.recipeDao().getAll().toMutableList()
@@ -452,7 +469,7 @@ private fun NavHost(
                     if (changePage) {
                         navigateToTopLevelDestination(
                             PlanEatTopLevelDestination(
-                                PlanEatRoute.SEARCH,
+                                PlanEatRoute.SAVED,
                                 0,
                                 0
                             )
@@ -475,7 +492,7 @@ private fun NavHost(
                 onRecipeDeleted = onRecipeDeleted)
         }
         composable(PlanEatRoute.SEARCH) {
-            RecipesScreen(
+            DiscoverScreen(
                 model = model,
                 onQueryChanged = onQueryChanged,
                 onRecipeDeleted = onRecipeDeleted,
@@ -510,6 +527,39 @@ private fun NavHost(
             )
         }
         composable(PlanEatRoute.SAVED) {
+            RecipesScreen(
+                model = model,
+                onQueryChanged = onQueryChanged,
+                onRecipeDeleted = onRecipeDeleted,
+                onRecipeAdded = onRecipeAdded,
+                onFilterClicked = { filter ->
+                    model.filter(filter)
+                },
+                dataUi = dataUi,
+                goToAgenda = {
+                    Handler(Looper.getMainLooper()).post {
+                        navigateToTopLevelDestination(
+                            PlanEatTopLevelDestination(
+                                PlanEatRoute.AGENDA,
+                                0,
+                                0
+                            )
+                        )
+                    }
+                },
+                goToDetails = { r ->
+                    model.openedRecipe.value = r
+                    Handler(Looper.getMainLooper()).post {
+                        navController.navigate(PlanEatRoute.DETAILS)
+                    }
+                },
+                goToEdition = { r ->
+                    model.openedRecipe.value = r
+                    Handler(Looper.getMainLooper()).post {
+                        navController.navigate(PlanEatRoute.EDITION)
+                    }
+                }
+            )
         }
         composable(PlanEatRoute.SHOPPING_LIST) {
             ShoppingScreen(

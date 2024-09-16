@@ -43,6 +43,31 @@ class ChaCuit : Connector {
         }
     }
 
+    override fun suggest(onRecipe: (Recipe) -> Unit) {
+        var i = 0
+        try {
+            val url = "https://cha-cu.it/"
+            val response = Jsoup.connect(url).execute()
+            val document = response.parse()
+
+            val elements = document.select(".p-2")
+            for (element in elements) {
+                val recipeUrl = element.select("a").attr("href")
+
+                val recipe = getRecipe(recipeUrl)
+                if (recipe.title.isEmpty())
+                    continue
+                onRecipe(recipe)
+                if (i == this.maxResult)
+                    break
+                i++
+            }
+        } catch (error: Exception) {
+            Log.e("PlanEat", error.toString())
+        }
+    }
+
+
     override fun getRecipe(url: String): Recipe {
         var recipe: Recipe = Recipe()
         Log.d("PlanEat", "Parse recipe from cha-cu.it: $url")

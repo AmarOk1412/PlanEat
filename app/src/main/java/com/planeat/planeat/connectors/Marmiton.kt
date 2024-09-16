@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets
 
 class Marmiton : Connector {
     private var maxResult: Int
+    private var maxSuggestion: Int = 9
 
     constructor(maxResult: Int) : super() {
         this.maxResult = maxResult
@@ -43,6 +44,30 @@ class Marmiton : Connector {
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }
+    }
+
+    override fun suggest(onRecipe: (Recipe) -> Unit) {
+        var i = 0
+        try {
+            val url = "https://www.marmiton.org/recettes/menu-de-la-semaine.aspx"
+            val doc: Document = Jsoup.connect(url).get()
+
+            // Select all anchor tags within divs with class 'mrtn-card__title'
+            val elements: Elements = doc.select("div.mrtn-card__title a")
+            for (element in elements) {
+                val relurl = element.attr("href")  // Get the href attribute
+                val recipe = getRecipe(relurl)  // Assuming you have a function to process the URL
+                if (recipe.title.isEmpty())
+                    continue
+                onRecipe(recipe)  // Pass the recipe object to the callback
+                if (i == this.maxSuggestion)
+                    break
+                i++
+            }
+        } catch (error: Exception) {
+            Log.e("PlanEat", error.toString())
+        }
+
     }
 
     override fun getRecipe(url: String): Recipe {

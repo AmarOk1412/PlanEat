@@ -49,6 +49,9 @@ class Ricardo : Connector {
         return routeProps
     }
 
+    override fun suggest(sonRecipe: (Recipe) -> Unit) {
+    }
+
     override fun search(searchTerm: String, onRecipe: (Recipe) -> Unit) {
         var r = 0
         try {

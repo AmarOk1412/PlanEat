@@ -14,6 +14,7 @@ import com.planeat.planeat.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
+import org.json.JSONObject
 import org.tensorflow.lite.examples.textclassification.client.IngredientClassifier
 
 @Serializable
@@ -46,6 +47,25 @@ class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit
             category = this.category,
             checked = this.checked
         )
+    }
+
+    fun toJson(): JSONObject {
+        val result = JSONObject()
+        result.put("name", name)
+        result.put("quantity", quantity)
+        result.put("unit", unit)
+        result.put("category", category)
+        result.put("checked", checked)
+        return result
+    }
+
+    fun fromJson(data: JSONObject) {
+        Log.d("PlanEat", data.toString())
+        name = data.getString("name")
+        quantity = data.getDouble("quantity").toFloat()
+        unit = data.getString("unit")
+        category = data.getString("category")
+        checked = data.getBoolean("checked")
     }
 }
 
