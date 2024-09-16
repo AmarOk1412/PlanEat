@@ -330,7 +330,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         }
     }
 
-    suspend fun search(searchTerm: String, context: Context): Boolean {
+    suspend fun search(searchTerm: String, context: Context, noExternal: Boolean): Boolean {
         // Cancel current search and refresh recipesShown()
         currentSearchTerm = searchTerm
         listJob?.cancel()
@@ -363,18 +363,20 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                         }
                     }
                 }
-                connectors.map { connector ->
-                    searchJobs += launch(Dispatchers.IO) {
-                        connector.search(searchTerm, onRecipe = { recipe ->
-                            if (searchTerm == currentSearchTerm) {
-                                Log.w("PlanEat", "Adding recipe $recipe")
-                                // Add new recipes to results
-                                if (!recipesInDbShown.any { it.url == recipe.url }) {
-                                    recipesSearchedShown.add(recipe)
-                                    recipesSearched.add(recipe)
+                if (!noExternal) {
+                    connectors.map { connector ->
+                        searchJobs += launch(Dispatchers.IO) {
+                            connector.search(searchTerm, onRecipe = { recipe ->
+                                if (searchTerm == currentSearchTerm) {
+                                    Log.w("PlanEat", "Adding recipe $recipe")
+                                    // Add new recipes to results
+                                    if (!recipesInDbShown.any { it.url == recipe.url }) {
+                                        recipesSearchedShown.add(recipe)
+                                        recipesSearched.add(recipe)
+                                    }
                                 }
-                            }
-                        })
+                            })
+                        }
                     }
                 }
             }
@@ -424,8 +426,8 @@ fun PlanEatApp(
 
     NavigationWrapper(
         model = model,
-        onQueryChanged = { value -> scope.launch {
-            model.search(value, context)
+        onQueryChanged = { value, noExternal -> scope.launch {
+            model.search(value, context, noExternal)
         } },
         onRecipeDeleted = {recipe -> scope.launch {
             model.remove(recipe)
@@ -442,7 +444,7 @@ fun PlanEatApp(
 @Composable
 private fun NavigationWrapper(
     model: AppModel,
-    onQueryChanged: (String) -> Unit,
+    onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeUpdated: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
@@ -481,7 +483,7 @@ private fun NavigationWrapper(
 fun AppContent(
     modifier: Modifier = Modifier,
     model: AppModel,
-    onQueryChanged: (String) -> Unit,
+    onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeUpdated: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
@@ -535,7 +537,7 @@ private fun NavHost(
     model: AppModel,
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    onQueryChanged: (String) -> Unit,
+    onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     onRecipeUpdated: (Recipe) -> Unit,

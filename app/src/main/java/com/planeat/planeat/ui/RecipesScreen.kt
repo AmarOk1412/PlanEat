@@ -75,7 +75,7 @@ import java.time.ZoneOffset
 fun RecipesScreen(
     model: AppModel,
     modifier: Modifier = Modifier,
-    onQueryChanged: (String) -> Unit,
+    onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     dataUi: CalendarUiModel,
@@ -125,7 +125,7 @@ fun RecipesScreen(
 
                 LaunchedEffect(text) {
                     delay(300)
-                    onQueryChanged.invoke(text)
+                    onQueryChanged.invoke(text, true)
                 }
 
                 SearchBar(
@@ -212,7 +212,7 @@ fun RecipesScreen(
                             )
                         }
                     }
-                    items(model.recipesInDbShown) { recipe ->
+                    items(model.recipesInDbShown, key = { recipe -> recipe.url }) { recipe ->
                         RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                             toPlanRecipe = r
                             openBottomSheet = true
@@ -227,7 +227,7 @@ fun RecipesScreen(
                                 modifier = Modifier.padding(vertical = 16.dp)
                             )
                         }
-                        items(model.recipesSearchedShown) { recipe ->
+                        items(model.recipesSearchedShown, key = { recipe -> recipe.url }) { recipe ->
                             RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                 toPlanRecipe = r
                                 openBottomSheet = true

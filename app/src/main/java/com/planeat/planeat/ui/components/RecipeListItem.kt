@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -24,7 +25,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Today
-import androidx.compose.material.icons.outlined.BookmarkAdd
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -121,7 +122,7 @@ fun RecipeListItem(
                             existId.longValue = res.recipeId
                         }
                         icon.value = if (existId.longValue == 0.toLong()) {
-                            Icons.Outlined.BookmarkAdd
+                            Icons.Outlined.Add
                         } else {
                             Icons.Default.MoreVert
                         }
@@ -184,9 +185,11 @@ fun RecipeListItem(
                             .clip(CircleShape)
                             .background(surfaceContainerLowestLight)
                             .align(Alignment.TopEnd)
+                            .size(26.dp)
                     ) {
                         Icon(
                             imageVector = icon.value,
+                            modifier = Modifier.size(18.dp),
                             contentDescription = stringResource(R.string.favorite),
                         )
 

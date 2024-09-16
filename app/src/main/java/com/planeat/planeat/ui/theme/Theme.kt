@@ -276,7 +276,7 @@ fun AppTheme(
   if (!view.isInEditMode) {
     SideEffect {
       val window = (view.context as Activity).window
-      window.statusBarColor = colorScheme.surfaceContainerLow.toArgb()
+      window.statusBarColor = Color(0x00FFFFFF).toArgb()//colorScheme.surfaceContainerLow.toArgb()
       WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
     }
   }

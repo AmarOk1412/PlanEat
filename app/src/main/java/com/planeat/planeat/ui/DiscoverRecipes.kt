@@ -63,7 +63,7 @@ import kotlinx.coroutines.launch
 fun DiscoverScreen(
     model: AppModel,
     modifier: Modifier = Modifier,
-    onQueryChanged: (String) -> Unit,
+    onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeAdded: (Recipe) -> Unit,
     dataUi: CalendarUiModel,
@@ -100,7 +100,7 @@ fun DiscoverScreen(
 
             LaunchedEffect(text) {
                 delay(300)
-                onQueryChanged.invoke(text)
+                onQueryChanged.invoke(text, false)
             }
 
             SearchBar(
@@ -188,7 +188,7 @@ fun DiscoverScreen(
                             )
                         }
 
-                        items(model.suggestedRecipes) { recipe ->
+                        items(model.suggestedRecipes, key = { recipe -> recipe.url }) { recipe ->
                             RecipeItem(
                                 recipe,
                                 model,
@@ -218,7 +218,7 @@ fun DiscoverScreen(
                             )
                         }
                     }
-                    items(model.recipesInDbShown) { recipe ->
+                    items(model.recipesInDbShown, key = { recipe -> recipe.url }) { recipe ->
                         RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                             toPlanRecipe = r
                             openBottomSheet = true
@@ -233,7 +233,7 @@ fun DiscoverScreen(
                                 modifier = Modifier.padding(vertical = 16.dp)
                             )
                         }
-                        items(model.recipesSearchedShown) { recipe ->
+                        items(model.recipesSearchedShown, key = { recipe -> recipe.url }) { recipe ->
                             RecipeItem(recipe, model, goToDetails,  goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                 toPlanRecipe = r
                                 openBottomSheet = true
