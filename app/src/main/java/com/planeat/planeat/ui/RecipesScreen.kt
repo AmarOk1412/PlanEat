@@ -273,7 +273,7 @@ fun RecipesScreen(
 
                                 Spacer(modifier = Modifier.weight(1.0f))
 
-                                if (httpRecipes.size > 5) {
+                                if (httpRecipes.size > 2) {
                                     TextButton(onClick = {
                                         filter = "http"
                                     },
@@ -310,7 +310,7 @@ fun RecipesScreen(
 
                                 Spacer(modifier = Modifier.weight(1.0f))
 
-                                if (nonHttpRecipes.size > 5) {
+                                if (nonHttpRecipes.size > 2) {
                                     TextButton(onClick = {
                                         filter = "nonHttp"
                                     },

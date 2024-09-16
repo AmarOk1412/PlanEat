@@ -70,7 +70,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     var recipesInDbShown = mutableStateListOf<Recipe>()
     val recipesSearched = mutableListOf<Recipe>()
     val recipesSearchedShown = mutableStateListOf<Recipe>()
-    val suggestedRecipes = mutableListOf<Recipe>()
+    val suggestedRecipes = mutableStateListOf<Recipe>()
 
     val openedRecipe = mutableStateOf<Recipe?>(null)
     var selectedDate = mutableStateOf<LocalDate?>(null)

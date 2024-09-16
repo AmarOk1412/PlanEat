@@ -24,8 +24,20 @@ data class ParsedIngredient(
     val unit: String? = null
 )
 
+fun singularize(name: String): String {
+    return if (name.endsWith("s", ignoreCase = true)) {
+        name.dropLast(1).lowercase()
+    } else {
+        name.lowercase()
+    }
+}
+
 @Serializable
 class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit: String = "", var category: String = "", var checked: Boolean = false) {
+
+    init {
+        name = singularize(name)
+    }
 
     fun addQuantity(other: IngredientItem) {
         if ((this.unit == other.unit)
@@ -61,7 +73,7 @@ class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit
 
     fun fromJson(data: JSONObject) {
         Log.d("PlanEat", data.toString())
-        name = data.getString("name")
+        name = singularize(data.getString("name"))
         quantity = data.getDouble("quantity").toFloat()
         unit = data.getString("unit")
         category = data.getString("category")
@@ -71,6 +83,7 @@ class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit
 
 @Composable
 fun toIngredientIcon(ingredientName: String): Painter? {
+    val singularName = singularize(ingredientName)
     // Store the icon resource ID
     var iconResId by remember { mutableStateOf<Int?>(null) }
     val db = IngredientsDb.getDatabase(LocalContext.current)
@@ -78,12 +91,15 @@ fun toIngredientIcon(ingredientName: String): Painter? {
     // Fetch the icon resource ID in a background thread
     LaunchedEffect(ingredientName) {
         withContext(Dispatchers.IO) {
-            val ingredient = db.ingredientDao().findByName(ingredientName)
+            var ingredient = db.ingredientDao().findByName(singularName)
+            if (ingredient == null) {
+                ingredient = db.ingredientDao().findByName(ingredientName.lowercase())
+            }
             if (ingredient != null) {
                 if (ingredient.icon != 0) {
                     iconResId = ingredient.icon
                 } else {
-                    val res = fetchIconForIngredient(ingredientName.lowercase())
+                    val res = fetchIconForIngredient(ingredientName)
                     if (res != 0) {
                         var newIngredient = ingredient.copy()
                         newIngredient.icon = res!!
@@ -98,7 +114,7 @@ fun toIngredientIcon(ingredientName: String): Painter? {
                     }
                 }
             } else {
-                val res = fetchIconForIngredient(ingredientName.lowercase())
+                val res = fetchIconForIngredient(ingredientName)
                 if (res != 0) {
                     iconResId = res
                     val ingredient = Ingredient(name=ingredientName, icon=iconResId!!)
@@ -123,13 +139,17 @@ fun toIngredientCategory(
     ic: IngredientClassifier,
     db: IngredientsDb
 ): String {
+    val singularName = singularize(ingredientName)
     var category: String? = null
 
-    val ingredient = db.ingredientDao().findByName(ingredientName)
+    var ingredient = db.ingredientDao().findByName(singularName)
+    if (ingredient == null) {
+        ingredient = db.ingredientDao().findByName(ingredientName.lowercase())
+    }
     if (ingredient != null && ingredient.category.isNotEmpty()) {
         category = ingredient.category
     } else if (ingredient != null) {
-        category = ic.classify(ingredientName.lowercase())
+        category = ic.classify(ingredientName)
         try {
             ingredient.category = category!!
             db.ingredientDao().update(ingredient)
@@ -137,7 +157,7 @@ fun toIngredientCategory(
             Log.w("PlanEat", "Error: $error")
         }
     } else {
-        category = ic.classify(ingredientName.lowercase())
+        category = ic.classify(ingredientName)
         val ingredient = Ingredient(name=ingredientName, category=category)
         try {
             db.ingredientDao().insertAll(ingredient)

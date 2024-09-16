@@ -177,11 +177,11 @@ fun DiscoverScreen(
             var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
 
             if (text.isEmpty()) {
-                if (model.suggestedRecipes.isNotEmpty()) {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
-                        modifier = Modifier.padding(start=16.dp, end=16.dp)
-                    ) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.padding(start=16.dp, end=16.dp)
+                ) {
+                    if (model.suggestedRecipes.isNotEmpty()) {
                         item(span = { GridItemSpan(2) }) {
                             Text(
                                 text = "You may like",
@@ -189,21 +189,21 @@ fun DiscoverScreen(
                                 modifier = Modifier.padding(vertical = 16.dp)
                             )
                         }
+                    }
 
-                        items(model.suggestedRecipes, key = { recipe -> recipe.url }) { recipe ->
-                            RecipeItem(
-                                recipe,
-                                model,
-                                goToDetails,
-                                goToAgenda,
-                                goToEdition,
-                                onRecipeDeleted,
-                                onRecipeAdded,
-                                onPlanRecipe = { r ->
-                                    toPlanRecipe = r
-                                    openBottomSheet = true
-                                })
-                        }
+                    items(model.suggestedRecipes, key = { recipe -> recipe.url }) { recipe ->
+                        RecipeItem(
+                            recipe,
+                            model,
+                            goToDetails,
+                            goToAgenda,
+                            goToEdition,
+                            onRecipeDeleted,
+                            onRecipeAdded,
+                            onPlanRecipe = { r ->
+                                toPlanRecipe = r
+                                openBottomSheet = true
+                            })
                     }
                 }
             } else {
