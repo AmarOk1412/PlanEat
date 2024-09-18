@@ -393,36 +393,43 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     suspend fun initSuggestions() {
         coroutineScope {
             launch {
-                if (suggestedRecipes.isEmpty()) {
-                    if (!isMoreThanOneWeekSinceLastModified(
-                            "suggestions.json"
-                        )
-                    ) {
-                        val suggestions =
-                            loadRecipesFromFile("suggestions.json")
-                        suggestions?.forEach { recipe ->
-                            if (!recipesInDbShown.any { it.url == recipe.url }) {
-                                suggestedRecipes.add(recipe)
-                                TagClassifier(context).classify(recipe.toSmallJson().toString())
+                withContext(Dispatchers.IO) {
+                    if (recipesInDb.isEmpty()) {
+                        recipesInDb = db.recipeDao().getAll().toMutableList()
+                        recipesInDb.sortWith(compareBy({ -it.planified }, { it.title }))
+                    }
+
+                    if (suggestedRecipes.isEmpty()) {
+                        if (!isMoreThanOneWeekSinceLastModified(
+                                "suggestions.json"
+                            )
+                        ) {
+                            val suggestions =
+                                loadRecipesFromFile("suggestions.json")
+                            suggestions?.forEach { recipe ->
+                                if (!recipesInDb.any { it.url == recipe.url }) {
+                                    suggestedRecipes.add(recipe)
+                                    TagClassifier(context).classify(recipe.toSmallJson().toString())
+                                }
                             }
                         }
-                    }
-                    // If nothing cached
-                    if (suggestedRecipes.isEmpty()) {
-                        connectors.map { connector ->
-                            searchJobs += launch(Dispatchers.IO) {
-                                // If no suggestions, find new one
-                                connector.suggest(onRecipe = { recipe ->
-                                    // Add new recipes to results
-                                    if (!recipesInDbShown.any { it.url == recipe.url }) {
-                                        suggestedRecipes.add(recipe)
-                                    }
-                                })
-                                // Cache it
-                                writeRecipesToFile(
-                                    suggestedRecipes,
-                                    "suggestions.json"
-                                )
+                        // If nothing cached
+                        if (suggestedRecipes.isEmpty()) {
+                            connectors.map { connector ->
+                                searchJobs += launch(Dispatchers.IO) {
+                                    // If no suggestions, find new one
+                                    connector.suggest(onRecipe = { recipe ->
+                                        // Add new recipes to results
+                                        if (!recipesInDb.any { it.url == recipe.url }) {
+                                            suggestedRecipes.add(recipe)
+                                        }
+                                    })
+                                    // Cache it
+                                    writeRecipesToFile(
+                                        suggestedRecipes,
+                                        "suggestions.json"
+                                    )
+                                }
                             }
                         }
                     }
@@ -443,10 +450,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         if (searchTerm.isEmpty()) {
             listJob = coroutineScope {
                 async(Dispatchers.IO) {
-                    if (recipesInDb.isEmpty()) {
-                        recipesInDb = db.recipeDao().getAll().toMutableList()
-                        recipesInDb.sortWith(compareBy({ -it.planified }, { it.title }))
-                    }
                     for (recipe in recipesInDb) {
                         recipesInDbShown.add((recipe))
                     }
