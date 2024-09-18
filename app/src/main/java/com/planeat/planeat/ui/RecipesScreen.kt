@@ -246,7 +246,7 @@ fun RecipesScreen(
                                 ) {
                                     toTagIcon(tag = filter)
                                     Text(
-                                        text = filter.toString(),
+                                        text = filter.getString(LocalContext.current),
                                         fontSize = with(LocalDensity.current) {
                                             14.dp.toSp()
                                         },
@@ -263,10 +263,12 @@ fun RecipesScreen(
                         if (httpRecipes.isNotEmpty()) {
 
                             Row(
-                                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
                             ) {
                                 Text(
-                                    text = "Favorites",
+                                    text = stringResource(R.string.favorite),
                                     style = MaterialTheme.typography.titleLarge,
                                     modifier = Modifier.align(Alignment.CenterVertically)
                                 )
@@ -278,7 +280,7 @@ fun RecipesScreen(
                                         filter = "http"
                                     },
                                         modifier = Modifier.align(Alignment.CenterVertically)) {
-                                        Text("See more")
+                                        Text(stringResource(R.string.see_more))
                                     }
                                 }
                             }
@@ -300,7 +302,9 @@ fun RecipesScreen(
 
                         if (nonHttpRecipes.isNotEmpty()) {
                             Row(
-                                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
                             ) {
                                 Text(
                                     text = "My recipes",
@@ -315,7 +319,7 @@ fun RecipesScreen(
                                         filter = "nonHttp"
                                     },
                                         modifier = Modifier.align(Alignment.CenterVertically)) {
-                                        Text("See more")
+                                        Text(stringResource(R.string.see_more))
                                     }
                                 }
                             }
@@ -361,7 +365,7 @@ fun RecipesScreen(
                             if (nonHttpRecipes.size > 0) {
                                 item(span = { GridItemSpan(2) }) {
                                     Text(
-                                        text = "My recipes",
+                                        text = stringResource(R.string.my_recipes),
                                         style = MaterialTheme.typography.titleLarge,
                                         modifier = Modifier.padding(vertical = 16.dp)
                                     )

@@ -29,13 +29,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.example.compose.onPrimaryLight
-import com.example.compose.primaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
-import com.example.compose.onSurfaceVariantLight
+import com.planeat.planeat.R
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -93,7 +93,7 @@ fun Header(
     Row (modifier = Modifier.padding(start=16.dp)) {
         Text(
             text = if (dataUi.selectedDate.isToday) {
-                "Today"
+                stringResource(R.string.today)
             } else {
                 dataUi.selectedDate.date.format(
                     DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
@@ -108,7 +108,7 @@ fun Header(
         }) {
             Icon(
                 imageVector = Icons.Filled.ChevronLeft,
-                contentDescription = "Back"
+                contentDescription = stringResource(R.string.back)
             )
         }
         IconButton(onClick = {
@@ -116,7 +116,7 @@ fun Header(
         }) {
             Icon(
                 imageVector = Icons.Filled.ChevronRight,
-                contentDescription = "Next"
+                contentDescription = stringResource(R.string.next)
             )
         }
     }

@@ -182,7 +182,10 @@ fun ShoppingScreen(
 
                         // Display number of planned recipes
                         Text(
-                            text = "${shoppingList!!.plannedRecipesSize()} recipes",
+                            text = stringResource(
+                                R.string.recipes,
+                                shoppingList!!.plannedRecipesSize()
+                            ),
                             style = MaterialTheme.typography.titleSmall
                         )
 

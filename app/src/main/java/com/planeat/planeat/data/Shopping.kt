@@ -1,5 +1,6 @@
 
 import android.content.Context
+import android.util.Log
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.IngredientItem
 import com.planeat.planeat.data.IngredientsDb
@@ -7,8 +8,6 @@ import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.toIngredientCategory
 import com.planeat.planeat.ui.utils.IngredientClassifier
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.json.JSONArray
 import org.json.JSONException
@@ -159,7 +158,7 @@ class ShoppingList(
         }
     }
 
-    suspend fun saveLoadFromDisk() {
+    fun saveLoadFromDisk() {
         var shoppingJson = loadShoppingJson()
         if (shoppingJson == null) {
             shoppingJson = JSONObject()
@@ -202,12 +201,10 @@ class ShoppingList(
             // Initialize ingredientsPerCategory and ingredientsPerRecipes
             plannedRecipes.forEach { recipe ->
                 recipe.parsed_ingredients.forEach {
-                    withContext(Dispatchers.IO) {
-                        if (it.category.isEmpty()) {
-                            it.category = toIngredientCategory(it.name, ic, ingredientsDb)
-                        }
-                        shoppingList += ShoppingIngredient(it, recipe.recipeId)
+                    if (it.category.isEmpty()) {
+                        it.category = toIngredientCategory(it.name, ic, ingredientsDb)
                     }
+                    shoppingList += ShoppingIngredient(it, recipe.recipeId)
                 }
             }
 

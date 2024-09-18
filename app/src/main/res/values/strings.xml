@@ -10,30 +10,17 @@
   -->
 <resources>
     <string name="app_name">PlanEat</string>
-    <string name="navigation_drawer">Navigation Drawer</string>
     <string name="tab_search">Discover</string>
     <string name="tab_agenda">Agenda</string>
-    <string name="tab_dm">Direct Messages</string>
-    <string name="tab_groups">Groups</string>
 
-    <string name="profile">Profile</string>
     <string name="search">Search</string>
-    <string name="reply">Reply</string>
-    <string name="reply_all">Reply All</string>
 
     <string name="edit">Edit</string>
 
-    <string name="empty_screen_title">Screen under construction</string>
-    <string name="empty_screen_subtitle">This screen is still under construction. This sample will help you learn about adaptive layouts in Jetpack Compose</string>
-
     <string name="back_button">Back</string>
     <string name="more_options_button">More options</string>
-    <string name="messages">Messages</string>
-    <string name="four_hours_ago">4 hrs ago</string>
 
     <string name="search_placeholder">Tartiflette, Ramen, Crêpes…</string>
-    <string name="no_item_found">No item found</string>
-    <string name="no_search_history">No search history</string>
     <string name="tab_saved">Favorites</string>
     <string name="tab_shopping_list">Shopping List</string>
     <string name="favorite">Favorite</string>
@@ -50,4 +37,50 @@
     <string name="carrots_eggs_chocolate">Carrots, Eggs, Chocolate…</string>
     <string name="custom">Custom</string>
     <string name="validated_ingredients">Validated Ingredients</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="add_recipe">Add recipe</string>
+    <string name="my_recipe">My recipe</string>
+    <string name="delete">Delete</string>
+    <string name="confirm_deletion">Confirm deletion</string>
+    <string name="remove_from_agenda">This will remove the recipe from your agenda and recipe list.</string>
+    <string name="confirm">Confirm</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="_1_ingredients">%1$s ingredients</string>
+    <string name="my_favorites">My favorites</string>
+    <string name="new_recipes">New recipes</string>
+    <string name="pick_image">Pick image</string>
+    <string name="url">URL</string>
+    <string name="import_from_url">Import from URL</string>
+    <string name="title">Title</string>
+    <string name="kind_of_meal">Kind of Meal</string>
+    <string name="cooking_time">Cooking Time</string>
+    <string name="season">Season</string>
+    <string name="tags">Tags</string>
+    <string name="save">Save</string>
+    <string name="add_to_recipes">Add to recipes</string>
+    <string name="edit_recipe">Edit recipe</string>
+    <string name="plan_it">Plan it</string>
+    <string name="step">Step %1$s</string>
+    <string name="see_more">See more</string>
+    <string name="my_recipes">My recipes</string>
+    <string name="today">Today</string>
+    <string name="you_may_like">You may like</string>
+    <string name="recipes">%1$s recipes</string>
+    <string name="tag_all">All</string>
+    <string name="tag_easy">Easy</string>
+    <string name="tag_medium">Medium</string>
+    <string name="tag_hard">Hard</string>
+    <string name="tag_appetizer">Appetizer</string>
+    <string name="tag_healthy">Healthy</string>
+    <string name="tag_middle_eastern">Middle Eastern</string>
+    <string name="tag_asian">Asian</string>
+    <string name="tag_vegetarian">Vegetarian</string>
+    <string name="tag_desserts">Desserts</string>
+    <string name="tag_comfort_food">Comfort Food</string>
+    <string name="tag_european">European</string>
+    <string name="tag_bakery">Bakery</string>
+    <string name="tag_seafood">Seafood</string>
+    <string name="tag_american">American</string>
+    <string name="tag_drinks">Drinks</string>
 </resources>

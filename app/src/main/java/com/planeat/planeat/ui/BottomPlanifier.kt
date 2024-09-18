@@ -33,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.room.Room
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb

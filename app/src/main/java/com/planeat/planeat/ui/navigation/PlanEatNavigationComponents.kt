@@ -62,7 +62,7 @@ fun PlanEatNavigationRail(
                 icon = {
                     Icon(
                         imageVector = Icons.Default.Menu,
-                        contentDescription = stringResource(id = R.string.navigation_drawer)
+                        contentDescription = null
                     )
                 }
             )

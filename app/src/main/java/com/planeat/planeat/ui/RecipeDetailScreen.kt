@@ -141,7 +141,10 @@ fun RecipeDetailScreen(
                         .weight(1f)
                         .padding(8.dp)
                 ) {
-                    Text(text = if (selectedRecipe.recipeId == 0L) "Add to recipes" else "Edit recipe")
+                    Text(text = if (selectedRecipe.recipeId == 0L) stringResource(R.string.add_to_recipes) else stringResource(
+                        R.string.edit_recipe
+                    )
+                    )
                 }
 
                 Button(
@@ -153,7 +156,7 @@ fun RecipeDetailScreen(
                         .weight(1f)
                         .padding(8.dp)
                 ) {
-                    Text(text = "Plan it")
+                    Text(text = stringResource(R.string.plan_it))
                 }
             }
         }
@@ -270,7 +273,7 @@ fun RecipeDetailScreen(
                                 selectedRecipe.steps.forEachIndexed { index, step ->
 
                                     Text(
-                                        text = "Step ${index + 1}",
+                                        text = stringResource(R.string.step, index + 1),
                                         style = MaterialTheme.typography.titleMedium,
                                         modifier = Modifier.padding(bottom = 8.dp)
                                     )

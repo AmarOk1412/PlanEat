@@ -42,6 +42,11 @@ class IngredientClassifier {
 
         } catch (error: Exception) {
             Log.e("IngredientClassifier", error.toString())
+            return ""
+        }
+
+        if (category.isEmpty()) {
+            category = "other"
         }
 
         return category.replace("&amp", "&")

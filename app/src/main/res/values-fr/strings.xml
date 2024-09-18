@@ -1,0 +1,87 @@
+<!--
+  Copyright 2022 The Android Open Source Project
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+  in compliance with the License. You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software distributed under the License
+  is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+  or implied. See the License for the specific language governing permissions and limitations under
+  the License.
+  -->
+<resources>
+    <string name="app_name">PlanEat</string>
+    <string name="tab_search">Découvrir</string>
+    <string name="tab_agenda">Agenda</string>
+
+    <string name="search">Recherche</string>
+
+    <string name="edit">Éditer</string>
+
+
+    <string name="back_button">Retour</string>
+    <string name="more_options_button">Plus d\'options</string>
+
+    <string name="search_placeholder">Tartiflette, Ramen, Crêpes…</string>
+    <string name="tab_saved">Favoris</string>
+    <string name="tab_shopping_list">Liste de courses</string>
+    <string name="favorite">Favoris</string>
+    <string name="ingredients">Ingrédients</string>
+    <string name="steps">Instructions</string>
+    <string name="add">ajout d\'une recette</string>
+    <string name="add_ingredient">Ajout d\'un ingrédient</string>
+    <string name="items">%1$s items</string>
+    <string name="sort_by">Trier par :</string>
+    <string name="aisle">Rayon</string>
+    <string name="recipe">Recette</string>
+    <string name="add_an_item">Ajout d\'un item</string>
+    <string name="go_back">Retour</string>
+    <string name="carrots_eggs_chocolate">Carrotes, Œufs, Chocolat…</string>
+    <string name="custom">Personnalisé</string>
+    <string name="validated_ingredients">Ingrédients validés</string>
+    <string name="back">Précédent</string>
+    <string name="next">Suivant</string>
+    <string name="add_recipe">Ajout d\'une recette</string>
+    <string name="my_recipe">Ma recette</string>
+    <string name="delete">Supprimer</string>
+    <string name="confirm_deletion">Confirmer la suppression</string>
+    <string name="remove_from_agenda">Cette action supprimera la recette de votre agenda et de votre liste de recettes.</string>
+    <string name="confirm">Confirmer</string>
+    <string name="dismiss">Annuler</string>
+    <string name="_1_ingredients">%1$s ingrédients</string>
+    <string name="my_favorites">Favoris</string>
+    <string name="new_recipes">Nouvelles recettes</string>
+    <string name="pick_image">Choisir une image</string>
+    <string name="url">URL</string>
+    <string name="import_from_url">Importer depuis un URL</string>
+    <string name="title">Titre</string>
+    <string name="kind_of_meal">Type de repas</string>
+    <string name="cooking_time">Temps de préparation</string>
+    <string name="season">Saison</string>
+    <string name="tags">Tags</string>
+    <string name="save">Sauvegarder</string>
+    <string name="add_to_recipes">Ajouter aux recettes</string>
+    <string name="edit_recipe">Éditer la recette</string>
+    <string name="plan_it">Planifier la</string>
+    <string name="step">Étape %1$s</string>
+    <string name="see_more">Voir plus</string>
+    <string name="my_recipes">Mes recettes</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="you_may_like">Vous pourriez aimer</string>
+    <string name="recipes">%1$s recettes</string>
+    <string name="tag_all">Tout</string>
+    <string name="tag_easy">Facile</string>
+    <string name="tag_medium">Moyen</string>
+    <string name="tag_hard">Difficile</string>
+    <string name="tag_appetizer">Entrée</string>
+    <string name="tag_healthy">Santé</string>
+    <string name="tag_middle_eastern">Moyen-Orient</string>
+    <string name="tag_asian">Asiatique</string>
+    <string name="tag_vegetarian">Végétarien</string>
+    <string name="tag_desserts">Desserts</string>
+    <string name="tag_comfort_food">Cuisine réconfortante</string>
+    <string name="tag_european">Européenne</string>
+    <string name="tag_bakery">Boulangerie</string>
+    <string name="tag_seafood">Fruits de mer</string>
+    <string name="tag_american">Américaine</string>
+    <string name="tag_drinks">Boissons</string>
+</resources>

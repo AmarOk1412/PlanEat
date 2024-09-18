@@ -117,7 +117,6 @@ fun RecipeListItem(
                     try {
                         val rdb = RecipesDb.getDatabase(context)
                         val res = rdb.recipeDao().findByUrl(recipe.url)
-                        // rdb.close()
                         if (res != null) {
                             existId.longValue = res.recipeId
                         }
@@ -159,7 +158,7 @@ fun RecipeListItem(
                     if (!recipe.url.startsWith("http")) {
                         SuggestionChip(
                             label = { Text(
-                                text = "My recipe",
+                                text = stringResource(R.string.my_recipe),
                                 maxLines = 1,
                                 style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.height(18.dp),
@@ -248,7 +247,7 @@ fun RecipeListItem(
                                 DropdownMenuItem(
                                     leadingIcon = { Icon(Icons.Filled.Edit, contentDescription = null) },
                                     text = {
-                                        Text(text = "Edit")
+                                        Text(text = stringResource(R.string.edit))
                                     },
                                     onClick = {
                                         showDialog.value = false
@@ -259,7 +258,7 @@ fun RecipeListItem(
                                 DropdownMenuItem(
                                     leadingIcon = { Icon(Icons.Filled.Delete, contentDescription = null, tint = Color.Red) },
                                     text = {
-                                        Text(text = "Delete", color = Color.Red)
+                                        Text(text = stringResource(R.string.delete), color = Color.Red)
                                     },
                                     onClick = {
                                         showDialog.value = false
@@ -275,10 +274,10 @@ fun RecipeListItem(
                                     Icon(Icons.Filled.Delete, contentDescription = null)
                                 },
                                 title = {
-                                    Text(text = "Confirm deletion")
+                                    Text(text = stringResource(R.string.confirm_deletion))
                                 },
                                 text = {
-                                    Text(text = "This will remove the recipe from your agenda and recipe list.")
+                                    Text(text = stringResource(R.string.remove_from_agenda))
                                 },
                                 onDismissRequest = {
                                     showDeleteDialog.value = false
@@ -290,7 +289,7 @@ fun RecipeListItem(
                                             onRecipeDeleted(recipe)
                                         }
                                     ) {
-                                        Text("Confirm")
+                                        Text(stringResource(R.string.confirm))
                                     }
                                 },
                                 dismissButton = {
@@ -299,7 +298,7 @@ fun RecipeListItem(
                                             showDeleteDialog.value = false
                                         }
                                     ) {
-                                        Text("Dismiss")
+                                        Text(stringResource(R.string.dismiss))
                                     }
                                 }
                             )
@@ -324,27 +323,30 @@ fun RecipeListItem(
             )
 
             SuggestionChip(
-                label = { Text(
-                    text = if (recipe.parsed_ingredients.isNotEmpty()) {
-                        recipe.parsed_ingredients.size.toString() + " ingrédients"
-                    } else {
-                        recipe.ingredients.size.toString() + " ingrédients"
-                    },
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.height(18.dp),
+                label = {
+                    Text(
+                        text = if (recipe.parsed_ingredients.isNotEmpty()) {
+                            stringResource(R.string._1_ingredients, recipe.parsed_ingredients.size)
+                        } else {
+                            stringResource(R.string._1_ingredients, recipe.ingredients.size)
+                        },
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.height(18.dp),
 
-                ) },
+                        )
+                },
                 onClick = {},
                 border = null,
                 colors = SuggestionChipDefaults.suggestionChipColors(
                     containerColor = Color(0xFFfff4df),
                     labelColor = Color(0xFF664a02)
-                )/* TODO SuggestionChipDefaults.suggestionChipColors(
+                ),
+                /* TODO SuggestionChipDefaults.suggestionChipColors(
                     containerColor = secondaryContainerLight,
                     labelColor = onSecondaryContainerLight
-                )*/,
+                )*/
                 modifier = Modifier
                     .padding(8.dp)
                     .height(24.dp),

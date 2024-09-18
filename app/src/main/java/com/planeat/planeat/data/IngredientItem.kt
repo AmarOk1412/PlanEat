@@ -41,6 +41,10 @@ class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit
             || (this.unit == "clove" && other.unit == "piece")
         ) {
             this.quantity += other.quantity
+        } else if ((this.unit == "" && other.unit == "pinch")
+                || (this.unit == "pinch" && other.unit == ""))
+        {
+            this.quantity = 1.0f
         } else {
             // Handle unit conversion or throw an error
             Log.e("PlanEat", "@@@ TODO convert ${other.unit} to ${this.unit}")
@@ -146,6 +150,7 @@ fun toIngredientCategory(
         category = ingredient.category
     } else if (ingredient != null) {
         category = ic.classify(ingredientName)
+        Log.d("PlanEat", "classify $ingredientName with $category")
         try {
             ingredient.category = category!!
             db.ingredientDao().update(ingredient)
@@ -154,6 +159,7 @@ fun toIngredientCategory(
         }
     } else {
         category = ic.classify(ingredientName)
+        Log.d("PlanEat", "classify $ingredientName with $category")
         val ingredient = Ingredient(name=ingredientName, category=category)
         try {
             db.ingredientDao().insertAll(ingredient)

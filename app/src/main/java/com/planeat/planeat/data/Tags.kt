@@ -1,5 +1,6 @@
 package com.planeat.planeat.data
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -11,26 +12,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.planeat.planeat.R
 
-enum class Tags {
-    All,
-    Easy,
-    Medium,
-    Hard,
-    Appetizer,
-    Healthy,
-    MiddleEastern,
-    Asian,
-    Vegetarian,
-    Desserts,
-    ComfortFood,
-    European,
-    Bakery,
-    Seafood,
-    American,
-    Drinks;
+enum class Tags(private val resId: Int) {
+    All(R.string.tag_all),
+    Easy(R.string.tag_easy),
+    Medium(R.string.tag_medium),
+    Hard(R.string.tag_hard),
+    Appetizer(R.string.tag_appetizer),
+    Healthy(R.string.tag_healthy),
+    MiddleEastern(R.string.tag_middle_eastern),
+    Asian(R.string.tag_asian),
+    Vegetarian(R.string.tag_vegetarian),
+    Desserts(R.string.tag_desserts),
+    ComfortFood(R.string.tag_comfort_food),
+    European(R.string.tag_european),
+    Bakery(R.string.tag_bakery),
+    Seafood(R.string.tag_seafood),
+    American(R.string.tag_american),
+    Drinks(R.string.tag_drinks);
 
-    override fun toString(): String {
-        return name.replace(Regex("([A-Z])"), " $1").trim()
+    fun getString(context: Context): String {
+        return context.getString(resId)
     }
 }
 

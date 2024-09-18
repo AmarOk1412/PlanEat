@@ -11,7 +11,7 @@ interface IngredientDao {
     @Query("SELECT * FROM ingredients")
     fun getAll(): List<Ingredient>
 
-    @Query("SELECT * FROM ingredients WHERE name IN (:name)")
+    @Query("SELECT * FROM ingredients WHERE name = :name")
     fun findByName(name: String): Ingredient
 
     @Query("SELECT * FROM ingredients")

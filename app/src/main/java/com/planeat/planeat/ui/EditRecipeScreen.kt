@@ -35,8 +35,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -60,7 +62,7 @@ fun RequestContentPermission(imageBitmap: MutableState<ImageBitmap>, onUriSelect
         Button(onClick = {
             launcher.launch("image/*")
         }) {
-            Text(text = "Pick image")
+            Text(text = stringResource(R.string.pick_image))
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -166,7 +168,7 @@ fun EditRecipeScreen(
             value = url,
             onValueChange = { url = it },
             maxLines = 1,
-            label = { Text(text = "URL") },
+            label = { Text(text = stringResource(R.string.url)) },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -180,7 +182,7 @@ fun EditRecipeScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Import from URL")
+            Text(text = stringResource(R.string.import_from_url))
         }
 
         // Image input
@@ -215,7 +217,7 @@ fun EditRecipeScreen(
         TextField(
             value = title,
             onValueChange = { title = it },
-            label = { Text(text = "Title") },
+            label = { Text(text = stringResource(R.string.title)) },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -224,7 +226,7 @@ fun EditRecipeScreen(
         TextField(
             value = kindOfMeal,
             onValueChange = { kindOfMeal = it },
-            label = { Text(text = "Kind of Meal") },
+            label = { Text(text = stringResource(R.string.kind_of_meal)) },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -232,7 +234,7 @@ fun EditRecipeScreen(
         TextField(
             value = cookingTime.toString(),
             onValueChange = { cookingTime = it.toIntOrNull() ?: 0 },
-            label = { Text(text = "Cooking Time") },
+            label = { Text(text = stringResource(R.string.cooking_time)) },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -240,7 +242,7 @@ fun EditRecipeScreen(
         TextField(
             value = season,
             onValueChange = { season = it },
-            label = { Text(text = "Season") },
+            label = { Text(text = stringResource(R.string.season)) },
             maxLines = 1,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -248,7 +250,7 @@ fun EditRecipeScreen(
         TextField(
             value = tags,
             onValueChange = { tags = it },
-            label = { Text(text = "Tags") },
+            label = { Text(text = stringResource(R.string.tags)) },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -256,7 +258,7 @@ fun EditRecipeScreen(
         TextField(
             value = ingredients,
             onValueChange = { ingredients = it },
-            label = { Text(text = "Ingredients") },
+            label = { Text(text = stringResource(R.string.ingredients)) },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -264,7 +266,7 @@ fun EditRecipeScreen(
         TextField(
             value = steps,
             onValueChange = { steps = it },
-            label = { Text(text = "Steps") },
+            label = { Text(text = stringResource(R.string.steps)) },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -284,7 +286,7 @@ fun EditRecipeScreen(
                 onRecipeUpdated(recipe)
             }
         ) {
-            Text(text = "Save")
+            Text(text = stringResource(R.string.save))
         }
 
         if (recipe.recipeId != 0L) {
@@ -294,7 +296,7 @@ fun EditRecipeScreen(
                     onRecipeDeleted(recipe)
                 }
             ) {
-                Text(text = "Delete")
+                Text(text = stringResource(R.string.delete))
             }
         }
     }

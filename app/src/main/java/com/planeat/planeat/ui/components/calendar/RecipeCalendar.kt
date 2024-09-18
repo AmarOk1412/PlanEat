@@ -41,9 +41,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import androidx.room.Room
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
@@ -141,7 +141,9 @@ fun ContentItem(
         )
 
         Row(
-            modifier = Modifier.horizontalScroll(rememberScrollState()).height(IntrinsicSize.Min)
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                .height(IntrinsicSize.Min)
         ) {
             val scope = rememberCoroutineScope()
 
@@ -176,12 +178,16 @@ fun ContentItem(
                         }
                     } },
                     agenda = recipeAgenda.agenda,
-                    modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium)
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .shadow(8.dp, shape = MaterialTheme.shapes.medium)
                 )
             }
 
             AddRecipeCard(
-                modifier = Modifier.padding(8.dp).shadow(8.dp, shape = MaterialTheme.shapes.medium),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .shadow(8.dp, shape = MaterialTheme.shapes.medium),
                 date = date,
                 dataUi = dataUi,
                 updateDate = updateDate
@@ -242,12 +248,12 @@ fun AddRecipeCard(
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.add),
-                    contentDescription = "Add recipe",
+                    contentDescription = stringResource(R.string.add_recipe),
                     tint = Color(0xFF00AF45),
                     modifier = Modifier.size(40.dp)
                 )
                 Text(
-                    text = "Add recipe",
+                    text = stringResource(R.string.add_recipe),
                     style = MaterialTheme.typography.titleLarge,
                 )
             }

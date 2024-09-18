@@ -16,6 +16,9 @@ data class Ingredient(
     @ColumnInfo(name = "icon") var icon: Int = 0,
     @ColumnInfo(name = "category") var category: String = ""
 )  {
+    init {
+        name = name.lowercase()
+    }
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var recipeId: Long = 0

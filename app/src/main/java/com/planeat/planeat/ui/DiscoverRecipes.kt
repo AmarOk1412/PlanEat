@@ -45,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -160,7 +161,7 @@ fun DiscoverScreen(
                             ) {
                                 toTagIcon(tag = filter)
                                 Text(
-                                    text = filter.toString(),
+                                    text = filter.getString(LocalContext.current),
                                     fontSize = with(LocalDensity.current) {
                                         14.dp.toSp()
                                     },
@@ -184,7 +185,7 @@ fun DiscoverScreen(
                     if (model.suggestedRecipes.isNotEmpty()) {
                         item(span = { GridItemSpan(2) }) {
                             Text(
-                                text = "You may like",
+                                text = stringResource(R.string.you_may_like),
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = Modifier.padding(vertical = 16.dp)
                             )
@@ -216,7 +217,7 @@ fun DiscoverScreen(
                     if (model.recipesSearchedShown.size > 0 && model.recipesInDbShown.size > 0) {
                         item(span = { GridItemSpan(2) }) {
                             Text(
-                                text = "My favorites",
+                                text = stringResource(R.string.my_favorites),
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = Modifier.padding(vertical = 16.dp)
                             )
@@ -244,7 +245,7 @@ fun DiscoverScreen(
                     if (model.recipesSearchedShown.size > 0) {
                         item(span = { GridItemSpan(2) }) {
                             Text(
-                                text = "New recipes",
+                                text = stringResource(R.string.new_recipes),
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = Modifier.padding(vertical = 16.dp)
                             )

@@ -190,8 +190,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                             result += Tags.American
                         if (r.tags.any { it.contains("grec") } || r.tags.any { it.contains("italie") } || r.tags.any { it.contains("portugua") } || r.tags.any { it.contains("fran") })
                             result += Tags.European
-                        if (r.tags.any { it.contains("sain") })
-                            result += Tags.Healthy
                         if (r.tags.any { it.contains("végétarien") })
                             result += Tags.Vegetarian
                         if (r.tags.any { it.contains("dessert") } || r.tags.any { it.contains("gâteau") })
@@ -206,7 +204,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                                         dataset.forEach { recipe, tags ->
                                             // Convert recipe to JSON string and tags to a string separated by commas
                                             val recipeJson = recipe.toSmallJson() // Assuming this is your JSON conversion method
-                                            val tagsString = tags.joinToString(",") // Convert list of tags to comma-separated string
+                                            val tagsString = tags.distinct().joinToString(",") // Convert list of tags to comma-separated string
 
                                             // Append to the CSV file, separating the columns with '@'
                                             writer.appendLine("$recipeJson@$tagsString")
