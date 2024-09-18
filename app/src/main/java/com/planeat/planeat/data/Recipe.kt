@@ -9,6 +9,8 @@ import androidx.room.TypeConverters
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
+import org.json.JSONArray
+import org.json.JSONObject
 
 class Converters {
     @TypeConverter
@@ -51,6 +53,14 @@ data class Recipe(
     @ColumnInfo(name = "ingredients") var ingredients: List<String> = emptyList(),
     @ColumnInfo(name = "steps") var steps: List<String> = emptyList()
 )  {
+    fun toSmallJson(): Any {
+        val jsonObject = JSONObject()
+        jsonObject.put("title", title)
+        jsonObject.put("tags", JSONArray(tags))
+        jsonObject.put("ingredients", JSONArray(ingredients))
+        return jsonObject
+    }
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var recipeId: Long = 0

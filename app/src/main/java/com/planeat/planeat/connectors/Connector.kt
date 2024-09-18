@@ -39,6 +39,7 @@ abstract class Connector {
     constructor()
     abstract fun handleUrl(url: String): Boolean
     abstract fun search(searchTerm: String, onRecipe: (Recipe) -> Unit)
+    abstract fun parsePages(url: String, onRecipe: (Recipe) -> Unit)
     abstract fun suggest(onRecipe: (Recipe) -> Unit)
     abstract fun getRecipe(url: String): Recipe
 }

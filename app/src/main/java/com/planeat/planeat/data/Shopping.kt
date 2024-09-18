@@ -6,11 +6,13 @@ import com.planeat.planeat.data.IngredientsDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.toIngredientCategory
+import com.planeat.planeat.ui.utils.IngredientClassifier
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import org.tensorflow.lite.examples.textclassification.client.IngredientClassifier
 import java.io.FileInputStream
 import java.io.InputStreamReader
 
@@ -157,8 +159,7 @@ class ShoppingList(
         }
     }
 
-    @Synchronized
-    fun saveLoadFromDisk() {
+    suspend fun saveLoadFromDisk() {
         var shoppingJson = loadShoppingJson()
         if (shoppingJson == null) {
             shoppingJson = JSONObject()
@@ -185,7 +186,7 @@ class ShoppingList(
                 }
             }
         }
-        resetList = resetList || (planned.size != currentPlanned.size)
+        resetList = true || resetList || (planned.size != currentPlanned.size)
         if (!resetList) {
             // Nothing to do
             for (it in shoppingList) {
@@ -201,10 +202,12 @@ class ShoppingList(
             // Initialize ingredientsPerCategory and ingredientsPerRecipes
             plannedRecipes.forEach { recipe ->
                 recipe.parsed_ingredients.forEach {
-                    if (it.category.isEmpty()) {
-                        it.category = toIngredientCategory(it.name, ic, ingredientsDb)
+                    withContext(Dispatchers.IO) {
+                        if (it.category.isEmpty()) {
+                            it.category = toIngredientCategory(it.name, ic, ingredientsDb)
+                        }
+                        shoppingList += ShoppingIngredient(it, recipe.recipeId)
                     }
-                    this.shoppingList += ShoppingIngredient(it, recipe.recipeId)
                 }
             }
 

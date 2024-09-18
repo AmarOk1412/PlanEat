@@ -40,4 +40,14 @@
     <string name="ingredients">Ingredients</string>
     <string name="steps">Instructions</string>
     <string name="add">add recipe</string>
+    <string name="add_ingredient">Add ingredient</string>
+    <string name="items">%1$s items</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="aisle">Aisle</string>
+    <string name="recipe">Recipe</string>
+    <string name="add_an_item">Add an item</string>
+    <string name="go_back">Go back</string>
+    <string name="carrots_eggs_chocolate">Carrots, Eggs, Chocolate…</string>
+    <string name="custom">Custom</string>
+    <string name="validated_ingredients">Validated Ingredients</string>
 </resources>

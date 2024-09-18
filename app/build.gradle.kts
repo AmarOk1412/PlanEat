@@ -108,7 +108,7 @@ android {
 
 dependencies {
     // Classify ingredients
-    implementation(libs.tensorflow.lite.task.text)
+    // implementation(libs.tensorflow.lite.task.text)
     // FOR RELEASE KEEP THIS
     implementation(libs.androidx.room.common)
     implementation(libs.room.ktx)
@@ -119,6 +119,11 @@ dependencies {
     implementation(libs.error.prone.annotations)
     // Database
     implementation(libs.androidx.room.runtime.v261)
+    implementation(libs.litert)
+    implementation("org.tensorflow:tensorflow-lite-select-tf-ops:+")
+
+    implementation(libs.litert.metadata)
+    implementation(libs.litert.support.api)
     annotationProcessor(libs.room.compiler.v261)
     kapt(libs.room.compiler.v261)
     implementation(libs.kotlinx.serialization.json)

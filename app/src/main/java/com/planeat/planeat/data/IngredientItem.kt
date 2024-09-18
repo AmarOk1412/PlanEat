@@ -11,11 +11,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.planeat.planeat.R
+import com.planeat.planeat.ui.utils.IngredientClassifier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.json.JSONObject
-import org.tensorflow.lite.examples.textclassification.client.IngredientClassifier
 
 @Serializable
 data class ParsedIngredient(
@@ -34,10 +34,6 @@ fun singularize(name: String): String {
 
 @Serializable
 class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit: String = "", var category: String = "", var checked: Boolean = false) {
-
-    init {
-        name = singularize(name)
-    }
 
     fun addQuantity(other: IngredientItem) {
         if ((this.unit == other.unit)
@@ -73,7 +69,7 @@ class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit
 
     fun fromJson(data: JSONObject) {
         Log.d("PlanEat", data.toString())
-        name = singularize(data.getString("name"))
+        name = data.getString("name")
         quantity = data.getDouble("quantity").toFloat()
         unit = data.getString("unit")
         category = data.getString("category")
@@ -209,6 +205,9 @@ fun fetchIconForIngredient(ingredient_name: String): Int? {
     }
     else if (ingredient_name.contains("cake")) {
         return R.drawable.birthday_cake_3d
+    }
+    else if (ingredient_name.contains("lemon")) {
+        return R.drawable.lemon_3d
     }
     else if (ingredient_name.contains("blueberries")) {
         return R.drawable.blueberries_3d
@@ -392,9 +391,6 @@ fun fetchIconForIngredient(ingredient_name: String): Int? {
     }
     else if (ingredient_name.contains("leafy")) {
         return R.drawable.leafy_green_3d
-    }
-    else if (ingredient_name.contains("lemon")) {
-        return R.drawable.lemon_3d
     }
     else if (ingredient_name.contains("lobster")) {
         return R.drawable.lobster_3d

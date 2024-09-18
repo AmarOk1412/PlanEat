@@ -52,6 +52,36 @@ class Ricardo : Connector {
     override fun suggest(sonRecipe: (Recipe) -> Unit) {
     }
 
+
+
+    override fun parsePages(url: String, onRecipe: (Recipe) -> Unit) {
+        for (i in 1 until 11) {
+            try {
+                val address = url.replace("PAGE", i.toString())
+                val response = Jsoup.connect(address).userAgent("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)").execute()
+                val document = response.parse()
+
+                val scriptContent = document.select("script[id=\"react-bridge-bootstrap\"]").html()
+                val data = getRouteProps(scriptContent).getJSONObject("results")
+
+                if (data["status"] == "success") {
+                    val rows = data.getJSONObject("content").getJSONObject("results").getJSONArray("rows")
+                    for (i in 0 until rows.length()) {
+                        val row = rows.getJSONObject(i)
+                        val rowUrl = row.getString("url")
+                        val recipeUrl = "https://www.ricardocuisine.com/recettes/$rowUrl"
+                        val recipe = getRecipe(recipeUrl)
+                        if (recipe.title.isEmpty())
+                            continue
+                        onRecipe(recipe)
+                    }
+                }
+            } catch (error: Exception) {
+                Log.e("PlanEat", error.toString())
+            }
+        }
+    }
+
     override fun search(searchTerm: String, onRecipe: (Recipe) -> Unit) {
         var r = 0
         try {
@@ -133,7 +163,7 @@ class Ricardo : Connector {
                     steps = stepsListOpt.toList().map { (it as LinkedHashMap<*, *>).get("text").toString() }
                         .toMutableList()
                 }
-                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags, cookingTime = duration, ingredients = ingredients, steps = steps)
+                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags.map { it.lowercase() }, cookingTime = duration, ingredients = ingredients, steps = steps)
             }
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())

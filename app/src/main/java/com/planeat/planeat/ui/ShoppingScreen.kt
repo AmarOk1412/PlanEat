@@ -91,11 +91,11 @@ import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.toIngredientIcon
 import com.planeat.planeat.ui.components.MinimalRecipeItemList
+import com.planeat.planeat.ui.utils.IngredientClassifier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.tensorflow.lite.examples.textclassification.client.IngredientClassifier
 import java.time.LocalDate
 import java.time.ZoneOffset
 
@@ -108,7 +108,7 @@ fun ShoppingScreen(
     onRecipeSelected: (Recipe) -> Unit,
 ) {
     val context = LocalContext.current
-    val ic = IngredientClassifier(context)
+    val ic = IngredientClassifier()
 
     var shoppingList by remember {
         mutableStateOf<ShoppingList?>(null)
@@ -161,7 +161,7 @@ fun ShoppingScreen(
                     modifier = Modifier.padding(end = 8.dp)) {
                     Icon(
                         imageVector = Icons.Filled.Add,
-                        contentDescription = "Add ingredient"
+                        contentDescription = stringResource(R.string.add_ingredient)
                     )
                 }
             },
@@ -204,7 +204,10 @@ fun ShoppingScreen(
 
                             // Display the total number of ingredients
                             Text(
-                                text = "${shoppingList!!.countUniqueIngredientNames()} items",
+                                text = stringResource(
+                                    R.string.items,
+                                    shoppingList!!.countUniqueIngredientNames()
+                                ),
                                 style = MaterialTheme.typography.titleSmall,
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
@@ -212,7 +215,7 @@ fun ShoppingScreen(
                             Spacer(modifier = Modifier.weight(1.0f))
 
                             Text(
-                                text = "Sort by:",
+                                text = stringResource(R.string.sort_by),
                                 style = MaterialTheme.typography.titleSmall,
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
@@ -240,7 +243,7 @@ fun ShoppingScreen(
                                     ) {
                                         DropdownMenuItem(
                                             text = {
-                                                Text(text = "Aisle")
+                                                Text(text = stringResource(R.string.aisle))
                                             },
                                             onClick = {
                                                 shoppingList!!.changeSortingMethod("Aisle")
@@ -250,7 +253,7 @@ fun ShoppingScreen(
                                         )
                                         DropdownMenuItem(
                                             text = {
-                                                Text(text = "Recipe")
+                                                Text(text = stringResource(R.string.recipe))
                                             },
                                             onClick = {
                                                 shoppingList!!.changeSortingMethod("Recipe")
@@ -277,18 +280,20 @@ fun ShoppingScreen(
 
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text("Add an item") },
+                TopAppBar(title = { Text(stringResource(R.string.add_an_item)) },
                     navigationIcon = {
                         IconButton(onClick = { searchItem = false }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Go back"
+                                contentDescription = stringResource(R.string.go_back)
                             )
                         }
                     }
                 )
             }
-        ) { Column(modifier=Modifier.padding(top=64.dp).verticalScroll(rememberScrollState())) {
+        ) { Column(modifier= Modifier
+            .padding(top = 64.dp)
+            .verticalScroll(rememberScrollState())) {
                 var ingredients by remember {
                     mutableStateOf<List<Ingredient>>(emptyList())
                 }
@@ -320,9 +325,14 @@ fun ShoppingScreen(
                     onExpandedChange = { },
                     inputField = {
                         SearchBarDefaults.InputField(
-                            modifier = Modifier.focusRequester(focusRequester)
-                                                .border(2.dp, if (expanded) Color(0xFF00AF45) else primaryContainerLight, RoundedCornerShape(100.dp))
-                                                .padding(start=8.dp),
+                            modifier = Modifier
+                                .focusRequester(focusRequester)
+                                .border(
+                                    2.dp,
+                                    if (expanded) Color(0xFF00AF45) else primaryContainerLight,
+                                    RoundedCornerShape(100.dp)
+                                )
+                                .padding(start = 8.dp),
                             query = text,
                             onQueryChange = {
                                 text = it
@@ -331,7 +341,7 @@ fun ShoppingScreen(
                             expanded = expanded,
                             onExpandedChange = { expanded = it },
                             onSearch = { expanded = false },
-                            placeholder = { Text("Carrots, Eggs, Chocolate…") },
+                            placeholder = { Text(stringResource(R.string.carrots_eggs_chocolate)) },
                             trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
                         )
                     }
@@ -430,7 +440,8 @@ fun IngredientCheckbox(
                     Image(
                         painter = icon,
                         contentDescription = null,
-                        modifier = Modifier.size(26.dp)
+                        modifier = Modifier
+                            .size(26.dp)
                             .alpha(if (isChecked) 0.5f else 1.0f)
                     )
                 }
@@ -577,7 +588,7 @@ fun ShoppingListByCategory(
     groupedList?.forEach { (groupKey, categoryIngredients) ->
         var key = groupKey.takeIf { sortedByCategory } ?: shoppingList?.plannedRecipes?.find { it.recipeId.toString() == groupKey }?.title.orEmpty()
         if (!sortedByCategory && groupKey == "0") {
-            key = "Custom"
+            key = stringResource(R.string.custom)
         }
 
         // Show category card with non-validated items
@@ -605,7 +616,7 @@ fun ShoppingListByCategory(
     // Show validated ingredients
     if (validatedItems?.isNotEmpty() == true) {
         ValidatedCategoryCard(
-            category = "Validated Ingredients",
+            category = stringResource(R.string.validated_ingredients),
             validatedIngredients = validatedItems!!,
             shoppingList = shoppingList,
             onUndoValidation = { unvalidatedIngredient ->
@@ -626,9 +637,11 @@ fun ShoppingListByCategory(
 @Composable
 fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) -> Unit) {
     ListItem(
-        modifier = Modifier.clickable {
-            onIngredientAdded(IngredientItem(ingredient.name))
-        }.padding(horizontal = 12.dp),
+        modifier = Modifier
+            .clickable {
+                onIngredientAdded(IngredientItem(ingredient.name))
+            }
+            .padding(horizontal = 12.dp),
         headlineContent = {
             Text(
                 text = ingredient.name.replaceFirstChar(Char::titlecase)
@@ -657,7 +670,7 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
                         )) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = "Add ingredient",
+                    contentDescription = stringResource(R.string.add_ingredient),
                     modifier = Modifier.size(18.dp)
                 )
             }

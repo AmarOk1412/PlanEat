@@ -16,6 +16,8 @@ class ChaCuit : Connector {
         return url.contains("cha-cu.it") || url.contains("re7.ache.one")
     }
 
+    override fun parsePages(url: String, onRecipe: (Recipe) -> Unit) { }
+
     override fun search(searchTerm: String, onRecipe: (Recipe) -> Unit) {
         var i = 0
         try {

@@ -23,6 +23,26 @@ class Marmiton : Connector {
         return url.contains("marmiton.org")
     }
 
+    override fun parsePages(url: String, onRecipe: (Recipe) -> Unit) {
+        for (i in 1 until 11) {
+            try {
+                val address = url.replace("PAGE", i.toString())
+                val doc: Document = Jsoup.connect(address).get()
+
+                val elements: Elements = doc.select(".recipe-card")
+                for (element in elements) {
+                    val relurl = element.select(".recipe-card-link").attr("href")
+                    val recipe = getRecipe(relurl)
+                    if (recipe.title.isEmpty())
+                        continue
+                    onRecipe(recipe)
+                }
+            } catch (error: Exception) {
+                Log.e("PlanEat", error.toString())
+            }
+        }
+    }
+
     override fun search(searchTerm: String, onRecipe: (Recipe) -> Unit) {
         var i = 0
         try {
@@ -92,14 +112,18 @@ class Marmiton : Connector {
 
             if (recipeData != null) {
                 val name = recipeData.getString("name")
-                var tags = emptyList<String>()
+                var tags = mutableListOf<String>()
                 if (recipeData.has("recipeCuisine")) {
-                    tags = listOf(recipeData.getString("recipeCuisine"))
+                    tags = listOf(recipeData.getString("recipeCuisine")).toMutableList()
                 }
                 if (recipeData.has("keywords")) {
-                    tags = recipeData.getString("keywords").split(", ")
-                } else if (recipeData.has("recipeCategory")) {
-                    tags = recipeData.getString("recipeCategory").split(", ")
+                    tags += recipeData.getString("keywords").split(", ")
+                }
+                if (recipeData.has("recipeCategory")) {
+                    tags += recipeData.getString("recipeCategory").split(", ")
+                }
+                if (recipeData.has("recipeTags")) {
+                    tags += recipeData.getString("recipeTags").split(", ")
                 }
 
                 val duration = recipeData.getString("totalTime").replace("\\D".toRegex(), "").toInt()
@@ -107,7 +131,7 @@ class Marmiton : Connector {
                 val steps = recipeData.getJSONArray("recipeInstructions").toList().map { (it as LinkedHashMap<*, *>).get("text").toString() }
                 val imageUrl = recipeData.getJSONArray("image").getString(0)
 
-                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags, cookingTime = duration, ingredients = ingredients, steps = steps)
+                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags.map { it.lowercase() }, cookingTime = duration, ingredients = ingredients, steps = steps)
             }
 
         } catch (error: Exception) {

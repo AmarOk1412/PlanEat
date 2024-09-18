@@ -35,11 +35,13 @@ import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
 import com.planeat.planeat.connectors.Ricardo
 import com.planeat.planeat.data.IngredientItem
+import com.planeat.planeat.data.IngredientsDb
 import com.planeat.planeat.data.ParsedIngredient
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.data.toTags
+import com.planeat.planeat.data.toIngredientCategory
 import com.planeat.planeat.ui.components.calendar.CalendarDataSource
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.navigation.PlanEatBottomNavigationBar
@@ -47,7 +49,9 @@ import com.planeat.planeat.ui.navigation.PlanEatNavigationActions
 import com.planeat.planeat.ui.navigation.PlanEatNavigationRail
 import com.planeat.planeat.ui.navigation.PlanEatRoute
 import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
+import com.planeat.planeat.ui.utils.IngredientClassifier
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
+import com.planeat.planeat.ui.utils.TagClassifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -60,6 +64,7 @@ import kotlinx.serialization.json.Json
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import java.io.File
+import java.io.FileWriter
 import java.time.LocalDate
 
 
@@ -134,6 +139,97 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         val chacuit = ChaCuit(maxResult)
         connectors = listOf(chacuit, ricardo, marmiton)
     }
+
+
+
+    suspend fun gigaDataset() {
+        val categoriesUrl = mutableMapOf<Tags, List<String>>()
+        categoriesUrl[Tags.Appetizer] = listOf("https://www.marmiton.org/recettes/index/categorie/aperitif-ou-buffet/PAGE")
+        categoriesUrl[Tags.Healthy] = listOf("https://www.ricardocuisine.com/themes/sante?sort=recent&content-type=theme&grouping-type=4&grouping-id=60&currentPage=PAGE")
+        categoriesUrl[Tags.MiddleEastern] = listOf("https://www.marmiton.org/recettes/selection_merveilles-du-maghreb-et-de-l-orient.aspx?p=PAGE", "https://www.ricardocuisine.com/themes/mediterraneen?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2447&currentPage=PAGE")
+        categoriesUrl[Tags.Drinks] = listOf("https://www.marmiton.org/recettes?type=boisson&page=PAGE")
+        categoriesUrl[Tags.American] = listOf("https://www.ricardocuisine.com/themes/cuisine-americaine?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2545&currentPage=PAGE")
+        categoriesUrl[Tags.Seafood] = listOf("https://www.ricardocuisine.com/themes/bord-de-mer?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2540&currentPage=PAGE")
+        categoriesUrl[Tags.Bakery] = listOf("https://www.ricardocuisine.com/themes/meilleurs-gateaux?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2286&currentPage=PAGE")
+        categoriesUrl[Tags.European] = listOf("https://www.marmiton.org/recettes/selection_recettes_portugaises.aspx?p=PAGE", "https://www.marmiton.org/recettes/selection_belgique.aspx?p=PAGE", "https://www.marmiton.org/recettes/selection_recettes_grecques.aspx?p=PAGE", "https://www.marmiton.org/recettes/selection_recettes_francaises.aspx?p=PAGE", "https://www.ricardocuisine.com/themes/cuisine-espagnole?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2552&currentPage=PAGE", "https://www.ricardocuisine.com/themes/cuisine-italienne?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2429&currentPage=PAGE")
+        categoriesUrl[Tags.Asian] = listOf(" https://www.ricardocuisine.com/themes/cuisine-chinoise?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2663&currentPage=PAGE", "https://www.ricardocuisine.com/themes/cuisine-coreenne?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2661&currentPage=PAGE", "https://www.ricardocuisine.com/themes/cuisine-japonaise?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2660&currentPage=PAGE")
+        categoriesUrl[Tags.Vegetarian] = listOf("https://www.ricardocuisine.com/themes/vegetarien?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2547&currentPage=PAGE")
+        categoriesUrl[Tags.Desserts] = listOf("https://www.marmiton.org/recettes/index/categorie/dessert/PAGE")
+        categoriesUrl[Tags.ComfortFood] = listOf("https://www.ricardocuisine.com/themes/comfort-food?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2266&currentPage=PAGE")
+
+        var dataset = mutableMapOf<Recipe, List<Tags>>()
+        coroutineScope {
+
+            val marmiton = Marmiton(3)
+            val ricardo = Ricardo(3)
+            launch(Dispatchers.IO) {
+                categoriesUrl.forEach {tag, listUrls ->
+
+                    val onRecipe: (Recipe) -> Unit = { r->
+                        val result = emptyList<Tags>().toMutableList()
+                        result += tag
+                        if (r.tags.any { it.contains("boisson") })
+                            result += Tags.Drinks
+                        if (r.tags.any { it.contains("maroc") })
+                            result += Tags.MiddleEastern
+                        if (r.tags.any { it.contains("oriental") })
+                            result += Tags.MiddleEastern
+                        if (r.tags.any { it.contains("amuse-gueule") })
+                            result += Tags.Appetizer
+                        if (r.tags.any { it.contains("comfort") })
+                            result += Tags.ComfortFood
+                        if (r.tags.any { it.contains("fruits de mer") } || r.tags.any { it.contains("crustacés") })
+                            result += Tags.Seafood
+                        if (r.tags.any { it.contains("méditerranée") })
+                            result += Tags.MiddleEastern
+                        if (r.tags.any { it.contains("asia") } || r.tags.any { it.contains("japonais") })
+                            result += Tags.Asian
+                        if (r.tags.any { it.contains("été") })
+                            result += Tags.ComfortFood
+                        if (r.tags.any { it.contains("américain") })
+                            result += Tags.American
+                        if (r.tags.any { it.contains("grec") } || r.tags.any { it.contains("italie") } || r.tags.any { it.contains("portugua") } || r.tags.any { it.contains("fran") })
+                            result += Tags.European
+                        if (r.tags.any { it.contains("sain") })
+                            result += Tags.Healthy
+                        if (r.tags.any { it.contains("végétarien") })
+                            result += Tags.Vegetarian
+                        if (r.tags.any { it.contains("dessert") } || r.tags.any { it.contains("gâteau") })
+                            result += Tags.Desserts
+                        synchronized(dataset) {
+                            dataset[r] = result
+                            Log.d("PlanEat", "Dataset size: ${dataset.size}")
+                            if (dataset.size >= 100) {
+                                dataset.forEach { recipe, tags ->
+                                    val file = File(context.filesDir, "output.csv")
+                                    FileWriter(file, true).use { writer ->
+                                        dataset.forEach { recipe, tags ->
+                                            // Convert recipe to JSON string and tags to a string separated by commas
+                                            val recipeJson = recipe.toSmallJson() // Assuming this is your JSON conversion method
+                                            val tagsString = tags.joinToString(",") // Convert list of tags to comma-separated string
+
+                                            // Append to the CSV file, separating the columns with '@'
+                                            writer.appendLine("$recipeJson@$tagsString")
+                                        }
+                                    }
+                                }
+                                dataset.clear()
+                            }
+                        }
+                    }
+
+                    listUrls.forEach { url ->
+                        if (url.contains("marmiton")) {
+                            marmiton.parsePages(url, onRecipe)
+                        } else if (url.contains("ricardo")) {
+                            ricardo.parsePages(url, onRecipe)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private var listJob: Job? = null
     var currentSearchTerm: String = ""
 
@@ -154,6 +250,9 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     }
 
     fun postIngredients(ingredientsData: String): List<IngredientItem> {
+
+        val ic = IngredientClassifier()
+        val db = IngredientsDb.getDatabase(context)
         try {
             // Use Jsoup to send a POST request
             val response = Jsoup.connect("https://cha-cu.it/parse")
@@ -177,7 +276,8 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                     IngredientItem(
                         quantity = parseQuantity(parsedIngredient.qty),
                         unit = parsedIngredient.unit ?: "",  // Default to empty string if unit is null
-                        name = it
+                        name = it,
+                        category = toIngredientCategory(it, ic, db)
                     )
                 }
             }
@@ -302,10 +402,10 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                     ) {
                         val suggestions =
                             loadRecipesFromFile("suggestions.json")
-                        Log.e("PlanEat", "@@@!!!")
                         suggestions?.forEach { recipe ->
                             if (!recipesInDbShown.any { it.url == recipe.url }) {
                                 suggestedRecipes.add(recipe)
+                                TagClassifier(context).classify(recipe.toSmallJson().toString())
                             }
                         }
                     }
@@ -314,7 +414,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                         connectors.map { connector ->
                             searchJobs += launch(Dispatchers.IO) {
                                 // If no suggestions, find new one
-                                Log.e("PlanEat", "@@@!!!")
                                 connector.suggest(onRecipe = { recipe ->
                                     // Add new recipes to results
                                     if (!recipesInDbShown.any { it.url == recipe.url }) {
@@ -409,6 +508,7 @@ fun PlanEatApp(
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     scope.launch {
+        //model.gigaDataset()
         model.initSuggestions()
     }
 
