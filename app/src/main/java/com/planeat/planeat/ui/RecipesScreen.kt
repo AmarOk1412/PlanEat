@@ -58,6 +58,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.compose.onPrimaryLight
+import com.example.compose.primaryLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
@@ -91,6 +93,8 @@ fun RecipesScreen(
     onFilterClicked: (Tags) -> Unit,
 ) {
     var filter by remember { mutableStateOf("") }
+    var currentTag by remember { mutableStateOf(model.currentTag.value) }
+
 
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
@@ -226,10 +230,10 @@ fun RecipesScreen(
                         Spacer(modifier = Modifier.width(16.dp))
 
                         filters.forEach { filter ->
-
                             Button(
                                 onClick = {
                                     CoroutineScope(Dispatchers.IO).launch {
+                                        currentTag = filter
                                         onFilterClicked(filter)
                                     }
                                 },
@@ -238,7 +242,7 @@ fun RecipesScreen(
                                     defaultElevation = 6.dp
                                 ),
                                 contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = surfaceContainerLowestLight, contentColor = Color.Black),
+                                colors = ButtonDefaults.buttonColors(containerColor = if (currentTag == filter) primaryLight else surfaceContainerLowestLight, contentColor = if (currentTag == filter) onPrimaryLight else Color.Black),
                                 modifier = Modifier.padding(end = 8.dp)
                             ) {
                                 Row(

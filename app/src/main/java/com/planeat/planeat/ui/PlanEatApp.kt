@@ -72,6 +72,8 @@ import java.time.LocalDate
 class AppModel(private val maxResult: Int, private val db: RecipesDb, private val context: Context) {
     private val connectors: List<Connector>
 
+    var currentTag = mutableStateOf(Tags.All)
+
     var recipesInDb = mutableListOf<Recipe>()
     var recipesInDbShown = mutableStateListOf<Recipe>()
     val recipesSearched = mutableListOf<Recipe>()
@@ -307,6 +309,8 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     }
 
     fun filter(tag: Tags) {
+        currentTag.value = tag
+
         // Update my recipes
         var newList = if (tag == Tags.All) {
             recipesInDb

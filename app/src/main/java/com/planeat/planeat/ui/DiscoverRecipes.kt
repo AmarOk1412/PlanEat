@@ -51,6 +51,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.compose.onPrimaryLight
+import com.example.compose.primaryLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
@@ -80,6 +82,7 @@ fun DiscoverScreen(
 
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
+    var currentTag by remember { mutableStateOf(model.currentTag.value) }
 
     Box(modifier = modifier
         .fillMaxSize()
@@ -156,6 +159,7 @@ fun DiscoverScreen(
                     Button(
                         onClick = {
                             CoroutineScope(Dispatchers.IO).launch {
+                                currentTag = filter
                                 onFilterClicked(filter)
                             }
                         },
@@ -164,7 +168,7 @@ fun DiscoverScreen(
                             defaultElevation = 6.dp
                         ),
                         contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = surfaceContainerLowestLight, contentColor = Color.Black),
+                        colors = ButtonDefaults.buttonColors(containerColor = if (currentTag == filter) primaryLight else surfaceContainerLowestLight, contentColor = if (currentTag == filter) onPrimaryLight else Color.Black),
                         modifier = Modifier.padding(end = 8.dp)
                     ) {
                             Row(
