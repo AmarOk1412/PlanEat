@@ -701,6 +701,7 @@ private fun NavHost(
                 },
                 dataUi = dataUi,
                 goToAgenda = {
+                    model.openedRecipe.value = null
                     Handler(Looper.getMainLooper()).post {
                         navigateToTopLevelDestination(
                             PlanEatTopLevelDestination(
@@ -736,6 +737,7 @@ private fun NavHost(
                 },
                 dataUi = dataUi,
                 goToAgenda = {
+                    model.openedRecipe.value = null
                     Handler(Looper.getMainLooper()).post {
                         navigateToTopLevelDestination(
                             PlanEatTopLevelDestination(
@@ -779,6 +781,7 @@ private fun NavHost(
                     goToAgenda = {
                         model.openedRecipe.value = null
                         Handler(Looper.getMainLooper()).post {
+                            navController.popBackStack()
                             navigateToTopLevelDestination(
                                 PlanEatTopLevelDestination(
                                     PlanEatRoute.AGENDA,

@@ -2,6 +2,7 @@ package com.planeat.planeat.ui
 
 import android.os.Build
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -76,6 +77,10 @@ fun DiscoverScreen(
     goToEdition: (Recipe) -> Unit,
     onFilterClicked: (Tags) -> Unit,
 ) {
+
+    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
+
     Box(modifier = modifier
         .fillMaxSize()
         .windowInsetsPadding(WindowInsets.statusBars)) {
@@ -88,7 +93,7 @@ fun DiscoverScreen(
         ) {
             // Header element
             Text(
-                text = "Discover",
+                text = stringResource(R.string.discover),
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(start=16.dp, bottom = 16.dp)
             )
@@ -96,6 +101,11 @@ fun DiscoverScreen(
             var text by rememberSaveable { mutableStateOf("") }
             var expanded by rememberSaveable { mutableStateOf(false) }
             val filters = Tags.entries.map { it }
+
+            BackHandler {
+                text = ""
+                expanded = false
+            }
 
             LaunchedEffect(Unit) {
                 text = ""
@@ -175,8 +185,6 @@ fun DiscoverScreen(
                 }
             }
 
-            var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-            var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
 
             if (text.isEmpty()) {
                 LazyVerticalGrid(
@@ -276,6 +284,7 @@ fun DiscoverScreen(
                     toPlanRecipe = toPlanRecipe!!,
                     goToAgenda = {
                         openBottomSheet = false
+                        toPlanRecipe = null
                         goToAgenda()
                     }
                 )
