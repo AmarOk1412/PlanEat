@@ -15,7 +15,7 @@ class TagClassifier(val context: Context) {
     private val interpreter: Interpreter
     private val tokenizer: Map<String, Int>
     private val labels: List<String>
-    private val maxLength = 241 // Replace with the actual max length from training
+    private val maxLength = 262 // Replace with the actual max length from training
     init {
         // Load the TFLite model
         interpreter = Interpreter(loadModelFile("model_multi_label.tflite"))
@@ -75,7 +75,7 @@ class TagClassifier(val context: Context) {
     private fun preprocessRecipe(recipe: String): ByteBuffer {
         // Convert the ingredient to a sequence of indices
         val sequence = tokenizer.entries.mapNotNull { (word, index) ->
-            if (recipe.contains(word, ignoreCase = true)) index else null
+            if (recipe.contains(word.lowercase(), ignoreCase = true)) index else null
         }.take(maxLength)
 
         // Create an array for the sequence with padding

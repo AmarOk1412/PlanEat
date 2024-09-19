@@ -19,8 +19,6 @@ abstract class IngredientsDb : RoomDatabase() {
         @Volatile
         private var INSTANCE: IngredientsDb? = null
 
-
-
         /**
          * Exports the current database to the specified location on external storage.
          * @param context The context to get the current database path.
@@ -63,6 +61,7 @@ abstract class IngredientsDb : RoomDatabase() {
                     "ingredients_database"
                 )
                 .createFromAsset("prepopulated_database.db")
+                .fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance
 

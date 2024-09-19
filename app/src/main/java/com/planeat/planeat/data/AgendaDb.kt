@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Agenda::class, Recipe::class], version = 2, exportSchema = true
+@Database(entities = [Agenda::class, Recipe::class], version = 1, exportSchema = true
 )
 abstract class AgendaDb : RoomDatabase() {
     abstract fun agendaDao(): AgendaDao

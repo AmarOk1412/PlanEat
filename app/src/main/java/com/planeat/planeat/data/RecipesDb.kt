@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(entities = [Recipe::class], version = 1,
           exportSchema = true // Ensure that the schema is exported
@@ -22,7 +21,7 @@ abstract class RecipesDb : RoomDatabase() {
                     context.applicationContext,
                     RecipesDb::class.java,
                     "recipes_database"
-                )
+                ).fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance
                 instance

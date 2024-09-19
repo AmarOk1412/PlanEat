@@ -84,4 +84,5 @@
     <string name="tag_seafood">Fruits de mer</string>
     <string name="tag_american">Américaine</string>
     <string name="tag_drinks">Boissons</string>
+    <string name="choose_a_date">Choisissez une date</string>
 </resources>

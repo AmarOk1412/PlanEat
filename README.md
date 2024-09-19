@@ -22,11 +22,12 @@ Please refer to [this page](models/ingredients_parser/README.md)
 
 ### Categorize ingredients
 
-Please refer to [this page](models/ingredients_classifier/README.md)
+To categorize ingredients, a default database is populated with custom ingredients.
+If the ingredient is not in this database, it will be added by retrieving the aisle by parsing metro.ca
 
 ### Classify recipes
 
-Not done yet
+Please refer to [this page](models/tag_classifier/README.md)
 
 ## Structure
 

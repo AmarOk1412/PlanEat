@@ -59,6 +59,7 @@ roomRuntime = "2.6.1"
 secrets = "2.0.1"
 # @keep
 targetSdk = "33"
+tensorflowLiteApi = "2.13.0"
 tensorflowLiteTaskText = "0.4.4"
 version-catalog-update = "0.8.4"
 roomCommon = "2.6.1"
@@ -66,6 +67,9 @@ roomKtx = "2.6.1"
 transportRuntime = "3.3.0"
 composeMaterial = "1.3.1"
 workRuntimeKtx = "2.9.0"
+litert = "1.0.1"
+litertSupportApi = "1.0.1"
+litertMetadata = "1.0.1"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -155,9 +159,13 @@ rometools-rome = { module = "com.rometools:rome", version.ref = "rome" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 room-compiler-v261 = { module = "androidx.room:room-compiler", version.ref = "roomCompilerVersion" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+tensorflow-lite-api = { module = "org.tensorflow:tensorflow-lite-api", version.ref = "tensorflowLiteApi" }
 tensorflow-lite-task-text = { module = "org.tensorflow:tensorflow-lite-task-text", version.ref = "tensorflowLiteTaskText" }
 transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version.ref = "transportRuntime" }
 compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
+litert = { group = "com.google.ai.edge.litert", name = "litert", version.ref = "litert" }
+litert-support-api = { group = "com.google.ai.edge.litert", name = "litert-support-api", version.ref = "litertSupportApi" }
+litert-metadata = { group = "com.google.ai.edge.litert", name = "litert-metadata", version.ref = "litertMetadata" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

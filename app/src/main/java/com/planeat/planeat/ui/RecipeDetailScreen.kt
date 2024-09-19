@@ -109,7 +109,7 @@ fun RecipeDetailScreen(
     LaunchedEffect(selectedRecipe) {
         if (selectedRecipe.parsed_ingredients.isEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
-                model.gatherIngredients(selectedRecipe)
+                model.classifyRecipeAndIngredients(selectedRecipe)
                 ingredients = selectedRecipe.parsed_ingredients
             }
         }

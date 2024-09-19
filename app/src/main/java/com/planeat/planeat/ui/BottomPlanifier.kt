@@ -32,11 +32,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.surfaceContainerLowestLight
+import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
+import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.ui.components.calendar.CalendarDataSource
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import kotlinx.coroutines.CoroutineScope
@@ -76,7 +79,7 @@ fun BottomPlanifier(
         ) {
 
             Text(
-                text = "Choose a date",
+                text = stringResource(R.string.choose_a_date),
                 style = MaterialTheme.typography.titleLarge,
             )
 
@@ -126,6 +129,24 @@ fun BottomPlanifier(
                 onClick = {
                     CoroutineScope(Dispatchers.IO).launch {
                         val agendaDb = AgendaDb.getDatabase(context)
+
+                        if (toPlanRecipe.recipeId == 0.toLong()) {
+                            val recipesDb = RecipesDb.getDatabase(context)
+                            val newRecipe = recipesDb.recipeDao().findByUrl(toPlanRecipe.url)
+                            if (newRecipe != null) {
+                                toPlanRecipe.recipeId = newRecipe.recipeId
+                            } else {
+                                recipesDb.recipeDao().insertAll(toPlanRecipe)
+                                val newRecipe = recipesDb.recipeDao().findByUrl(toPlanRecipe.url)
+                                if (newRecipe != null) {
+                                    toPlanRecipe.recipeId = newRecipe.recipeId
+                                } else {
+                                    Log.e("PlanEat", "Recipe not found")
+                                    goToAgenda()
+                                    return@launch
+                                }
+                            }
+                        }
                         for (d in selectedDates) {
                             Log.w("PlanEat", "Selected date: ${d}")
                             val dateMidday = d
@@ -133,7 +154,7 @@ fun BottomPlanifier(
                                 .toInstant(ZoneOffset.UTC)
                                 .toEpochMilli()
 
-                            Log.w("PlanEat", "Recipe: ${toPlanRecipe!!.recipeId}, Date: ${dateMidday}")
+                            Log.w("PlanEat", "Recipe: ${toPlanRecipe.recipeId}, Date: ${dateMidday}")
                             agendaDb
                                 .agendaDao()
                                 .insertAll(
@@ -148,7 +169,7 @@ fun BottomPlanifier(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Plan it")
+                Text(text = stringResource(R.string.plan_it))
             }
         }
     }
@@ -169,7 +190,7 @@ fun DateHeader(
         }) {
             Icon(
                 imageVector = Icons.Filled.ChevronLeft,
-                contentDescription = "Back"
+                contentDescription = stringResource(R.string.back)
             )
         }
 
@@ -186,7 +207,7 @@ fun DateHeader(
         }) {
             Icon(
                 imageVector = Icons.Filled.ChevronRight,
-                contentDescription = "Next"
+                contentDescription =  stringResource(R.string.next)
             )
         }
     }

@@ -1,10 +1,12 @@
+American
 Appetizer
 Asian
-Comfort Food
+Bakery
+ComfortFood
 Desserts
 Drinks
 European
 Healthy
-Middle Eastern
+MiddleEastern
 Seafood
 Vegetarian

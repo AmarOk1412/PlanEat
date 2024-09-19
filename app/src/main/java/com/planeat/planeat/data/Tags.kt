@@ -33,6 +33,12 @@ enum class Tags(private val resId: Int) {
     fun getString(context: Context): String {
         return context.getString(resId)
     }
+
+    companion object {
+        fun fromString(value: String): Tags? {
+            return values().find { it.name.equals(value, ignoreCase = true) }
+        }
+    }
 }
 
 @Composable
@@ -112,17 +118,9 @@ fun toTags(recipe: Recipe): List<Tags> {
         tags.add(Tags.Hard)
     }
 
-    if (recipe.tags.contains("poisson")) {
-        tags.add(Tags.Seafood)
-    } else if (recipe.tags.contains("boisson") || recipe.tags.contains("concktail")) {
-        tags.add(Tags.Drinks)
-    } else if (recipe.tags.contains("petit-déjeuner")) {
-        tags.add(Tags.Bakery)
-    } else if (recipe.tags.contains("pâtisserie")) {
-        tags.add(Tags.Desserts)
+    for (tag in recipe.tags) {
+        tags.add(Tags.fromString(tag)?: Tags.All)
     }
-
-    // TODO Create classification model
 
     return tags
 }

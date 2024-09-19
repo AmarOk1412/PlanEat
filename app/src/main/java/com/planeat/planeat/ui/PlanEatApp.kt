@@ -25,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -162,6 +163,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
 
             val marmiton = Marmiton(3)
             val ricardo = Ricardo(3)
+            var i = 0
             launch(Dispatchers.IO) {
                 categoriesUrl.forEach {tag, listUrls ->
 
@@ -178,6 +180,8 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                             result += Tags.Appetizer
                         if (r.tags.any { it.contains("comfort") })
                             result += Tags.ComfortFood
+                        if (r.tags.any { it.contains("sant") })
+                            result += Tags.Healthy
                         if (r.tags.any { it.contains("fruits de mer") } || r.tags.any { it.contains("crustacés") })
                             result += Tags.Seafood
                         if (r.tags.any { it.contains("méditerranée") })
@@ -196,10 +200,11 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                             result += Tags.Desserts
                         synchronized(dataset) {
                             dataset[r] = result
-                            Log.d("PlanEat", "Dataset size: ${dataset.size}")
+                            i += 1
+                            Log.d("PlanEat", "Dataset size: ${i}")
                             if (dataset.size >= 100) {
                                 dataset.forEach { recipe, tags ->
-                                    val file = File(context.filesDir, "output.csv")
+                                    val file = File(context.filesDir, "input.csv")
                                     FileWriter(file, true).use { writer ->
                                         dataset.forEach { recipe, tags ->
                                             // Convert recipe to JSON string and tags to a string separated by commas
@@ -285,18 +290,19 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         }
     }
 
-    suspend fun gatherIngredients(recipe: Recipe) {
+    suspend fun classifyRecipeAndIngredients(recipe: Recipe) {
         if (recipe.parsed_ingredients.isEmpty()) {
             val ingredientsData = recipe.ingredients.joinToString("\n")
             recipe.parsed_ingredients = postIngredients(ingredientsData)
+            recipe.tags = TagClassifier(context).classify(recipe.toSmallJson().toString())
             update(recipe)
             return
         }
     }
 
-    suspend fun gatherIngredients(recipes: List<Recipe>) {
+    suspend fun classifyRecipeAndIngredients(recipes: List<Recipe>) {
         recipes.forEach { recipe ->
-            gatherIngredients(recipe)
+            classifyRecipeAndIngredients(recipe)
         }
     }
 
@@ -346,7 +352,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                         add(recipe)
                     } else {
                         db.recipeDao().update(recipe)
-                        gatherIngredients(recipe)
+                        classifyRecipeAndIngredients(recipe)
                     }
                 } catch (error: Exception) {
                     Log.d("PlanEat", "Error: $error")
@@ -363,7 +369,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                 val res = db.recipeDao().findByUrl(recipe.url)
                 recipesInDb.add(res)
                 recipesInDb.sortWith(compareBy({ -it.planified }, { it.title }))
-                gatherIngredients(res)
                 // Update visibiliy
                 if (recipesSearchedShown.any { it.url == recipe.url }) {
                     recipesSearchedShown.remove(recipe)
@@ -372,6 +377,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                     suggestedRecipes.remove(recipe)
                 }
                 recipesInDbShown.add(res)
+                classifyRecipeAndIngredients(res)
             }
         }
     }
@@ -409,7 +415,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                             suggestions?.forEach { recipe ->
                                 if (!recipesInDb.any { it.url == recipe.url }) {
                                     suggestedRecipes.add(recipe)
-                                    TagClassifier(context).classify(recipe.toSmallJson().toString())
                                 }
                             }
                         }
@@ -509,9 +514,11 @@ fun PlanEatApp(
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     scope.launch {
-        //model.gigaDataset()
+
+       // model.gigaDataset()
         model.initSuggestions()
     }
+
 
     when (windowSize.widthSizeClass) {
         WindowWidthSizeClass.Compact -> {
