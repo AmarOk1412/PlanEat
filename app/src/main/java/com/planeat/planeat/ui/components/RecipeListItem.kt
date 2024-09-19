@@ -183,6 +183,7 @@ fun RecipeListItem(
                                 if (recipe.recipeId == 0.toLong()) {
                                     val rdb = RecipesDb.getDatabase(context)
                                     if (existId.longValue == 0.toLong()) {
+                                        Log.e("PlanEat", "@@@Add 2 recipe: ${recipe.title}")
                                         onRecipeAdded(recipe)
                                         val res = rdb.recipeDao().findByUrl(recipe.url)
                                         existId.longValue = res.recipeId
@@ -235,6 +236,7 @@ fun RecipeListItem(
                                                 val rdb = RecipesDb.getDatabase(context)
                                                 if (existId.longValue == 0.toLong()) {
                                                     // If a search result, add it to recipes first
+                                                    Log.e("PlanEat", "@@@Add recipe: ${recipe.title}")
                                                     onRecipeAdded(recipe)
                                                     val res = rdb.recipeDao().findByUrl(recipe.url)
                                                     onPlanRecipe(res)

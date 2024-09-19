@@ -1,6 +1,7 @@
 package com.planeat.planeat.ui
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -196,11 +197,21 @@ fun DiscoverScreen(
                         RecipeItem(
                             recipe,
                             model,
-                            goToDetails,
-                            goToAgenda,
-                            goToEdition,
-                            onRecipeDeleted,
-                            onRecipeAdded,
+                            goToDetails = {
+                                Log.d("PlanEat", "@@@ GO")
+                                goToDetails(it) },
+                            goToAgenda = {
+                                Log.d("PlanEat", "@@@ GO A")
+                                goToAgenda() },
+                            goToEdition = {
+                                Log.d("PlanEat", "@@@ GO goToEdition")
+                                goToEdition(it) },
+                            onRecipeDeleted = {
+                                Log.d("PlanEat", "@@@ GO onRecipeDeleted")
+                                onRecipeDeleted(it) },
+                            onRecipeAdded = {
+                                Log.d("PlanEat", "@@@ GO onRecipeAdded")
+                                onRecipeAdded(it) },
                             onPlanRecipe = { r ->
                                 toPlanRecipe = r
                                 openBottomSheet = true
@@ -208,8 +219,6 @@ fun DiscoverScreen(
                     }
                 }
             } else {
-
-
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.padding(start=16.dp, end=16.dp)

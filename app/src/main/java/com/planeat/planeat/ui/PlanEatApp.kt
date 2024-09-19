@@ -345,17 +345,15 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     }
 
     suspend fun update(recipe: Recipe) {
-        coroutineScope {
-            async(Dispatchers.IO) {
-                try {
-                    if (recipe.recipeId == 0.toLong()) {
-                        add(recipe)
-                    } else {
+        if (recipe.recipeId != 0.toLong()) {
+            coroutineScope {
+                async(Dispatchers.IO) {
+                    try {
                         db.recipeDao().update(recipe)
                         classifyRecipeAndIngredients(recipe)
+                    } catch (error: Exception) {
+                        Log.d("PlanEat", "Error: $error")
                     }
-                } catch (error: Exception) {
-                    Log.d("PlanEat", "Error: $error")
                 }
             }
         }
