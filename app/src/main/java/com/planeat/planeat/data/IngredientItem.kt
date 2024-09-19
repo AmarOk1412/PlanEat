@@ -10,12 +10,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.TranslatorOptions
 import com.planeat.planeat.R
 import com.planeat.planeat.ui.utils.IngredientClassifier
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.json.JSONObject
+import java.util.Locale
 
 @Serializable
 data class ParsedIngredient(
@@ -79,13 +86,54 @@ class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit
         category = data.getString("category")
         checked = data.getBoolean("checked")
     }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    suspend fun toLocalName(): String = suspendCancellableCoroutine { continuation ->
+        val currentLocale = Locale.getDefault()
+        val default = name.replaceFirstChar(Char::titlecase)
+
+        // If the current locale is English, return the name directly
+        if (currentLocale.language == Locale.ENGLISH.language) {
+            continuation.resume(default) { default }
+            return@suspendCancellableCoroutine
+        }
+
+        val options = TranslatorOptions.Builder()
+            .setSourceLanguage(TranslateLanguage.ENGLISH)
+            .setTargetLanguage(TranslateLanguage.fromLanguageTag(currentLocale.language)!!)
+            .build()
+
+        val englishTranslator = Translation.getClient(options)
+        val conditions = DownloadConditions.Builder()
+            .requireWifi()
+            .build()
+
+        // Download the translation model if needed
+        englishTranslator.downloadModelIfNeeded(conditions)
+            .addOnSuccessListener {
+                // Once the model is downloaded, perform the translation
+                englishTranslator.translate(name)
+                    .addOnSuccessListener { translatedText ->
+                        continuation.resume(translatedText.replaceFirstChar(Char::titlecase)) { default }
+                    }
+                    .addOnFailureListener {
+                        // If translation fails, return the original name
+                        continuation.resume(default) { default }
+                    }
+            }
+            .addOnFailureListener {
+                // If model download fails, return the original name
+                continuation.resume(default) { default }
+            }
+    }
+
 }
 
 @Composable
-fun toIngredientIcon(ingredientName: String): Painter? {
+fun toIngredientIcon(ingredientName: String): Painter {
     val singularName = singularize(ingredientName)
-    // Store the icon resource ID
-    var iconResId by remember { mutableStateOf<Int?>(null) }
+    // Initialize iconResId with a default value (not null)
+    var iconResId by remember { mutableStateOf(R.drawable.bagel_3d) }
     val db = IngredientsDb.getDatabase(LocalContext.current)
 
     // Fetch the icon resource ID in a background thread
@@ -101,38 +149,34 @@ fun toIngredientIcon(ingredientName: String): Painter? {
                 } else {
                     val res = fetchIconForIngredient(ingredientName)
                     if (res != 0) {
-                        var newIngredient = ingredient.copy()
-                        newIngredient.icon = res!!
-                        iconResId = res
+                        val newIngredient = ingredient.copy(icon = res?: R.drawable.bagel_3d)
+                        iconResId = res?: R.drawable.bagel_3d
                         try {
                             db.ingredientDao().update(newIngredient)
                         } catch (error: Exception) {
-                            Log.w("PlanEat", "Error: $error")
+                            Log.w("PlanEat", "Error updating ingredient: $error")
                         }
-                    } else {
-                        iconResId = R.drawable.bagel_3d
                     }
                 }
             } else {
                 val res = fetchIconForIngredient(ingredientName)
                 if (res != 0) {
-                    iconResId = res
-                    val ingredient = Ingredient(name=ingredientName, icon=iconResId!!)
+                    iconResId = res?: R.drawable.bagel_3d
+                    val newIngredient = Ingredient(name = ingredientName, icon = iconResId)
                     try {
-                        db.ingredientDao().insertAll(ingredient)
+                        db.ingredientDao().insertAll(newIngredient)
                     } catch (error: Exception) {
-                        Log.w("PlanEat", "Error: $error")
+                        Log.w("PlanEat", "Error inserting ingredient: $error")
                     }
-                } else {
-                    iconResId = R.drawable.bagel_3d
                 }
             }
         }
     }
 
-    // Return the ImageVector in the composable context
-    return iconResId?.let { painterResource(id=it) }
+    // Always return a valid painter (fallback if necessary)
+    return painterResource(id = iconResId)
 }
+
 
 fun toIngredientCategory(
     ingredientName: String,

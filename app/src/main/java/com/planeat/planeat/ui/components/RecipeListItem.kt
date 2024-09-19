@@ -65,6 +65,7 @@ import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.data.Tags
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -315,12 +316,25 @@ fun RecipeListItem(
                 maxLines = 1
             )
 
+            val tagStr = if (recipe.tags.isNotEmpty()) {
+                val t = Tags.fromString(recipe.tags.first())
+                if (t != null) {
+                    " · " + t.getString(context)
+                } else {
+                    ""
+                }
+            } else {
+                ""
+            }
+            val middleLabel = convertDuration(recipe.cookingTime) + tagStr
+
             Text(
-                text = convertDuration(recipe.cookingTime),
+                text = middleLabel,
                 style = MaterialTheme.typography.bodySmall,
                 color = onSurfaceVariantLight,
                 modifier = Modifier.padding(start=8.dp, top = 0.dp, bottom = 0.dp),
             )
+
 
             SuggestionChip(
                 label = {

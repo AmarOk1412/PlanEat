@@ -242,9 +242,16 @@ fun RecipeDetailScreen(
                             ) {
                                 if (ingredients.isNotEmpty()) {
                                     ingredients.forEach {
+
+
+                                        var name by remember { mutableStateOf(it.name.replaceFirstChar(Char::titlecase)) }
+                                        LaunchedEffect(Unit) {
+                                            name = it.toLocalName()
+                                        }
+
                                         val quantity = if (it.quantity.toInt().toFloat() != it.quantity) it.quantity.toString() else it.quantity.toInt().toString()
                                         ListItem(
-                                            headlineContent = { Text(it.name.replaceFirstChar(Char::titlecase)) },
+                                            headlineContent = { Text(name) },
                                             supportingContent = { if (quantity != "1") Text(quantity + " " + it.unit) },
                                             leadingContent = {
                                                 toIngredientIcon(it.name.lowercase())?.let { it1 ->

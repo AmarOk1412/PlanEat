@@ -403,6 +403,8 @@ fun IngredientCheckbox(
     var isChecked by remember { mutableStateOf(item.ingredient.checked) }
     var isVisible by remember { mutableStateOf(!item.validated || showOnChecked) }
 
+    var name by remember { mutableStateOf(item.ingredient.name.replaceFirstChar(Char::titlecase)) }
+
     // Logic for checkbox change and validation
     fun handleCheckChange(newCheckedState: Boolean) {
         isChecked = newCheckedState
@@ -418,6 +420,10 @@ fun IngredientCheckbox(
         }
     }
 
+    LaunchedEffect(Unit) {
+        name = item.ingredient.toLocalName()
+    }
+
     // Properly manage visibility and ensure only the correct checkbox responds
     AnimatedVisibility(
         visible = isVisible,
@@ -429,7 +435,7 @@ fun IngredientCheckbox(
             modifier = Modifier.fillMaxWidth(),
             headlineContent = {
                 Text(
-                    text = item.ingredient.name.replaceFirstChar(Char::titlecase),
+                    text = name,
                     style = if (isChecked) TextStyle(textDecoration = TextDecoration.LineThrough) else TextStyle()
                 )
             },
@@ -639,6 +645,11 @@ fun ShoppingListByCategory(
 
 @Composable
 fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) -> Unit) {
+    var name by remember { mutableStateOf(ingredient.name.replaceFirstChar(Char::titlecase)) }
+    LaunchedEffect(Unit) {
+        val ingredientItem = IngredientItem(ingredient.name)
+        name = ingredientItem.toLocalName()
+    }
     ListItem(
         modifier = Modifier
             .clickable {
@@ -647,7 +658,7 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
             .padding(horizontal = 12.dp),
         headlineContent = {
             Text(
-                text = ingredient.name.replaceFirstChar(Char::titlecase)
+                text = name
             )
         },
         leadingContent = {
