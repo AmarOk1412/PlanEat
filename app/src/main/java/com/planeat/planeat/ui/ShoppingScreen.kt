@@ -93,6 +93,7 @@ import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.toIngredientIcon
 import com.planeat.planeat.ui.components.MinimalRecipeItemList
 import com.planeat.planeat.ui.utils.IngredientClassifier
+import com.planeat.planeat.ui.utils.Translator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -233,7 +234,7 @@ fun ShoppingScreen(
                                 contentPadding = PaddingValues(horizontal = 16.dp)
                             ) {
                                 Row {
-                                    Text(text = shoppingList!!.sortingMethod, modifier = Modifier.align(Alignment.CenterVertically))
+                                    Text(text = if (shoppingList!!.sortingMethod == "Aisle") stringResource(R.string.aisle) else stringResource(R.string.recipe), modifier = Modifier.align(Alignment.CenterVertically))
 
                                     Icon(Icons.Filled.KeyboardArrowDown, tint = Color(0xFF949494), contentDescription = null)
                                 }
@@ -602,9 +603,15 @@ fun ShoppingListByCategory(
 
     // Render each category and its ingredients
     groupedList?.forEach { (groupKey, categoryIngredients) ->
-        var key = groupKey.takeIf { sortedByCategory } ?: shoppingList?.plannedRecipes?.find { it.recipeId.toString() == groupKey }?.title.orEmpty()
+        val k = groupKey.takeIf { sortedByCategory } ?: shoppingList?.plannedRecipes?.find { it.recipeId.toString() == groupKey }?.title.orEmpty()
+        var key by remember { mutableStateOf(k) }
         if (!sortedByCategory && groupKey == "0") {
             key = stringResource(R.string.custom)
+        }
+        if (sortedByCategory) {
+            scope.launch {
+                key = Translator().translate(key)
+            }
         }
 
         // Show category card with non-validated items

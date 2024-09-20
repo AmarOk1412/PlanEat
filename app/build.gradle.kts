@@ -32,7 +32,7 @@ android {
         applicationId = "com.planeat.planeat"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = 34
-        versionCode = 5
+        versionCode = 6
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -60,6 +60,7 @@ android {
         }
 
         getByName("release") {
+            ndk.debugSymbolLevel = "full"
             isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("debug")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
