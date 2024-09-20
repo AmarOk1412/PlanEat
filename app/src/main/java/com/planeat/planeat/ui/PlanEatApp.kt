@@ -348,13 +348,32 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         }
     }
 
-    suspend fun update(recipe: Recipe) {
+    suspend fun update(recipe: Recipe, addRecipe: Boolean = false) {
         if (recipe.recipeId != 0.toLong()) {
             coroutineScope {
                 async(Dispatchers.IO) {
                     try {
                         db.recipeDao().update(recipe)
                         classifyRecipeAndIngredients(recipe)
+                    } catch (error: Exception) {
+                        Log.d("PlanEat", "Error: $error")
+                    }
+                }
+            }
+        } else if (addRecipe) {
+            coroutineScope {
+                async(Dispatchers.IO) {
+                    try {
+                        db.recipeDao().insertAll(recipe)
+                        val res = db.recipeDao().findByUrl(recipe.url)
+                        if (res != null) {
+                            recipesInDb.add(res)
+                            recipesInDb.sortWith(compareBy({ -it.planified }, { it.title }))
+                            recipesInDbShown.add(recipe)
+                            recipesInDbShown.sortWith(compareBy({ -it.planified }, { it.title }))
+                            recipe.recipeId = res.recipeId
+                            classifyRecipeAndIngredients(recipe)
+                        }
                     } catch (error: Exception) {
                         Log.d("PlanEat", "Error: $error")
                     }
@@ -562,7 +581,7 @@ fun PlanEatApp(
             model.remove(recipe)
         } },
         onRecipeUpdated = {recipe -> scope.launch {
-            model.update(recipe)
+            model.update(recipe, true)
         } },
         onRecipeAdded = {recipe -> scope.launch { model.add(recipe) } },
         navigationType = navigationType,
