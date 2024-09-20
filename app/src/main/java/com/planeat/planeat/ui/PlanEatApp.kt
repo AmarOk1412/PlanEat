@@ -79,6 +79,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     val recipesSearched = mutableListOf<Recipe>()
     val recipesSearchedShown = mutableStateListOf<Recipe>()
     val suggestedRecipes = mutableStateListOf<Recipe>()
+    val suggestedRecipesShown = mutableStateListOf<Recipe>()
 
     val openedRecipe = mutableStateOf<Recipe?>(null)
     var selectedDate = mutableStateOf<LocalDate?>(null)
@@ -331,6 +332,16 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         for (r in newList) {
             recipesSearchedShown.add(r)
         }
+        // Update suggested
+        newList = if (tag == Tags.All) {
+            suggestedRecipes
+        } else {
+            suggestedRecipes.filter { recipe -> toTags(recipe).contains(tag) }
+        }
+        suggestedRecipesShown.clear()
+        for (r in newList) {
+            suggestedRecipesShown.add(r)
+        }
     }
 
     suspend fun remove(recipe: Recipe) {
@@ -396,6 +407,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                 }
                 if (suggestedRecipes.any { it.url == recipe.url }) {
                     suggestedRecipes.remove(recipe)
+                    suggestedRecipesShown.remove(recipe)
                 }
                 recipesInDbShown.add(res)
                 classifyRecipeAndIngredients(res)
@@ -436,6 +448,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                             suggestions?.forEach { recipe ->
                                 if (!recipesInDb.any { it.url == recipe.url }) {
                                     suggestedRecipes.add(recipe)
+                                    suggestedRecipesShown.add(recipe)
                                     Log.e("PlanEat", "@@@ $recipe")
                                     if (recipe.parsed_ingredients.isEmpty()) {
                                         classifyRecipeAndIngredients(recipe)
@@ -456,6 +469,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                                         // Add new recipes to results
                                         if (!recipesInDb.any { it.url == recipe.url }) {
                                             suggestedRecipes.add(recipe)
+                                            suggestedRecipesShown.add(recipe)
                                             launch(Dispatchers.IO) {
                                                 classifyRecipeAndIngredients(recipe)
                                                 writeRecipesToFile(

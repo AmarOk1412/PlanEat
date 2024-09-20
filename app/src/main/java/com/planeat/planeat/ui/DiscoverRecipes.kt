@@ -195,7 +195,7 @@ fun DiscoverScreen(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.padding(start=16.dp, end=16.dp)
                 ) {
-                    if (model.suggestedRecipes.isNotEmpty()) {
+                    if (model.suggestedRecipesShown.isNotEmpty()) {
                         item(span = { GridItemSpan(2) }) {
                             Text(
                                 text = stringResource(R.string.you_may_like),
@@ -205,7 +205,7 @@ fun DiscoverScreen(
                         }
                     }
 
-                    items(model.suggestedRecipes, key = { recipe -> recipe.url }) { recipe ->
+                    items(model.suggestedRecipesShown, key = { recipe -> recipe.url }) { recipe ->
                         RecipeItem(
                             recipe,
                             model,
