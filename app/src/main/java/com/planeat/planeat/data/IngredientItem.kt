@@ -1,25 +1,19 @@
 package com.planeat.planeat.data
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.util.Log
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.core.content.ContextCompat
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
 import com.planeat.planeat.R
+import com.planeat.planeat.R.drawable.amphora_3d
 import com.planeat.planeat.ui.utils.IngredientClassifier
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.json.JSONObject
 import java.util.Locale
@@ -129,52 +123,64 @@ class IngredientItem(var name: String = "", var quantity: Float = 1.0f, var unit
 
 }
 
-@Composable
-fun toIngredientIcon(ingredientName: String): Painter {
+@SuppressLint("UseCompatLoadingForDrawables")
+fun isValidDrawable(resId: Int, context: Context): Boolean {
+    return try {
+        val drawable = ContextCompat.getDrawable(context, resId)
+        // Ensure it's not a ColorDrawable
+        return drawable is BitmapDrawable
+    } catch (e: Exception) {
+        Log.e("PlanEat", "Error getting drawable resource: $e")
+        false
+    }
+}
+
+fun toIngredientIcon(ingredientName: String, db: IngredientsDb, context: Context): Int {
     val singularName = singularize(ingredientName)
     // Initialize iconResId with a default value (not null)
-    var iconResId by remember { mutableStateOf(R.drawable.bagel_3d) }
-    val db = IngredientsDb.getDatabase(LocalContext.current)
+    var iconResId = R.drawable.bagel_3d
 
-    // Fetch the icon resource ID in a background thread
-    LaunchedEffect(ingredientName) {
-        withContext(Dispatchers.IO) {
-            var ingredient = db.ingredientDao().findByName(singularName)
-            if (ingredient == null) {
-                ingredient = db.ingredientDao().findByName(ingredientName.lowercase())
+    var ingredient = db.ingredientDao().findByName(singularName)
+    if (ingredient == null) {
+        ingredient = db.ingredientDao().findByName(ingredientName.lowercase())
+    }
+
+    var update = true
+    if (ingredient != null) {
+        if (ingredient.icon != 0) {
+            iconResId = ingredient.icon
+            update = false
+        }
+    } else {
+        val res = fetchIconForIngredient(ingredientName)
+        if (res != 0) {
+            iconResId = res!!
+            update = false
+            val newIngredient = Ingredient(name = ingredientName, icon = iconResId)
+            try {
+                db.ingredientDao().insertAll(newIngredient)
+            } catch (error: Exception) {
+                Log.w("PlanEat", "Error inserting ingredient: $error")
             }
-            if (ingredient != null) {
-                if (ingredient.icon != 0) {
-                    iconResId = ingredient.icon
-                } else {
-                    val res = fetchIconForIngredient(ingredientName)
-                    if (res != 0) {
-                        val newIngredient = ingredient.copy(icon = res?: R.drawable.bagel_3d)
-                        iconResId = res?: R.drawable.bagel_3d
-                        try {
-                            db.ingredientDao().update(newIngredient)
-                        } catch (error: Exception) {
-                            Log.w("PlanEat", "Error updating ingredient: $error")
-                        }
-                    }
-                }
-            } else {
-                val res = fetchIconForIngredient(ingredientName)
-                if (res != 0) {
-                    iconResId = res?: R.drawable.bagel_3d
-                    val newIngredient = Ingredient(name = ingredientName, icon = iconResId)
-                    try {
-                        db.ingredientDao().insertAll(newIngredient)
-                    } catch (error: Exception) {
-                        Log.w("PlanEat", "Error inserting ingredient: $error")
-                    }
-                }
+        }
+    }
+
+    if (update || !isValidDrawable(iconResId, context)) {
+        val res = fetchIconForIngredient(ingredientName)
+
+        if (res != 0) {
+            val newIngredient = ingredient.copy(icon = res?: R.drawable.bagel_3d)
+            iconResId = res!!
+            try {
+                db.ingredientDao().update(newIngredient)
+            } catch (error: Exception) {
+                Log.w("PlanEat", "Error updating ingredient: $error")
             }
         }
     }
 
     // Always return a valid painter (fallback if necessary)
-    return painterResource(id = iconResId)
+    return iconResId
 }
 
 
@@ -217,7 +223,7 @@ fun toIngredientCategory(
 
 fun fetchIconForIngredient(ingredient_name: String): Int? {
     if (ingredient_name.contains("amphora")) {
-        return R.drawable.amphora_3d
+        return amphora_3d
     } else if (ingredient_name.contains("avocado")) {
         return R.drawable.avocado_3d
     } else if (ingredient_name.contains("baby")) {

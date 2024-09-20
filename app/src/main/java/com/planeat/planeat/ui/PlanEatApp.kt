@@ -417,6 +417,14 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                             suggestions?.forEach { recipe ->
                                 if (!recipesInDb.any { it.url == recipe.url }) {
                                     suggestedRecipes.add(recipe)
+                                    Log.e("PlanEat", "@@@ $recipe")
+                                    if (recipe.parsed_ingredients.isEmpty()) {
+                                        classifyRecipeAndIngredients(recipe)
+                                        writeRecipesToFile(
+                                            suggestedRecipes,
+                                            "suggestions.json"
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -429,6 +437,13 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                                         // Add new recipes to results
                                         if (!recipesInDb.any { it.url == recipe.url }) {
                                             suggestedRecipes.add(recipe)
+                                            launch(Dispatchers.IO) {
+                                                classifyRecipeAndIngredients(recipe)
+                                                writeRecipesToFile(
+                                                    suggestedRecipes,
+                                                    "suggestions.json"
+                                                )
+                                            }
                                         }
                                     })
                                     // Cache it

@@ -59,8 +59,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
+import com.planeat.planeat.data.IngredientsDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.toIngredientIcon
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
@@ -68,6 +70,7 @@ import com.planeat.planeat.ui.components.convertDuration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -242,11 +245,16 @@ fun RecipeDetailScreen(
                             ) {
                                 if (ingredients.isNotEmpty()) {
                                     ingredients.forEach {
-
+                                        val context = LocalContext.current
+                                        val db = IngredientsDb.getDatabase(context)
 
                                         var name by remember { mutableStateOf(it.name.replaceFirstChar(Char::titlecase)) }
+                                        var res by remember { mutableStateOf<Int?>(null) }
                                         LaunchedEffect(Unit) {
-                                            name = it.toLocalName()
+                                            withContext(Dispatchers.IO) {
+                                                res = toIngredientIcon(it.name.lowercase(), db, context)
+                                                name = it.toLocalName()
+                                            }
                                         }
 
                                         val quantity = if (it.quantity.toInt().toFloat() != it.quantity) it.quantity.toString() else it.quantity.toInt().toString()
@@ -254,11 +262,10 @@ fun RecipeDetailScreen(
                                             headlineContent = { Text(name) },
                                             supportingContent = { if (quantity != "1") Text(quantity + " " + it.unit) },
                                             leadingContent = {
-                                                toIngredientIcon(it.name.lowercase())?.let { it1 ->
-                                                    Image(painter = it1,
-                                                        contentDescription = null,
-                                                        modifier = Modifier.size(26.dp))
-                                                }
+                                                val painter = rememberAsyncImagePainter(res)
+                                                Image(painter = painter,
+                                                    contentDescription = null,
+                                                    modifier = Modifier.size(26.dp))
                                             },
                                             colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
                                         )

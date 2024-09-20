@@ -80,6 +80,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.example.compose.primaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
@@ -404,6 +405,15 @@ fun IngredientCheckbox(
     var isVisible by remember { mutableStateOf(!item.validated || showOnChecked) }
 
     var name by remember { mutableStateOf(item.ingredient.name.replaceFirstChar(Char::titlecase)) }
+    var res by remember { mutableStateOf<Int?>(null) }
+    val context = LocalContext.current
+    val db = IngredientsDb.getDatabase(context)
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            res = toIngredientIcon(item.ingredient.name.lowercase(), db, context)
+            name = item.ingredient.toLocalName()
+        }
+    }
 
     // Logic for checkbox change and validation
     fun handleCheckChange(newCheckedState: Boolean) {
@@ -418,10 +428,6 @@ fun IngredientCheckbox(
             onValidationChange(newCheckedState)
             isVisible = !item.validated && !showOnChecked
         }
-    }
-
-    LaunchedEffect(Unit) {
-        name = item.ingredient.toLocalName()
     }
 
     // Properly manage visibility and ensure only the correct checkbox responds
@@ -445,14 +451,15 @@ fun IngredientCheckbox(
                 }
             },
             leadingContent = {
-                toIngredientIcon(item.ingredient.name.lowercase())?.let { icon ->
-                    Image(
-                        painter = icon,
+                if (res != null) {
+                    val painter = rememberAsyncImagePainter(res)
+                    Image(painter = painter,
                         contentDescription = null,
-                        modifier = Modifier
-                            .size(26.dp)
-                            .alpha(if (isChecked) 0.5f else 1.0f)
+                        modifier = Modifier.size(26.dp)
+                        .alpha(if (isChecked) 0.5f else 1.0f)
                     )
+                } else {
+                    Spacer(modifier = Modifier.width(26.dp))
                 }
             },
             trailingContent = {
@@ -646,10 +653,17 @@ fun ShoppingListByCategory(
 @Composable
 fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) -> Unit) {
     var name by remember { mutableStateOf(ingredient.name.replaceFirstChar(Char::titlecase)) }
+    var res by remember { mutableStateOf<Int?>(null) }
+    val context = LocalContext.current
+    val db = IngredientsDb.getDatabase(context)
     LaunchedEffect(Unit) {
-        val ingredientItem = IngredientItem(ingredient.name)
-        name = ingredientItem.toLocalName()
+        withContext(Dispatchers.IO) {
+            val ingredientItem = IngredientItem(ingredient.name)
+            res = toIngredientIcon(ingredientItem.name.lowercase(), db, context)
+            name = ingredientItem.toLocalName()
+        }
     }
+
     ListItem(
         modifier = Modifier
             .clickable {
@@ -662,14 +676,12 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
             )
         },
         leadingContent = {
-            if (ingredient.name.isNotEmpty()) {
-                toIngredientIcon(ingredient.name.lowercase())?.let { icon ->
-                    Image(
-                        painter = icon,
-                        contentDescription = null,
-                        modifier = Modifier.size(26.dp)
+            if (res != null) {
+                val painter = rememberAsyncImagePainter(res)
+                Image(painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier.size(26.dp)
                     )
-                }
             } else {
                 Spacer(modifier = Modifier.width(26.dp))
             }
