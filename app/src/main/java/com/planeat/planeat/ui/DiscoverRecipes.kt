@@ -1,7 +1,6 @@
 package com.planeat.planeat.ui
 
 import android.os.Build
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.horizontalScroll
@@ -209,21 +208,11 @@ fun DiscoverScreen(
                         RecipeItem(
                             recipe,
                             model,
-                            goToDetails = {
-                                Log.d("PlanEat", "@@@ GO")
-                                goToDetails(it) },
-                            goToAgenda = {
-                                Log.d("PlanEat", "@@@ GO A")
-                                goToAgenda() },
-                            goToEdition = {
-                                Log.d("PlanEat", "@@@ GO goToEdition")
-                                goToEdition(it) },
-                            onRecipeDeleted = {
-                                Log.d("PlanEat", "@@@ GO onRecipeDeleted")
-                                onRecipeDeleted(it) },
-                            onRecipeAdded = {
-                                Log.d("PlanEat", "@@@ GO onRecipeAdded")
-                                onRecipeAdded(it) },
+                            goToDetails = { goToDetails(it) },
+                            goToAgenda = { goToAgenda() },
+                            goToEdition = { goToEdition(it) },
+                            onRecipeDeleted = { onRecipeDeleted(it) },
+                            onRecipeAdded = { onRecipeAdded(it) },
                             onPlanRecipe = { r ->
                                 toPlanRecipe = r
                                 openBottomSheet = true

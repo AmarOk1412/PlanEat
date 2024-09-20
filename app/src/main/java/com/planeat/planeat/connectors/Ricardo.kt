@@ -52,13 +52,11 @@ class Ricardo : Connector {
     override fun suggest(sonRecipe: (Recipe) -> Unit) {
     }
 
-
-
     override fun parsePages(url: String, onRecipe: (Recipe) -> Unit) {
         for (i in 1 until 11) {
             try {
                 val address = url.replace("PAGE", i.toString())
-                val response = Jsoup.connect(address).userAgent("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)").execute()
+                val response = Jsoup.connect(address).timeout(2000).userAgent("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)").execute()
                 val document = response.parse()
 
                 val scriptContent = document.select("script[id=\"react-bridge-bootstrap\"]").html()
@@ -87,7 +85,7 @@ class Ricardo : Connector {
         try {
             val searchTermEscaped = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8.toString())
             val url = "https://www.ricardocuisine.com/recherche?sort=score&searchValue=$searchTermEscaped&content-type=recipe&currentPage=1"
-            val response = Jsoup.connect(url).execute()
+            val response = Jsoup.connect(url).timeout(2000).execute()
             val document = response.parse()
 
             val scriptContent = document.select("script[id=\"react-bridge-bootstrap\"]").html()
@@ -117,7 +115,7 @@ class Ricardo : Connector {
         var recipe: Recipe = Recipe()
         Log.d("PlanEat", "Parse recipe from Ricardo: $url")
         try {
-            val response = Jsoup.connect(url).execute()
+            val response = Jsoup.connect(url).timeout(2000).execute()
             val document = response.parse()
             var recipeData: JSONObject? = null
 

@@ -58,6 +58,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
@@ -66,6 +67,7 @@ import org.jsoup.Connection
 import org.jsoup.Jsoup
 import java.io.File
 import java.io.FileWriter
+import java.net.SocketTimeoutException
 import java.time.LocalDate
 
 
@@ -85,6 +87,9 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     var selectedDate = mutableStateOf<LocalDate?>(null)
 
     var searchJobs = mutableListOf<Job>()
+
+    private val hasConnection = mutableStateOf(true)
+    private val checkConnectionJob = mutableStateOf<Job?>(null)
 
 
     fun writeRecipesToFile(recipes: List<Recipe>, fileName: String) {
@@ -143,8 +148,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         val chacuit = ChaCuit(maxResult)
         connectors = listOf(chacuit, ricardo, marmiton)
     }
-
-
 
     suspend fun gigaDataset() {
         val categoriesUrl = mutableMapOf<Tags, List<String>>()
@@ -256,6 +259,8 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     }
 
     fun postIngredients(ingredientsData: String): List<IngredientItem> {
+        if (!hasConnection.value)
+            return emptyList()
 
         val ic = IngredientClassifier()
         val db = IngredientsDb.getDatabase(context)
@@ -265,6 +270,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                 .method(Connection.Method.POST)
                 .header("Content-Type", "text/plain")
                 .requestBody(ingredientsData)
+                .timeout(2000)
                 .ignoreContentType(true) // We want to handle the JSON response
                 .execute()
 
@@ -287,9 +293,52 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                     )
                 }
             }
+        } catch (error: SocketTimeoutException) {
+            hasConnection.value = false
+            startCheckConnection()
         } catch(error: Exception) {
             Log.d("PlanEat", "Error: $error")
-            return emptyList()
+        }
+        return emptyList()
+    }
+
+    private fun startCheckConnection() {
+        if (checkConnectionJob.value == null) { // Only start if no job is running
+            val scope = CoroutineScope(Dispatchers.Default)
+
+            // Launch a job that checks the connection every minute
+            checkConnectionJob.value = scope.launch {
+                while (!hasConnection.value) {
+                    // Perform your connection check here
+                    Log.e("PlanEat", "Checking connection to parse ingredients.")
+
+                    // Wait for 1 minute
+                    delay(60 * 1000L)
+
+                    try {
+                        // Use Jsoup to send a POST request
+                        val response = Jsoup.connect("https://cha-cu.it/parse")
+                            .method(Connection.Method.POST)
+                            .header("Content-Type", "text/plain")
+                            .requestBody("eggs")
+                            .timeout(2000)
+                            .ignoreContentType(true) // We want to handle the JSON response
+                            .execute()
+
+                        // Get the response body as a string (JSON)
+                        response.body()
+                        hasConnection.value = true
+                        Log.d("PlanEat", "Connection to parse ingredients is back!")
+                    } catch (error: Exception) {
+                        Log.d("PlanEat", "Error: $error")
+                        continue
+                    }
+                }
+
+                // When hasConnection becomes false, stop the job and set it to null
+                println("No connection, stopping job.")
+                checkConnectionJob.value = null
+            }
         }
     }
 
@@ -449,7 +498,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                                 if (!recipesInDb.any { it.url == recipe.url }) {
                                     suggestedRecipes.add(recipe)
                                     suggestedRecipesShown.add(recipe)
-                                    Log.e("PlanEat", "@@@ $recipe")
                                     if (recipe.parsed_ingredients.isEmpty()) {
                                         classifyRecipeAndIngredients(recipe)
                                         writeRecipesToFile(

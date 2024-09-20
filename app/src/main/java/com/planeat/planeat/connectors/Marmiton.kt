@@ -27,7 +27,7 @@ class Marmiton : Connector {
         for (i in 1 until 11) {
             try {
                 val address = url.replace("PAGE", i.toString())
-                val doc: Document = Jsoup.connect(address).get()
+                val doc: Document = Jsoup.connect(address).timeout(2000).get()
 
                 val elements: Elements = doc.select(".recipe-card")
                 for (element in elements) {
@@ -48,7 +48,7 @@ class Marmiton : Connector {
         try {
             val searchTermEscaped = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8.toString())
             val url = "https://www.marmiton.org/recettes/recherche.aspx?aqt=$searchTermEscaped"
-            val doc: Document = Jsoup.connect(url).get()
+            val doc: Document = Jsoup.connect(url).timeout(2000).get()
 
             val elements: Elements = doc.select(".recipe-card-algolia")
             for (element in elements) {
@@ -70,7 +70,7 @@ class Marmiton : Connector {
         var i = 0
         try {
             val url = "https://www.marmiton.org/recettes/menu-de-la-semaine.aspx"
-            val doc: Document = Jsoup.connect(url).get()
+            val doc: Document = Jsoup.connect(url).timeout(2000).get()
 
             // Select all anchor tags within divs with class 'mrtn-card__title'
             val elements: Elements = doc.select("div.mrtn-card__title a")
@@ -94,7 +94,7 @@ class Marmiton : Connector {
         var recipe: Recipe = Recipe()
         Log.d("PlanEat", "Parse recipe from Marmiton: $url")
         try {
-            val response = Jsoup.connect(url).execute()
+            val response = Jsoup.connect(url).timeout(2000).execute()
             val document = response.parse()
 
             var recipeData: JSONObject? = null

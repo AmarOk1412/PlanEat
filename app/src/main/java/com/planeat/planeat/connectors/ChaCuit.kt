@@ -22,7 +22,8 @@ class ChaCuit : Connector {
         var i = 0
         try {
             val url = "https://cha-cu.it/recettes"
-            val response = Jsoup.connect(url).execute()
+            val response = Jsoup.connect(url)
+                .timeout(2000).execute()
             val document = response.parse()
 
             val elements = document.select(".p-2")
@@ -49,7 +50,8 @@ class ChaCuit : Connector {
         var i = 0
         try {
             val url = "https://cha-cu.it/"
-            val response = Jsoup.connect(url).execute()
+            val response = Jsoup.connect(url)
+                .timeout(2000).execute()
             val document = response.parse()
 
             val elements = document.select(".p-2")
@@ -74,7 +76,7 @@ class ChaCuit : Connector {
         var recipe: Recipe = Recipe()
         Log.d("PlanEat", "Parse recipe from cha-cu.it: $url")
         try {
-            val response = Jsoup.connect(url).execute()
+            val response = Jsoup.connect(url).timeout(2000).execute()
             val document = response.parse()
 
             val name = document.select("meta[property=\"og:title\"]").attr("content")
