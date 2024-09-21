@@ -25,7 +25,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
+import com.planeat.planeat.connectors.Nytimes
 import com.planeat.planeat.connectors.Ricardo
 import com.planeat.planeat.data.IngredientItem
 import com.planeat.planeat.data.IngredientsDb
@@ -41,8 +41,8 @@ import com.planeat.planeat.data.ParsedIngredient
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
-import com.planeat.planeat.data.toTags
 import com.planeat.planeat.data.toIngredientCategory
+import com.planeat.planeat.data.toTags
 import com.planeat.planeat.ui.components.calendar.CalendarDataSource
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import com.planeat.planeat.ui.navigation.PlanEatBottomNavigationBar
@@ -146,7 +146,8 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         val marmiton = Marmiton(maxResult)
         val ricardo = Ricardo(maxResult)
         val chacuit = ChaCuit(maxResult)
-        connectors = listOf(chacuit, ricardo, marmiton)
+        val nytimes = Nytimes(maxResult)
+        connectors = listOf(chacuit, ricardo, marmiton, nytimes)
     }
 
     suspend fun gigaDataset() {

@@ -3,6 +3,7 @@ package com.planeat.planeat.ui
 import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,7 +27,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -45,12 +45,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.onPrimaryLight
+import com.example.compose.primaryContainerLight
 import com.example.compose.primaryLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
@@ -103,6 +106,7 @@ fun DiscoverScreen(
             var text by rememberSaveable { mutableStateOf("") }
             var expanded by rememberSaveable { mutableStateOf(false) }
             val filters = Tags.entries.map { it }
+            val focusRequester = remember { FocusRequester() }
 
             BackHandler {
                 text = ""
@@ -112,6 +116,7 @@ fun DiscoverScreen(
             LaunchedEffect(Unit) {
                 text = ""
                 expanded = false
+                focusRequester.requestFocus()
             }
 
             LaunchedEffect(text) {
@@ -130,6 +135,14 @@ fun DiscoverScreen(
                 onExpandedChange = { },
                 inputField = {
                     SearchBarDefaults.InputField(
+                        modifier = Modifier
+                            .focusRequester(focusRequester)
+                            .border(
+                                2.dp,
+                                if (expanded) Color(0xFF00AF45) else primaryContainerLight,
+                                RoundedCornerShape(100.dp)
+                            )
+                            .padding(start = 8.dp),
                         query = text,
                         onQueryChange = {
                             text = it
@@ -138,8 +151,7 @@ fun DiscoverScreen(
                         onExpandedChange = { expanded = it },
                         onSearch = { expanded = false },
                         placeholder = { Text(stringResource(id = R.string.search_placeholder)) },
-                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                        trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) }
+                        trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
                     )
                 }
             ) {}

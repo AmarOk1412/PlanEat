@@ -43,7 +43,8 @@
     <string name="my_recipe">My recipe</string>
     <string name="delete">Delete</string>
     <string name="confirm_deletion">Confirm deletion</string>
-    <string name="remove_from_agenda">This will remove the recipe from your agenda and recipe list.</string>
+    <string name="remove_from_agenda">Remove from agenda</string>
+    <string name="remove_from_agenda_confirmation">This will remove the recipe from your agenda and recipe list.</string>
     <string name="confirm">Confirm</string>
     <string name="dismiss">Dismiss</string>
     <string name="_1_ingredients">%1$s ingredients</string>
@@ -85,4 +86,5 @@
     <string name="tag_drinks">Drinks</string>
     <string name="choose_a_date">Choose a date</string>
     <string name="discover">Discover</string>
+    <string name="add_to_agenda">Add to agenda</string>
 </resources>

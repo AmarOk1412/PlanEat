@@ -19,13 +19,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Today
-import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -90,8 +88,8 @@ fun RecipeListItem(
 ) {
     val context = LocalContext.current
     val existId = remember { mutableLongStateOf(0.toLong()) }
-    val icon = remember { mutableStateOf(Icons.Default.Add) }
     val outlinedFav = ImageVector.vectorResource(R.drawable.favorite)
+    val icon = remember { mutableStateOf(outlinedFav) }
 
     val showDialog = remember { mutableStateOf(false) }
     var showDeleteDialog = remember { mutableStateOf(false) }
@@ -122,7 +120,7 @@ fun RecipeListItem(
                             existId.longValue = res.recipeId
                         }
                         icon.value = if (existId.longValue == 0.toLong()) {
-                            Icons.Outlined.Add
+                            outlinedFav
                         } else {
                             Icons.Default.MoreVert
                         }
@@ -183,7 +181,6 @@ fun RecipeListItem(
                                 if (recipe.recipeId == 0.toLong()) {
                                     val rdb = RecipesDb.getDatabase(context)
                                     if (existId.longValue == 0.toLong()) {
-                                        Log.e("PlanEat", "@@@Add 2 recipe: ${recipe.title}")
                                         onRecipeAdded(recipe)
                                         val res = rdb.recipeDao().findByUrl(recipe.url)
                                         existId.longValue = res.recipeId
@@ -225,7 +222,10 @@ fun RecipeListItem(
                                 DropdownMenuItem(
                                     leadingIcon = { Icon(Icons.Filled.Today, contentDescription = null) },
                                     text = {
-                                        Text(text = if (agenda != null) "Remove from agenda" else "Add to agenda")
+                                        Text(text = if (agenda != null) stringResource(R.string.remove_from_agenda) else stringResource(
+                                            R.string.add_to_agenda
+                                        )
+                                        )
                                     },
                                     onClick = {
                                         showDialog.value = false
@@ -236,7 +236,7 @@ fun RecipeListItem(
                                                 val rdb = RecipesDb.getDatabase(context)
                                                 if (existId.longValue == 0.toLong()) {
                                                     // If a search result, add it to recipes first
-                                                    Log.e("PlanEat", "@@@Add recipe: ${recipe.title}")
+                                                    Log.d("PlanEat", "Add recipe: ${recipe.title}")
                                                     onRecipeAdded(recipe)
                                                     val res = rdb.recipeDao().findByUrl(recipe.url)
                                                     onPlanRecipe(res)
@@ -280,7 +280,7 @@ fun RecipeListItem(
                                     Text(text = stringResource(R.string.confirm_deletion))
                                 },
                                 text = {
-                                    Text(text = stringResource(R.string.remove_from_agenda))
+                                    Text(text = stringResource(R.string.remove_from_agenda_confirmation))
                                 },
                                 onDismissRequest = {
                                     showDeleteDialog.value = false

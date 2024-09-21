@@ -44,7 +44,8 @@
     <string name="my_recipe">Ma recette</string>
     <string name="delete">Supprimer</string>
     <string name="confirm_deletion">Confirmer la suppression</string>
-    <string name="remove_from_agenda">Cette action supprimera la recette de votre agenda et de votre liste de recettes.</string>
+    <string name="remove_from_agenda">Enlever de l\'agenda</string>
+    <string name="remove_from_agenda_confirmation">Cette action supprimera la recette de votre agenda et de votre liste de recettes.</string>
     <string name="confirm">Confirmer</string>
     <string name="dismiss">Annuler</string>
     <string name="_1_ingredients">%1$s ingrédients</string>
@@ -86,4 +87,5 @@
     <string name="tag_drinks">Boissons</string>
     <string name="choose_a_date">Choisissez une date</string>
     <string name="discover">Découvrir</string>
+    <string name="add_to_agenda">Ajouter à l\'agenda</string>
 </resources>

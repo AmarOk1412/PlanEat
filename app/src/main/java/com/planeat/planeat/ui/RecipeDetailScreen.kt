@@ -91,12 +91,14 @@ fun RecipeDetailScreen(
         selectedRecipe.url.contains("ricardo") -> R.drawable.ricardo
         selectedRecipe.url.contains("marmiton") -> R.drawable.marmiton
         selectedRecipe.url.contains("cha-cu.it") -> R.drawable.chacuit
+        selectedRecipe.url.contains("nytimes.com") -> R.drawable.nytimes
         else -> null
     }
     val description = when {
         selectedRecipe.url.contains("ricardo") -> "Ricardo"
         selectedRecipe.url.contains("marmiton") -> "Marmiton"
         selectedRecipe.url.contains("cha-cu.it") -> "ChaCuit"
+        selectedRecipe.url.contains("nytimes.com") -> "New-york times"
         else -> null
     }
 
