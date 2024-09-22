@@ -53,21 +53,21 @@ fun Calendar(
         Header(
             dataUi = dataUi,
             onPrevClickListener = { startDate ->
-                val finalStartDate = startDate.minusDays(1)
+                val finalStartDate = startDate.minusDays(7)
                 updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date), false)
             },
             onNextClickListener = { endDate ->
-                val finalStartDate = endDate.plusDays(2)
+                val finalStartDate = endDate.plusDays(1)
                 updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date), false)
             }
         )
         Content(dataUi = dataUi,
                 onPrevClickListener = { startDate ->
-                    val finalStartDate = startDate.minusDays(1)
+                    val finalStartDate = startDate.minusDays(7)
                     updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date), false)
                 },
                 onNextClickListener = { endDate ->
-                    val finalStartDate = endDate.plusDays(2)
+                    val finalStartDate = endDate.plusDays(1)
                     updateDate(dataSource.getData(startDate = finalStartDate, lastSelectedDate = dataUi.selectedDate.date), false)
                 }
         ) { date ->

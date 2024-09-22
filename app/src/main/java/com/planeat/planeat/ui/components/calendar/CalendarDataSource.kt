@@ -17,11 +17,10 @@ class CalendarDataSource {
         }
 
     fun getData(startDate: LocalDate = today, lastSelectedDate: LocalDate): CalendarUiModel {
-        val firstDayOfWeek = startDate.with(DayOfWeek.MONDAY)
-        val endDayOfWeek = firstDayOfWeek.plusDays(7)
-        val visibleDates = getDatesBetween(firstDayOfWeek, endDayOfWeek)
-        val firstDate = firstDayOfWeek.minusDays(7)
-        val endDate = endDayOfWeek.plusDays(7)
+        val oneWeekLater = startDate.plusDays(7)
+        val visibleDates = getDatesBetween(startDate, oneWeekLater)
+        val firstDate = startDate.minusDays(7)
+        val endDate = oneWeekLater.plusDays(7)
         val scrollDates = getDatesBetween(firstDate, endDate)
         return toUiModel(visibleDates, lastSelectedDate, scrollDates)
     }

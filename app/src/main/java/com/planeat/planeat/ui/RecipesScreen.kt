@@ -187,12 +187,10 @@ fun RecipesScreen(
                     var text by rememberSaveable { mutableStateOf("") }
                     var expanded by rememberSaveable { mutableStateOf(false) }
                     val filters = Tags.entries.map { it }
-                    val focusRequester = remember { FocusRequester() }
 
                     LaunchedEffect(Unit) {
                         text = ""
                         expanded = false
-                        focusRequester.requestFocus()
                     }
 
                     LaunchedEffect(text) {
@@ -212,7 +210,6 @@ fun RecipesScreen(
                         inputField = {
                             SearchBarDefaults.InputField(
                                 modifier = Modifier
-                                    .focusRequester(focusRequester)
                                     .border(
                                         2.dp,
                                         if (expanded) Color(0xFF00AF45) else primaryContainerLight,

@@ -62,7 +62,7 @@ fun BottomPlanifier(
 
     val selectedSource by remember { mutableStateOf(CalendarDataSource()) }
     var selectedUi by remember { mutableStateOf(selectedSource.getData(lastSelectedDate = selectedSource.today)) }
-    val selectedDates = remember { mutableStateListOf<LocalDate>(dataUi.selectedDate.date) }
+    val selectedDates = remember { mutableStateListOf(dataUi.selectedDate.date) }
     val skipPartiallyExpanded by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
 
@@ -87,11 +87,11 @@ fun BottomPlanifier(
             DateHeader(
                 dataUi = selectedUi,
                 onPrevClickListener = { startDate ->
-                    val finalStartDate = startDate.minusDays(1)
+                    val finalStartDate = startDate.minusDays(7)
                     selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
                 },
                 onNextClickListener = { endDate ->
-                    val finalStartDate = endDate.plusDays(2)
+                    val finalStartDate = endDate.plusDays(1)
                     selectedUi = selectedSource.getData(startDate = finalStartDate, lastSelectedDate = selectedUi.selectedDate.date)
                 }
             )
