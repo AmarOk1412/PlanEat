@@ -75,6 +75,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
@@ -313,7 +314,11 @@ fun ShoppingScreen(
                         ingredients = ingredientsDb.ingredientDao().selectAll()
                         filtered = ingredients
                     }
-                    focusRequester.requestFocus()
+
+                    // Switch back to the Main thread for UI updates
+                    withContext(Dispatchers.Main) {
+                        focusRequester.requestFocus()
+                    }
                 }
                 var text by remember {
                     mutableStateOf("")
@@ -332,6 +337,7 @@ fun ShoppingScreen(
                         SearchBarDefaults.InputField(
                             modifier = Modifier
                                 .focusRequester(focusRequester)
+                                .testTag("search_input")
                                 .border(
                                     2.dp,
                                     if (expanded) Color(0xFF00AF45) else primaryContainerLight,
@@ -695,7 +701,7 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
         },
         trailingContent = {
             IconButton(
-                modifier = Modifier.size(28.dp),
+                modifier = Modifier.size(28.dp).testTag("add_ingredient"),
                 onClick = { onIngredientAdded(IngredientItem(ingredient.name))},
                 colors = IconButtonDefaults.iconButtonColors(
                             containerColor = Color(0xFF599e39),// TODO primaryContainerLight,

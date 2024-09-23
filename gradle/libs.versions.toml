@@ -71,6 +71,7 @@ litert = "1.0.1"
 litertSupportApi = "1.0.1"
 litertMetadata = "1.0.1"
 runner = "1.6.2"
+rules = "1.6.1"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -168,6 +169,7 @@ litert = { group = "com.google.ai.edge.litert", name = "litert", version.ref = "
 litert-support-api = { group = "com.google.ai.edge.litert", name = "litert-support-api", version.ref = "litertSupportApi" }
 litert-metadata = { group = "com.google.ai.edge.litert", name = "litert-metadata", version.ref = "litertMetadata" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

@@ -126,6 +126,7 @@ dependencies {
     // Database
     implementation(libs.androidx.room.runtime.v261)
     implementation(libs.androidx.runner)
+    implementation(libs.androidx.rules)
     annotationProcessor(libs.room.compiler.v261)
     kapt(libs.room.compiler.v261)
     implementation(libs.kotlinx.serialization.json)

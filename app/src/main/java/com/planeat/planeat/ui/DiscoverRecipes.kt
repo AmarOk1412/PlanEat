@@ -50,6 +50,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.onPrimaryLight
@@ -142,6 +143,7 @@ fun DiscoverScreen(
                                 if (expanded) Color(0xFF00AF45) else primaryContainerLight,
                                 RoundedCornerShape(100.dp)
                             )
+                            .testTag("search_input")
                             .padding(start = 8.dp),
                         query = text,
                         onQueryChange = {

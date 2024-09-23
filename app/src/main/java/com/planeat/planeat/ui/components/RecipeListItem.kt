@@ -50,6 +50,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -205,6 +206,7 @@ fun RecipeListItem(
                             .background(surfaceContainerLowestLight)
                             .align(Alignment.TopEnd)
                             .size(26.dp)
+                            .testTag("favorite_button")
                     ) {
                         Icon(
                             imageVector = icon.value,
