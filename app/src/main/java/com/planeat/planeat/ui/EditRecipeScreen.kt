@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -219,7 +220,7 @@ fun EditRecipeScreen(
             onValueChange = { title = it },
             label = { Text(text = stringResource(R.string.title)) },
             maxLines = 1,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp).testTag("title_input")
         )
 
         // Kind of Meal input
@@ -236,7 +237,7 @@ fun EditRecipeScreen(
             onValueChange = { cookingTime = it.toIntOrNull() ?: 0 },
             label = { Text(text = stringResource(R.string.cooking_time)) },
             maxLines = 1,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp).testTag("cooking_time_input")
         )
         // Season input
         TextField(

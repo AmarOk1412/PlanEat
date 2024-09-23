@@ -125,6 +125,7 @@ dependencies {
     implementation(libs.error.prone.annotations)
     // Database
     implementation(libs.androidx.room.runtime.v261)
+    implementation(libs.androidx.runner)
     annotationProcessor(libs.room.compiler.v261)
     kapt(libs.room.compiler.v261)
     implementation(libs.kotlinx.serialization.json)
@@ -142,4 +143,10 @@ dependencies {
     implementation(libs.accompanist.adaptive.v0262beta)
     // Async image
     implementation(libs.coil.compose.v260)
+
+    // Test rules and transitive dependencies:
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.2")
+    // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>():
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.2")
+
 }
