@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -99,6 +100,7 @@ fun Header(
                     DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
                 )
             },
+            style = MaterialTheme.typography.titleSmall,
             modifier = Modifier
                 .weight(1f)
                 .align(Alignment.CenterVertically)
@@ -133,7 +135,7 @@ fun Content(
     val scrollState = rememberScrollState()
     var active by remember { mutableStateOf(false) }
 
-    Row(Modifier.horizontalScroll(scrollState)) {
+    Row(Modifier.horizontalScroll(scrollState).padding(top = 12.dp)) {
         if (active) {
             if (scrollState.value > 5*scrollState.maxValue/6) {
                 LaunchedEffect(Unit) {
@@ -188,7 +190,7 @@ fun ContentItem(
         modifier = Modifier
             .width(70.dp)
             .height(70.dp)
-            .padding(vertical = 4.dp, horizontal = 4.dp),
+            .padding(horizontal = 4.dp),
         onClick = {
             onClickListener(date)
         },

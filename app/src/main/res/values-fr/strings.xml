@@ -88,4 +88,8 @@
     <string name="choose_a_date">Choisissez une date</string>
     <string name="discover">Découvrir</string>
     <string name="add_to_agenda">Ajouter à l\'agenda</string>
+    <string name="the_list_is_empty">La liste est vide</string>
+    <string name="shopping_list_placeholder">Ajoute manuellement tes ingrédients ou planifie une recette pour les ajouter à ta liste de course</string>
+    <string name="planify_a_recipe">Planifier une recette</string>
+    <string name="create_a_recipe">Créer une nouvelle recette</string>
 </resources>

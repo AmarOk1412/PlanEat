@@ -27,13 +27,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -53,15 +53,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.onPrimaryLight
-import com.example.compose.primaryContainerLight
 import com.example.compose.primaryLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
@@ -114,10 +111,12 @@ fun RecipesScreen(
         Scaffold(
             topBar = {
                 TopAppBar(title = { Text(text = if (filter == "http") {
-                    "Favorites"
-                } else {
-                    "My recipes"
-                }) },
+                            "Favorites"
+                        } else {
+                            "My recipes"
+                        },
+                        style = MaterialTheme.typography.headlineSmall
+                        ) },
                     navigationIcon = {
                         IconButton(onClick = { filter = "" }) {
                             Icon(
@@ -131,7 +130,9 @@ fun RecipesScreen(
         ) { innerPadding ->
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = innerPadding.calculateTopPadding())
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = innerPadding.calculateTopPadding()),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(if (filter == "http") {
                     httpRecipes
@@ -161,28 +162,24 @@ fun RecipesScreen(
             contentWindowInsets = WindowInsets(0.dp),
             floatingActionButton = {
                 FloatingActionButton(onClick = { goToEdition(Recipe()) },
-                    containerColor = Color(0xFF01AA44),
-                    contentColor = Color(0xFFFFFFFF),
+                    containerColor = primaryLight,
+                    contentColor = onPrimaryLight,
                     shape = RoundedCornerShape(100.dp),
-                    modifier = Modifier.padding(end = 8.dp)) {
-                    Icon(
-                        imageVector = Icons.Filled.Add,
-                        contentDescription = "New Recipe"
+                    elevation = FloatingActionButtonDefaults.elevation(0.dp),
+                    modifier = Modifier.padding(vertical = 32.dp)) {
+                    Text(
+                        text = stringResource(R.string.create_a_recipe),
+                        style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 10.dp)
                     )
                 }
             },
-            floatingActionButtonPosition = FabPosition.End,
+            floatingActionButtonPosition = FabPosition.Center,
             content = {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    // Header element
-                    Text(
-                        text = stringResource(id = R.string.tab_saved),
-                        style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier.padding(start=16.dp, bottom = 16.dp)
-                    )
 
                     var text by rememberSaveable { mutableStateOf("") }
                     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -212,7 +209,7 @@ fun RecipesScreen(
                                 modifier = Modifier
                                     .border(
                                         2.dp,
-                                        if (expanded) Color(0xFF00AF45) else primaryContainerLight,
+                                        if (expanded) Color(0xFF00AF45) else Color(0x00000000),
                                         RoundedCornerShape(100.dp)
                                     )
                                     .padding(start = 8.dp),
@@ -223,7 +220,7 @@ fun RecipesScreen(
                                 expanded = expanded,
                                 onExpandedChange = { expanded = it },
                                 onSearch = { expanded = false },
-                                placeholder = { Text(stringResource(id = R.string.search_placeholder)) },
+                                placeholder = { Text(stringResource(id = R.string.search_placeholder), style = MaterialTheme.typography.bodyLarge) },
                                 trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
                             )
                         }
@@ -232,7 +229,7 @@ fun RecipesScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp)
+                            .padding(top = 8.dp, bottom = 20.dp)
                             .horizontalScroll(rememberScrollState()),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -278,11 +275,11 @@ fun RecipesScreen(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                                    .padding(horizontal = 16.dp, vertical = 12.dp)
                             ) {
                                 Text(
                                     text = stringResource(R.string.favorite),
-                                    style = MaterialTheme.typography.titleLarge,
+                                    style = MaterialTheme.typography.headlineSmall,
                                     modifier = Modifier.align(Alignment.CenterVertically)
                                 )
 
@@ -293,12 +290,13 @@ fun RecipesScreen(
                                         filter = "http"
                                     },
                                         modifier = Modifier.align(Alignment.CenterVertically)) {
-                                        Text(stringResource(R.string.see_more))
+                                        Text(stringResource(R.string.see_more), style = MaterialTheme.typography.labelLarge)
                                     }
                                 }
                             }
 
                             Row(
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .horizontalScroll(rememberScrollState())
@@ -317,11 +315,11 @@ fun RecipesScreen(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 16.dp)
+                                    .padding(horizontal = 16.dp, vertical = 12.dp)
                             ) {
                                 Text(
-                                    text = "My recipes",
-                                    style = MaterialTheme.typography.titleLarge,
+                                    text = stringResource(R.string.my_recipes),
+                                    style = MaterialTheme.typography.headlineSmall,
                                     modifier = Modifier.align(Alignment.CenterVertically)
                                 )
 
@@ -332,12 +330,13 @@ fun RecipesScreen(
                                         filter = "nonHttp"
                                     },
                                         modifier = Modifier.align(Alignment.CenterVertically)) {
-                                        Text(stringResource(R.string.see_more))
+                                        Text(stringResource(R.string.see_more), style = MaterialTheme.typography.labelLarge)
                                     }
                                 }
                             }
 
                             Row(
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .horizontalScroll(rememberScrollState())
@@ -356,7 +355,9 @@ fun RecipesScreen(
 
                         LazyVerticalGrid(
                             columns = GridCells.Fixed(2),
-                            modifier = Modifier.padding(start=16.dp, end=16.dp)
+                            modifier = Modifier.padding(start=16.dp, end=16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
                         ) {
                             if (httpRecipes.size > 0) {
                                 item(span = { GridItemSpan(2) }) {
@@ -468,7 +469,6 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
         onRecipeDeleted = onRecipeDeleted,
         onRecipeAdded = onRecipeAdded,
         modifier = Modifier
-            .padding(8.dp)
             .shadow(8.dp, shape = MaterialTheme.shapes.medium)
     )
 }

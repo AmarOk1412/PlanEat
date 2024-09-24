@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -99,7 +100,6 @@ fun RecipeListItem(
         modifier = modifier
             .clip(CardDefaults.shape)
             .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp)
-            .height((LocalConfiguration.current.screenWidthDp * 0.4f).dp)// Set the width to 40% of the screen
             .combinedClickable(
                 onClick = { onRecipeSelected(recipe) },
                 onLongClick = { }
@@ -160,7 +160,7 @@ fun RecipeListItem(
                             label = { Text(
                                 text = stringResource(R.string.my_recipe),
                                 maxLines = 1,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier.height(18.dp),
                             ) },
                             onClick = {},
@@ -226,7 +226,8 @@ fun RecipeListItem(
                                     text = {
                                         Text(text = if (agenda != null) stringResource(R.string.remove_from_agenda) else stringResource(
                                             R.string.add_to_agenda
-                                        )
+                                        ),
+                                            style = MaterialTheme.typography.bodyMedium
                                         )
                                     },
                                     onClick = {
@@ -252,7 +253,7 @@ fun RecipeListItem(
                                 DropdownMenuItem(
                                     leadingIcon = { Icon(Icons.Filled.Edit, contentDescription = null) },
                                     text = {
-                                        Text(text = stringResource(R.string.edit))
+                                        Text(text = stringResource(R.string.edit), style = MaterialTheme.typography.bodyMedium)
                                     },
                                     onClick = {
                                         showDialog.value = false
@@ -263,7 +264,7 @@ fun RecipeListItem(
                                 DropdownMenuItem(
                                     leadingIcon = { Icon(Icons.Filled.Delete, contentDescription = null, tint = Color.Red) },
                                     text = {
-                                        Text(text = stringResource(R.string.delete), color = Color.Red)
+                                        Text(text = stringResource(R.string.delete), color = Color.Red, style = MaterialTheme.typography.bodyMedium)
                                     },
                                     onClick = {
                                         showDialog.value = false
@@ -314,8 +315,9 @@ fun RecipeListItem(
             }
             Text(
                 text = recipe.title,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(start = 8.dp, top = 12.dp, end = 8.dp, bottom = 0.dp),
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.padding(start = 8.dp, top = 12.dp, end = 8.dp, bottom = 0.dp)
+                                   .testTag("recipe_title"),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
             )
@@ -335,10 +337,8 @@ fun RecipeListItem(
             Text(
                 text = middleLabel,
                 style = MaterialTheme.typography.bodySmall,
-                color = onSurfaceVariantLight,
-                modifier = Modifier.padding(start=8.dp, top = 0.dp, bottom = 0.dp),
+                modifier = Modifier.padding(start=8.dp, top = 4.dp, bottom = 0.dp).testTag("recipe_label"),
             )
-
 
             SuggestionChip(
                 label = {
@@ -350,11 +350,11 @@ fun RecipeListItem(
                         },
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.height(18.dp),
-
-                        )
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.height(18.dp)
+                    )
                 },
+                shape = RoundedCornerShape(100.dp),
                 onClick = {},
                 border = null,
                 colors = SuggestionChipDefaults.suggestionChipColors(
@@ -366,8 +366,8 @@ fun RecipeListItem(
                     labelColor = onSecondaryContainerLight
                 )*/
                 modifier = Modifier
-                    .padding(8.dp)
-                    .height(24.dp),
+                    .padding(horizontal = 8.dp, vertical = 12.dp)
+                    .height(22.dp),
             )
 
         }

@@ -80,7 +80,7 @@ fun BottomPlanifier(
 
             Text(
                 text = stringResource(R.string.choose_a_date),
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleSmall,
             )
 
 

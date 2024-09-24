@@ -128,7 +128,7 @@ fun RecipeDetailScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
+                    .height(92.dp)
                     .background(Color.White),
             ) {
                 OutlinedButton(
@@ -142,13 +142,13 @@ fun RecipeDetailScreen(
                             goToEdition(selectedRecipe)
                         }
                     },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(8.dp)
+                    modifier = Modifier.weight(1f).padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 24.dp)
                 ) {
-                    Text(text = if (selectedRecipe.recipeId == 0L) stringResource(R.string.add_to_recipes) else stringResource(
-                        R.string.edit_recipe
-                    )
+                    Text(text = if (selectedRecipe.recipeId == 0L)
+                                    stringResource(R.string.add_to_recipes)
+                                else
+                                    stringResource(R.string.edit_recipe),
+                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
 
@@ -157,11 +157,11 @@ fun RecipeDetailScreen(
                         toPlanRecipe = selectedRecipe
                         openBottomSheet = true
                     },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(8.dp)
+                    modifier = Modifier.weight(1f).padding(start = 0.dp, end = 12.dp, top = 12.dp, bottom = 24.dp)
                 ) {
-                    Text(text = stringResource(R.string.plan_it))
+                    Text(text = stringResource(R.string.plan_it),
+                         style = MaterialTheme.typography.labelLarge,
+                         modifier = Modifier.padding(vertical = 8.dp))
                 }
             }
         }
@@ -193,7 +193,7 @@ fun RecipeDetailScreen(
 
                     Text(
                         text = selectedRecipe.title,
-                        style = MaterialTheme.typography.headlineLarge,
+                        style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.padding(start=16.dp, top=8.dp, bottom = 8.dp, end = 16.dp)
                     )
 
@@ -207,7 +207,7 @@ fun RecipeDetailScreen(
                         )
                         Text(
                             text = convertDuration(selectedRecipe.cookingTime),
-                            style = MaterialTheme.typography.bodyLarge,
+                            style = MaterialTheme.typography.labelLarge,
                             modifier = Modifier.padding(start = 8.dp),
                         )
                     }
@@ -225,6 +225,7 @@ fun RecipeDetailScreen(
                         containerColor = surfaceContainerLowestLight,
                         indicator = { tabPositions ->
                             PrimaryIndicator(
+                                width = 100.dp,
                                 modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex.intValue])
                             )
                         }
@@ -233,7 +234,7 @@ fun RecipeDetailScreen(
                             Tab(
                                 selected = selectedTabIndex.intValue == index,
                                 onClick = { selectedTabIndex.intValue = index },
-                                text = { Text(text = title) }
+                                text = { Text(text = title, style = MaterialTheme.typography.labelLarge) }
                             )
                         }
                     }
@@ -261,8 +262,12 @@ fun RecipeDetailScreen(
 
                                         val quantity = if (it.quantity.toInt().toFloat() != it.quantity) it.quantity.toString() else it.quantity.toInt().toString()
                                         ListItem(
-                                            headlineContent = { Text(name) },
-                                            supportingContent = { if (quantity != "1") Text(quantity + " " + it.unit) },
+                                            headlineContent = { Text(name.replaceFirstChar(Char::titlecase), style = MaterialTheme.typography.labelLarge) },
+                                            supportingContent = { if (quantity != "1")
+                                                                        Text(quantity + " " + it.unit,
+                                                                            style = MaterialTheme.typography.bodyMedium,
+                                                                            color = Color(0xFF706C7A)
+                                                                        ) },
                                             leadingContent = {
                                                 val painter = rememberAsyncImagePainter(res)
                                                 Image(painter = painter,
@@ -275,7 +280,7 @@ fun RecipeDetailScreen(
                                 } else {
                                     selectedRecipe.ingredients.forEach {
                                         ListItem(
-                                            headlineContent = { Text(it) },
+                                            headlineContent = { Text(it, style = MaterialTheme.typography.labelLarge) },
                                             colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
                                         )
                                     }
@@ -290,14 +295,13 @@ fun RecipeDetailScreen(
 
                                     Text(
                                         text = stringResource(R.string.step, index + 1),
-                                        style = MaterialTheme.typography.titleMedium,
+                                        style = MaterialTheme.typography.titleSmall,
                                         modifier = Modifier.padding(bottom = 8.dp)
                                     )
 
                                     Text(
                                         text = step,
                                         style = MaterialTheme.typography.bodyMedium,
-                                        modifier = Modifier.padding(bottom = 8.dp)
                                     )
 
                                     HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
@@ -308,7 +312,7 @@ fun RecipeDetailScreen(
                     }
 
 
-                    Spacer(modifier = Modifier.height(80.dp))
+                    Spacer(modifier = Modifier.height(92.dp))
 
                 }
             }

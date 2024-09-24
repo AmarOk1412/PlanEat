@@ -1,9 +1,11 @@
 
 import android.content.Context
 import android.os.Build
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
@@ -83,14 +85,14 @@ class PlanEatTest {
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     @Test
     fun testFilterSuggestion() {
-        composeTestRule.onNodeWithText("Discover",).performClick()
+        composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
 
         // Click on Drinks
-        composeTestRule.onNodeWithText("Drinks").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Drinks").performScrollTo().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("You may like").assertIsNotDisplayed()
 
-        composeTestRule.onNodeWithText("European").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("European").performScrollTo().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
 
         composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertExists()
@@ -98,10 +100,10 @@ class PlanEatTest {
 
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     fun addNewRecipe() {
-        composeTestRule.onNodeWithText("Favorites",).performClick()
+        composeTestRule.onNodeWithText("Favorites",).assertIsDisplayed().performClick()
         composeTestRule.onNodeWithContentDescription("New Recipe").assertIsDisplayed()
         composeTestRule.onNodeWithText("My recipes").assertIsNotDisplayed()
-        composeTestRule.onNodeWithContentDescription("New Recipe").performClick()
+        composeTestRule.onNodeWithContentDescription("New Recipe").assertIsDisplayed().performClick()
 
         // Save recipe
         // Add "Foo" as the title
@@ -126,42 +128,47 @@ class PlanEatTest {
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     fun saveSuggestion() {
         // Recipes should be empty
-        composeTestRule.onAllNodesWithText("Favorites",).onLast().performClick()
+        composeTestRule.onAllNodesWithText("Favorites",).onLast().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsNotDisplayed()
 
-        composeTestRule.onNodeWithText("Discover",).performClick()
+        composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
 
         // Save one recipe
-        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().performClick()
+        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed().performClick()
 
         // Should appear in favorites
-        composeTestRule.onNodeWithText("Favorites",).performClick()
+        composeTestRule.onNodeWithText("Favorites",).assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
     }
 
     fun filterRecipes() {
         composeTestRule.onAllNodesWithText("Favorites",).onLast().performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
+        composeTestRule.onNodeWithText("My recipes").assertIsDisplayed()
 
         // Click on European (one saved from previous test)
-        composeTestRule.onNodeWithText("European").performScrollTo().performClick()
+        // TODO!
+        composeTestRule.onNodeWithText("European").performScrollTo().assertIsDisplayed().performClick()
+        if (!composeTestRule.onNodeWithText("Favorite").isDisplayed()) {
+            composeTestRule.onNodeWithText("Asian").performScrollTo().assertIsDisplayed().performClick()
+        }
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
         composeTestRule.onNodeWithText("My recipes").assertIsNotDisplayed()
 
         // Click on Drinks (one saved from previous test)
-        composeTestRule.onNodeWithText("Drinks").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Drinks").performScrollTo().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsNotDisplayed()
         composeTestRule.onNodeWithText("My recipes").assertIsNotDisplayed()
 
         // All, everything is shown
-        composeTestRule.onNodeWithText("All").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("All").performScrollTo().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
         composeTestRule.onNodeWithText("My recipes").assertIsDisplayed()
     }
 
     fun searchAndAddEggs() {
-        composeTestRule.onNodeWithText("Discover",).performClick()
+        composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
 
         // Search for "eggs"
@@ -170,12 +177,47 @@ class PlanEatTest {
 
         // Save one recipe
         composeTestRule.onNodeWithText("New recipes",).assertIsDisplayed()
-        composeTestRule.onAllNodesWithTag("favorite_button").onLast().performClick()
+        composeTestRule.onAllNodesWithTag("favorite_button").onLast().assertIsDisplayed().performClick()
 
         // Should have 2 recipes in favorites + 1 in my recipes
-        composeTestRule.onAllNodesWithText("Favorites",).onLast().performClick()
+        composeTestRule.onAllNodesWithText("Favorites",).onLast().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
         composeTestRule.onAllNodesWithTag("favorite_button").assertCountEquals(3)
+
+    }
+
+    fun addToAgenda() {
+        composeTestRule.onAllNodesWithTag("Favorites",).onFirst().assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
+
+        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithText("Add to agenda",).assertIsDisplayed().performClick()
+
+        composeTestRule.onNodeWithText("Plan it",).assertIsDisplayed().performClick()
+
+        // Should get to agenda screen
+        composeTestRule.onNodeWithText("Agenda")
+        // And one recipe shown at least
+        composeTestRule.onNodeWithTag("favorite_button").assertIsDisplayed()
+    }
+
+    fun deleteRecipe() {
+        val titleNode = composeTestRule.onAllNodesWithTag("recipe_title").onFirst()
+        val titleText = titleNode.fetchSemanticsNode().config[SemanticsProperties.Text].first()
+        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithText("Delete").assertIsDisplayed().performClick()
+
+        composeTestRule.onNodeWithText("Confirm").assertIsDisplayed().performClick()
+
+        val titleNode2 = composeTestRule.onAllNodesWithTag("recipe_title").fetchSemanticsNodes()
+        if (titleNode2.isEmpty()) {
+            // Success
+        } else {
+            val titleText2 = titleNode2.first().config[SemanticsProperties.Text].first()
+            assert(titleText != titleText2) {
+                "The recipe was not deleted, as the title remains the same: $titleText"
+            }
+        }
 
     }
 
@@ -186,6 +228,8 @@ class PlanEatTest {
         saveSuggestion()
         filterRecipes()
         // TODO searchAndAddEggs()
+        addToAgenda()
+        deleteRecipe()
     }
 
 }

@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -89,6 +90,7 @@ fun PlanEatNavigationRail(
         ) {
             TOP_LEVEL_DESTINATIONS.forEach { planEatDestination ->
                 NavigationRailItem(
+                    modifier = Modifier.testTag("tab_${planEatDestination.iconTextId}"),
                     selected = selectedDestination == planEatDestination.route,
                     onClick = { navigateToTopLevelDestination(planEatDestination) },
                     icon = {

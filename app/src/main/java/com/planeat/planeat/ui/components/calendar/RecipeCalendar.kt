@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -94,7 +93,6 @@ data class RecipeAgenda (
     val agenda: Agenda
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun ContentItem(
@@ -106,7 +104,7 @@ fun ContentItem(
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel, Boolean) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().padding(top=32.dp)) {
 
         val context = LocalContext.current
         val recipesPlanned = remember {mutableStateOf(listOf<RecipeAgenda>())}
@@ -136,8 +134,8 @@ fun ContentItem(
             text = date.date.format(
                 DateTimeFormatter.ofPattern("EEEE dd MMMM")
             ),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(bottom = 8.dp)
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(bottom = 12.dp)
         )
 
         Row(
@@ -254,7 +252,7 @@ fun AddRecipeCard(
                 )
                 Text(
                     text = stringResource(R.string.add_recipe),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleSmall,
                 )
             }
         }

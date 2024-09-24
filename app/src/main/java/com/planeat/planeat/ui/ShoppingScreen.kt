@@ -53,6 +53,7 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
@@ -76,13 +77,14 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.compose.primaryContainerLight
+import com.example.compose.onSurfaceVariantLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.AgendaDb
@@ -109,6 +111,7 @@ import java.time.ZoneOffset
 fun ShoppingScreen(
     modifier: Modifier = Modifier,
     onRecipeSelected: (Recipe) -> Unit,
+    goToAgenda: () -> Unit
 ) {
     val context = LocalContext.current
     val ic = IngredientClassifier()
@@ -158,10 +161,10 @@ fun ShoppingScreen(
             contentWindowInsets = WindowInsets(0.dp),
             floatingActionButton = {
                 FloatingActionButton(onClick = { searchItem = true },
-                    containerColor = Color(0xFF01AA44),
+                    containerColor = Color(0xFF599e39),
                     contentColor = Color(0xFFFFFFFF),
                     shape = RoundedCornerShape(100.dp),
-                    modifier = Modifier.padding(end = 8.dp)) {
+                    modifier = Modifier.padding(end = 16.dp).size(56.dp)) {
                     Icon(
                         imageVector = Icons.Filled.Add,
                         contentDescription = stringResource(R.string.add_ingredient)
@@ -177,11 +180,6 @@ fun ShoppingScreen(
                             .padding(horizontal = 16.dp, vertical = 16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        // Shopping List Header
-                        Text(
-                            text = stringResource(id = R.string.tab_shopping_list),
-                            style = MaterialTheme.typography.headlineLarge,
-                        )
 
                         // Display number of planned recipes
                         Text(
@@ -189,18 +187,20 @@ fun ShoppingScreen(
                                 R.string.recipes,
                                 shoppingList!!.plannedRecipesSize()
                             ),
-                            style = MaterialTheme.typography.titleSmall
+                            style = MaterialTheme.typography.headlineSmall
                         )
 
                         // Row for the planned recipes
-                        Row(
-                            modifier = Modifier
-                                .height(100.dp)
-                                .horizontalScroll(rememberScrollState()),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            shoppingList!!.plannedRecipes.forEach { recipe ->
-                                MinimalRecipeItemList(recipe = recipe, onRecipeSelected = onRecipeSelected)
+                        if (shoppingList!!.plannedRecipes.isNotEmpty()) {
+                            Row(
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .horizontalScroll(rememberScrollState()),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                shoppingList!!.plannedRecipes.forEach { recipe ->
+                                    MinimalRecipeItemList(recipe = recipe, onRecipeSelected = onRecipeSelected)
+                                }
                             }
                         }
 
@@ -214,7 +214,7 @@ fun ShoppingScreen(
                                     R.string.items,
                                     shoppingList!!.countUniqueIngredientNames()
                                 ),
-                                style = MaterialTheme.typography.titleSmall,
+                                style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
 
@@ -222,7 +222,7 @@ fun ShoppingScreen(
 
                             Text(
                                 text = stringResource(R.string.sort_by),
-                                style = MaterialTheme.typography.titleSmall,
+                                style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
 
@@ -235,7 +235,11 @@ fun ShoppingScreen(
                                 contentPadding = PaddingValues(horizontal = 16.dp)
                             ) {
                                 Row {
-                                    Text(text = if (shoppingList!!.sortingMethod == "Aisle") stringResource(R.string.aisle) else stringResource(R.string.recipe), modifier = Modifier.align(Alignment.CenterVertically))
+                                    Text(text = if (shoppingList!!.sortingMethod == "Aisle")
+                                                    stringResource(R.string.aisle)
+                                                else stringResource(R.string.recipe),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        modifier = Modifier.align(Alignment.CenterVertically))
 
                                     Icon(Icons.Filled.KeyboardArrowDown, tint = Color(0xFF949494), contentDescription = null)
                                 }
@@ -249,7 +253,8 @@ fun ShoppingScreen(
                                     ) {
                                         DropdownMenuItem(
                                             text = {
-                                                Text(text = stringResource(R.string.aisle))
+                                                Text(text = stringResource(R.string.aisle),
+                                                    style = MaterialTheme.typography.bodyMedium)
                                             },
                                             onClick = {
                                                 shoppingList!!.changeSortingMethod("Aisle")
@@ -259,7 +264,8 @@ fun ShoppingScreen(
                                         )
                                         DropdownMenuItem(
                                             text = {
-                                                Text(text = stringResource(R.string.recipe))
+                                                Text(text = stringResource(R.string.recipe),
+                                                    style = MaterialTheme.typography.bodyMedium)
                                             },
                                             onClick = {
                                                 shoppingList!!.changeSortingMethod("Recipe")
@@ -272,9 +278,41 @@ fun ShoppingScreen(
                             }
                         }
 
-                        ShoppingListByCategory(sortingMethod == "Aisle", shoppingList)
+                        if (shoppingList!!.shoppingList.isEmpty()) {
+                            Spacer(modifier = Modifier.height(112.dp))
 
-                        Spacer(modifier = Modifier.height(64.dp))
+                            Image(painter = painterResource(R.drawable.shopping_list_image),
+                                contentDescription = null,
+                                modifier = Modifier.size(184.dp).align(Alignment.CenterHorizontally))
+
+                            Text(
+                                stringResource(R.string.the_list_is_empty),
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.align(Alignment.CenterHorizontally))
+
+                            Text(
+                                stringResource(R.string.shopping_list_placeholder),
+                                style = MaterialTheme.typography.bodyMedium,
+                                textAlign = TextAlign.Center,
+                                color = onSurfaceVariantLight,
+                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                                            .padding(horizontal = 64.dp, vertical = 8.dp))
+
+                            OutlinedButton(
+                                onClick = {
+                                    goToAgenda()
+                                },
+                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                            ) {
+                                Text(text = stringResource(R.string.planify_a_recipe),
+                                     style = MaterialTheme.typography.bodyMedium,
+                                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 10.dp))
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
+                        } else {
+                            ShoppingListByCategory(sortingMethod == "Aisle", shoppingList)
+                            Spacer(modifier = Modifier.height(64.dp))
+                        }
                     }
                 }
             }
@@ -286,7 +324,7 @@ fun ShoppingScreen(
 
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text(stringResource(R.string.add_an_item)) },
+                TopAppBar(title = { Text(stringResource(R.string.add_an_item), style = MaterialTheme.typography.headlineSmall) },
                     navigationIcon = {
                         IconButton(onClick = { searchItem = false }) {
                             Icon(
@@ -340,7 +378,7 @@ fun ShoppingScreen(
                                 .testTag("search_input")
                                 .border(
                                     2.dp,
-                                    if (expanded) Color(0xFF00AF45) else primaryContainerLight,
+                                    if (expanded) Color(0xFF00AF45) else Color(0x00000000),
                                     RoundedCornerShape(100.dp)
                                 )
                                 .padding(start = 8.dp),
@@ -352,7 +390,7 @@ fun ShoppingScreen(
                             expanded = expanded,
                             onExpandedChange = { expanded = it },
                             onSearch = { expanded = false },
-                            placeholder = { Text(stringResource(R.string.carrots_eggs_chocolate)) },
+                            placeholder = { Text(stringResource(R.string.carrots_eggs_chocolate), style = MaterialTheme.typography.bodyLarge) },
                             trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
                         )
                     }
@@ -449,12 +487,12 @@ fun IngredientCheckbox(
             headlineContent = {
                 Text(
                     text = name,
-                    style = if (isChecked) TextStyle(textDecoration = TextDecoration.LineThrough) else TextStyle()
+                    style = if (isChecked) MaterialTheme.typography.bodyMedium.copy(textDecoration = TextDecoration.LineThrough) else MaterialTheme.typography.bodyMedium
                 )
             },
             supportingContent = {
                 if (item.ingredient.quantity.toInt() != 1) {
-                    Text("${item.ingredient.quantity.toInt()} ${item.ingredient.unit}")
+                    Text("${item.ingredient.quantity.toInt()} ${item.ingredient.unit}", style=MaterialTheme.typography.bodySmall)
                 }
             },
             leadingContent = {
@@ -462,8 +500,9 @@ fun IngredientCheckbox(
                     val painter = rememberAsyncImagePainter(res)
                     Image(painter = painter,
                         contentDescription = null,
-                        modifier = Modifier.size(26.dp)
-                        .alpha(if (isChecked) 0.5f else 1.0f)
+                        modifier = Modifier
+                            .size(26.dp)
+                            .alpha(if (isChecked) 0.5f else 1.0f)
                     )
                 } else {
                     Spacer(modifier = Modifier.width(26.dp))
@@ -522,7 +561,7 @@ fun CategoryCard(
             Column {
                 Text(
                     text = category.replaceFirstChar(Char::titlecase),
-                    fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(start = 16.dp, top = 8.dp)
                 )
 
@@ -685,7 +724,8 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
             .padding(horizontal = 12.dp),
         headlineContent = {
             Text(
-                text = name
+                text = name,
+                style = MaterialTheme.typography.bodyLarge
             )
         },
         leadingContent = {
@@ -701,8 +741,9 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
         },
         trailingContent = {
             IconButton(
-                modifier = Modifier.size(28.dp).testTag("add_ingredient"),
-                onClick = { onIngredientAdded(IngredientItem(ingredient.name))},
+                modifier = Modifier
+                    .testTag("add_ingredient"),
+                onClick = { onIngredientAdded(IngredientItem(ingredient.name.replaceFirstChar(Char::titlecase)))},
                 colors = IconButtonDefaults.iconButtonColors(
                             containerColor = Color(0xFF599e39),// TODO primaryContainerLight,
                             contentColor = Color(0xFFFFFFFF)
@@ -710,7 +751,6 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = stringResource(R.string.add_ingredient),
-                    modifier = Modifier.size(18.dp)
                 )
             }
         },

@@ -871,6 +871,12 @@ private fun NavHost(
                     Handler(Looper.getMainLooper()).post {
                         navController.navigate(PlanEatRoute.DETAILS)
                     }
+                },
+                goToAgenda = {
+                    model.openedRecipe.value = null
+                    Handler(Looper.getMainLooper()).post {
+                        navController.navigate(PlanEatRoute.AGENDA)
+                    }
                 }
             )
         }

@@ -54,7 +54,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.onPrimaryLight
-import com.example.compose.primaryContainerLight
 import com.example.compose.primaryLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
@@ -97,13 +96,6 @@ fun DiscoverScreen(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            // Header element
-            Text(
-                text = stringResource(R.string.discover),
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(start=16.dp, bottom = 16.dp)
-            )
-
             var text by rememberSaveable { mutableStateOf("") }
             var expanded by rememberSaveable { mutableStateOf(false) }
             val filters = Tags.entries.map { it }
@@ -140,7 +132,7 @@ fun DiscoverScreen(
                             .focusRequester(focusRequester)
                             .border(
                                 2.dp,
-                                if (expanded) Color(0xFF00AF45) else primaryContainerLight,
+                                if (expanded) Color(0xFF00AF45) else Color(0x00000000),
                                 RoundedCornerShape(100.dp)
                             )
                             .testTag("search_input")
@@ -152,7 +144,7 @@ fun DiscoverScreen(
                         expanded = expanded,
                         onExpandedChange = { expanded = it },
                         onSearch = { expanded = false },
-                        placeholder = { Text(stringResource(id = R.string.search_placeholder)) },
+                        placeholder = { Text(stringResource(id = R.string.search_placeholder), style = MaterialTheme.typography.bodyLarge) },
                         trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
                     )
                 }
@@ -182,7 +174,7 @@ fun DiscoverScreen(
                         ),
                         contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = if (currentTag == filter) primaryLight else surfaceContainerLowestLight, contentColor = if (currentTag == filter) onPrimaryLight else Color.Black),
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier.padding(end = 8.dp, bottom = 20.dp)
                     ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth()
@@ -206,14 +198,15 @@ fun DiscoverScreen(
             if (text.isEmpty()) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    modifier = Modifier.padding(start=16.dp, end=16.dp)
+                    modifier = Modifier.padding(start=16.dp, end=16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (model.suggestedRecipesShown.isNotEmpty()) {
                         item(span = { GridItemSpan(2) }) {
                             Text(
                                 text = stringResource(R.string.you_may_like),
-                                style = MaterialTheme.typography.titleLarge,
-                                modifier = Modifier.padding(vertical = 16.dp)
+                                style = MaterialTheme.typography.headlineSmall
                             )
                         }
                     }
@@ -236,19 +229,22 @@ fun DiscoverScreen(
             } else {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    modifier = Modifier.padding(start=16.dp, end=16.dp)
+                    modifier = Modifier.padding(start=16.dp, end=16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (model.recipesSearchedShown.size > 0 && model.recipesInDbShown.size > 0) {
                         item(span = { GridItemSpan(2) }) {
                             Text(
                                 text = stringResource(R.string.my_favorites),
-                                style = MaterialTheme.typography.titleLarge,
-                                modifier = Modifier.padding(vertical = 16.dp)
+                                style = MaterialTheme.typography.headlineSmall,
+                                modifier = Modifier.padding(top = 20.dp)
                             )
                         }
                     }
                     item(span = { GridItemSpan(2) }) {
-                        LazyRow {
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                             items(model.recipesInDbShown, key = { recipe -> recipe.url }) { recipe ->
                                 RecipeItem(
                                     recipe,
@@ -270,8 +266,8 @@ fun DiscoverScreen(
                         item(span = { GridItemSpan(2) }) {
                             Text(
                                 text = stringResource(R.string.new_recipes),
-                                style = MaterialTheme.typography.titleLarge,
-                                modifier = Modifier.padding(vertical = 16.dp)
+                                style = MaterialTheme.typography.headlineSmall,
+                                modifier = Modifier.padding(top = 20.dp)
                             )
                         }
                         items(model.recipesSearchedShown, key = { recipe -> recipe.url }) { recipe ->
