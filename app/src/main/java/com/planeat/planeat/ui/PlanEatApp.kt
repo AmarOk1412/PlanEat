@@ -920,15 +920,27 @@ private fun NavHost(
                         onRecipeUpdated(r)
                         model.openedRecipe.value = null
                         navController.popBackStack()
+                        val isDetailsPage = navController.currentBackStackEntry?.destination?.route == PlanEatRoute.DETAILS
+                        if (isDetailsPage) {
+                            navController.popBackStack()
+                        }
                     },
                     onRecipeDeleted = { r ->
                         onRecipeDeleted(r)
                         model.openedRecipe.value = null
                         navController.popBackStack()
+                        val isDetailsPage = navController.currentBackStackEntry?.destination?.route == PlanEatRoute.DETAILS
+                        if (isDetailsPage) {
+                            navController.popBackStack()
+                        }
                     },
                     goBack = {
                         model.openedRecipe.value = null
                         navController.popBackStack()
+                        val isDetailsPage = navController.currentBackStackEntry?.destination?.route == PlanEatRoute.DETAILS
+                        if (isDetailsPage) {
+                            navController.popBackStack()
+                        }
                     }
                 )
             }
