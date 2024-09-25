@@ -4,7 +4,6 @@ import ShoppingIngredient
 import ShoppingList
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -185,8 +184,9 @@ fun ShoppingScreen(
 
                         // Display number of planned recipes
                         Text(
-                            text = stringResource(
-                                R.string.recipes,
+                            text = LocalContext.current.resources.getQuantityString(
+                                R.plurals.recipes,
+                                shoppingList!!.plannedRecipesSize(),
                                 shoppingList!!.plannedRecipesSize()
                             ),
                             style = MaterialTheme.typography.headlineSmall
@@ -212,8 +212,9 @@ fun ShoppingScreen(
 
                             // Display the total number of ingredients
                             Text(
-                                text = stringResource(
-                                    R.string.items,
+                                text = LocalContext.current.resources.getQuantityString(
+                                    R.plurals.items,
+                                    shoppingList!!.countUniqueIngredientNames(),
                                     shoppingList!!.countUniqueIngredientNames()
                                 ),
                                 style = MaterialTheme.typography.bodyMedium,

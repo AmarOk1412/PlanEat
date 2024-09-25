@@ -28,7 +28,11 @@
     <string name="steps">Instructions</string>
     <string name="add">add recipe</string>
     <string name="add_ingredient">Add ingredient</string>
-    <string name="items">%1$s items</string>
+    <plurals name="items">
+        <item quantity="zero">%1$d item</item>
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
     <string name="sort_by">Sort by:</string>
     <string name="aisle">Aisle</string>
     <string name="recipe">Recipe</string>
@@ -47,7 +51,11 @@
     <string name="remove_from_agenda_confirmation">This will remove the recipe from your agenda and recipe list.</string>
     <string name="confirm">Confirm</string>
     <string name="dismiss">Dismiss</string>
-    <string name="_1_ingredients">%1$s ingredients</string>
+    <plurals name="_1_ingredients">
+        <item quantity="zero">%1$d ingrédient</item>
+        <item quantity="one">%1$d ingrédient</item>
+        <item quantity="other">%1$d ingrédients</item>
+    </plurals>
     <string name="my_favorites">My favorites</string>
     <string name="new_recipes">New recipes</string>
     <string name="pick_image">Pick image</string>
@@ -67,7 +75,11 @@
     <string name="my_recipes">My recipes</string>
     <string name="today">Today</string>
     <string name="you_may_like">You may like</string>
-    <string name="recipes">%1$s recipes</string>
+    <plurals name="recipes">
+        <item quantity="zero">%1$d recipe</item>
+        <item quantity="one">%1$d recipe</item>
+        <item quantity="other">%1$d recipes</item>
+    </plurals>
     <string name="tag_all">All</string>
     <string name="tag_easy">Easy</string>
     <string name="tag_medium">Medium</string>

@@ -341,11 +341,11 @@ fun RecipeListItem(
             SuggestionChip(
                 label = {
                     Text(
-                        text = if (recipe.parsed_ingredients.isNotEmpty()) {
-                            stringResource(R.string._1_ingredients, recipe.parsed_ingredients.size)
-                        } else {
-                            stringResource(R.string._1_ingredients, recipe.ingredients.size)
-                        },
+                        text = LocalContext.current.resources.getQuantityString(
+                            R.plurals._1_ingredients,
+                            recipe.parsed_ingredients.size,
+                            recipe.parsed_ingredients.size
+                        ),
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                         style = MaterialTheme.typography.bodySmall,

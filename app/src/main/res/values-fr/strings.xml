@@ -29,7 +29,11 @@
     <string name="steps">Instructions</string>
     <string name="add">ajout d\'une recette</string>
     <string name="add_ingredient">Ajout d\'un ingrédient</string>
-    <string name="items">%1$s items</string>
+    <plurals name="items">
+        <item quantity="zero">%1$d item</item>
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
     <string name="sort_by">Trier par :</string>
     <string name="aisle">Rayon</string>
     <string name="recipe">Recette</string>
@@ -48,7 +52,11 @@
     <string name="remove_from_agenda_confirmation">Cette action supprimera la recette de votre agenda et de votre liste de recettes.</string>
     <string name="confirm">Confirmer</string>
     <string name="dismiss">Annuler</string>
-    <string name="_1_ingredients">%1$s ingrédients</string>
+    <plurals name="_1_ingredients">
+        <item quantity="zero">%1$d ingrédient</item>
+        <item quantity="one">%1$d ingrédient</item>
+        <item quantity="other">%1$d ingrédients</item>
+    </plurals>
     <string name="my_favorites">Favoris</string>
     <string name="new_recipes">Nouvelles recettes</string>
     <string name="pick_image">Choisir une image</string>
@@ -68,7 +76,11 @@
     <string name="my_recipes">Mes recettes</string>
     <string name="today">Aujourd\'hui</string>
     <string name="you_may_like">Vous pourriez aimer</string>
-    <string name="recipes">%1$s recettes</string>
+    <plurals name="recipes">
+        <item quantity="zero">%1$d recette</item>
+        <item quantity="one">%1$d recette</item>
+        <item quantity="other">%1$d recettes</item>
+    </plurals>
     <string name="tag_all">Tout</string>
     <string name="tag_easy">Facile</string>
     <string name="tag_medium">Moyen</string>
