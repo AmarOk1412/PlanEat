@@ -79,7 +79,7 @@ fun RecipeListItem(
     onRecipeSelected: (Recipe) -> Unit = {},
     onEditRecipe: (Recipe) -> Unit = {},
     onPlanRecipe: (Recipe) -> Unit = {},
-    onRemoveFromAgenda: () -> Unit = {},
+    onRemoveFromAgenda: (Long) -> Unit = {},
     onRecipeDeleted: (Recipe) -> Unit = {},
     onRecipeAdded: (Recipe) -> Unit = {},
     agenda: Agenda? = null,
@@ -231,7 +231,7 @@ fun RecipeListItem(
                                     onClick = {
                                         showDialog.value = false
                                         if (agenda != null) {
-                                            onRemoveFromAgenda()
+                                            onRemoveFromAgenda(recipe.recipeId)
                                         } else {
                                             if (recipe.recipeId == 0.toLong()) {
                                                 val rdb = RecipesDb.getDatabase(context)

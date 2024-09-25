@@ -138,12 +138,12 @@ fun ContentItem(
             modifier = Modifier.padding(bottom = 12.dp)
         )
 
+        val scope = rememberCoroutineScope()
         Row(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
                 .height(IntrinsicSize.Min)
         ) {
-            val scope = rememberCoroutineScope()
 
             recipesPlanned.value.forEach { recipeAgenda ->
                 val recipe = recipeAgenda.recipe
@@ -154,10 +154,9 @@ fun ContentItem(
                     onRecipeAdded = {},
                     onEditRecipe = { r -> goToEdition(r) },
                     onPlanRecipe = {},
-                    onRemoveFromAgenda = { scope.launch {
-                        // TODO better animation?
+                    onRemoveFromAgenda = { recipeId -> scope.launch {
                         withContext(Dispatchers.IO) {
-                            recipesPlanned.value = emptyList()
+                            val newRecipesPlanned: MutableList<RecipeAgenda> = mutableListOf()
                             val rdb = RecipesDb.getDatabase(context)
                             val adb = AgendaDb.getDatabase(context)
                             val recipesPlannedDb = adb.agendaDao().findByDate(date.date.atTime(12, 0)
@@ -165,13 +164,15 @@ fun ContentItem(
                                 .toEpochMilli())
 
                             recipesPlannedDb.forEach {
-                                val recipeDb = rdb.recipeDao().findById(it.recipeId)
-                                if (recipe != recipeDb) {
-                                    val ra = RecipeAgenda(recipe = recipeDb, agenda = it)
-                                    recipesPlanned.value += ra
-                                } else {
+                                if (recipeId == it.recipeId) {
                                     adb.agendaDao().delete(it)
+                                } else {
+                                    val r = rdb.recipeDao().findById(it.recipeId)
+                                    newRecipesPlanned += RecipeAgenda(recipe = r, agenda = it)
                                 }
+                            }
+                            withContext(Dispatchers.Main) {
+                                recipesPlanned.value = newRecipesPlanned
                             }
                         }
                     } },
