@@ -362,8 +362,8 @@ fun RecipesScreen(
                             if (httpRecipes.size > 0) {
                                 item(span = { GridItemSpan(2) }) {
                                     Text(
-                                        text = "Saved",
-                                        style = MaterialTheme.typography.titleLarge,
+                                        text = stringResource(R.string.my_favorites),
+                                        style = MaterialTheme.typography.headlineSmall,
                                         modifier = Modifier.padding(vertical = 16.dp)
                                     )
                                 }
@@ -380,7 +380,7 @@ fun RecipesScreen(
                                 item(span = { GridItemSpan(2) }) {
                                     Text(
                                         text = stringResource(R.string.my_recipes),
-                                        style = MaterialTheme.typography.titleLarge,
+                                        style = MaterialTheme.typography.headlineSmall,
                                         modifier = Modifier.padding(vertical = 16.dp)
                                     )
                                 }

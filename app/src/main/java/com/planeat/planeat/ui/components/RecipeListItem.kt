@@ -10,7 +10,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,10 +20,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Today
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -100,6 +97,7 @@ fun RecipeListItem(
         modifier = modifier
             .clip(CardDefaults.shape)
             .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp)
+            .height((LocalConfiguration.current.screenWidthDp * 0.4f).dp)
             .combinedClickable(
                 onClick = { onRecipeSelected(recipe) },
                 onLongClick = { }
@@ -134,7 +132,7 @@ fun RecipeListItem(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1f / .5f)
+                    .height((LocalConfiguration.current.screenWidthDp * 0.2f).dp)
             ) {
                 AsyncImage(
                     model = if (recipe.image.startsWith("http")) {
@@ -222,7 +220,7 @@ fun RecipeListItem(
                                 onDismissRequest = { showDialog.value = false },
                             ) {
                                 DropdownMenuItem(
-                                    leadingIcon = { Icon(Icons.Filled.Today, contentDescription = null) },
+                                    leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.today), contentDescription = null) },
                                     text = {
                                         Text(text = if (agenda != null) stringResource(R.string.remove_from_agenda) else stringResource(
                                             R.string.add_to_agenda
@@ -251,7 +249,7 @@ fun RecipeListItem(
                                     }
                                 )
                                 DropdownMenuItem(
-                                    leadingIcon = { Icon(Icons.Filled.Edit, contentDescription = null) },
+                                    leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.edit), contentDescription = null) },
                                     text = {
                                         Text(text = stringResource(R.string.edit), style = MaterialTheme.typography.bodyMedium)
                                     },
@@ -262,7 +260,7 @@ fun RecipeListItem(
                                 )
                                 HorizontalDivider()
                                 DropdownMenuItem(
-                                    leadingIcon = { Icon(Icons.Filled.Delete, contentDescription = null, tint = Color.Red) },
+                                    leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.delete), contentDescription = null, tint = Color.Red) },
                                     text = {
                                         Text(text = stringResource(R.string.delete), color = Color.Red, style = MaterialTheme.typography.bodyMedium)
                                     },

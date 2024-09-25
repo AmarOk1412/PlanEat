@@ -80,9 +80,9 @@ fun BottomPlanifier(
 
             Text(
                 text = stringResource(R.string.choose_a_date),
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(bottom = 24.dp)
             )
-
 
             DateHeader(
                 dataUi = selectedUi,
@@ -107,7 +107,7 @@ fun BottomPlanifier(
                         text = date.date.format(
                             DateTimeFormatter.ofPattern("EEEE d")
                         ),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.weight(1f),
                     )
                     Checkbox(
@@ -169,7 +169,9 @@ fun BottomPlanifier(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = stringResource(R.string.plan_it))
+                Text(text = stringResource(R.string.plan_it),
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.padding(vertical = 10.dp))
             }
         }
     }
@@ -198,7 +200,8 @@ fun DateHeader(
 
         Text(text = dataUi.startDate.date.format(
                 DateTimeFormatter.ofPattern("MMMM yyyy")
-            ), modifier = Modifier.align(Alignment.CenterVertically))
+            ), modifier = Modifier.align(Alignment.CenterVertically),
+            style = MaterialTheme.typography.headlineSmall)
 
         Spacer(modifier = Modifier.weight(1f))
 

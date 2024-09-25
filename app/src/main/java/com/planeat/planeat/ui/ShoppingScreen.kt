@@ -41,6 +41,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedButton
@@ -50,8 +51,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -85,6 +84,8 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.compose.onSurfaceVariantLight
+import com.example.compose.outlineLight
+import com.example.compose.primaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.AgendaDb
@@ -288,7 +289,7 @@ fun ShoppingScreen(
                             Text(
                                 stringResource(R.string.the_list_is_empty),
                                 style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.align(Alignment.CenterHorizontally))
+                                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top=24.dp))
 
                             Text(
                                 stringResource(R.string.shopping_list_placeholder),
@@ -296,13 +297,13 @@ fun ShoppingScreen(
                                 textAlign = TextAlign.Center,
                                 color = onSurfaceVariantLight,
                                 modifier = Modifier.align(Alignment.CenterHorizontally)
-                                            .padding(horizontal = 64.dp, vertical = 8.dp))
+                                            .padding(start = 36.dp, end = 36.dp, top = 4.dp))
 
                             OutlinedButton(
                                 onClick = {
                                     goToAgenda()
                                 },
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 24.dp)
                             ) {
                                 Text(text = stringResource(R.string.planify_a_recipe),
                                      style = MaterialTheme.typography.bodyMedium,
@@ -399,7 +400,7 @@ fun ShoppingScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(start = 16.dp, end = 16.dp, top = 24.dp),
                     shape = RoundedCornerShape(12.dp),
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 6.dp
@@ -407,7 +408,7 @@ fun ShoppingScreen(
                     colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
                 ) {
                     val scope = rememberCoroutineScope()
-                    Column() {
+                    Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(16.dp)) {
                         val matchingIngredient = filtered.find { it.name == text }
                         if (matchingIngredient == null && text.isNotEmpty()) {
                             IngredientToAdd(ingredient = Ingredient(text), onIngredientAdded = {
@@ -456,7 +457,7 @@ fun IngredientCheckbox(
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
             res = toIngredientIcon(item.ingredient.name.lowercase(), db, context)
-            name = item.ingredient.toLocalName()
+            name = item.ingredient.toLocalName().replaceFirstChar(Char::titlecase)
         }
     }
 
@@ -482,40 +483,44 @@ fun IngredientCheckbox(
         exit = fadeOut(animationSpec = tween(1000)) + shrinkVertically(animationSpec = tween(1000)),
         modifier = Modifier.clickable { handleCheckChange(!isChecked) }
     ) {
-        ListItem(
-            modifier = Modifier.fillMaxWidth(),
-            headlineContent = {
+        Row (
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        ) {
+            if (res != null) {
+                val painter = rememberAsyncImagePainter(res)
+                Image(painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(26.dp)
+                        .align(Alignment.CenterVertically)
+                        .alpha(if (isChecked) 0.5f else 1.0f)
+                )
+            } else {
+                Spacer(modifier = Modifier.width(26.dp))
+            }
+
+            Column(modifier = Modifier.padding(start = 16.dp).align(Alignment.CenterVertically)) {
                 Text(
                     text = name,
-                    style = if (isChecked) MaterialTheme.typography.bodyMedium.copy(textDecoration = TextDecoration.LineThrough) else MaterialTheme.typography.bodyMedium
+                    style = if (isChecked) MaterialTheme.typography.labelLarge.copy(textDecoration = TextDecoration.LineThrough) else MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.alpha(if (isChecked) 0.5f else 1.0f)
                 )
-            },
-            supportingContent = {
                 if (item.ingredient.quantity.toInt() != 1) {
-                    Text("${item.ingredient.quantity.toInt()} ${item.ingredient.unit}", style=MaterialTheme.typography.bodySmall)
+                    Text("${item.ingredient.quantity.toInt()} ${item.ingredient.unit}",
+                        style=MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.alpha(if (isChecked) 0.5f else 1.0f))
                 }
-            },
-            leadingContent = {
-                if (res != null) {
-                    val painter = rememberAsyncImagePainter(res)
-                    Image(painter = painter,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(26.dp)
-                            .alpha(if (isChecked) 0.5f else 1.0f)
-                    )
-                } else {
-                    Spacer(modifier = Modifier.width(26.dp))
-                }
-            },
-            trailingContent = {
-                Checkbox(
-                    checked = isChecked,
-                    onCheckedChange = { handleCheckChange(it) }
-                )
-            },
-            colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
-        )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Checkbox(
+                colors = CheckboxDefaults.colors(uncheckedColor = outlineLight, checkedColor = primaryContainerLight),
+                checked = isChecked,
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onCheckedChange = { handleCheckChange(it) }
+            )
+        }
     }
 }
 
@@ -558,10 +563,11 @@ fun CategoryCard(
             elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
             colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
         ) {
-            Column {
+            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
                     text = category.replaceFirstChar(Char::titlecase),
                     style = MaterialTheme.typography.bodySmall,
+                    color = onSurfaceVariantLight,
                     modifier = Modifier.padding(start = 16.dp, top = 8.dp)
                 )
 
@@ -602,10 +608,11 @@ fun ValidatedCategoryCard(
             elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
             colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
         ) {
-            Column {
+            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
                     text = category,
-                    fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = onSurfaceVariantLight,
                     modifier = Modifier.padding(start = 16.dp, top = 8.dp)
                 )
 
@@ -716,44 +723,42 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
         }
     }
 
-    ListItem(
-        modifier = Modifier
-            .clickable {
-                onIngredientAdded(IngredientItem(ingredient.name))
-            }
-            .padding(horizontal = 12.dp),
-        headlineContent = {
-            Text(
-                text = name,
-                style = MaterialTheme.typography.bodyLarge
+    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+
+        if (res != null) {
+            val painter = rememberAsyncImagePainter(res)
+            Image(painter = painter,
+                contentDescription = null,
+                modifier = Modifier.size(36.dp).align(Alignment.CenterVertically),
             )
-        },
-        leadingContent = {
-            if (res != null) {
-                val painter = rememberAsyncImagePainter(res)
-                Image(painter = painter,
-                    contentDescription = null,
-                    modifier = Modifier.size(26.dp)
-                    )
-            } else {
-                Spacer(modifier = Modifier.width(26.dp))
-            }
-        },
-        trailingContent = {
-            IconButton(
-                modifier = Modifier
-                    .testTag("add_ingredient"),
-                onClick = { onIngredientAdded(IngredientItem(ingredient.name.replaceFirstChar(Char::titlecase)))},
-                colors = IconButtonDefaults.iconButtonColors(
-                            containerColor = Color(0xFF599e39),// TODO primaryContainerLight,
-                            contentColor = Color(0xFFFFFFFF)
-                        )) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(R.string.add_ingredient),
-                )
-            }
-        },
-        colors = ListItemDefaults.colors(containerColor = surfaceContainerLowestLight)
-    )
+        } else {
+            Spacer(modifier = Modifier.width(36.dp))
+        }
+
+        Text(
+            text = name.replaceFirstChar(Char::titlecase),
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier .align(Alignment.CenterVertically)
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        IconButton(
+            modifier = Modifier
+                .testTag("add_ingredient")
+                .align(Alignment.CenterVertically)
+                .size(28.dp),
+            onClick = { onIngredientAdded(IngredientItem(ingredient.name.replaceFirstChar(Char::titlecase)))},
+            colors = IconButtonDefaults.iconButtonColors(
+                containerColor = Color(0xFF599e39),// TODO primaryContainerLight,
+                contentColor = Color(0xFFFFFFFF)
+            )) {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                modifier = Modifier.size(14.dp),
+                contentDescription = stringResource(R.string.add_ingredient),
+            )
+        }
+    }
 }

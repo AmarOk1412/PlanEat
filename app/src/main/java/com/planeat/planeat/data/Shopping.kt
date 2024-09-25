@@ -1,6 +1,5 @@
 
 import android.content.Context
-import android.util.Log
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.IngredientItem
 import com.planeat.planeat.data.IngredientsDb
@@ -201,6 +200,12 @@ class ShoppingList(
             // Initialize ingredientsPerCategory and ingredientsPerRecipes
             plannedRecipes.forEach { recipe ->
                 recipe.parsed_ingredients.forEach {
+                    // Remove water & salt & pepper from recipes
+                    if (it.name.contains ("water")
+                        || it.name.contains ("salt")
+                        || it.name.contains ("pepper")
+                        || it.name.contains ("liquid"))
+                        return@forEach
                     if (it.category.isEmpty()) {
                         it.category = toIngredientCategory(it.name, ic, ingredientsDb)
                     }
