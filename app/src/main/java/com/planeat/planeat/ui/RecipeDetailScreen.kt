@@ -17,10 +17,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -137,8 +140,11 @@ fun RecipeDetailScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(92.dp)
-                    .background(Color.White),
+                    .height(92.dp + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding())
+                    .background(Color.White)
+                    .padding(
+                        bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+                    ),
             ) {
                 OutlinedButton(
                     onClick = {
@@ -342,7 +348,7 @@ fun RecipeDetailScreen(
                     }
 
 
-                    Spacer(modifier = Modifier.height(92.dp))
+                    Spacer(modifier = Modifier.height(92.dp + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()))
 
                 }
             }
