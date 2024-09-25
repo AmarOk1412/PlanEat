@@ -184,7 +184,7 @@ class ShoppingList(
                 }
             }
         }
-        resetList = true || resetList || (planned.size != currentPlanned.size)
+        resetList = resetList || (planned.size != currentPlanned.size)
         if (!resetList) {
             // Nothing to do
             for (it in shoppingList) {
