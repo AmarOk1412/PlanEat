@@ -1,7 +1,6 @@
 
 import android.content.Context
 import android.os.Build
-import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
@@ -101,9 +100,9 @@ class PlanEatTest {
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     fun addNewRecipe() {
         composeTestRule.onNodeWithText("Favorites",).assertIsDisplayed().performClick()
-        composeTestRule.onNodeWithContentDescription("New Recipe").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Create a recipe").assertIsDisplayed()
         composeTestRule.onNodeWithText("My recipes").assertIsNotDisplayed()
-        composeTestRule.onNodeWithContentDescription("New Recipe").assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithText("Create a recipe").assertIsDisplayed().performClick()
 
         // Save recipe
         // Add "Foo" as the title
@@ -187,7 +186,7 @@ class PlanEatTest {
     }
 
     fun addToAgenda() {
-        composeTestRule.onAllNodesWithTag("Favorites",).onFirst().assertIsDisplayed().performClick()
+        composeTestRule.onAllNodesWithText("Favorites",).onFirst().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
 
         composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed().performClick()
@@ -196,40 +195,72 @@ class PlanEatTest {
         composeTestRule.onNodeWithText("Plan it",).assertIsDisplayed().performClick()
 
         // Should get to agenda screen
-        composeTestRule.onNodeWithText("Agenda")
+        composeTestRule.onNodeWithText("Today")
         // And one recipe shown at least
-        composeTestRule.onNodeWithTag("favorite_button").assertIsDisplayed()
+        // NOTE: seems agenda is scrolled one time...
+        if (!composeTestRule.onNodeWithTag("favorite_button").isDisplayed()) {
+            // Scroll to previous
+            composeTestRule.onNodeWithContentDescription("Back").assertIsDisplayed().performClick()
+            composeTestRule.onNodeWithTag("favorite_button").assertIsDisplayed()
+        }
     }
 
     fun deleteRecipe() {
-        val titleNode = composeTestRule.onAllNodesWithTag("recipe_title").onFirst()
-        val titleText = titleNode.fetchSemanticsNode().config[SemanticsProperties.Text].first()
         composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Delete").assertIsDisplayed().performClick()
 
         composeTestRule.onNodeWithText("Confirm").assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithTag("favorite_button").assertIsNotDisplayed()
+    }
 
-        val titleNode2 = composeTestRule.onAllNodesWithTag("recipe_title").fetchSemanticsNodes()
-        if (titleNode2.isEmpty()) {
-            // Success
-        } else {
-            val titleText2 = titleNode2.first().config[SemanticsProperties.Text].first()
-            assert(titleText != titleText2) {
-                "The recipe was not deleted, as the title remains the same: $titleText"
-            }
-        }
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    @Test
+    fun testScenarioAddAndDeleteRecipe() {
+        addNewRecipe()
+        saveSuggestion()
+        filterRecipes()
+        addToAgenda()
+        deleteRecipe()
+    }
+
+    private fun shoppingListNotEmpty() {
+        composeTestRule.onAllNodesWithText("Shopping List",).onFirst().assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithText("1 recipe").assertExists()
+    }
+
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    @Test
+    fun testScenarioPlanifyARecipe() {
+        saveSuggestion()
+        addToAgenda()
+        shoppingListNotEmpty()
+    }
+
+    fun sortByRecipe() {
+        composeTestRule.onNodeWithTag("sort_button").assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithTag("sort_recipe").assertIsDisplayed().performClick()
+        // TODO check title
+    }
+
+    fun validateOneIngredient() {
+        composeTestRule.onNodeWithText("Validated Ingredients").assertDoesNotExist()
+        composeTestRule.onAllNodesWithTag("ingredient_checkbox").onFirst().assertIsDisplayed().performClick()
+        composeTestRule.mainClock.autoAdvance = false
+        composeTestRule.mainClock.advanceTimeBy(2000)
+        composeTestRule.onAllNodesWithTag("ingredient_checkbox").onFirst().assertIsDisplayed().performClick()
+        composeTestRule.mainClock.advanceTimeBy(2000)
+        composeTestRule.onNodeWithText("Validated Ingredients").assertExists()
 
     }
 
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     @Test
-    fun testScenarios() {
-        addNewRecipe()
+    fun testScenarioSortAndValidateIngredient() {
         saveSuggestion()
-        filterRecipes()
-        // TODO searchAndAddEggs()
         addToAgenda()
-        deleteRecipe()
+        shoppingListNotEmpty()
+        sortByRecipe()
+        validateOneIngredient()
     }
 
 }

@@ -23,11 +23,9 @@ class ShoppingLIstTest {
 
     @Test
     fun addIngredientToShoppingList() {
-        // Start the app
-        // TODO!!!
         composeTestRule.setContent {
             AppTheme {
-                ShoppingScreen {  }
+                ShoppingScreen(onRecipeSelected = {}, goToAgenda = {})
             }
         }
 

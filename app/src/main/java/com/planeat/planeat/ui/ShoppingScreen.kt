@@ -4,6 +4,7 @@ import ShoppingIngredient
 import ShoppingList
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -234,7 +235,7 @@ fun ShoppingScreen(
                             ElevatedButton(onClick = { showDialog.value = true }, colors = ButtonDefaults.elevatedButtonColors(
                                 containerColor = Color(0xFFFFFFFF),
                                 contentColor = Color(0xFF000000)
-                            ), modifier = Modifier.padding(start = 8.dp),
+                            ), modifier = Modifier.padding(start = 8.dp).testTag("sort_button"),
                                 contentPadding = PaddingValues(horizontal = 16.dp)
                             ) {
                                 Row {
@@ -259,6 +260,7 @@ fun ShoppingScreen(
                                                 Text(text = stringResource(R.string.aisle),
                                                     style = MaterialTheme.typography.bodyMedium)
                                             },
+                                            modifier = Modifier.testTag("sort_aisle"),
                                             onClick = {
                                                 shoppingList!!.changeSortingMethod("Aisle")
                                                 sortingMethod = "Aisle"
@@ -270,6 +272,7 @@ fun ShoppingScreen(
                                                 Text(text = stringResource(R.string.recipe),
                                                     style = MaterialTheme.typography.bodyMedium)
                                             },
+                                            modifier = Modifier.testTag("sort_recipe"),
                                             onClick = {
                                                 shoppingList!!.changeSortingMethod("Recipe")
                                                 sortingMethod = "Recipe"
@@ -566,7 +569,7 @@ fun IngredientCheckbox(
             Checkbox(
                 colors = CheckboxDefaults.colors(uncheckedColor = outlineLight, checkedColor = primaryContainerLight),
                 checked = isChecked,
-                modifier = Modifier.align(Alignment.CenterVertically),
+                modifier = Modifier.align(Alignment.CenterVertically).testTag("ingredient_checkbox"),
                 onCheckedChange = { handleCheckChange(it) }
             )
         }
@@ -706,6 +709,7 @@ fun ShoppingListByCategory(
     groupedList?.forEach { (groupKey, categoryIngredients) ->
         val k = groupKey.takeIf { sortedByCategory } ?: shoppingList?.plannedRecipes?.find { it.recipeId.toString() == groupKey }?.title.orEmpty()
         var key by remember { mutableStateOf(k) }
+        key = k // Force update
         if (!sortedByCategory && groupKey == "0") {
             key = stringResource(R.string.custom)
         }
