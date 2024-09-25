@@ -4,6 +4,7 @@ import ShoppingIngredient
 import ShoppingList
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -411,14 +412,61 @@ fun ShoppingScreen(
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(16.dp)) {
                         val matchingIngredient = filtered.find { it.name == text }
                         if (matchingIngredient == null && text.isNotEmpty()) {
-                            IngredientToAdd(ingredient = Ingredient(text), onIngredientAdded = {
-                                scope.launch {
+                            // Search result
+                            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+
+                                var res by remember { mutableStateOf<Int?>(null) }
+                                val db = IngredientsDb.getDatabase(context)
+                                LaunchedEffect(text) {
                                     withContext(Dispatchers.IO) {
-                                        shoppingList!!.addIngredient(it)
-                                        searchItem = false
+                                        val ingredientItem = IngredientItem(text)
+                                        res = toIngredientIcon(ingredientItem.name.lowercase(), db, context)
                                     }
                                 }
-                            })
+
+                                if (res != null) {
+                                    val painter = rememberAsyncImagePainter(res)
+                                    Image(painter = painter,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(36.dp).align(Alignment.CenterVertically),
+                                    )
+                                } else {
+                                    Spacer(modifier = Modifier.width(36.dp))
+                                }
+
+                                Text(
+                                    text = text.replaceFirstChar(Char::titlecase),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    modifier = Modifier .align(Alignment.CenterVertically)
+                                )
+
+                                Spacer(modifier = Modifier.weight(1f))
+
+                                IconButton(
+                                    modifier = Modifier
+                                        .testTag("add_ingredient")
+                                        .align(Alignment.CenterVertically)
+                                        .size(28.dp),
+                                    onClick = {
+                                        scope.launch {
+                                            withContext(Dispatchers.IO) {
+                                                shoppingList!!.addIngredient(IngredientItem(text.lowercase()))
+                                                searchItem = false
+                                            }
+                                        }
+                                    },
+                                    colors = IconButtonDefaults.iconButtonColors(
+                                        containerColor = Color(0xFF599e39),// TODO primaryContainerLight,
+                                        contentColor = Color(0xFFFFFFFF)
+                                    )) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Add,
+                                        modifier = Modifier.size(14.dp),
+                                        contentDescription = stringResource(R.string.add_ingredient),
+                                    )
+                                }
+                            }
                         }
 
                         filtered.forEach {
