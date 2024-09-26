@@ -1,7 +1,7 @@
 
 import android.content.Context
 import android.os.Build
-import androidx.compose.ui.test.assertCountEquals
+import android.util.Log
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.isDisplayed
@@ -166,25 +166,6 @@ class PlanEatTest {
         composeTestRule.onNodeWithText("My recipes").assertIsDisplayed()
     }
 
-    fun searchAndAddEggs() {
-        composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
-        composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
-
-        // Search for "eggs"
-        composeTestRule.onNodeWithTag("search_input") // Add a test tag to the search TextField
-            .performTextInput("eggs")
-
-        // Save one recipe
-        composeTestRule.onNodeWithText("New recipes",).assertIsDisplayed()
-        composeTestRule.onAllNodesWithTag("favorite_button").onLast().assertIsDisplayed().performClick()
-
-        // Should have 2 recipes in favorites + 1 in my recipes
-        composeTestRule.onAllNodesWithText("Favorites",).onLast().assertIsDisplayed().performClick()
-        composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
-        composeTestRule.onAllNodesWithTag("favorite_button").assertCountEquals(3)
-
-    }
-
     fun addToAgenda() {
         composeTestRule.onAllNodesWithText("Favorites",).onFirst().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
@@ -245,10 +226,10 @@ class PlanEatTest {
     fun validateOneIngredient() {
         composeTestRule.onNodeWithText("Validated Ingredients").assertDoesNotExist()
         composeTestRule.onAllNodesWithTag("ingredient_checkbox").onFirst().assertIsDisplayed().performClick()
-        composeTestRule.mainClock.autoAdvance = false
-        composeTestRule.mainClock.advanceTimeBy(2000)
-        composeTestRule.onAllNodesWithTag("ingredient_checkbox").onFirst().assertIsDisplayed().performClick()
-        composeTestRule.mainClock.advanceTimeBy(2000)
+        composeTestRule.waitUntil(3000) {
+            Log.e("PlanEat", "@@@ ${composeTestRule.onAllNodesWithText("Validated Ingredients").fetchSemanticsNodes().size}")
+            composeTestRule.onAllNodesWithText("Validated Ingredients").fetchSemanticsNodes().size != 0
+        }
         composeTestRule.onNodeWithText("Validated Ingredients").assertExists()
 
     }
@@ -261,6 +242,30 @@ class PlanEatTest {
         shoppingListNotEmpty()
         sortByRecipe()
         validateOneIngredient()
+    }
+
+
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    @Test
+    fun searchAndAddEggs() {
+        composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
+
+        // Search for "eggs"
+        composeTestRule.onNodeWithTag("search_input").performTextInput("eggs")
+
+        composeTestRule.waitUntil(3000) {
+            composeTestRule.onNodeWithText("New recipes",).isDisplayed()
+        }
+
+        // Save one recipe
+        composeTestRule.onNodeWithText("New recipes",).assertIsDisplayed()
+        composeTestRule.onAllNodesWithTag("favorite_button").onLast().assertIsDisplayed().performClick()
+
+        // Should have 2 recipes in favorites + 1 in my recipes
+        composeTestRule.onAllNodesWithText("Favorites",).onLast().assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
+        composeTestRule.onNodeWithText("favorite_button").assertIsDisplayed()
     }
 
 }

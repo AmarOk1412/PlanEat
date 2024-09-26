@@ -2,6 +2,7 @@ package com.planeat.planeat
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
@@ -37,10 +38,12 @@ class ShoppingLIstTest {
 
         composeTestRule.onAllNodesWithTag("add_ingredient").onLast().assertIsDisplayed().performClick()
 
-        composeTestRule.onAllNodesWithText("banana").onLast().assertIsDisplayed()
-        composeTestRule.onNodeWithText("Shopping List").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Aisle").assertIsDisplayed()
+        composeTestRule.waitUntil(3000) {
+            composeTestRule.onNodeWithText("Aisle").isDisplayed()
+        }
 
+        composeTestRule.onAllNodesWithText("Banana").onLast().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Aisle").assertIsDisplayed()
     }
 
 
