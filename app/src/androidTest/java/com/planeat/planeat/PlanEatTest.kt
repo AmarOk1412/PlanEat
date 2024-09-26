@@ -227,7 +227,6 @@ class PlanEatTest {
         composeTestRule.onNodeWithText("Validated Ingredients").assertDoesNotExist()
         composeTestRule.onAllNodesWithTag("ingredient_checkbox").onFirst().assertIsDisplayed().performClick()
         composeTestRule.waitUntil(3000) {
-            Log.e("PlanEat", "@@@ ${composeTestRule.onAllNodesWithText("Validated Ingredients").fetchSemanticsNodes().size}")
             composeTestRule.onAllNodesWithText("Validated Ingredients").fetchSemanticsNodes().size != 0
         }
         composeTestRule.onNodeWithText("Validated Ingredients").assertExists()

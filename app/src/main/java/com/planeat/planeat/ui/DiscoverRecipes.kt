@@ -226,6 +226,10 @@ fun DiscoverScreen(
                                 openBottomSheet = true
                             })
                     }
+
+                    item(span = { GridItemSpan(2) }) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
             } else {
                 LazyVerticalGrid(
