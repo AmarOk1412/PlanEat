@@ -1,7 +1,6 @@
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.isDisplayed
@@ -81,8 +80,6 @@ class PlanEatTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Test
     fun testFilterSuggestion() {
         composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
@@ -97,7 +94,6 @@ class PlanEatTest {
         composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertExists()
     }
 
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     fun addNewRecipe() {
         composeTestRule.onNodeWithText("Favorites",).assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Create a recipe").assertIsDisplayed()
@@ -124,7 +120,6 @@ class PlanEatTest {
         composeTestRule.onNodeWithText("Foo").assertIsDisplayed()
     }
 
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     fun saveSuggestion() {
         // Recipes should be empty
         composeTestRule.onAllNodesWithText("Favorites",).onLast().assertIsDisplayed().performClick()
@@ -168,7 +163,6 @@ class PlanEatTest {
 
     fun addToAgenda() {
         composeTestRule.onAllNodesWithText("Favorites",).onFirst().assertIsDisplayed().performClick()
-        composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
 
         composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Add to agenda",).assertIsDisplayed().performClick()
@@ -179,10 +173,10 @@ class PlanEatTest {
         composeTestRule.onNodeWithText("Today")
         // And one recipe shown at least
         // NOTE: seems agenda is scrolled one time...
-        if (!composeTestRule.onNodeWithTag("favorite_button").isDisplayed()) {
+        if (!composeTestRule.onAllNodesWithTag("favorite_button").onFirst().isDisplayed()) {
             // Scroll to previous
             composeTestRule.onNodeWithContentDescription("Back").assertIsDisplayed().performClick()
-            composeTestRule.onNodeWithTag("favorite_button").assertIsDisplayed()
+            composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed()
         }
     }
 
@@ -194,11 +188,8 @@ class PlanEatTest {
         composeTestRule.onNodeWithTag("favorite_button").assertIsNotDisplayed()
     }
 
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Test
     fun testScenarioAddAndDeleteRecipe() {
         addNewRecipe()
-        saveSuggestion()
         filterRecipes()
         addToAgenda()
         deleteRecipe()
@@ -209,18 +200,32 @@ class PlanEatTest {
         composeTestRule.onNodeWithText("1 recipe").assertExists()
     }
 
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Test
-    fun testScenarioPlanifyARecipe() {
-        saveSuggestion()
-        addToAgenda()
-        shoppingListNotEmpty()
-    }
+    fun sortByRecipeThenAisle() {
+        composeTestRule.onNodeWithText("Agenda").performClick()
+        composeTestRule.onNodeWithText("Today").assertIsDisplayed()
 
-    fun sortByRecipe() {
+        val title = "cake aux brocolis, tomates et noisettes"
+
+        composeTestRule.onNodeWithText("Shopping List").performClick()
+        composeTestRule.onNodeWithText(title).assertDoesNotExist()
+
+        // Sort by recipe
         composeTestRule.onNodeWithTag("sort_button").assertIsDisplayed().performClick()
         composeTestRule.onNodeWithTag("sort_recipe").assertIsDisplayed().performClick()
-        // TODO check title
+        composeTestRule.waitUntil(3000) {
+            composeTestRule.onAllNodesWithText(title.replaceFirstChar(Char::titlecase)).fetchSemanticsNodes().size != 0
+        }
+        composeTestRule.onNodeWithText(title.replaceFirstChar(Char::titlecase)).assertExists()
+        composeTestRule.onNodeWithText("Recipe").isDisplayed()
+
+        // Sort by Aisle again
+        composeTestRule.onNodeWithTag("sort_button").assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithTag("sort_aisle").assertIsDisplayed().performClick()
+        composeTestRule.waitUntil(3000) {
+            composeTestRule.onAllNodesWithText(title.replaceFirstChar(Char::titlecase)).fetchSemanticsNodes().size == 0
+        }
+        composeTestRule.onNodeWithText(title.replaceFirstChar(Char::titlecase)).assertDoesNotExist()
+        composeTestRule.onNodeWithText("Aisle").isDisplayed()
     }
 
     fun validateOneIngredient() {
@@ -233,19 +238,15 @@ class PlanEatTest {
 
     }
 
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Test
     fun testScenarioSortAndValidateIngredient() {
         saveSuggestion()
         addToAgenda()
         shoppingListNotEmpty()
-        sortByRecipe()
+        sortByRecipeThenAisle()
         validateOneIngredient()
     }
 
 
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    @Test
     fun searchAndAddEggs() {
         composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
@@ -264,7 +265,18 @@ class PlanEatTest {
         // Should have 2 recipes in favorites + 1 in my recipes
         composeTestRule.onAllNodesWithText("Favorites",).onLast().assertIsDisplayed().performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
-        composeTestRule.onNodeWithText("favorite_button").assertIsDisplayed()
+        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed()
+    }
+
+
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    @Test
+    fun testScenarios() {
+        // TODO no need for ordering this.
+        testScenarioSortAndValidateIngredient()
+        testScenarioAddAndDeleteRecipe()
+        testFilterSuggestion()
+        searchAndAddEggs()
     }
 
 }
