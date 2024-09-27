@@ -1,6 +1,7 @@
 package com.planeat.planeat.connectors
 
 import android.util.Log
+import com.google.android.datatransport.BuildConfig
 import com.planeat.planeat.data.Recipe
 import org.json.JSONObject
 
@@ -56,7 +57,7 @@ class Ricardo : Connector {
         for (i in 1 until 11) {
             try {
                 val address = url.replace("PAGE", i.toString())
-                val response = Jsoup.connect(address).timeout(2000).userAgent("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)").execute()
+                val response = Jsoup.connect(address).timeout(2000).userAgent("PlanEat ${BuildConfig.VERSION_NAME}").execute()
                 val document = response.parse()
 
                 val scriptContent = document.select("script[id=\"react-bridge-bootstrap\"]").html()

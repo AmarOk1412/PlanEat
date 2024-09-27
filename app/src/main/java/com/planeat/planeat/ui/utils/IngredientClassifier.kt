@@ -2,6 +2,7 @@ package com.planeat.planeat.ui.utils
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import com.google.android.datatransport.BuildConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,7 +31,7 @@ class IngredientClassifier {
 
                     try {
                         val url = "https://www.metro.ca/en/online-grocery/search?filter=egg"
-                        val response = Jsoup.connect(url).timeout(2000).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0").execute()
+                        val response = Jsoup.connect(url).timeout(2000).userAgent("PlanEat ${BuildConfig.VERSION_NAME}").execute()
                         response.parse()
                         hasConnection.value = true
                         Log.d("PlanEat", "Connection to classify ingredients is back!")
@@ -54,7 +55,7 @@ class IngredientClassifier {
         try {
             // Make the request to the search URL for the ingredient
             val url = "https://www.metro.ca/en/online-grocery/search?filter=$ingredient"
-            val response = Jsoup.connect(url).timeout(2000).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0").execute()
+            val response = Jsoup.connect(url).timeout(2000).userAgent("PlanEat ${BuildConfig.VERSION_NAME}").execute()
             val document = response.parse()
 
             // Select product tiles with ingredient info
