@@ -2,6 +2,7 @@ package com.planeat.planeat.connectors
 
 import android.util.Log
 import com.planeat.planeat.data.Recipe
+import org.json.JSONArray
 import org.json.JSONObject
 
 import org.jsoup.Jsoup
@@ -110,10 +111,28 @@ class Nytimes : Connector {
 
                 val duration = recipeData.getString("totalTime").replace("\\D".toRegex(), "").toInt()
                 val ingredients = recipeData.getJSONArray("recipeIngredient").toList().map { it.toString() }
-                val steps = recipeData.getJSONArray("recipeInstructions").toList().map { (it as LinkedHashMap<*, *>).get("text").toString() }
+                val steps = JSONArray()
+                val recipeInstructions = recipeData.getJSONArray("recipeInstructions")
+                for (i in 0 until recipeInstructions.length()) {
+                    val instruction = recipeInstructions.getJSONObject(i)
+
+                    // Create a new JSONObject for each step
+                    val stepObject = JSONObject()
+
+                    // Add the text field
+                    stepObject.put("text", instruction.getString("text"))
+
+                    // Optionally add the image field if it exists
+                    if (instruction.has("image")) {
+                        stepObject.put("image", instruction.getString("image"))
+                    }
+
+                    // Add the stepObject to the steps array
+                    steps.put(stepObject)
+                }
                 val imageUrl = recipeData.getJSONArray("image").getJSONObject(0).getString("url")
 
-                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags.map { it.lowercase() }, cookingTime = duration, ingredients = ingredients, steps = steps)
+                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags.map { it.lowercase() }, cookingTime = duration, ingredients = ingredients, steps = steps.toString())
             }
 
         } catch (error: Exception) {

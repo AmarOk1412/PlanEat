@@ -97,7 +97,7 @@ fun RecipeListItem(
         modifier = modifier
             .clip(CardDefaults.shape)
             .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp)
-            .height((LocalConfiguration.current.screenWidthDp * 0.4f).dp)
+            .height((LocalConfiguration.current.screenWidthDp * 0.43f).dp)
             .combinedClickable(
                 onClick = { onRecipeSelected(recipe) },
                 onLongClick = { }

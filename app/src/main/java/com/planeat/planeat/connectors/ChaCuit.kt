@@ -2,6 +2,8 @@ package com.planeat.planeat.connectors
 
 import android.util.Log
 import com.planeat.planeat.data.Recipe
+import org.json.JSONArray
+import org.json.JSONObject
 
 import org.jsoup.Jsoup
 
@@ -123,13 +125,24 @@ class ChaCuit : Connector {
                 equipment.add(item)
             }
 
-            val steps = mutableListOf<String>()
+            val steps = JSONArray()
+            var i = 1
+            val recipeName = url.split("/").filter { it.isNotEmpty() }.last()
             document.select("ol li").forEach { element ->
+                val stepObject = JSONObject()
                 val step = element.text()
-                steps.add(step)
+                stepObject.put("text", step)
+                // TODO check if there is an image
+                steps.put(stepObject)
+                val imageUrlPattern = "/img/$recipeName/$recipeName-step-$i.jpg"
+                val imageExists = document.select("img[src$='$imageUrlPattern']").isNotEmpty()
+                if (imageExists) {
+                    stepObject.put("image", "https://cha-cu.it/img/$recipeName/$recipeName-step-$i.jpg")
+                }
+                i += 1
             }
 
-            recipe = recipe.copy(title = name, url = url, cookingTime = duration, ingredients = ingredients, steps = steps, tags = tags, image = imageUrl)
+            recipe = recipe.copy(title = name, url = url, cookingTime = duration, ingredients = ingredients, steps = steps.toString(), tags = tags, image = imageUrl)
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }

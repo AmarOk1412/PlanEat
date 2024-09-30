@@ -51,7 +51,7 @@ data class Recipe(
     @ColumnInfo(name = "season") var season: String = "",
     @ColumnInfo(name = "tags") var tags: List<String> = emptyList(),
     @ColumnInfo(name = "ingredients") var ingredients: List<String> = emptyList(),
-    @ColumnInfo(name = "steps") var steps: List<String> = emptyList(),
+    @ColumnInfo(name = "steps") var steps: String = "",
     @ColumnInfo(name = "parsed_ingredients") var parsed_ingredients: List<IngredientItem> = emptyList()
 )  {
     fun toSmallJson(): Any {

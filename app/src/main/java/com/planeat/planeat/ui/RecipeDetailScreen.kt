@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
@@ -59,6 +60,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -72,6 +74,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.IngredientsDb
@@ -83,6 +86,29 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
+
+data class Step(val text: String, val image: String) {
+}
+
+fun getSteps(steps: String, needsUpdate: ()->Unit): List<Step> {
+    val result = emptyList<Step>().toMutableList()
+    try {
+        val stepsArray = JSONArray(steps)
+        for (index in 0 until stepsArray.length()) {
+            val step = stepsArray.getJSONObject(index)
+            result += Step(step.getString("text"), step.optString("image", ""))
+        }
+    } catch (e: Exception) {
+        steps.split("\n@@@\n").forEach {
+            result += Step(it, "")
+        }
+        needsUpdate()
+    }
+    return result
+}
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -327,22 +353,50 @@ fun RecipeDetailScreen(
                             Column (
                                 modifier = Modifier.padding(16.dp)
                             ) {
-                                selectedRecipe.steps.forEachIndexed { index, step ->
+                                getSteps(selectedRecipe.steps,
+                                    needsUpdate = {
+                                        // TODO remove!
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            val steps = JSONArray()
+                                            selectedRecipe.steps.split("\n@@@\n").forEach {
+                                                steps.put(JSONObject().put("text", it))
+                                            }
+                                            selectedRecipe.steps = steps.toString()
+                                            model.update(selectedRecipe)
+                                        }
+                                    }).forEachIndexed { index, step ->
 
-                                    Text(
-                                        text = stringResource(R.string.step, index + 1),
-                                        style = MaterialTheme.typography.titleSmall,
-                                        modifier = Modifier.padding(bottom = 8.dp)
-                                    )
+                                        Text(
+                                            text = stringResource(R.string.step, index + 1),
+                                            style = MaterialTheme.typography.titleSmall,
+                                            modifier = Modifier.padding(bottom = 8.dp)
+                                        )
 
-                                    Text(
-                                        text = step,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                    )
+                                        if (step.image.isNotEmpty()) {
+                                            AsyncImage(
+                                                model = if (step.image.startsWith("http")) {
+                                                    step.image
+                                                } else {
+                                                    ImageRequest.Builder(LocalContext.current)
+                                                        .data(step.image)
+                                                        .build()
+                                                },
+                                                contentDescription = step.text,
+                                                modifier = Modifier.fillMaxWidth().clip(
+                                                    RoundedCornerShape(8.dp)
+                                                ).padding(bottom = 8.dp),
+                                                contentScale = ContentScale.Crop,
+                                            )
+                                        }
 
-                                    HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+                                        Text(
+                                            text = step.text,
+                                            style = MaterialTheme.typography.bodyMedium,
+                                        )
 
-                                }
+                                        HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+
+                                    }
                             }
                         }
                     }

@@ -3,6 +3,7 @@ package com.planeat.planeat.connectors
 import android.util.Log
 import com.google.android.datatransport.BuildConfig
 import com.planeat.planeat.data.Recipe
+import org.json.JSONArray
 import org.json.JSONObject
 
 import org.jsoup.Jsoup
@@ -148,21 +149,34 @@ class Ricardo : Connector {
                 val ingredients = recipeData.optJSONArray("recipeIngredient")?.toList()?.map { it.toString() } ?: emptyList()
                 val imageUrl = recipeData.getJSONArray("image").getString(0)
                 val stepsListOpt = recipeData.optJSONArray("recipeInstructions")
-                var steps = emptyList<String>().toMutableList()
+                val steps = JSONArray()
                 if (stepsListOpt?.length()!! >= 0 && (stepsListOpt.get(0) as JSONObject).optString("@type") == "HowToSection") {
                     for (i in 0 until stepsListOpt.length()) {
                         val stepsList = (stepsListOpt.get(i) as JSONObject)
                         val items = stepsList.getJSONArray("itemListElement")
                         for (j in 0 until items.length()) {
-                            val stepObj = items.get(j) as JSONObject
-                            steps += stepObj.getString("text")
+                            val instruction = items.get(j) as JSONObject
+                            val stepObject = JSONObject()
+                            stepObject.put("text", instruction.getString("text"))
+                            if (instruction.has("image")) {
+                                stepObject.put("image", instruction.getString("image"))
+                            }
+                            steps.put(stepObject)
                         }
                     }
                 } else {
-                    steps = stepsListOpt.toList().map { (it as LinkedHashMap<*, *>).get("text").toString() }
-                        .toMutableList()
+                    val recipeInstructions = recipeData.getJSONArray("recipeInstructions")
+                    for (i in 0 until recipeInstructions.length()) {
+                        val instruction = recipeInstructions.getJSONObject(i)
+                        val stepObject = JSONObject()
+                        stepObject.put("text", instruction.getString("text"))
+                        if (instruction.has("image")) {
+                            stepObject.put("image", instruction.getString("image"))
+                        }
+                        steps.put(stepObject)
+                    }
                 }
-                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags.map { it.lowercase() }, cookingTime = duration, ingredients = ingredients, steps = steps)
+                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags.map { it.lowercase() }, cookingTime = duration, ingredients = ingredients, steps = steps.toString())
             }
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())

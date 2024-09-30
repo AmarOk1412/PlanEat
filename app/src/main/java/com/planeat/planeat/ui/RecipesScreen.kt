@@ -131,7 +131,7 @@ fun RecipesScreen(
         ) { innerPadding ->
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = innerPadding.calculateTopPadding()),
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = innerPadding.calculateTopPadding()),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
@@ -171,7 +171,7 @@ fun RecipesScreen(
                     contentColor = onPrimaryLight,
                     shape = RoundedCornerShape(100.dp),
                     elevation = FloatingActionButtonDefaults.elevation(0.dp),
-                    modifier = Modifier.padding(vertical = 32.dp)) {
+                    modifier = Modifier.padding(vertical = 16.dp)) {
                     Text(
                         text = stringResource(R.string.create_a_recipe),
                         style = MaterialTheme.typography.labelLarge,

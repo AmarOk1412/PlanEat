@@ -23,7 +23,7 @@
 
     <string name="search_placeholder">Tartiflette, Ramen, Crêpes…</string>
     <string name="tab_saved">Favoris</string>
-    <string name="tab_shopping_list">Liste de courses</string>
+    <string name="tab_shopping_list">Liste</string>
     <string name="favorite">Favoris</string>
     <string name="ingredients">Ingrédients</string>
     <string name="steps">Instructions</string>

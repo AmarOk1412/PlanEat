@@ -22,7 +22,7 @@ val RobotoFlexFontFamily = FontFamily(
     Font(R.font.roboto_flex, FontWeight.Normal)
 )
 
-val factor = 1.5
+val factor = 1
 
 val AppTypography = Typography(
     displayLarge = TextStyle(
