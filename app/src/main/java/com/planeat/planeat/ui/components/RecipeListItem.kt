@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -96,8 +95,6 @@ fun RecipeListItem(
     Card(
         modifier = modifier
             .clip(CardDefaults.shape)
-            .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp)
-            .height((LocalConfiguration.current.screenWidthDp * 0.43f).dp)
             .combinedClickable(
                 onClick = { onRecipeSelected(recipe) },
                 onLongClick = { }
@@ -132,7 +129,7 @@ fun RecipeListItem(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height((LocalConfiguration.current.screenWidthDp * 0.2f).dp)
+                    .height((LocalConfiguration.current.screenHeightDp * 0.165f).dp)
             ) {
                 AsyncImage(
                     model = if (recipe.image.startsWith("http")) {

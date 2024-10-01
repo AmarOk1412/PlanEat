@@ -19,11 +19,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -100,7 +97,6 @@ fun DiscoverScreen(
             var text by rememberSaveable { mutableStateOf("") }
             var expanded by rememberSaveable { mutableStateOf(false) }
             val filters = Tags.entries.map { it }
-            val focusRequester = remember { FocusRequester() }
 
             BackHandler {
                 text = ""
@@ -110,7 +106,6 @@ fun DiscoverScreen(
             LaunchedEffect(Unit) {
                 text = ""
                 expanded = false
-                focusRequester.requestFocus()
             }
 
             LaunchedEffect(text) {
@@ -130,7 +125,6 @@ fun DiscoverScreen(
                 inputField = {
                     SearchBarDefaults.InputField(
                         modifier = Modifier
-                            .focusRequester(focusRequester)
                             .border(
                                 2.dp,
                                 if (expanded) Color(0xFF00AF45) else Color(0x00000000),
@@ -197,14 +191,12 @@ fun DiscoverScreen(
 
 
             if (text.isEmpty()) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
+                LazyColumn(
                     modifier = Modifier.padding(start=16.dp, end=16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (model.suggestedRecipesShown.isNotEmpty()) {
-                        item(span = { GridItemSpan(2) }) {
+                        item {
                             Text(
                                 text = stringResource(R.string.you_may_like),
                                 style = MaterialTheme.typography.headlineSmall
@@ -227,19 +219,17 @@ fun DiscoverScreen(
                             })
                     }
 
-                    item(span = { GridItemSpan(2) }) {
+                    item {
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
             } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
+                LazyColumn (
                     modifier = Modifier.padding(start=16.dp, end=16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (model.recipesSearchedShown.size > 0 && model.recipesInDbShown.size > 0) {
-                        item(span = { GridItemSpan(2) }) {
+                        item {
                             Text(
                                 text = stringResource(R.string.my_favorites),
                                 style = MaterialTheme.typography.headlineSmall,
@@ -247,7 +237,7 @@ fun DiscoverScreen(
                             )
                         }
                     }
-                    item(span = { GridItemSpan(2) }) {
+                    item {
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                             items(model.recipesInDbShown, key = { recipe -> recipe.url }) { recipe ->
@@ -268,7 +258,7 @@ fun DiscoverScreen(
                     }
 
                     if (model.recipesSearchedShown.size > 0) {
-                        item(span = { GridItemSpan(2) }) {
+                        item {
                             Text(
                                 text = stringResource(R.string.new_recipes),
                                 style = MaterialTheme.typography.headlineSmall,
@@ -283,7 +273,7 @@ fun DiscoverScreen(
                         }
                     }
 
-                    item(span = { GridItemSpan(2) }) {
+                    item {
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }

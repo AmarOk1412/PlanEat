@@ -25,11 +25,15 @@ androidx-test-ext-truth = "1.5.0"
 androidx-window = "1.3.0-alpha03"
 androidxHiltNavigationCompose = "1.1.0"
 androix-test-uiautomator = "2.2.0"
+barcodeScanning = "17.1.0"
+cameraView = "1.3.4"
+cameraLifecycle = "1.3.4"
 coil = "2.4.0"
 # @keep
 coilCompose = "2.6.0"
 compileSdk = "34"
 compose-compiler = "1.5.4"
+composeQrCode = "1.0.1"
 coroutines = "1.8.0"
 error_prone_annotations = "2.9.0"
 google-maps = "18.2.0"
@@ -86,6 +90,9 @@ androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-benchmark-macrobenchmark = { module = "androidx.benchmark:benchmark-macro", version.ref = "androidx-benchmark" }
 androidx-benchmark-macrobenchmark-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark-junit4" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraView" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraLifecycle" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
@@ -135,8 +142,10 @@ androidx-test-runner = "androidx.test:runner:1.5.2"
 androidx-test-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androix-test-uiautomator" }
 androidx-window = { module = "androidx.window:window", version.ref = "androidx-window" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
+barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
 coil-compose-v260 = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 coil-kt-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+compose-qr-code = { module = "com.lightspark:compose-qr-code", version.ref = "composeQrCode" }
 core-jdk-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "jdkDesugar" }
 error_prone_annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "error_prone_annotations" }
 google-android-material = { module = "com.google.android.material:material", version.ref = "material" }

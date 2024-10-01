@@ -150,4 +150,12 @@ dependencies {
     // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>():
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.2")
 
+    // QrCode
+    implementation(libs.compose.qr.code)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.barcode.scanning)
+
 }

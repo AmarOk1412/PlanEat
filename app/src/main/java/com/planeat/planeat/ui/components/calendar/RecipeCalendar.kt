@@ -8,7 +8,6 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -139,58 +138,82 @@ fun ContentItem(
         )
 
         val scope = rememberCoroutineScope()
-        Row(
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .height(IntrinsicSize.Min)
-        ) {
-
-            recipesPlanned.value.forEach { recipeAgenda ->
-                val recipe = recipeAgenda.recipe
-                RecipeListItem(
-                    recipe = recipe,
-                    onRecipeSelected = { r -> goToDetails(r) },
-                    onRecipeDeleted = { r -> onRecipeDeleted(r) },
-                    onRecipeAdded = {},
-                    onEditRecipe = { r -> goToEdition(r) },
-                    onPlanRecipe = {},
-                    onRemoveFromAgenda = { recipeId -> scope.launch {
-                        withContext(Dispatchers.IO) {
-                            val newRecipesPlanned: MutableList<RecipeAgenda> = mutableListOf()
-                            val rdb = RecipesDb.getDatabase(context)
-                            val adb = AgendaDb.getDatabase(context)
-                            val recipesPlannedDb = adb.agendaDao().findByDate(date.date.atTime(12, 0)
-                                .toInstant(ZoneOffset.UTC)
-                                .toEpochMilli())
-
-                            recipesPlannedDb.forEach {
-                                if (recipeId == it.recipeId) {
-                                    adb.agendaDao().delete(it)
-                                } else {
-                                    val r = rdb.recipeDao().findById(it.recipeId)
-                                    newRecipesPlanned += RecipeAgenda(recipe = r, agenda = it)
-                                }
-                            }
-                            withContext(Dispatchers.Main) {
-                                recipesPlanned.value = newRecipesPlanned
-                            }
-                        }
-                    } },
-                    agenda = recipeAgenda.agenda,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .shadow(8.dp, shape = MaterialTheme.shapes.medium)
-                )
-            }
-
+        if (recipesPlanned.value.isEmpty()) {
             AddRecipeCard(
                 modifier = Modifier
                     .padding(8.dp)
-                    .shadow(8.dp, shape = MaterialTheme.shapes.medium),
+                    .shadow(8.dp, shape = MaterialTheme.shapes.medium)
+                    .fillMaxWidth()
+                    .height(64.dp),
                 date = date,
                 dataUi = dataUi,
-                updateDate = updateDate
+                updateDate = updateDate,
+                showLabel = true
             )
+        } else {
+            Row(
+                modifier = Modifier
+                    .horizontalScroll(rememberScrollState())
+            ) {
+
+                recipesPlanned.value.forEach { recipeAgenda ->
+                    val recipe = recipeAgenda.recipe
+                    RecipeListItem(
+                        recipe = recipe,
+                        onRecipeSelected = { r -> goToDetails(r) },
+                        onRecipeDeleted = { r -> onRecipeDeleted(r) },
+                        onRecipeAdded = {},
+                        onEditRecipe = { r -> goToEdition(r) },
+                        onPlanRecipe = {},
+                        onRemoveFromAgenda = { recipeId ->
+                            scope.launch {
+                                withContext(Dispatchers.IO) {
+                                    val newRecipesPlanned: MutableList<RecipeAgenda> =
+                                        mutableListOf()
+                                    val rdb = RecipesDb.getDatabase(context)
+                                    val adb = AgendaDb.getDatabase(context)
+                                    val recipesPlannedDb = adb.agendaDao().findByDate(
+                                        date.date.atTime(12, 0)
+                                            .toInstant(ZoneOffset.UTC)
+                                            .toEpochMilli()
+                                    )
+
+                                    recipesPlannedDb.forEach {
+                                        if (recipeId == it.recipeId) {
+                                            adb.agendaDao().delete(it)
+                                        } else {
+                                            val r = rdb.recipeDao().findById(it.recipeId)
+                                            newRecipesPlanned += RecipeAgenda(
+                                                recipe = r,
+                                                agenda = it
+                                            )
+                                        }
+                                    }
+                                    withContext(Dispatchers.Main) {
+                                        recipesPlanned.value = newRecipesPlanned
+                                    }
+                                }
+                            }
+                        },
+                        agenda = recipeAgenda.agenda,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .shadow(8.dp, shape = MaterialTheme.shapes.medium)
+                            .width((LocalConfiguration.current.screenWidthDp * 0.75f).dp)
+                    )
+                }
+
+                AddRecipeCard(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .shadow(8.dp, shape = MaterialTheme.shapes.medium)
+                        .width((LocalConfiguration.current.screenWidthDp * 0.25f).dp)
+                        .height((LocalConfiguration.current.screenHeightDp * 0.165f).dp),
+                    date = date,
+                    dataUi = dataUi,
+                    updateDate = updateDate
+                )
+            }
         }
     }
 }
@@ -203,15 +226,14 @@ fun AddRecipeCard(
     date: CalendarUiModel.Date,
     dataUi: CalendarUiModel,
     updateDate: (CalendarUiModel, Boolean) -> Unit,
+    showLabel: Boolean = false,
 ) {
     Card(
         modifier = modifier
             .clip(CardDefaults.shape)
-            .width((LocalConfiguration.current.screenWidthDp * 0.4f).dp) // Set the width to 40% of the screen
-            .height((LocalConfiguration.current.screenWidthDp * 0.43f).dp)
             .dashedBorder(
                 width = 2.dp,
-                color = Color(0xFF00AF45),
+                color = Color(0xFFCFCFCF),
                 shape = MaterialTheme.shapes.medium, on = 8.dp, off = 8.dp
             )
             .combinedClickable(
@@ -241,20 +263,33 @@ fun AddRecipeCard(
                 .fillMaxWidth()
                 .wrapContentSize(Alignment.Center)
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.add),
-                    contentDescription = stringResource(R.string.add_recipe),
-                    tint = Color(0xFF00AF45),
-                    modifier = Modifier.size(40.dp)
-                )
-                Text(
-                    text = stringResource(R.string.add_recipe),
-                    style = MaterialTheme.typography.titleSmall,
-                )
+            if (showLabel) {
+                Row {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.add),
+                        contentDescription = stringResource(R.string.add_recipe),
+                        tint = Color(0xFF00AF45),
+                        modifier = Modifier.size(40.dp)
+                    )
+
+                    Text(
+                        text = stringResource(R.string.planify_a_recipe),
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(start = 8.dp).align(Alignment.CenterVertically)
+                    )
+                }
+            } else {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.add),
+                        contentDescription = stringResource(R.string.add_recipe),
+                        tint = Color(0xFF00AF45),
+                        modifier = Modifier.size(40.dp)
+                    )
+                }
             }
         }
     }

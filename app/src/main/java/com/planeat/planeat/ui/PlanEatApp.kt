@@ -790,7 +790,15 @@ private fun NavHost(
                         navController.navigate(PlanEatRoute.EDITION)
                     }
                 },
+                goToAccount = {
+                    Handler(Looper.getMainLooper()).post {
+                        navController.navigate(PlanEatRoute.ACCOUNT)
+                    }
+                },
                 onRecipeDeleted = onRecipeDeleted)
+        }
+        composable(PlanEatRoute.ACCOUNT) {
+            AccountScreen()
         }
         composable(PlanEatRoute.SEARCH) {
             DiscoverScreen(

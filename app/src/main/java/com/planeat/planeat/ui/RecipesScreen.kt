@@ -20,10 +20,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -129,10 +127,8 @@ fun RecipesScreen(
                 )
             }
         ) { innerPadding ->
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
+            LazyColumn(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = innerPadding.calculateTopPadding()),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(if (filter == "http") {
@@ -154,7 +150,7 @@ fun RecipesScreen(
                         })
                 }
 
-                item(span = { GridItemSpan(2) }) {
+                item() {
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
@@ -358,14 +354,12 @@ fun RecipesScreen(
 
                     } else {
 
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(2),
+                        LazyColumn(
                             modifier = Modifier.padding(start=16.dp, end=16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                         ) {
-                            if (httpRecipes.size > 0) {
-                                item(span = { GridItemSpan(2) }) {
+                            if (httpRecipes.isNotEmpty()) {
+                                item {
                                     Text(
                                         text = stringResource(R.string.my_favorites),
                                         style = MaterialTheme.typography.headlineSmall,
@@ -381,8 +375,8 @@ fun RecipesScreen(
                             }
 
                             // My recipes
-                            if (nonHttpRecipes.size > 0) {
-                                item(span = { GridItemSpan(2) }) {
+                            if (nonHttpRecipes.isNotEmpty()) {
+                                item {
                                     Text(
                                         text = stringResource(R.string.my_recipes),
                                         style = MaterialTheme.typography.headlineSmall,
@@ -475,5 +469,6 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
         onRecipeAdded = onRecipeAdded,
         modifier = Modifier
             .shadow(8.dp, shape = MaterialTheme.shapes.medium)
+            .fillMaxWidth()
     )
 }
