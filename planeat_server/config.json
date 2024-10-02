@@ -1,0 +1,4 @@
+{
+    "bind_address": "0.0.0.0:8080",
+    "domain": "planeat.cha-cu.it"
+}
