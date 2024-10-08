@@ -48,6 +48,7 @@ import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
+import com.planeat.planeat.ui.AppModel
 import com.planeat.planeat.ui.components.RecipeListItem
 import dashedBorder
 import kotlinx.coroutines.Dispatchers
@@ -60,6 +61,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun RecipeCalendar(
+    model: AppModel,
     goToDetails: (Recipe) -> Unit,
     goToEdition: (Recipe) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
@@ -71,6 +73,7 @@ fun RecipeCalendar(
     Column(modifier = modifier.fillMaxSize()) {
         dataUi.visibleDates.forEach{ visibleDate ->
             ContentItem(
+                model = model,
                 goToDetails = goToDetails,
                 goToEdition = goToEdition,
                 onRecipeDeleted = { r ->
@@ -95,6 +98,7 @@ data class RecipeAgenda (
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun ContentItem(
+    model: AppModel,
     goToDetails: (Recipe) -> Unit,
     goToEdition: (Recipe) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
@@ -113,6 +117,10 @@ fun ContentItem(
             withContext(Dispatchers.IO) {
                 val rdb = RecipesDb.getDatabase(context)
                 val adb = AgendaDb.getDatabase(context)
+                val d = date.date.atTime(12, 0)
+                    .toInstant(ZoneOffset.UTC)
+                    .toEpochMilli()
+
                 val recipesPlannedDb = adb.agendaDao().findByDate(date.date.atTime(12, 0)
                     .toInstant(ZoneOffset.UTC)
                     .toEpochMilli())
@@ -180,7 +188,7 @@ fun ContentItem(
 
                                     recipesPlannedDb.forEach {
                                         if (recipeId == it.recipeId) {
-                                            adb.agendaDao().delete(it)
+                                            model.unplanify(it)
                                         } else {
                                             val r = rdb.recipeDao().findById(it.recipeId)
                                             newRecipesPlanned += RecipeAgenda(

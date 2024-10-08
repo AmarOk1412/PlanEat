@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -26,13 +27,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -53,6 +54,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -62,11 +64,9 @@ import com.example.compose.primaryLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
-import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
-import com.planeat.planeat.data.toTagIcon
 import com.planeat.planeat.ui.components.RecipeListItem
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import kotlinx.coroutines.CoroutineScope
@@ -147,7 +147,8 @@ fun RecipesScreen(
                         onPlanRecipe = { r ->
                             toPlanRecipe = r
                             openBottomSheet = true
-                        })
+                        },
+                        modifier = Modifier.fillMaxWidth())
                 }
 
                 item() {
@@ -163,19 +164,17 @@ fun RecipesScreen(
             contentWindowInsets = WindowInsets(0.dp),
             floatingActionButton = {
                 FloatingActionButton(onClick = { goToEdition(Recipe()) },
-                    containerColor = primaryLight,
-                    contentColor = onPrimaryLight,
+                    containerColor = Color(0xFF599e39),
+                    contentColor = Color(0xFFFFFFFF),
                     shape = RoundedCornerShape(100.dp),
-                    elevation = FloatingActionButtonDefaults.elevation(0.dp),
-                    modifier = Modifier.padding(vertical = 16.dp)) {
-                    Text(
-                        text = stringResource(R.string.create_a_recipe),
-                        style = MaterialTheme.typography.labelLarge,
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 10.dp)
+                    modifier = Modifier.size(56.dp)) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = stringResource(R.string.create_a_recipe)
                     )
                 }
             },
-            floatingActionButtonPosition = FabPosition.Center,
+            floatingActionButtonPosition = FabPosition.End,
             content = {
                 Column(
                     modifier = Modifier
@@ -230,7 +229,7 @@ fun RecipesScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp, bottom = 20.dp)
+                            .padding(top = 8.dp, bottom = 12.dp)
                             .horizontalScroll(rememberScrollState()),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -255,7 +254,6 @@ fun RecipesScreen(
                                 Row(
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
-                                    toTagIcon(tag = filter)
                                     Text(
                                         text = filter.getString(LocalContext.current),
                                         fontSize = with(LocalDensity.current) {
@@ -263,7 +261,6 @@ fun RecipesScreen(
                                         },
                                         modifier = Modifier
                                             .align(Alignment.CenterVertically)
-                                            .padding(start = 8.dp)
                                     )
                                 }
                             }
@@ -307,7 +304,8 @@ fun RecipesScreen(
                                     RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                         toPlanRecipe = r
                                         openBottomSheet = true
-                                    })
+                                    },
+                                    modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.75f).dp))
                                 }
                             }
                         }
@@ -347,7 +345,8 @@ fun RecipesScreen(
                                     RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                         toPlanRecipe = r
                                         openBottomSheet = true
-                                    })
+                                    },
+                                    modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.75f).dp))
                                 }
                             }
                         }
@@ -371,7 +370,8 @@ fun RecipesScreen(
                                 RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                     toPlanRecipe = r
                                     openBottomSheet = true
-                                })
+                                },
+                                modifier = Modifier.fillMaxWidth())
                             }
 
                             // My recipes
@@ -388,7 +388,8 @@ fun RecipesScreen(
                                 RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                     toPlanRecipe = r
                                     openBottomSheet = true
-                                })
+                                },
+                                modifier = Modifier.fillMaxWidth())
                             }
                         }
                     }
@@ -418,7 +419,8 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
                goToEdition: (Recipe) -> Unit,
                onRecipeDeleted: (Recipe) -> Unit,
                onRecipeAdded: (Recipe) -> Unit,
-               onPlanRecipe: (Recipe) -> Unit) {
+               onPlanRecipe: (Recipe) -> Unit,
+               modifier: Modifier = Modifier) {
     val context = LocalContext.current
     RecipeListItem(
         recipe = recipe,
@@ -444,7 +446,6 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
                     rdb.recipeDao().update(newRecipe)
                     val res2 = rdb.recipeDao().findByUrl(recipe.url)
                     // Then add it to agenda
-                    val adb = AgendaDb.getDatabase(context)
                     Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
                     val dateMidday = model.selectedDate.value!!
                         .atTime(12, 0)
@@ -452,13 +453,10 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
                         .toEpochMilli()
 
                     Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
-                    adb.agendaDao()
-                        .insertAll(
-                            Agenda(
-                                date = dateMidday,
-                                recipeId = id
-                            )
-                        )
+                    model.planify(Agenda(
+                        date = dateMidday,
+                        recipeId = id
+                    ))
                     goToAgenda()
                 }
             }
@@ -467,8 +465,7 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
         onPlanRecipe = onPlanRecipe,
         onRecipeDeleted = onRecipeDeleted,
         onRecipeAdded = onRecipeAdded,
-        modifier = Modifier
+        modifier = modifier
             .shadow(8.dp, shape = MaterialTheme.shapes.medium)
-            .fillMaxWidth()
     )
 }

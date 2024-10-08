@@ -1,5 +1,6 @@
 package com.planeat.planeat.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.Handler
@@ -35,6 +36,9 @@ import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
 import com.planeat.planeat.connectors.Nytimes
 import com.planeat.planeat.connectors.Ricardo
+import com.planeat.planeat.data.Account
+import com.planeat.planeat.data.Agenda
+import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.IngredientItem
 import com.planeat.planeat.data.IngredientsDb
 import com.planeat.planeat.data.ParsedIngredient
@@ -65,12 +69,18 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import org.jsoup.Connection
 import org.jsoup.Jsoup
+import org.json.JSONObject
 import java.io.File
 import java.io.FileWriter
 import java.net.SocketTimeoutException
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 
+@SuppressLint("NewApi")
 class AppModel(private val maxResult: Int, private val db: RecipesDb, private val context: Context) {
     private val connectors: List<Connector>
 
@@ -91,6 +101,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     private val hasConnection = mutableStateOf(true)
     private val checkConnectionJob = mutableStateOf<Job?>(null)
 
+    var account = mutableStateOf<Account?>(null)
 
     fun writeRecipesToFile(recipes: List<Recipe>, fileName: String) {
         try {
@@ -148,6 +159,8 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         val chacuit = ChaCuit(maxResult)
         val nytimes = Nytimes(maxResult)
         connectors = listOf(chacuit, ricardo, marmiton, nytimes)
+        account.value = Account(this.context, onMessage = { message -> this.onMessage(message) })
+        this.account.value!!.loadAccount()
     }
 
     suspend fun gigaDataset() {
@@ -440,6 +453,93 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                     }
                 }
             }
+        }
+    }
+
+    fun planify(agenda: Agenda) {
+
+        val adb = AgendaDb.getDatabase(context)
+        adb.agendaDao().insertAll(agenda)
+
+        val res = db.recipeDao().findById(agenda.recipeId)
+        if (res != null) {
+            val jsonRes = JSONObject()
+            jsonRes.put("date", agenda.date)
+            val jsonString = Json.encodeToString(Recipe.serializer(), res)
+            jsonRes.put("recipe", jsonString)
+            for (key in account.value!!.linkedAccounts) {
+                val message = account.value!!.writeMessage(key, jsonRes.toString())
+                account.value!!.sendMessage(key, message)
+            }
+        }
+    }
+
+    fun unplanify(agenda: Agenda) {
+        val adb = AgendaDb.getDatabase(context)
+        adb.agendaDao().delete(agenda)
+
+        val res = db.recipeDao().findById(agenda.recipeId)
+        if (res != null) {
+            val jsonRes = JSONObject()
+            jsonRes.put("date", agenda.date)
+            val jsonString = Json.encodeToString(Recipe.serializer(), res)
+            jsonRes.put("recipe", jsonString)
+            jsonRes.put("remove", true)
+            for (key in account.value!!.linkedAccounts) {
+                val message = account.value!!.writeMessage(key, jsonRes.toString())
+                account.value!!.sendMessage(key, message)
+            }
+        }
+    }
+
+    private fun onMessage(messageContent: String) {
+        try {
+            // Parse the received message as JSON
+            val jsonObj = JSONObject(messageContent)
+            val date = jsonObj.getLong("date")
+            val remove = jsonObj.optBoolean("remove").or(false)
+
+            val formattedDate = Instant.ofEpochMilli(date)
+                .atZone(ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
+            println("Formatted Date: $formattedDate")
+
+            val recipeJson = jsonObj.getString("recipe")
+
+            // Deserialize the recipe JSON string to Recipe object
+            val recipe = Json.decodeFromString(Recipe.serializer(), recipeJson)
+
+            // Check if the recipe already exists in the database
+            val existingRecipe = db.recipeDao().findByUrl(recipe.url)
+
+            val recipeId = if (existingRecipe != null) {
+                // Recipe exists, use the existing id
+                existingRecipe.recipeId
+            } else {
+                val r = recipe.copy()
+                r.recipeId = 0
+                // Recipe does not exist, insert the new recipe and get the new id
+                db.recipeDao().insertAll(r)
+                val newRecipe = db.recipeDao().findByUrl(r.url)
+                newRecipe.recipeId // Retrieve the inserted recipe's ID (assume ID is auto-assigned)
+            }
+
+            // Create and insert a new agenda entry
+            val newAgenda = Agenda(date, recipeId)
+            val agendaDb = AgendaDb.getDatabase(context)
+            if (remove) {
+                val res = agendaDb.agendaDao().findByDate(date)
+                for (a in res) {
+                    agendaDb.agendaDao().delete(a)
+                }
+                Log.i("PlanEat", "Recipe removed from agenda with ID: $recipeId")
+            } else {
+                agendaDb.agendaDao().insertAll(newAgenda)
+                Log.i("PlanEat", "Recipe added to agenda with ID: $recipeId")
+            }
+        } catch (e: Exception) {
+            Log.e("PlanEat", "Error processing message: ${e.message}")
         }
     }
 
@@ -764,7 +864,7 @@ private fun NavHost(
         startDestination = PlanEatRoute.AGENDA,
     ) {
         composable(PlanEatRoute.AGENDA) {
-            AgendaScreen(dataSource = dataSource, dataUi = dataUi,
+            AgendaScreen(model = model, dataSource = dataSource, dataUi = dataUi,
                 updateDate = { newUi: CalendarUiModel, changePage: Boolean ->
                     dataUi = newUi
                     if (changePage) {
@@ -798,7 +898,7 @@ private fun NavHost(
                 onRecipeDeleted = onRecipeDeleted)
         }
         composable(PlanEatRoute.ACCOUNT) {
-            AccountScreen()
+            AccountScreen(account=model.account.value!!)
         }
         composable(PlanEatRoute.SEARCH) {
             DiscoverScreen(

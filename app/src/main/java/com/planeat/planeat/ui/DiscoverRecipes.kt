@@ -43,8 +43,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -57,7 +55,6 @@ import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.Tags
-import com.planeat.planeat.data.toTagIcon
 import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -169,12 +166,11 @@ fun DiscoverScreen(
                         ),
                         contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = if (currentTag == filter) primaryLight else surfaceContainerLowestLight, contentColor = if (currentTag == filter) onPrimaryLight else Color.Black),
-                        modifier = Modifier.padding(end = 8.dp, bottom = 20.dp)
+                        modifier = Modifier.padding(end = 8.dp, bottom = 12.dp)
                     ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                toTagIcon(tag = filter)
                                 Text(
                                     text = filter.getString(LocalContext.current),
                                     fontSize = with(LocalDensity.current) {
@@ -182,7 +178,6 @@ fun DiscoverScreen(
                                     },
                                     modifier = Modifier
                                         .align(Alignment.CenterVertically)
-                                        .padding(start = 8.dp)
                                 )
                             }
                     }

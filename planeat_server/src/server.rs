@@ -49,6 +49,7 @@ pub struct InboxRequest {
 #[derive(Debug, Deserialize)]
 pub struct OutboxRequest {
     pub to: String,      // Key recipient
+    pub from: String,      // Key from sender
     pub message: String, // Message content
 }
 
@@ -268,7 +269,7 @@ impl Server {
         log::info!("SHA_KEY: {}", sha_key);
 
         // Step 4: Prepare the JSON payload for the outbox action
-        let json_payload = json!({ "action": "sync", "message": info.message });
+        let json_payload = json!({ "action": "sync", "message": info.message, "from": info.from });
 
         // Step 4: Construct the database path and check if the directory exists
         let db_path = format!("data/{}/sync.db", sha_key);
@@ -362,7 +363,7 @@ impl Server {
     fn insert_into_db(db_path: &str, action: &str) -> SqlResult<()> {
         let conn = Connection::open(db_path)?;
         conn.execute(
-            "CREATE TABLE IF NOT EXISTS sync (id INTEGER PRIMARY KEY, action TEXT NOT NULL)",
+            "CREATE TABLE IF NOT EXISTS sync (id INTEGER PRIMARY KEY AUTOINCREMENT, action TEXT NOT NULL)",
             params![],
         )?;
 
@@ -393,7 +394,7 @@ impl Server {
     // Helper function to delete messages with ID less than or equal to `latest_sync`
     fn delete_old_messages(db_path: &str, latest_sync: i64) -> SqlResult<()> {
         let conn = Connection::open(db_path)?;
-        conn.execute("DELETE FROM sync WHERE id <= ?1", params![latest_sync])?;
+        conn.execute("DELETE FROM sync WHERE id < ?1", params![latest_sync])?;
         log::info!("Old messages deleted from {}", db_path);
         Ok(())
     }

@@ -32,6 +32,7 @@ import com.planeat.planeat.ui.components.calendar.RecipeCalendar
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AgendaScreen(
+    model: AppModel,
     modifier: Modifier = Modifier,
     onRecipeDeleted: (Recipe) -> Unit,
     dataSource: CalendarDataSource,
@@ -74,6 +75,7 @@ fun AgendaScreen(
                 )
 
                 RecipeCalendar(
+                    model,
                     goToDetails,
                     goToEdition,
                     onRecipeDeleted = onRecipeDeleted,

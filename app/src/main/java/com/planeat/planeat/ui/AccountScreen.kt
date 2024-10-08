@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -40,20 +39,20 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import com.lightspark.composeqr.QrCodeView
 import com.planeat.planeat.data.Account
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPermissionsApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AccountScreen(
     modifier: Modifier = Modifier,
+    account: Account,
 ) {
-    val account = Account(LocalContext.current)
-    account.loadAccount()
     val pk = account.exportPublicKey()
 
-
     val cameraPermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
-
 
     // Display the QR code image
     Column(
@@ -70,7 +69,11 @@ fun AccountScreen(
         )
 
         if (cameraPermissionState.status.isGranted) {
-            CameraScreen()
+            CameraScreen(onKey = { key ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    account.link(key)
+                }
+            })
         } else if (cameraPermissionState.status.shouldShowRationale) {
             Text("Camera Permission permanently denied")
         } else {
@@ -79,11 +82,15 @@ fun AccountScreen(
             }
             Text("No Camera Permission")
         }
+
+        account.linkedAccounts.forEach {
+            Text(it.substring(12))
+        }
     }
 }
 
 @Composable
-fun CameraScreen() {
+fun CameraScreen(onKey: (String) -> Unit) {
     val localContext = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember {
@@ -104,7 +111,7 @@ fun CameraScreen() {
             val imageAnalysis = ImageAnalysis.Builder().build()
             imageAnalysis.setAnalyzer(
                 ContextCompat.getMainExecutor(context),
-                BarcodeAnalyzer(context)
+                BarcodeAnalyzer(context, onKey)
             )
 
             runCatching {
@@ -122,13 +129,15 @@ fun CameraScreen() {
     )
 }
 
-class BarcodeAnalyzer(private val context: Context) : ImageAnalysis.Analyzer {
+class BarcodeAnalyzer(private val context: Context, val onKey: (String) -> Unit) : ImageAnalysis.Analyzer {
 
     private val options = BarcodeScannerOptions.Builder()
         .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
         .build()
 
     private val scanner = BarcodeScanning.getClient(options)
+
+    var currentVal = ""
 
     @SuppressLint("UnsafeOptInUsageError")
     override fun analyze(imageProxy: ImageProxy) {
@@ -141,7 +150,10 @@ class BarcodeAnalyzer(private val context: Context) : ImageAnalysis.Analyzer {
                 barcode?.takeIf { it.isNotEmpty() }
                     ?.mapNotNull { it.rawValue }
                     ?.joinToString(",")
-                    ?.let { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() }
+                    ?.let { if (it != currentVal) {
+                        currentVal = it
+                        onKey(it)
+                    } }
             }.addOnCompleteListener {
                 imageProxy.close()
             }
