@@ -65,4 +65,7 @@ data class Recipe(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var recipeId: Long = 0
+
+    @ColumnInfo(name = "edited") var edited: Boolean = false
+    @ColumnInfo(name = "favorite") var favorite: Boolean = false
 }

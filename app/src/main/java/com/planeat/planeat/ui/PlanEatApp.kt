@@ -747,7 +747,11 @@ fun PlanEatApp(
         onRecipeUpdated = {recipe -> scope.launch {
             model.update(recipe, true)
         } },
-        onRecipeAdded = {recipe -> scope.launch { model.add(recipe) } },
+        onRecipeAdded = {recipe -> scope.launch {
+            val r = recipe.copy()
+            r.favorite = true
+            model.add(r)
+        } },
         navigationType = navigationType,
     )
 }

@@ -99,8 +99,8 @@ fun RecipesScreen(
     var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
 
 
-    val httpRecipes = model.recipesInDbShown.filter { it.url.startsWith("http") }
-    val nonHttpRecipes = model.recipesInDbShown.filter { !it.url.startsWith("http") }
+    val favoritesRecipes = model.recipesInDbShown.filter { it.favorite }
+    val editedRecipes = model.recipesInDbShown.filter { it.edited }
 
     if (filter.isNotEmpty()) {
         BackHandler {
@@ -109,7 +109,7 @@ fun RecipesScreen(
 
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text(text = if (filter == "http") {
+                TopAppBar(title = { Text(text = if (filter == "favorites") {
                             "Favorites"
                         } else {
                             "My recipes"
@@ -131,10 +131,10 @@ fun RecipesScreen(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = innerPadding.calculateTopPadding()),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                items(if (filter == "http") {
-                    httpRecipes
+                items(if (filter == "favorites") {
+                    favoritesRecipes
                 } else {
-                    nonHttpRecipes
+                    editedRecipes
                 }, key = { recipe -> recipe.url }) { recipe ->
                     RecipeItem(
                         recipe,
@@ -268,7 +268,7 @@ fun RecipesScreen(
                     }
 
                     if (text.isEmpty()) {
-                        if (httpRecipes.isNotEmpty()) {
+                        if (favoritesRecipes.isNotEmpty()) {
 
                             Row(
                                 modifier = Modifier
@@ -283,9 +283,9 @@ fun RecipesScreen(
 
                                 Spacer(modifier = Modifier.weight(1.0f))
 
-                                if (httpRecipes.size > 2) {
+                                if (favoritesRecipes.size > 2) {
                                     TextButton(onClick = {
-                                        filter = "http"
+                                        filter = "favorites"
                                     },
                                         modifier = Modifier.align(Alignment.CenterVertically)) {
                                         Text(stringResource(R.string.see_more), style = MaterialTheme.typography.labelLarge)
@@ -300,7 +300,7 @@ fun RecipesScreen(
                                     .horizontalScroll(rememberScrollState())
                                     .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                             ) {
-                                httpRecipes.take(5).forEach { recipe ->
+                                favoritesRecipes.take(5).forEach { recipe ->
                                     RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                         toPlanRecipe = r
                                         openBottomSheet = true
@@ -310,7 +310,7 @@ fun RecipesScreen(
                             }
                         }
 
-                        if (nonHttpRecipes.isNotEmpty()) {
+                        if (editedRecipes.isNotEmpty()) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -324,9 +324,9 @@ fun RecipesScreen(
 
                                 Spacer(modifier = Modifier.weight(1.0f))
 
-                                if (nonHttpRecipes.size > 2) {
+                                if (editedRecipes.size > 2) {
                                     TextButton(onClick = {
-                                        filter = "nonHttp"
+                                        filter = "edited"
                                     },
                                         modifier = Modifier.align(Alignment.CenterVertically)) {
                                         Text(stringResource(R.string.see_more), style = MaterialTheme.typography.labelLarge)
@@ -341,7 +341,7 @@ fun RecipesScreen(
                                     .horizontalScroll(rememberScrollState())
                                     .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                             ) {
-                                nonHttpRecipes.take(5).forEach { recipe ->
+                                editedRecipes.take(5).forEach { recipe ->
                                     RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                         toPlanRecipe = r
                                         openBottomSheet = true
@@ -357,7 +357,7 @@ fun RecipesScreen(
                             modifier = Modifier.padding(start=16.dp, end=16.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                         ) {
-                            if (httpRecipes.isNotEmpty()) {
+                            if (favoritesRecipes.isNotEmpty()) {
                                 item {
                                     Text(
                                         text = stringResource(R.string.my_favorites),
@@ -366,7 +366,7 @@ fun RecipesScreen(
                                     )
                                 }
                             }
-                            items(httpRecipes, key = { recipe -> recipe.url }) { recipe ->
+                            items(favoritesRecipes, key = { recipe -> recipe.url }) { recipe ->
                                 RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                     toPlanRecipe = r
                                     openBottomSheet = true
@@ -375,7 +375,7 @@ fun RecipesScreen(
                             }
 
                             // My recipes
-                            if (nonHttpRecipes.isNotEmpty()) {
+                            if (editedRecipes.isNotEmpty()) {
                                 item {
                                     Text(
                                         text = stringResource(R.string.my_recipes),
@@ -384,7 +384,7 @@ fun RecipesScreen(
                                     )
                                 }
                             }
-                            items(nonHttpRecipes, key = { recipe -> recipe.url }) { recipe ->
+                            items(editedRecipes, key = { recipe -> recipe.url }) { recipe ->
                                 RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
                                     toPlanRecipe = r
                                     openBottomSheet = true

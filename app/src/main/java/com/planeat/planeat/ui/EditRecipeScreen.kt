@@ -276,6 +276,7 @@ fun EditRecipeScreen(
             onClick = {
                 Log.d("PlanEat", "Save recipe: $recipe.title")
                 recipe.title = title
+                recipe.edited = true
                 recipe.kindOfMeal = kindOfMeal
                 recipe.season = season
                 recipe.cookingTime = cookingTime

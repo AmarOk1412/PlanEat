@@ -150,7 +150,7 @@ fun RecipeListItem(
                         .padding(8.dp)
                 ) {
 
-                    if (!recipe.url.startsWith("http")) {
+                    if (recipe.edited) {
                         SuggestionChip(
                             label = { Text(
                                 text = stringResource(R.string.my_recipe),

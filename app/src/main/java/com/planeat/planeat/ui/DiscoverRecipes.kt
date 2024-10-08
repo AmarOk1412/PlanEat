@@ -226,7 +226,7 @@ fun DiscoverScreen(
                     if (model.recipesSearchedShown.size > 0 && model.recipesInDbShown.size > 0) {
                         item {
                             Text(
-                                text = stringResource(R.string.my_favorites),
+                                text = stringResource(R.string.my_recipes),
                                 style = MaterialTheme.typography.headlineSmall,
                                 modifier = Modifier.padding(top = 20.dp)
                             )
