@@ -28,12 +28,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,6 +45,7 @@ import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -52,16 +55,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.compose.onPrimaryLight
-import com.example.compose.primaryLight
+import com.example.compose.onPrimaryContainerLight
+import com.example.compose.primaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
+import com.example.compose.surfaceLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.Recipe
@@ -100,7 +105,7 @@ fun RecipesScreen(
 
 
     val favoritesRecipes = model.recipesInDbShown.filter { it.favorite }
-    val editedRecipes = model.recipesInDbShown.filter { it.edited }
+    val editedRecipes = model.recipesInDbShown.filter { !it.url.startsWith("http") || it.edited }
 
     if (filter.isNotEmpty()) {
         BackHandler {
@@ -123,7 +128,8 @@ fun RecipesScreen(
                                 contentDescription = "Go back"
                             )
                         }
-                    }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = surfaceContainerLowestLight)
                 )
             }
         ) { innerPadding ->
@@ -149,6 +155,8 @@ fun RecipesScreen(
                             openBottomSheet = true
                         },
                         modifier = Modifier.fillMaxWidth())
+
+                    HorizontalDivider(color = surfaceLight)
                 }
 
                 item() {
@@ -164,10 +172,10 @@ fun RecipesScreen(
             contentWindowInsets = WindowInsets(0.dp),
             floatingActionButton = {
                 FloatingActionButton(onClick = { goToEdition(Recipe()) },
-                    containerColor = Color(0xFF599e39),
-                    contentColor = Color(0xFFFFFFFF),
+                    containerColor = primaryContainerLight,
+                    contentColor = onPrimaryContainerLight,
                     shape = RoundedCornerShape(100.dp),
-                    modifier = Modifier.size(56.dp)) {
+                    modifier = Modifier.padding(end = 16.dp).size(56.dp)) {
                     Icon(
                         imageVector = Icons.Filled.Add,
                         contentDescription = stringResource(R.string.create_a_recipe)
@@ -195,12 +203,15 @@ fun RecipesScreen(
                         onQueryChanged.invoke(text, true)
                     }
 
+                    val focusRequester = remember { FocusRequester() }
+
                     SearchBar(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .focusRequester(focusRequester)
                             .padding(horizontal = 16.dp),
                         colors = SearchBarDefaults.colors(
-                            containerColor = surfaceContainerLowestLight,
+                            containerColor = surfaceLight,
                         ),
                         expanded = false,
                         onExpandedChange = { },
@@ -221,7 +232,11 @@ fun RecipesScreen(
                                 onExpandedChange = { expanded = it },
                                 onSearch = { expanded = false },
                                 placeholder = { Text(stringResource(id = R.string.search_placeholder), style = MaterialTheme.typography.bodyLarge) },
-                                trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
+                                trailingIcon = {
+                                    IconButton(onClick = { if (expanded) text = "" else focusRequester.requestFocus() }) {
+                                        Icon(if (expanded) Icons.Filled.Close else Icons.Default.Search, contentDescription = null)
+                                    }
+                                }
                             )
                         }
                     ) {}
@@ -248,7 +263,7 @@ fun RecipesScreen(
                                     defaultElevation = 6.dp
                                 ),
                                 contentPadding = PaddingValues(horizontal=16.dp, vertical=10.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = if (currentTag == filter) primaryLight else surfaceContainerLowestLight, contentColor = if (currentTag == filter) onPrimaryLight else Color.Black),
+                                colors = ButtonDefaults.buttonColors(containerColor = if (currentTag == filter) primaryContainerLight else surfaceContainerLowestLight, contentColor = if (currentTag == filter) onPrimaryContainerLight else Color.Black),
                                 modifier = Modifier.padding(end = 8.dp)
                             ) {
                                 Row(
@@ -317,7 +332,7 @@ fun RecipesScreen(
                                     .padding(horizontal = 16.dp, vertical = 12.dp)
                             ) {
                                 Text(
-                                    text = stringResource(R.string.my_recipes),
+                                    text = stringResource(R.string.my_creations),
                                     style = MaterialTheme.typography.headlineSmall,
                                     modifier = Modifier.align(Alignment.CenterVertically)
                                 )
@@ -372,13 +387,15 @@ fun RecipesScreen(
                                     openBottomSheet = true
                                 },
                                 modifier = Modifier.fillMaxWidth())
+
+                                HorizontalDivider(color = surfaceLight)
                             }
 
                             // My recipes
                             if (editedRecipes.isNotEmpty()) {
                                 item {
                                     Text(
-                                        text = stringResource(R.string.my_recipes),
+                                        text = stringResource(R.string.my_creations),
                                         style = MaterialTheme.typography.headlineSmall,
                                         modifier = Modifier.padding(vertical = 16.dp)
                                     )
@@ -390,6 +407,8 @@ fun RecipesScreen(
                                     openBottomSheet = true
                                 },
                                 modifier = Modifier.fillMaxWidth())
+
+                                HorizontalDivider(color = surfaceLight)
                             }
                         }
                     }
@@ -402,7 +421,6 @@ fun RecipesScreen(
     if (openBottomSheet) {
         BottomPlanifier(
             onDismissRequest = { openBottomSheet = false },
-            dataUi = dataUi,
             toPlanRecipe = toPlanRecipe!!,
             goToAgenda = {
                 openBottomSheet = false
@@ -466,6 +484,5 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
         onRecipeDeleted = onRecipeDeleted,
         onRecipeAdded = onRecipeAdded,
         modifier = modifier
-            .shadow(8.dp, shape = MaterialTheme.shapes.medium)
     )
 }

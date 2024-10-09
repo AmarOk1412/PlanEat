@@ -10,6 +10,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,10 +21,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -55,16 +55,17 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.compose.onBackgroundLight
+import com.example.compose.onSecondaryContainerLight
 import com.example.compose.onSurfaceVariantLight
+import com.example.compose.secondaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -86,286 +87,249 @@ fun RecipeListItem(
 ) {
     val context = LocalContext.current
     val existId = remember { mutableLongStateOf(0.toLong()) }
-    val outlinedFav = ImageVector.vectorResource(R.drawable.favorite)
-    val icon = remember { mutableStateOf(outlinedFav) }
 
     val showDialog = remember { mutableStateOf(false) }
     var showDeleteDialog = remember { mutableStateOf(false) }
 
-    Card(
+    Column(
         modifier = modifier
-            .clip(CardDefaults.shape)
             .combinedClickable(
                 onClick = { onRecipeSelected(recipe) },
                 onLongClick = { }
             )
             .clip(CardDefaults.shape),
-        colors = CardDefaults.cardColors(
-            containerColor = surfaceContainerLowestLight,
-        ),
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            LaunchedEffect(Unit) {
-                withContext(Dispatchers.IO) {
-                    try {
-                        val rdb = RecipesDb.getDatabase(context)
-                        val res = rdb.recipeDao().findByUrl(recipe.url)
-                        if (res != null) {
-                            existId.longValue = res.recipeId
-                        }
-                        icon.value = if (existId.longValue == 0.toLong()) {
-                            outlinedFav
-                        } else {
-                            Icons.Default.MoreVert
-                        }
-                    } catch (error: Exception) {
-                        Log.w("PlanEat", "Error: $error")
+        LaunchedEffect(Unit) {
+            withContext(Dispatchers.IO) {
+                try {
+                    val rdb = RecipesDb.getDatabase(context)
+                    val res = rdb.recipeDao().findByUrl(recipe.url)
+                    if (res != null) {
+                        existId.longValue = res.recipeId
                     }
+                } catch (error: Exception) {
+                    Log.w("PlanEat", "Error: $error")
                 }
             }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(CardDefaults.shape)
+                .height((LocalConfiguration.current.screenHeightDp * 0.165f).dp)
+        ) {
+            AsyncImage(
+                model = if (recipe.image.startsWith("http")) {
+                    recipe.image
+                } else {
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(recipe.image)
+                        .build()
+                },
+                contentDescription = recipe.title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+            )
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height((LocalConfiguration.current.screenHeightDp * 0.165f).dp)
+                    .fillMaxSize()
+                    .padding(8.dp)
             ) {
-                AsyncImage(
-                    model = if (recipe.image.startsWith("http")) {
-                        recipe.image
-                    } else {
-                        ImageRequest.Builder(LocalContext.current)
-                            .data(recipe.image)
-                            .build()
-                    },
-                    contentDescription = recipe.title,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                )
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp)
-                ) {
-
-                    if (recipe.edited) {
-                        SuggestionChip(
-                            label = { Text(
-                                text = stringResource(R.string.my_recipe),
-                                maxLines = 1,
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier.height(18.dp),
-                            ) },
-                            onClick = {},
-                            border = null,
-                            colors = SuggestionChipDefaults.suggestionChipColors(
-                                containerColor = Color(0xCCFFFFFF),
-                                labelColor = onSurfaceVariantLight
-                            ),
-                            modifier = Modifier
-                                .align(Alignment.TopStart)
-                                .height(24.dp),
-                        )
-                    }
-
-                    IconButton(
-                        onClick = {
-                            CoroutineScope(Dispatchers.IO).launch {
-                            try {
-                                if (recipe.recipeId == 0.toLong()) {
-                                    val rdb = RecipesDb.getDatabase(context)
-                                    if (existId.longValue == 0.toLong()) {
-                                        onRecipeAdded(recipe)
-                                        val res = rdb.recipeDao().findByUrl(recipe.url)
-                                        existId.longValue = res.recipeId
-                                        icon.value = Icons.Filled.Favorite
-                                    } else {
-                                        Log.w("PlanEat", "Delete recipe: ${recipe.title}")
-                                        val r = recipe
-                                        r.recipeId = existId.longValue
-                                        rdb.recipeDao().delete(r)
-                                        existId.longValue = 0
-                                        icon.value = outlinedFav
-                                    }
-                                } else {
-                                    showDialog.value = true
-                                }
-                            } catch (error: Exception) {
-                                Log.d("PlanEat", "Error: $error")
-                            }
-                        } },
+                if (recipe.edited) {
+                    SuggestionChip(
+                        label = { Text(
+                            text = if (recipe.url.startsWith("http")) stringResource(R.string.edited) else stringResource(R.string.my_recipe),
+                            maxLines = 1,
+                            style = MaterialTheme.typography.bodySmall,
+                        ) },
+                        onClick = {},
+                        border = null,
+                        colors = SuggestionChipDefaults.suggestionChipColors(
+                            containerColor = Color(0xCCFFFFFF),
+                            labelColor = onSurfaceVariantLight
+                        ),
                         modifier = Modifier
-                            .clip(CircleShape)
-                            .background(surfaceContainerLowestLight)
-                            .align(Alignment.TopEnd)
-                            .size(26.dp)
-                            .testTag("favorite_button")
-                    ) {
-                        Icon(
-                            imageVector = icon.value,
-                            modifier = Modifier.size(18.dp),
-                            contentDescription = stringResource(R.string.favorite),
-                        )
-
-                        if (showDialog.value) {
-                            DropdownMenu(
-                                containerColor = surfaceContainerLowestLight,
-                                offset = DpOffset(0.dp, 8.dp),
-                                expanded = showDialog.value,
-                                onDismissRequest = { showDialog.value = false },
-                            ) {
-                                DropdownMenuItem(
-                                    leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.today), contentDescription = null) },
-                                    text = {
-                                        Text(text = if (agenda != null) stringResource(R.string.remove_from_agenda) else stringResource(
-                                            R.string.add_to_agenda
-                                        ),
-                                            style = MaterialTheme.typography.bodyMedium
-                                        )
-                                    },
-                                    onClick = {
-                                        showDialog.value = false
-                                        if (agenda != null) {
-                                            onRemoveFromAgenda(recipe.recipeId)
-                                        } else {
-                                            if (recipe.recipeId == 0.toLong()) {
-                                                val rdb = RecipesDb.getDatabase(context)
-                                                if (existId.longValue == 0.toLong()) {
-                                                    // If a search result, add it to recipes first
-                                                    Log.d("PlanEat", "Add recipe: ${recipe.title}")
-                                                    onRecipeAdded(recipe)
-                                                    val res = rdb.recipeDao().findByUrl(recipe.url)
-                                                    onPlanRecipe(res)
-                                                }
-                                            } else {
-                                                onPlanRecipe(recipe)
-                                            }
-                                        }
-                                    }
-                                )
-                                DropdownMenuItem(
-                                    leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.edit), contentDescription = null) },
-                                    text = {
-                                        Text(text = stringResource(R.string.edit), style = MaterialTheme.typography.bodyMedium)
-                                    },
-                                    onClick = {
-                                        showDialog.value = false
-                                        onEditRecipe(recipe)
-                                    }
-                                )
-                                HorizontalDivider()
-                                DropdownMenuItem(
-                                    leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.delete), contentDescription = null, tint = Color.Red) },
-                                    text = {
-                                        Text(text = stringResource(R.string.delete), color = Color.Red, style = MaterialTheme.typography.bodyMedium)
-                                    },
-                                    onClick = {
-                                        showDialog.value = false
-                                        showDeleteDialog.value = true
-                                    }
-                                )
-                            }
-                        }
-
-                        if (showDeleteDialog.value) {
-                            AlertDialog(
-                                icon = {
-                                    Icon(Icons.Filled.Delete, contentDescription = null)
-                                },
-                                title = {
-                                    Text(text = stringResource(R.string.confirm_deletion))
-                                },
-                                text = {
-                                    Text(text = stringResource(R.string.remove_from_agenda_confirmation))
-                                },
-                                onDismissRequest = {
-                                    showDeleteDialog.value = false
-                                },
-                                confirmButton = {
-                                    TextButton(
-                                        onClick = {
-                                            showDeleteDialog.value = false
-                                            onRecipeDeleted(recipe)
-                                        }
-                                    ) {
-                                        Text(stringResource(R.string.confirm))
-                                    }
-                                },
-                                dismissButton = {
-                                    TextButton(
-                                        onClick = {
-                                            showDeleteDialog.value = false
-                                        }
-                                    ) {
-                                        Text(stringResource(R.string.dismiss))
-                                    }
-                                }
-                            )
-
-                        }
-                    }
+                            .align(Alignment.TopStart)
+                            .height(24.dp),
+                    )
                 }
             }
-            Text(
-                text = recipe.title,
-                style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.padding(start = 8.dp, top = 12.dp, end = 8.dp, bottom = 0.dp)
-                                   .testTag("recipe_title"),
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1
-            )
+        }
 
-            val tagStr = if (recipe.tags.isNotEmpty()) {
-                val t = Tags.fromString(recipe.tags.first())
-                if (t != null) {
-                    " · " + t.getString(context)
+        Row {
+            Column() {
+                Text(
+                    text = recipe.title,
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(start = 8.dp, top = 12.dp, end = 8.dp, bottom = 0.dp)
+                        .testTag("recipe_title"),
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
+                )
+
+                val tagStr = if (recipe.tags.isNotEmpty()) {
+                    val t = Tags.fromString(recipe.tags.first())
+                    if (t != null) {
+                        " · " + t.getString(context)
+                    } else {
+                        ""
+                    }
                 } else {
                     ""
                 }
-            } else {
-                ""
+                val middleLabel = convertDuration(recipe.cookingTime) + tagStr
+
+                Text(
+                    text = middleLabel,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(start=8.dp, top = 4.dp, bottom = 0.dp).testTag("recipe_label"),
+                )
             }
-            val middleLabel = convertDuration(recipe.cookingTime) + tagStr
 
-            Text(
-                text = middleLabel,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(start=8.dp, top = 4.dp, bottom = 0.dp).testTag("recipe_label"),
-            )
+            Spacer(modifier = Modifier.weight(1f))
 
-            SuggestionChip(
-                label = {
-                    Text(
-                        text = LocalContext.current.resources.getQuantityString(
-                            R.plurals._1_ingredients,
-                            recipe.parsed_ingredients.size,
-                            recipe.parsed_ingredients.size
-                        ),
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.height(18.dp)
-                    )
-                },
-                shape = RoundedCornerShape(100.dp),
-                onClick = {},
-                border = null,
-                colors = SuggestionChipDefaults.suggestionChipColors(
-                    containerColor = Color(0xFFfff4df),
-                    labelColor = Color(0xFF664a02)
-                ),
-                /* TODO SuggestionChipDefaults.suggestionChipColors(
-                    containerColor = secondaryContainerLight,
-                    labelColor = onSecondaryContainerLight
-                )*/
+            IconButton(
+                onClick = { showDialog.value = true },
                 modifier = Modifier
-                    .padding(horizontal = 8.dp, vertical = 12.dp)
-                    .height(22.dp),
-            )
+                    .clip(CircleShape)
+                    .align(Alignment.CenterVertically)
+                    .background(surfaceContainerLowestLight)
+                    .size(40.dp)
+                    .testTag("favorite_button")
+            ) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = stringResource(R.string.favorite),
+                )
 
+                if (showDialog.value) {
+                    DropdownMenu(
+                        containerColor = surfaceContainerLowestLight,
+                        offset = DpOffset(0.dp, 8.dp),
+                        expanded = showDialog.value,
+                        onDismissRequest = { showDialog.value = false },
+                    ) {
+                        DropdownMenuItem(
+                            leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.today), contentDescription = null, tint = onBackgroundLight) },
+                            text = {
+                                Text(text = if (agenda != null) stringResource(R.string.remove_from_agenda) else stringResource(
+                                    R.string.add_to_agenda
+                                ),
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            },
+                            onClick = {
+                                showDialog.value = false
+                                if (agenda != null) {
+                                    onRemoveFromAgenda(recipe.recipeId)
+                                } else {
+                                    if (recipe.recipeId == 0.toLong()) {
+                                        val rdb = RecipesDb.getDatabase(context)
+                                        if (existId.longValue == 0.toLong()) {
+                                            // If a search result, add it to recipes first
+                                            Log.d("PlanEat", "Add recipe: ${recipe.title}")
+                                            onRecipeAdded(recipe)
+                                            val res = rdb.recipeDao().findByUrl(recipe.url)
+                                            onPlanRecipe(res)
+                                        }
+                                    } else {
+                                        onPlanRecipe(recipe)
+                                    }
+                                }
+                            }
+                        )
+                        DropdownMenuItem(
+                            leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.edit), contentDescription = null, tint = onBackgroundLight) },
+                            text = {
+                                Text(text = stringResource(R.string.edit), style = MaterialTheme.typography.bodyMedium)
+                            },
+                            onClick = {
+                                showDialog.value = false
+                                onEditRecipe(recipe)
+                            }
+                        )
+                        if (agenda == null && recipe.recipeId != 0.toLong()) {
+                            HorizontalDivider()
+                            DropdownMenuItem(
+                                leadingIcon = { Icon(imageVector = ImageVector.vectorResource(R.drawable.delete), contentDescription = null, tint = Color.Red) },
+                                text = {
+                                    Text(text = stringResource(R.string.delete), color = Color.Red, style = MaterialTheme.typography.bodyMedium)
+                                },
+                                onClick = {
+                                    showDialog.value = false
+                                    showDeleteDialog.value = true
+                                }
+                            )
+                        }
+                    }
+                }
+
+                if (showDeleteDialog.value) {
+                    AlertDialog(
+                        icon = {
+                            Icon(Icons.Filled.Delete, contentDescription = null)
+                        },
+                        title = {
+                            Text(text = stringResource(R.string.confirm_deletion))
+                        },
+                        text = {
+                            Text(text = stringResource(R.string.remove_from_agenda_confirmation))
+                        },
+                        onDismissRequest = {
+                            showDeleteDialog.value = false
+                        },
+                        confirmButton = {
+                            TextButton(
+                                onClick = {
+                                    showDeleteDialog.value = false
+                                    onRecipeDeleted(recipe)
+                                }
+                            ) {
+                                Text(stringResource(R.string.confirm))
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(
+                                onClick = {
+                                    showDeleteDialog.value = false
+                                }
+                            ) {
+                                Text(stringResource(R.string.dismiss))
+                            }
+                        }
+                    )
+
+                }
+            }
         }
+
+        SuggestionChip(
+            label = {
+                Text(
+                    text = LocalContext.current.resources.getQuantityString(
+                        R.plurals._1_ingredients,
+                        recipe.parsed_ingredients.size,
+                        recipe.parsed_ingredients.size
+                    ),
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.bodySmall.copy(color = onSecondaryContainerLight),
+                )
+            },
+            shape = RoundedCornerShape(100.dp),
+            onClick = {},
+            border = null,
+            colors = SuggestionChipDefaults.suggestionChipColors(
+                containerColor = secondaryContainerLight,
+                labelColor = onSecondaryContainerLight
+            ),
+            modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 8.dp).height(22.dp)
+        )
+
     }
  }
 

@@ -104,4 +104,6 @@
     <string name="shopping_list_placeholder">Ajoute manuellement tes ingrédients ou planifie une recette pour les ajouter à ta liste de course</string>
     <string name="planify_a_recipe">Planifier une recette</string>
     <string name="create_a_recipe">Créer une nouvelle recette</string>
+    <string name="edited">Édité</string>
+    <string name="my_creations">Mes créations</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,9 +19,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,15 +39,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import com.example.compose.surfaceContainerLowestLight
+import com.example.compose.onPrimaryContainerLight
+import com.example.compose.outlineVariantLight
+import com.example.compose.primaryContainerLight
+import com.example.compose.surfaceVariantLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
@@ -142,16 +146,15 @@ fun ContentItem(
                 DateTimeFormatter.ofPattern("EEEE dd MMMM")
             ),
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(bottom = 12.dp)
+            modifier = Modifier.padding(bottom = 12.dp, start = 16.dp)
         )
 
         val scope = rememberCoroutineScope()
         if (recipesPlanned.value.isEmpty()) {
             AddRecipeCard(
                 modifier = Modifier
-                    .padding(8.dp)
-                    .shadow(8.dp, shape = MaterialTheme.shapes.medium)
                     .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
                     .height(64.dp),
                 date = date,
                 dataUi = dataUi,
@@ -161,8 +164,11 @@ fun ContentItem(
         } else {
             Row(
                 modifier = Modifier
-                    .horizontalScroll(rememberScrollState())
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+
+                Spacer(modifier = Modifier.width(8.dp))
 
                 recipesPlanned.value.forEach { recipeAgenda ->
                     val recipe = recipeAgenda.recipe
@@ -205,18 +211,15 @@ fun ContentItem(
                         },
                         agenda = recipeAgenda.agenda,
                         modifier = Modifier
-                            .padding(8.dp)
-                            .shadow(8.dp, shape = MaterialTheme.shapes.medium)
-                            .width((LocalConfiguration.current.screenWidthDp * 0.75f).dp)
+                            .width((LocalConfiguration.current.screenWidthDp * 0.70f).dp)
                     )
                 }
 
                 AddRecipeCard(
                     modifier = Modifier
-                        .padding(8.dp)
-                        .shadow(8.dp, shape = MaterialTheme.shapes.medium)
                         .width((LocalConfiguration.current.screenWidthDp * 0.25f).dp)
-                        .height((LocalConfiguration.current.screenHeightDp * 0.165f).dp),
+                        .height((LocalConfiguration.current.screenHeightDp * 0.165f).dp)
+                        .padding(end = 16.dp),
                     date = date,
                     dataUi = dataUi,
                     updateDate = updateDate
@@ -240,9 +243,9 @@ fun AddRecipeCard(
         modifier = modifier
             .clip(CardDefaults.shape)
             .dashedBorder(
-                width = 2.dp,
-                color = Color(0xFFCFCFCF),
-                shape = MaterialTheme.shapes.medium, on = 8.dp, off = 8.dp
+                width = 1.dp,
+                color = outlineVariantLight,
+                shape = MaterialTheme.shapes.small, on = 4.dp, off = 4.dp
             )
             .combinedClickable(
                 onClick = {
@@ -258,11 +261,11 @@ fun AddRecipeCard(
             )
             .clip(CardDefaults.shape),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = 0.dp
         ),
         border = null,
         colors = CardDefaults.cardColors(
-            containerColor = surfaceContainerLowestLight,
+            containerColor = surfaceVariantLight,
         )
     ) {
         Box(
@@ -270,33 +273,46 @@ fun AddRecipeCard(
                 .fillMaxHeight()
                 .fillMaxWidth()
                 .wrapContentSize(Alignment.Center)
+
         ) {
             if (showLabel) {
-                Row {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.add),
-                        contentDescription = stringResource(R.string.add_recipe),
-                        tint = Color(0xFF00AF45),
-                        modifier = Modifier.size(40.dp)
-                    )
+                Row(modifier = Modifier.fillMaxSize().padding(start = 12.dp)) {
+                    IconButton(onClick = { },
+                        colors = IconButtonDefaults.iconButtonColors(
+                            containerColor = primaryContainerLight,
+                            contentColor = onPrimaryContainerLight,
+                        ),
+                        modifier = Modifier.size(40.dp).align(Alignment.CenterVertically)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Add,
+                            contentDescription = stringResource(R.string.add_recipe)
+                        )
+                    }
 
                     Text(
                         text = stringResource(R.string.planify_a_recipe),
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleSmall.copy(color = onPrimaryContainerLight),
                         modifier = Modifier.padding(start = 8.dp).align(Alignment.CenterVertically)
                     )
                 }
             } else {
                 Column(
+                    modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.add),
-                        contentDescription = stringResource(R.string.add_recipe),
-                        tint = Color(0xFF00AF45),
-                        modifier = Modifier.size(40.dp)
-                    )
+                    IconButton(onClick = { },
+                        colors = IconButtonDefaults.iconButtonColors(
+                            containerColor = primaryContainerLight,
+                            contentColor = onPrimaryContainerLight,
+                        ),
+                        modifier = Modifier.size(40.dp)) {
+                        Icon(
+                            imageVector = Icons.Filled.Add,
+                            contentDescription = stringResource(R.string.add_recipe)
+                        )
+                    }
                 }
             }
         }

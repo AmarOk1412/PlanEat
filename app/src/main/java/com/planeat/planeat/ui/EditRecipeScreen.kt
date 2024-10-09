@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -39,6 +40,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import com.example.compose.onPrimaryContainerLight
+import com.example.compose.primaryContainerLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import kotlinx.coroutines.CoroutineScope
@@ -62,7 +65,9 @@ fun RequestContentPermission(imageBitmap: MutableState<ImageBitmap>, onUriSelect
     Column() {
         Button(onClick = {
             launcher.launch("image/*")
-        }) {
+        },
+            colors = ButtonDefaults.buttonColors(containerColor = primaryContainerLight, contentColor = onPrimaryContainerLight)
+        ) {
             Text(text = stringResource(R.string.pick_image))
         }
 
@@ -170,7 +175,7 @@ fun EditRecipeScreen(
             onValueChange = { url = it },
             maxLines = 1,
             label = { Text(text = stringResource(R.string.url)) },
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp, top = 64.dp)
         )
 
         // Import button
@@ -181,7 +186,8 @@ fun EditRecipeScreen(
                     model.getRecipe(url) { recipe = it }
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = primaryContainerLight, contentColor = onPrimaryContainerLight)
         ) {
             Text(text = stringResource(R.string.import_from_url))
         }
@@ -286,7 +292,8 @@ fun EditRecipeScreen(
                 recipe.steps = steps
                 recipe.url = if (url.isNotEmpty()) url else "recipe_${System.currentTimeMillis()}"
                 onRecipeUpdated(recipe)
-            }
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = primaryContainerLight, contentColor = onPrimaryContainerLight)
         ) {
             Text(text = stringResource(R.string.save))
         }
@@ -296,7 +303,8 @@ fun EditRecipeScreen(
             Button(
                 onClick = {
                     onRecipeDeleted(recipe)
-                }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = primaryContainerLight, contentColor = onPrimaryContainerLight)
             ) {
                 Text(text = stringResource(R.string.delete))
             }

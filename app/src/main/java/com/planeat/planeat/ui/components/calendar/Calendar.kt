@@ -34,7 +34,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.compose.onPrimaryLight
+import com.example.compose.onPrimaryContainerLight
+import com.example.compose.onSurfaceLight
+import com.example.compose.primaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
 import java.time.LocalDate
@@ -178,10 +180,10 @@ fun ContentItem(
 
     LaunchedEffect(dataUi) {
         if (date == dataUi.selectedDate) {
-            contentColor = onPrimaryLight
-            containerColor = Color(0xFF599E39) // TODO not in exported theme? primaryContainerLight
+            contentColor = onPrimaryContainerLight
+            containerColor = primaryContainerLight
         } else {
-            contentColor = Color(0xFF687466) // TODO onSurfaceVariantLight
+            contentColor = onSurfaceLight
             containerColor = surfaceContainerLowestLight
         }
     }

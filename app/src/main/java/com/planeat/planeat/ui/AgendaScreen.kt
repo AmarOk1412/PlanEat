@@ -7,21 +7,14 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.ui.components.calendar.Calendar
@@ -49,16 +42,16 @@ fun AgendaScreen(
             .windowInsetsPadding(WindowInsets.statusBars),
         contentWindowInsets = WindowInsets(0.dp),
         floatingActionButton = {
-            FloatingActionButton(onClick = { goToAccount() },
-                containerColor = Color(0xFF599e39),
-                contentColor = Color(0xFFFFFFFF),
+            /*FloatingActionButton(onClick = { goToAccount() },
+                containerColor = primaryContainerLight,
+                contentColor = onPrimaryContainerLight,
                 shape = RoundedCornerShape(100.dp),
                 modifier = Modifier.padding(end = 16.dp).size(56.dp)) {
                 Icon(
                     imageVector = Icons.Filled.Sync,
                     contentDescription = "Synchronize"
                 )
-            }
+            }*/
         },
         floatingActionButtonPosition = FabPosition.End,
         content = { innerPadding ->
@@ -79,7 +72,7 @@ fun AgendaScreen(
                     goToDetails,
                     goToEdition,
                     onRecipeDeleted = onRecipeDeleted,
-                    modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                    modifier.fillMaxWidth(),
                     dataUi,
                     updateDate = updateDate
                 )

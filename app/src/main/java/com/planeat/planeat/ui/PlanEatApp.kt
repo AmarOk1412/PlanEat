@@ -584,7 +584,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
             launch {
                 withContext(Dispatchers.IO) {
                     if (recipesInDb.isEmpty()) {
-
                         recipesInDb = db.recipeDao().getAll().toMutableList()
                         recipesInDb.sortWith(compareBy({ -it.planified }, { it.title }))
                     }
@@ -824,7 +823,6 @@ fun AppContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surfaceContainerLow)
         ) {
             NavHost(
                 model = model,

@@ -4,7 +4,6 @@ import ShoppingIngredient
 import ShoppingList
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -36,11 +35,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenu
@@ -49,16 +48,17 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -84,10 +84,14 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.compose.onBackgroundLight
+import com.example.compose.onPrimaryContainerLight
 import com.example.compose.onSurfaceVariantLight
-import com.example.compose.outlineLight
+import com.example.compose.outlineVariantLight
 import com.example.compose.primaryContainerLight
+import com.example.compose.secondaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
+import com.example.compose.surfaceLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.Ingredient
@@ -163,8 +167,8 @@ fun ShoppingScreen(
             contentWindowInsets = WindowInsets(0.dp),
             floatingActionButton = {
                 FloatingActionButton(onClick = { searchItem = true },
-                    containerColor = Color(0xFF599e39),
-                    contentColor = Color(0xFFFFFFFF),
+                    containerColor = primaryContainerLight,
+                    contentColor = onPrimaryContainerLight,
                     shape = RoundedCornerShape(100.dp),
                     modifier = Modifier.padding(end = 16.dp).size(56.dp)) {
                     Icon(
@@ -179,110 +183,9 @@ fun ShoppingScreen(
                     Column(
                         modifier = modifier
                             .verticalScroll(rememberScrollState())
-                            .padding(horizontal = 16.dp, vertical = 16.dp),
+                            .padding(vertical = 16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-
-                        // Display number of planned recipes
-                        Text(
-                            text = LocalContext.current.resources.getQuantityString(
-                                R.plurals.recipes,
-                                shoppingList!!.plannedRecipesSize(),
-                                shoppingList!!.plannedRecipesSize()
-                            ),
-                            style = MaterialTheme.typography.headlineSmall
-                        )
-
-                        // Row for the planned recipes
-                        if (shoppingList!!.plannedRecipes.isNotEmpty()) {
-                            Row(
-                                modifier = Modifier
-                                    .height(100.dp)
-                                    .horizontalScroll(rememberScrollState()),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                shoppingList!!.plannedRecipes.forEach { recipe ->
-                                    MinimalRecipeItemList(recipe = recipe, onRecipeSelected = onRecipeSelected)
-                                }
-                            }
-                        }
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-
-                            // Display the total number of ingredients
-                            Text(
-                                text = LocalContext.current.resources.getQuantityString(
-                                    R.plurals.items,
-                                    shoppingList!!.countUniqueIngredientNames(),
-                                    shoppingList!!.countUniqueIngredientNames()
-                                ),
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.align(Alignment.CenterVertically)
-                            )
-
-                            Spacer(modifier = Modifier.weight(1.0f))
-
-                            Text(
-                                text = stringResource(R.string.sort_by),
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.align(Alignment.CenterVertically)
-                            )
-
-                            var showDialog = remember { mutableStateOf(false) }
-
-                            ElevatedButton(onClick = { showDialog.value = true }, colors = ButtonDefaults.elevatedButtonColors(
-                                containerColor = Color(0xFFFFFFFF),
-                                contentColor = Color(0xFF000000)
-                            ), modifier = Modifier.padding(start = 8.dp).testTag("sort_button"),
-                                contentPadding = PaddingValues(horizontal = 16.dp)
-                            ) {
-                                Row {
-                                    Text(text = if (shoppingList!!.sortingMethod == "Aisle")
-                                                    stringResource(R.string.aisle)
-                                                else stringResource(R.string.recipe),
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        modifier = Modifier.align(Alignment.CenterVertically))
-
-                                    Icon(Icons.Filled.KeyboardArrowDown, tint = Color(0xFF949494), contentDescription = null)
-                                }
-
-                                if (showDialog.value) {
-                                    DropdownMenu(
-                                        containerColor = surfaceContainerLowestLight,
-                                        offset = DpOffset(0.dp, 8.dp),
-                                        expanded = showDialog.value,
-                                        onDismissRequest = { showDialog.value = false },
-                                    ) {
-                                        DropdownMenuItem(
-                                            text = {
-                                                Text(text = stringResource(R.string.aisle),
-                                                    style = MaterialTheme.typography.bodyMedium)
-                                            },
-                                            modifier = Modifier.testTag("sort_aisle"),
-                                            onClick = {
-                                                shoppingList!!.changeSortingMethod("Aisle")
-                                                sortingMethod = "Aisle"
-                                                showDialog.value = false
-                                            }
-                                        )
-                                        DropdownMenuItem(
-                                            text = {
-                                                Text(text = stringResource(R.string.recipe),
-                                                    style = MaterialTheme.typography.bodyMedium)
-                                            },
-                                            modifier = Modifier.testTag("sort_recipe"),
-                                            onClick = {
-                                                shoppingList!!.changeSortingMethod("Recipe")
-                                                sortingMethod = "Recipe"
-                                                showDialog.value = false
-                                            }
-                                        )
-                                    }
-                                }
-                            }
-                        }
 
                         if (shoppingList!!.shoppingList.isEmpty()) {
                             Spacer(modifier = Modifier.height(112.dp))
@@ -294,7 +197,7 @@ fun ShoppingScreen(
                             Text(
                                 stringResource(R.string.the_list_is_empty),
                                 style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top=24.dp))
+                                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top=48.dp))
 
                             Text(
                                 stringResource(R.string.shopping_list_placeholder),
@@ -302,20 +205,122 @@ fun ShoppingScreen(
                                 textAlign = TextAlign.Center,
                                 color = onSurfaceVariantLight,
                                 modifier = Modifier.align(Alignment.CenterHorizontally)
-                                            .padding(start = 36.dp, end = 36.dp, top = 4.dp))
+                                            .padding(start = 64.dp, end = 64.dp, top = 4.dp))
 
-                            OutlinedButton(
+                            Button(
                                 onClick = {
                                     goToAgenda()
                                 },
-                                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 24.dp)
+                                colors = ButtonDefaults.buttonColors(containerColor = primaryContainerLight, contentColor = onPrimaryContainerLight),
+                                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 48.dp)
                             ) {
                                 Text(text = stringResource(R.string.planify_a_recipe),
-                                     style = MaterialTheme.typography.bodyMedium,
+                                     style = MaterialTheme.typography.labelLarge,
                                      modifier = Modifier.padding(horizontal = 24.dp, vertical = 10.dp))
                             }
                             Spacer(modifier = Modifier.weight(1f))
                         } else {
+                            // Display number of planned recipes
+                            Text(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                text = LocalContext.current.resources.getQuantityString(
+                                    R.plurals.recipes,
+                                    shoppingList!!.plannedRecipesSize(),
+                                    shoppingList!!.plannedRecipesSize()
+                                ),
+                                style = MaterialTheme.typography.headlineSmall
+                            )
+
+                            // Row for the planned recipes
+                            if (shoppingList!!.plannedRecipes.isNotEmpty()) {
+                                Row(
+                                    modifier = Modifier
+                                        .height(100.dp).padding(horizontal = 16.dp)
+                                        .horizontalScroll(rememberScrollState()),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    shoppingList!!.plannedRecipes.forEach { recipe ->
+                                        MinimalRecipeItemList(recipe = recipe, onRecipeSelected = onRecipeSelected)
+                                    }
+                                }
+                            }
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                            ) {
+
+                                // Display the total number of ingredients
+                                Text(
+                                    text = LocalContext.current.resources.getQuantityString(
+                                        R.plurals.items,
+                                        shoppingList!!.countUniqueIngredientNames(),
+                                        shoppingList!!.countUniqueIngredientNames()
+                                    ),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.align(Alignment.CenterVertically)
+                                )
+
+                                Spacer(modifier = Modifier.weight(1.0f))
+
+                                Text(
+                                    text = stringResource(R.string.sort_by),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.align(Alignment.CenterVertically)
+                                )
+
+                                var showDialog = remember { mutableStateOf(false) }
+
+                                ElevatedButton(onClick = { showDialog.value = true }, colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = secondaryContainerLight,
+                                    contentColor = Color(0xFF000000)
+                                ), modifier = Modifier.padding(start = 8.dp).testTag("sort_button"),
+                                    contentPadding = PaddingValues(horizontal = 16.dp)
+                                ) {
+                                    Row {
+                                        Text(text = if (shoppingList!!.sortingMethod == "Aisle")
+                                            stringResource(R.string.aisle)
+                                        else stringResource(R.string.recipe),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            modifier = Modifier.align(Alignment.CenterVertically))
+
+                                        Icon(Icons.Filled.KeyboardArrowDown, tint = Color(0xFF949494), contentDescription = null)
+                                    }
+
+                                    if (showDialog.value) {
+                                        DropdownMenu(
+                                            containerColor = surfaceContainerLowestLight,
+                                            offset = DpOffset(0.dp, 8.dp),
+                                            expanded = showDialog.value,
+                                            onDismissRequest = { showDialog.value = false },
+                                        ) {
+                                            DropdownMenuItem(
+                                                text = {
+                                                    Text(text = stringResource(R.string.aisle),
+                                                        style = MaterialTheme.typography.bodyMedium)
+                                                },
+                                                modifier = Modifier.testTag("sort_aisle"),
+                                                onClick = {
+                                                    shoppingList!!.changeSortingMethod("Aisle")
+                                                    sortingMethod = "Aisle"
+                                                    showDialog.value = false
+                                                }
+                                            )
+                                            DropdownMenuItem(
+                                                text = {
+                                                    Text(text = stringResource(R.string.recipe),
+                                                        style = MaterialTheme.typography.bodyMedium)
+                                                },
+                                                modifier = Modifier.testTag("sort_recipe"),
+                                                onClick = {
+                                                    shoppingList!!.changeSortingMethod("Recipe")
+                                                    sortingMethod = "Recipe"
+                                                    showDialog.value = false
+                                                }
+                                            )
+                                        }
+                                    }
+                                }
+                            }
                             ShoppingListByCategory(sortingMethod == "Aisle", shoppingList)
                             Spacer(modifier = Modifier.height(64.dp))
                         }
@@ -338,7 +343,8 @@ fun ShoppingScreen(
                                 contentDescription = stringResource(R.string.go_back)
                             )
                         }
-                    }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = surfaceContainerLowestLight)
                 )
             }
         ) { Column(modifier= Modifier
@@ -373,7 +379,7 @@ fun ShoppingScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     colors = SearchBarDefaults.colors(
-                        containerColor = surfaceContainerLowestLight,
+                        containerColor = surfaceLight,
                     ),
                     expanded = false,
                     onExpandedChange = { },
@@ -397,92 +403,85 @@ fun ShoppingScreen(
                             onExpandedChange = { expanded = it },
                             onSearch = { expanded = false },
                             placeholder = { Text(stringResource(R.string.carrots_eggs_chocolate), style = MaterialTheme.typography.bodyLarge) },
-                            trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
+                            trailingIcon = {
+                                IconButton(onClick = { if (expanded) text = "" else focusRequester.requestFocus() }) {
+                                    Icon(if (expanded) Icons.Filled.Close else Icons.Default.Search, contentDescription = null)
+                                }
+                            }
                         )
                     }
                 ) {}
 
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp, top = 24.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 6.dp
-                    ),
-                    colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
-                ) {
-                    val scope = rememberCoroutineScope()
-                    Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(16.dp)) {
-                        val matchingIngredient = filtered.find { it.name == text }
-                        if (matchingIngredient == null && text.isNotEmpty()) {
-                            // Search result
-                            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                val scope = rememberCoroutineScope()
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(16.dp)) {
+                    val matchingIngredient = filtered.find { it.name == text }
+                    if (matchingIngredient == null && text.isNotEmpty()) {
+                        // Search result
+                        Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)) {
 
-                                var res by remember { mutableStateOf<Int?>(null) }
-                                val db = IngredientsDb.getDatabase(context)
-                                LaunchedEffect(text) {
-                                    withContext(Dispatchers.IO) {
-                                        val ingredientItem = IngredientItem(text)
-                                        res = toIngredientIcon(ingredientItem.name.lowercase(), db, context)
-                                    }
-                                }
-
-                                if (res != null) {
-                                    val painter = rememberAsyncImagePainter(res)
-                                    Image(painter = painter,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(36.dp).align(Alignment.CenterVertically),
-                                    )
-                                } else {
-                                    Spacer(modifier = Modifier.width(36.dp))
-                                }
-
-                                Text(
-                                    text = text.replaceFirstChar(Char::titlecase),
-                                    style = MaterialTheme.typography.labelLarge,
-                                    modifier = Modifier .align(Alignment.CenterVertically)
-                                )
-
-                                Spacer(modifier = Modifier.weight(1f))
-
-                                IconButton(
-                                    modifier = Modifier
-                                        .testTag("add_ingredient")
-                                        .align(Alignment.CenterVertically)
-                                        .size(28.dp),
-                                    onClick = {
-                                        scope.launch {
-                                            withContext(Dispatchers.IO) {
-                                                shoppingList!!.addIngredient(IngredientItem(text.lowercase()))
-                                                searchItem = false
-                                            }
-                                        }
-                                    },
-                                    colors = IconButtonDefaults.iconButtonColors(
-                                        containerColor = Color(0xFF599e39),// TODO primaryContainerLight,
-                                        contentColor = Color(0xFFFFFFFF)
-                                    )) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Add,
-                                        modifier = Modifier.size(14.dp),
-                                        contentDescription = stringResource(R.string.add_ingredient),
-                                    )
+                            var res by remember { mutableStateOf<Int?>(null) }
+                            val db = IngredientsDb.getDatabase(context)
+                            LaunchedEffect(text) {
+                                withContext(Dispatchers.IO) {
+                                    val ingredientItem = IngredientItem(text)
+                                    res = toIngredientIcon(ingredientItem.name.lowercase(), db, context)
                                 }
                             }
-                        }
 
-                        filtered.forEach {
-                            IngredientToAdd(ingredient = it, onIngredientAdded = {
-                                scope.launch {
-                                    withContext(Dispatchers.IO) {
-                                        shoppingList!!.addIngredient(it)
-                                        searchItem = false
+                            if (res != null) {
+                                val painter = rememberAsyncImagePainter(res)
+                                Image(painter = painter,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(36.dp).align(Alignment.CenterVertically),
+                                )
+                            } else {
+                                Spacer(modifier = Modifier.width(36.dp))
+                            }
+
+                            Text(
+                                text = text.replaceFirstChar(Char::titlecase),
+                                style = MaterialTheme.typography.labelLarge,
+                                modifier = Modifier .align(Alignment.CenterVertically)
+                            )
+
+                            Spacer(modifier = Modifier.weight(1f))
+
+                            IconButton(
+                                modifier = Modifier
+                                    .testTag("add_ingredient")
+                                    .align(Alignment.CenterVertically)
+                                    .size(28.dp),
+                                onClick = {
+                                    scope.launch {
+                                        withContext(Dispatchers.IO) {
+                                            shoppingList!!.addIngredient(IngredientItem(text.lowercase()))
+                                            searchItem = false
+                                        }
                                     }
-                                }
-                            })
+                                },
+                                colors = IconButtonDefaults.iconButtonColors(
+                                    containerColor = Color(0xFF599e39),// TODO primaryContainerLight,
+                                    contentColor = Color(0xFFFFFFFF)
+                                )) {
+                                Icon(
+                                    imageVector = Icons.Filled.Add,
+                                    modifier = Modifier.size(14.dp),
+                                    contentDescription = stringResource(R.string.add_ingredient),
+                                )
+                            }
                         }
+                    }
+
+                    filtered.forEach {
+                        IngredientToAdd(ingredient = it, onIngredientAdded = {
+                            scope.launch {
+                                withContext(Dispatchers.IO) {
+                                    shoppingList!!.addIngredient(it)
+                                    searchItem = false
+                                }
+                            }
+                        })
                     }
                 }
             }
@@ -567,9 +566,9 @@ fun IngredientCheckbox(
             Spacer(modifier = Modifier.weight(1f))
 
             Checkbox(
-                colors = CheckboxDefaults.colors(uncheckedColor = outlineLight, checkedColor = primaryContainerLight),
+                colors = CheckboxDefaults.colors(uncheckedColor = outlineVariantLight, checkedColor = onBackgroundLight),
                 checked = isChecked,
-                modifier = Modifier.align(Alignment.CenterVertically).testTag("ingredient_checkbox"),
+                modifier = Modifier.alpha(if (isChecked) 0.5f else 1.0f).align(Alignment.CenterVertically).testTag("ingredient_checkbox"),
                 onCheckedChange = { handleCheckChange(it) }
             )
         }
@@ -596,7 +595,7 @@ fun mergeDuplicateIngredients(ingredients: List<ShoppingIngredient>): List<Shopp
 }
 
 @Composable
-fun CategoryCard(
+fun CategoryItem(
     category: String,
     ingredients: List<ShoppingIngredient>,
     shoppingList: ShoppingList?,
@@ -609,35 +608,33 @@ fun CategoryCard(
     val list = mergeDuplicateIngredients(nonValidatedItems)
 
     if (list.isNotEmpty()) {
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-            colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
-        ) {
-            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(
-                    text = category.replaceFirstChar(Char::titlecase),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = onSurfaceVariantLight,
-                    modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                )
+        HorizontalDivider()
 
-                // List of unvalidated ingredients with unique keys
-                list.forEach { shoppingIngredient ->
-                    key(shoppingIngredient.ingredient.name, shoppingIngredient.ingredient.checked) {
-                        IngredientCheckbox(
-                            item = shoppingIngredient,
-                            shoppingList = shoppingList,
-                            onCheckedChange,
-                            onValidationChange = { validated ->
-                                if (validated && list.all { it.validated }) {
-                                    onCategoryEmpty() // Notify parent when category is empty
-                                }
-                                onValidationChange(validated)
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 0.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = category.replaceFirstChar(Char::titlecase),
+                style = MaterialTheme.typography.bodySmall,
+                color = onSurfaceVariantLight,
+                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+            )
+
+            // List of unvalidated ingredients with unique keys
+            list.forEach { shoppingIngredient ->
+                key(shoppingIngredient.ingredient.name, shoppingIngredient.ingredient.checked) {
+                    IngredientCheckbox(
+                        item = shoppingIngredient,
+                        shoppingList = shoppingList,
+                        onCheckedChange,
+                        onValidationChange = { validated ->
+                            if (validated && list.all { it.validated }) {
+                                onCategoryEmpty() // Notify parent when category is empty
                             }
-                        )
-                    }
+                            onValidationChange(validated)
+                        }
+                    )
                 }
             }
         }
@@ -645,7 +642,7 @@ fun CategoryCard(
 }
 
 @Composable
-fun ValidatedCategoryCard(
+fun ValidatedCategoryItem(
     category: String,
     validatedIngredients: List<ShoppingIngredient>,
     shoppingList: ShoppingList?,
@@ -654,35 +651,33 @@ fun ValidatedCategoryCard(
 ) {
     val list = mergeDuplicateIngredients(validatedIngredients)
     if (list.isNotEmpty()) {
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-            colors = CardDefaults.cardColors(containerColor = surfaceContainerLowestLight),
-        ) {
-            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(
-                    text = category,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = onSurfaceVariantLight,
-                    modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-                )
 
-                // List of validated ingredients
-                list.forEach { shoppingIngredient ->
-                    key(shoppingIngredient.ingredient.name, shoppingIngredient.ingredient.checked) {
-                        IngredientCheckbox(
-                            item = shoppingIngredient,
-                            shoppingList = shoppingList,
-                            onValidationChange = { validated ->
-                                if (!validated) {
-                                    onUndoValidation(shoppingIngredient) // Move back to original category
-                                }
-                                onValidationChange(validated)
-                            },
-                            onCheckedChange = {}
-                        )
-                    }
+        HorizontalDivider()
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 0.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = category,
+                style = MaterialTheme.typography.bodySmall,
+                color = onSurfaceVariantLight,
+                modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+            )
+
+            // List of validated ingredients
+            list.forEach { shoppingIngredient ->
+                key(shoppingIngredient.ingredient.name, shoppingIngredient.ingredient.checked) {
+                    IngredientCheckbox(
+                        item = shoppingIngredient,
+                        shoppingList = shoppingList,
+                        onValidationChange = { validated ->
+                            if (!validated) {
+                                onUndoValidation(shoppingIngredient) // Move back to original category
+                            }
+                            onValidationChange(validated)
+                        },
+                        onCheckedChange = {}
+                    )
                 }
             }
         }
@@ -720,7 +715,7 @@ fun ShoppingListByCategory(
         }
 
         // Show category card with non-validated items
-        CategoryCard(
+        CategoryItem(
             category = key,
             ingredients = categoryIngredients,
             shoppingList = shoppingList,
@@ -743,7 +738,7 @@ fun ShoppingListByCategory(
 
     // Show validated ingredients
     if (validatedItems?.isNotEmpty() == true) {
-        ValidatedCategoryCard(
+        ValidatedCategoryItem(
             category = stringResource(R.string.validated_ingredients),
             validatedIngredients = validatedItems!!,
             shoppingList = shoppingList,
@@ -804,8 +799,8 @@ fun IngredientToAdd(ingredient: Ingredient, onIngredientAdded: (IngredientItem) 
                 .size(28.dp),
             onClick = { onIngredientAdded(IngredientItem(ingredient.name.replaceFirstChar(Char::titlecase)))},
             colors = IconButtonDefaults.iconButtonColors(
-                containerColor = Color(0xFF599e39),// TODO primaryContainerLight,
-                contentColor = Color(0xFFFFFFFF)
+                containerColor =  primaryContainerLight,
+                contentColor = onPrimaryContainerLight
             )) {
             Icon(
                 imageVector = Icons.Filled.Add,

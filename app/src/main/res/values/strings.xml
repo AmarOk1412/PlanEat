@@ -103,4 +103,6 @@
     <string name="shopping_list_placeholder">Manually add your ingredients or add a new recipe to your agenda to automatically add it to the shopping list</string>
     <string name="planify_a_recipe">Planify a recipe</string>
     <string name="create_a_recipe">Create a recipe</string>
+    <string name="edited">Edited</string>
+    <string name="my_creations">My creations</string>
 </resources>

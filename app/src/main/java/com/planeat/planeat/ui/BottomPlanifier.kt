@@ -13,7 +13,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -34,7 +36,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.compose.onBackgroundLight
+import com.example.compose.onPrimaryContainerLight
+import com.example.compose.outlineVariantLight
+import com.example.compose.primaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
+import com.example.compose.surfaceLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
@@ -54,7 +61,6 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun BottomPlanifier(
     onDismissRequest: () -> Unit,
-    dataUi: CalendarUiModel,
     toPlanRecipe: Recipe,
     goToAgenda: () -> Unit,
 ) {
@@ -62,7 +68,7 @@ fun BottomPlanifier(
 
     val selectedSource by remember { mutableStateOf(CalendarDataSource()) }
     var selectedUi by remember { mutableStateOf(selectedSource.getData(lastSelectedDate = selectedSource.today)) }
-    val selectedDates = remember { mutableStateListOf(dataUi.selectedDate.date) }
+    val selectedDates = remember { mutableStateListOf<LocalDate>() }
     val skipPartiallyExpanded by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
 
@@ -96,7 +102,7 @@ fun BottomPlanifier(
                 }
             )
 
-            HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp), color = surfaceLight)
 
             selectedUi.visibleDates.forEach{ date ->
 
@@ -112,6 +118,7 @@ fun BottomPlanifier(
                     )
                     Checkbox(
                         checked = selectedDates.contains(date.date),
+                        colors = CheckboxDefaults.colors(uncheckedColor = outlineVariantLight, checkedColor = onBackgroundLight),
                         onCheckedChange = { isChecked ->
                             if (isChecked) {
                                 selectedDates.add(date.date)
@@ -167,7 +174,8 @@ fun BottomPlanifier(
                         goToAgenda()
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = primaryContainerLight, contentColor = onPrimaryContainerLight)
             ) {
                 Text(text = stringResource(R.string.plan_it),
                     style = MaterialTheme.typography.labelLarge,

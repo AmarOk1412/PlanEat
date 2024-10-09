@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Menu
@@ -28,15 +27,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import com.example.compose.onBackgroundLight
 import com.example.compose.onSurfaceVariantLight
-import com.example.compose.primaryLight
 import com.example.compose.surfaceContainerLowLight
 import com.example.compose.surfaceContainerLowestLight
 import com.planeat.planeat.R
@@ -120,12 +121,18 @@ fun PlanEatBottomNavigationBar(
         content = {
             NavigationBar(
                 containerColor = surfaceContainerLowestLight,
-                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(32.dp, 32.dp, 0.dp, 0.dp))) {
+                modifier = Modifier.fillMaxWidth().drawBehind {
+                    drawLine(color = surfaceContainerLowLight,
+                        start = Offset(0f, 0f),
+                        end = Offset(size.width, 0f),
+                        strokeWidth = 2f
+                    )
+                }) {
                 TOP_LEVEL_DESTINATIONS.forEach { planEatDestination ->
                     NavigationBarItem(
                         selected = selectedDestination == planEatDestination.route,
                         onClick = { navigateToTopLevelDestination(planEatDestination) },
-                        colors = NavigationBarItemDefaults.colors(indicatorColor = surfaceContainerLowLight, selectedIconColor = primaryLight, selectedTextColor = primaryLight, unselectedIconColor = onSurfaceVariantLight, unselectedTextColor = onSurfaceVariantLight),
+                        colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent, selectedIconColor = onBackgroundLight, selectedTextColor = onBackgroundLight, unselectedIconColor = onSurfaceVariantLight, unselectedTextColor = onSurfaceVariantLight),
                         icon = {
                             Icon(
                                 imageVector = ImageVector.vectorResource(planEatDestination.icon),
