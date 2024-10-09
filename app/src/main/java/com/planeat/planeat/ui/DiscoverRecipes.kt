@@ -50,6 +50,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
@@ -62,7 +63,6 @@ import com.example.compose.surfaceLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.Tags
-import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -77,8 +77,6 @@ fun DiscoverScreen(
     modifier: Modifier = Modifier,
     onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
-    onRecipeAdded: (Recipe) -> Unit,
-    dataUi: CalendarUiModel,
     goToAgenda: () -> Unit,
     goToDetails: (Recipe) -> Unit,
     goToEdition: (Recipe) -> Unit,
@@ -239,7 +237,6 @@ fun DiscoverScreen(
                                 goToAgenda = { goToAgenda() },
                                 goToEdition = { goToEdition(it) },
                                 onRecipeDeleted = { onRecipeDeleted(it) },
-                                onRecipeAdded = { onRecipeAdded(it) },
                                 onPlanRecipe = { r ->
                                     toPlanRecipe = r
                                     openBottomSheet = true
@@ -280,11 +277,11 @@ fun DiscoverScreen(
                                         goToAgenda,
                                         goToEdition,
                                         onRecipeDeleted,
-                                        onRecipeAdded,
                                         onPlanRecipe = { r ->
                                             toPlanRecipe = r
                                             openBottomSheet = true
-                                        })
+                                        },
+                                        modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.75f).dp))
                                 }
                             }
                         }
@@ -307,11 +304,11 @@ fun DiscoverScreen(
                                     goToAgenda,
                                     goToEdition,
                                     onRecipeDeleted,
-                                    onRecipeAdded,
                                     onPlanRecipe = { r ->
                                         toPlanRecipe = r
                                         openBottomSheet = true
-                                    })
+                                    },
+                                    modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.75f).dp))
 
                                 HorizontalDivider(color = surfaceLight)
                             }

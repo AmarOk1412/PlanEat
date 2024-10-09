@@ -73,7 +73,6 @@ import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.ui.components.RecipeListItem
-import com.planeat.planeat.ui.components.calendar.CalendarUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -89,8 +88,6 @@ fun RecipesScreen(
     modifier: Modifier = Modifier,
     onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
-    onRecipeAdded: (Recipe) -> Unit,
-    dataUi: CalendarUiModel,
     goToAgenda: () -> Unit,
     goToDetails: (Recipe) -> Unit,
     goToEdition: (Recipe) -> Unit,
@@ -149,7 +146,6 @@ fun RecipesScreen(
                         goToAgenda,
                         goToEdition,
                         onRecipeDeleted,
-                        onRecipeAdded,
                         onPlanRecipe = { r ->
                             toPlanRecipe = r
                             openBottomSheet = true
@@ -316,7 +312,7 @@ fun RecipesScreen(
                                     .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                             ) {
                                 favoritesRecipes.take(5).forEach { recipe ->
-                                    RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
+                                    RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onPlanRecipe = { r ->
                                         toPlanRecipe = r
                                         openBottomSheet = true
                                     },
@@ -357,7 +353,7 @@ fun RecipesScreen(
                                     .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                             ) {
                                 editedRecipes.take(5).forEach { recipe ->
-                                    RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
+                                    RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onPlanRecipe = { r ->
                                         toPlanRecipe = r
                                         openBottomSheet = true
                                     },
@@ -382,7 +378,7 @@ fun RecipesScreen(
                                 }
                             }
                             items(favoritesRecipes, key = { recipe -> recipe.url }) { recipe ->
-                                RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
+                                RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onPlanRecipe = { r ->
                                     toPlanRecipe = r
                                     openBottomSheet = true
                                 },
@@ -402,7 +398,7 @@ fun RecipesScreen(
                                 }
                             }
                             items(editedRecipes, key = { recipe -> recipe.url }) { recipe ->
-                                RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onRecipeAdded, onPlanRecipe = { r ->
+                                RecipeItem(recipe, model, goToDetails, goToAgenda, goToEdition, onRecipeDeleted, onPlanRecipe = { r ->
                                     toPlanRecipe = r
                                     openBottomSheet = true
                                 },
@@ -436,12 +432,12 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
                goToAgenda: () -> Unit,
                goToEdition: (Recipe) -> Unit,
                onRecipeDeleted: (Recipe) -> Unit,
-               onRecipeAdded: (Recipe) -> Unit,
                onPlanRecipe: (Recipe) -> Unit,
                modifier: Modifier = Modifier) {
     val context = LocalContext.current
     RecipeListItem(
         recipe = recipe,
+        model = model,
         onRecipeSelected = { r ->
             if (model.selectedDate.value == null) {
                 goToDetails(r)
@@ -482,7 +478,6 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
         onEditRecipe = goToEdition,
         onPlanRecipe = onPlanRecipe,
         onRecipeDeleted = onRecipeDeleted,
-        onRecipeAdded = onRecipeAdded,
         modifier = modifier
     )
 }

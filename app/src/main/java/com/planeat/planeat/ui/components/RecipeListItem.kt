@@ -65,7 +65,10 @@ import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
+import com.planeat.planeat.ui.AppModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -81,7 +84,7 @@ fun RecipeListItem(
     onPlanRecipe: (Recipe) -> Unit = {},
     onRemoveFromAgenda: (Long) -> Unit = {},
     onRecipeDeleted: (Recipe) -> Unit = {},
-    onRecipeAdded: (Recipe) -> Unit = {},
+    model: AppModel,
     agenda: Agenda? = null,
     modifier: Modifier = Modifier,
 ) {
@@ -222,21 +225,23 @@ fun RecipeListItem(
                                 )
                             },
                             onClick = {
-                                showDialog.value = false
-                                if (agenda != null) {
-                                    onRemoveFromAgenda(recipe.recipeId)
-                                } else {
-                                    if (recipe.recipeId == 0.toLong()) {
-                                        val rdb = RecipesDb.getDatabase(context)
-                                        if (existId.longValue == 0.toLong()) {
-                                            // If a search result, add it to recipes first
-                                            Log.d("PlanEat", "Add recipe: ${recipe.title}")
-                                            onRecipeAdded(recipe)
-                                            val res = rdb.recipeDao().findByUrl(recipe.url)
-                                            onPlanRecipe(res)
-                                        }
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    showDialog.value = false
+                                    if (agenda != null) {
+                                        onRemoveFromAgenda(recipe.recipeId)
                                     } else {
-                                        onPlanRecipe(recipe)
+                                        if (recipe.recipeId == 0.toLong()) {
+                                            val rdb = RecipesDb.getDatabase(context)
+                                            if (existId.longValue == 0.toLong()) {
+                                                // If a search result, add it to recipes first
+                                                Log.d("PlanEat", "Add recipe: ${recipe.title}")
+                                                model.add(recipe)
+                                                val res = rdb.recipeDao().findByUrl(recipe.url)
+                                                onPlanRecipe(res)
+                                            }
+                                        } else {
+                                            onPlanRecipe(recipe)
+                                        }
                                     }
                                 }
                             }
@@ -308,11 +313,12 @@ fun RecipeListItem(
 
         SuggestionChip(
             label = {
+                val ingredients = recipe.parsed_ingredients.ifEmpty { recipe.ingredients }
                 Text(
                     text = LocalContext.current.resources.getQuantityString(
                         R.plurals._1_ingredients,
-                        recipe.parsed_ingredients.size,
-                        recipe.parsed_ingredients.size
+                        ingredients.size,
+                        ingredients.size
                     ),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

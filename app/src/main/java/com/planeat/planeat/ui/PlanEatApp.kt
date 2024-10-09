@@ -746,11 +746,6 @@ fun PlanEatApp(
         onRecipeUpdated = {recipe -> scope.launch {
             model.update(recipe, true)
         } },
-        onRecipeAdded = {recipe -> scope.launch {
-            val r = recipe.copy()
-            r.favorite = true
-            model.add(r)
-        } },
         navigationType = navigationType,
     )
 }
@@ -762,7 +757,6 @@ private fun NavigationWrapper(
     onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeUpdated: (Recipe) -> Unit,
-    onRecipeAdded: (Recipe) -> Unit,
     navigationType: PlanEatNavigationType,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -781,7 +775,6 @@ private fun NavigationWrapper(
         onQueryChanged = onQueryChanged,
         onRecipeDeleted = onRecipeDeleted,
         onRecipeUpdated = onRecipeUpdated,
-        onRecipeAdded = onRecipeAdded,
         navigationType = navigationType,
         navController = navController,
         selectedDestination = selectedDestination,
@@ -801,7 +794,6 @@ fun AppContent(
     onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
     onRecipeUpdated: (Recipe) -> Unit,
-    onRecipeAdded: (Recipe) -> Unit,
     navigationType: PlanEatNavigationType,
     navController: NavHostController,
     selectedDestination: String,
@@ -831,7 +823,6 @@ fun AppContent(
                 onQueryChanged = onQueryChanged,
                 onRecipeDeleted = onRecipeDeleted,
                 onRecipeUpdated = onRecipeUpdated,
-                onRecipeAdded = onRecipeAdded,
                 navigateToTopLevelDestination = navTo
             )
             AnimatedVisibility(visible = navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
@@ -853,7 +844,6 @@ private fun NavHost(
     modifier: Modifier = Modifier,
     onQueryChanged: (String, Boolean) -> Unit,
     onRecipeDeleted: (Recipe) -> Unit,
-    onRecipeAdded: (Recipe) -> Unit,
     onRecipeUpdated: (Recipe) -> Unit,
     navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
 ) {
@@ -907,11 +897,9 @@ private fun NavHost(
                 model = model,
                 onQueryChanged = onQueryChanged,
                 onRecipeDeleted = onRecipeDeleted,
-                onRecipeAdded = onRecipeAdded,
                 onFilterClicked = { filter ->
                     model.filter(filter)
                 },
-                dataUi = dataUi,
                 goToAgenda = {
                     model.openedRecipe.value = null
                     Handler(Looper.getMainLooper()).post {
@@ -943,11 +931,9 @@ private fun NavHost(
                 model = model,
                 onQueryChanged = onQueryChanged,
                 onRecipeDeleted = onRecipeDeleted,
-                onRecipeAdded = onRecipeAdded,
                 onFilterClicked = { filter ->
                     model.filter(filter)
                 },
-                dataUi = dataUi,
                 goToAgenda = {
                     model.openedRecipe.value = null
                     Handler(Looper.getMainLooper()).post {

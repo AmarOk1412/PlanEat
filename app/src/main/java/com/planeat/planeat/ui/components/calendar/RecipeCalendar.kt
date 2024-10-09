@@ -173,10 +173,10 @@ fun ContentItem(
                 recipesPlanned.value.forEach { recipeAgenda ->
                     val recipe = recipeAgenda.recipe
                     RecipeListItem(
+                        model = model,
                         recipe = recipe,
                         onRecipeSelected = { r -> goToDetails(r) },
                         onRecipeDeleted = { r -> onRecipeDeleted(r) },
-                        onRecipeAdded = {},
                         onEditRecipe = { r -> goToEdition(r) },
                         onPlanRecipe = {},
                         onRemoveFromAgenda = { recipeId ->
