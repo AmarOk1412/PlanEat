@@ -51,21 +51,32 @@ class Account(private val context: Context, private val onMessage: (String)->Uni
         private const val SYNC_INTERVAL = 10L // Interval in minutes
     }
 
-    init {
-        loadLinkedAccounts() // Load linked accounts on initialization
-        loadLatestSync()
-
+    fun startSync() {
         // Schedule the sync() method to run every 10 minutes
         executor.scheduleWithFixedDelay({ sync() }, 0, SYNC_INTERVAL, TimeUnit.MINUTES)
     }
 
-    fun generateECCKeyPair(): KeyPair {
+    init {
+        loadLinkedAccounts() // Load linked accounts on initialization
+        loadLatestSync()
+        if (linkedAccounts.isNotEmpty()) {
+            startSync()
+        }
+    }
+
+    private fun generateECCKeyPair(): KeyPair {
         val keyPairGenerator = KeyPairGenerator.getInstance(
             KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore"
         )
+        val purposes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            KeyProperties.PURPOSE_AGREE_KEY or KeyProperties.PURPOSE_SIGN or
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+        } else {
+            KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+        }
         val keyGenParameterSpec = KeyGenParameterSpec.Builder(
             KEY_ALIAS,
-            KeyProperties.PURPOSE_AGREE_KEY or KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+            purposes
         )
             .setKeySize(256)
             .setDigests(KeyProperties.DIGEST_SHA256)

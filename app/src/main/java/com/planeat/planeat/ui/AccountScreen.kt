@@ -20,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -51,6 +52,10 @@ fun AccountScreen(
     account: Account,
 ) {
     val pk = account.exportPublicKey()
+
+    LaunchedEffect(Unit) {
+        account.startSync()
+    }
 
     val cameraPermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
 

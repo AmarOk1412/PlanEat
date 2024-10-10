@@ -85,6 +85,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     private val connectors: List<Connector>
 
     var currentTag = mutableStateOf(Tags.All)
+    var onAgendaChanged = mutableStateOf<()->Unit>({})
 
     var recipesInDb = mutableListOf<Recipe>()
     var recipesInDbShown = mutableStateListOf<Recipe>()
@@ -415,6 +416,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
             async(Dispatchers.IO) {
                 try {
                     db.recipeDao().delete(recipe)
+                    onAgendaChanged.value()
                 } catch (error: Exception) {
                     Log.d("PlanEat", "Error: $error")
                 }
@@ -538,6 +540,8 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                 agendaDb.agendaDao().insertAll(newAgenda)
                 Log.i("PlanEat", "Recipe added to agenda with ID: $recipeId")
             }
+
+            onAgendaChanged.value()
         } catch (e: Exception) {
             Log.e("PlanEat", "Error processing message: ${e.message}")
         }
