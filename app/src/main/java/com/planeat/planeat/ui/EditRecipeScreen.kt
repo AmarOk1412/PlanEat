@@ -11,19 +11,30 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ImageSearch
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -32,7 +43,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
@@ -41,9 +54,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.example.compose.onPrimaryContainerLight
+import com.example.compose.outlineVariantLight
 import com.example.compose.primaryContainerLight
+import com.example.compose.surfaceVariantLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
+import dashedBorder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,29 +69,82 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun RequestContentPermission(imageBitmap: MutableState<ImageBitmap>, onUriSelected: (Uri) -> Unit) {
+fun RequestContentPermission(hasImage: Boolean, imageBitmap: MutableState<ImageBitmap>, onUriSelected: (Uri) -> Unit) {
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
+        Log.d("PlanEat", "RequestContentPermission: $uri")
         if (uri != null) {
+            Log.d("PlanEat", "RequestContentPermission: $uri")
             onUriSelected(uri)
         }
     }
-    Column() {
-        Button(onClick = {
-            launcher.launch("image/*")
-        },
-            colors = ButtonDefaults.buttonColors(containerColor = primaryContainerLight, contentColor = onPrimaryContainerLight)
-        ) {
-            Text(text = stringResource(R.string.pick_image))
-        }
 
-        Spacer(modifier = Modifier.height(12.dp))
-
+    if (hasImage) {
         Image(bitmap = imageBitmap.value,
             contentDescription = null,
-            modifier = Modifier.size(400.dp))
+            modifier = Modifier.fillMaxSize().combinedClickable(onClick = {
+                launcher.launch("image/*")
+            }))
+    } else {
+        PickImageCard(onClick = {
+            launcher.launch("image/*")
+        })
+    }
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun PickImageCard(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Card(
+        modifier = modifier
+            .clip(CardDefaults.shape)
+            .dashedBorder(
+                width = 1.dp,
+                color = outlineVariantLight,
+                shape = MaterialTheme.shapes.small, on = 4.dp, off = 4.dp
+            )
+            .combinedClickable(onClick = onClick)
+            .clip(CardDefaults.shape),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 0.dp
+        ),
+        border = null,
+        colors = CardDefaults.cardColors(
+            containerColor = surfaceVariantLight,
+        )
+    ) {
+        Box(
+            modifier = Modifier
+                .height(150.dp)
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center)
+
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.ImageSearch,
+                    contentDescription = stringResource(R.string.add_image)
+                )
+
+                Text(
+                    text = stringResource(R.string.add_image),
+                    style = MaterialTheme.typography.titleSmall.copy(color = onPrimaryContainerLight),
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+        }
     }
 }
 
@@ -104,7 +173,7 @@ fun EditRecipeScreen(
     ) {
         val context = LocalContext.current
 
-        var recipe by remember { mutableStateOf(r) }
+        val recipe by remember { mutableStateOf(r) }
         var title by remember { mutableStateOf(r.title) }
         var kindOfMeal by remember { mutableStateOf(r.kindOfMeal) }
         var season by remember { mutableStateOf(r.season) }
@@ -118,9 +187,10 @@ fun EditRecipeScreen(
             100,
             Bitmap.Config.ARGB_8888
         )
-        val imageBitmap =  remember {
-            mutableStateOf<ImageBitmap>(bitmap.asImageBitmap())
+        val imageBitmap = remember {
+            mutableStateOf(bitmap.asImageBitmap())
         }
+        var hasImage by remember { mutableStateOf(r.image.isNotEmpty()) }
 
         // For recipe.image = imagePath
         LaunchedEffect(Unit) {
@@ -155,50 +225,27 @@ fun EditRecipeScreen(
                             .createSource(context.contentResolver, imagePath.toUri())
                         val drawable = ImageDecoder.decodeBitmap(source)
                         imageBitmap.value = drawable.asImageBitmap()
+                        hasImage = true
                     }
                 } else if (imagePath.isNotEmpty()) {
                     val source = ImageDecoder
                         .createSource(context.contentResolver,  imagePath.toUri())
                     val drawable = ImageDecoder.decodeBitmap(source)
                     imageBitmap.value = drawable.asImageBitmap()
+                    hasImage = true
                 }
             }
         }
 
-        // URL input
-        var url by remember { mutableStateOf("") }
-        if (r.url.startsWith("http")) {
-            url = r.url
-        }
-        TextField(
-            value = url,
-            onValueChange = { url = it },
-            maxLines = 1,
-            label = { Text(text = stringResource(R.string.url)) },
-            modifier = Modifier.padding(bottom = 16.dp, top = 64.dp)
-        )
-
-        // Import button
-        Button(
-            onClick = {
-                // Add your import logic here
-                CoroutineScope(Dispatchers.IO).launch {
-                    model.getRecipe(url) { recipe = it }
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = primaryContainerLight, contentColor = onPrimaryContainerLight)
-        ) {
-            Text(text = stringResource(R.string.import_from_url))
-        }
+        Spacer(modifier = Modifier.height(64.dp))
 
         // Image input
-        RequestContentPermission(imageBitmap, onUriSelected = { uri ->
+        RequestContentPermission(hasImage, imageBitmap, onUriSelected = { uri ->
             val cacheDir = context.cacheDir
             val inputStream = context.contentResolver.openInputStream(uri)
             if (inputStream != null) {
                 var imagePath = r.image
-                if (imagePath.isEmpty() || imagePath.startsWith("http")) {
+                if (imagePath.isEmpty() || imagePath.startsWith("http") || imagePath.startsWith("file")) {
                     imagePath = "recipe_${System.currentTimeMillis()}"
                 }
                 val outputFile = File(cacheDir, imagePath)
@@ -217,11 +264,12 @@ fun EditRecipeScreen(
                     .createSource(context.contentResolver, imagePath.toUri())
                 val drawable = ImageDecoder.decodeBitmap(source)
                 imageBitmap.value = drawable.asImageBitmap()
+                hasImage = true
             }
         })
 
         // Title input
-        TextField(
+        OutlinedTextField(
             value = title,
             onValueChange = { title = it },
             label = { Text(text = stringResource(R.string.title)) },
@@ -230,7 +278,7 @@ fun EditRecipeScreen(
         )
 
         // Kind of Meal input
-        TextField(
+        OutlinedTextField(
             value = kindOfMeal,
             onValueChange = { kindOfMeal = it },
             label = { Text(text = stringResource(R.string.kind_of_meal)) },
@@ -238,7 +286,7 @@ fun EditRecipeScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
         // Cooking Time input
-        TextField(
+        OutlinedTextField(
             value = cookingTime.toString(),
             onValueChange = { cookingTime = it.toIntOrNull() ?: 0 },
             label = { Text(text = stringResource(R.string.cooking_time)) },
@@ -246,7 +294,7 @@ fun EditRecipeScreen(
             modifier = Modifier.padding(bottom = 16.dp).testTag("cooking_time_input")
         )
         // Season input
-        TextField(
+        OutlinedTextField(
             value = season,
             onValueChange = { season = it },
             label = { Text(text = stringResource(R.string.season)) },
@@ -254,7 +302,7 @@ fun EditRecipeScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
         // Tags input
-        TextField(
+        OutlinedTextField(
             value = tags,
             onValueChange = { tags = it },
             label = { Text(text = stringResource(R.string.tags)) },
@@ -262,7 +310,7 @@ fun EditRecipeScreen(
         )
 
         // Ingredients input
-        TextField(
+        OutlinedTextField(
             value = ingredients,
             onValueChange = { ingredients = it },
             label = { Text(text = stringResource(R.string.ingredients)) },
@@ -270,7 +318,7 @@ fun EditRecipeScreen(
         )
 
         // Steps input
-        TextField(
+        OutlinedTextField(
             value = steps,
             onValueChange = { steps = it },
             label = { Text(text = stringResource(R.string.steps)) },
@@ -290,7 +338,7 @@ fun EditRecipeScreen(
                 recipe.ingredients = ingredients.split("\n")
                 recipe.parsed_ingredients = emptyList()
                 recipe.steps = steps
-                recipe.url = if (url.isNotEmpty()) url else "recipe_${System.currentTimeMillis()}"
+                recipe.url = if (recipe.url.isNotEmpty()) recipe.url else "recipe_${System.currentTimeMillis()}"
                 onRecipeUpdated(recipe)
             },
             colors = ButtonDefaults.buttonColors(containerColor = primaryContainerLight, contentColor = onPrimaryContainerLight)

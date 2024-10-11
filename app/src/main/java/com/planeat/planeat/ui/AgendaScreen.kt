@@ -7,15 +7,23 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.compose.onPrimaryContainerLight
+import com.example.compose.primaryContainerLight
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.ui.components.calendar.Calendar
 import com.planeat.planeat.ui.components.calendar.CalendarDataSource
@@ -42,7 +50,7 @@ fun AgendaScreen(
             .windowInsetsPadding(WindowInsets.statusBars),
         contentWindowInsets = WindowInsets(0.dp),
         floatingActionButton = {
-            /*FloatingActionButton(onClick = { goToAccount() },
+            FloatingActionButton(onClick = { goToAccount() },
                 containerColor = primaryContainerLight,
                 contentColor = onPrimaryContainerLight,
                 shape = RoundedCornerShape(100.dp),
@@ -51,7 +59,7 @@ fun AgendaScreen(
                     imageVector = Icons.Filled.Sync,
                     contentDescription = "Synchronize"
                 )
-            }*/
+            }
         },
         floatingActionButtonPosition = FabPosition.End,
         content = { innerPadding ->
