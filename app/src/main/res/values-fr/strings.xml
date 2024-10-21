@@ -65,7 +65,7 @@
     <string name="title">Titre</string>
     <string name="kind_of_meal">Type de repas</string>
     <string name="cooking_time">Temps de préparation</string>
-    <string name="season">Saison</string>
+    <string name="season">Saison (optionel)</string>
     <string name="tags">Tags</string>
     <string name="save">Sauvegarder</string>
     <string name="add_to_recipes">Ajouter aux recettes</string>
@@ -107,4 +107,18 @@
     <string name="edited">Édité</string>
     <string name="my_creations">Mes créations</string>
     <string name="add_image">Ajouter une photo</string>
+    <string name="add_a_title_to_your_recipe">Ajouter un titre à votre recette</string>
+    <string name="hours">heures</string>
+    <string name="add_step">Ajouter une étape</string>
+    <string name="remove_tag">Enlever le tag</string>
+    <string name="favorites">Favoris</string>
+    <string name="description">Description</string>
+    <string name="validate">Valider</string>
+    <string name="quantity">Quantité</string>
+    <string name="unit">Unité</string>
+    <string name="step_d_of_4">Étape %1$d sur 4</string>
+    <string name="details">Détails</string>
+    <string name="categories">Catégories</string>
+    <string name="choose_1_or_more_categorie_s">Choisissez 1 ou plusieurs catégorie(s)</string>
+    <string name="choose_a_difficulty">Choisir une difficulté</string>
 </resources>

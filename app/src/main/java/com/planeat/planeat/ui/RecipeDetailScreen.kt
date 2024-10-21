@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -98,9 +97,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
 import org.json.JSONArray
 import org.json.JSONObject
 
+@Serializable
 data class Step(val text: String, val image: String) {
 }
 
@@ -212,14 +213,13 @@ fun RecipeDetailScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
-                    .aspectRatio(1f / .8f)
+                    .fillMaxWidth().height(200.dp)
                     .clip(CardDefaults.shape)
             ) {
                 AsyncImage(
                     model = selectedRecipe.image,
                     contentDescription = selectedRecipe.title,
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                 )
             }

@@ -64,7 +64,7 @@
     <string name="title">Title</string>
     <string name="kind_of_meal">Kind of Meal</string>
     <string name="cooking_time">Cooking Time</string>
-    <string name="season">Season</string>
+    <string name="season">Season (optional)</string>
     <string name="tags">Tags</string>
     <string name="save">Save</string>
     <string name="add_to_recipes">Add to recipes</string>
@@ -106,4 +106,18 @@
     <string name="edited">Edited</string>
     <string name="my_creations">My creations</string>
     <string name="add_image">Add photo</string>
+    <string name="add_a_title_to_your_recipe">Add a title to your recipe</string>
+    <string name="hours">hours</string>
+    <string name="add_step">Add step</string>
+    <string name="remove_tag">Remove tag</string>
+    <string name="favorites">Favorites</string>
+    <string name="description">Description</string>
+    <string name="validate">Validate</string>
+    <string name="quantity">Quantity</string>
+    <string name="unit">Unit</string>
+    <string name="step_d_of_4">Step %1$d of 4</string>
+    <string name="details">Details</string>
+    <string name="categories">Categories</string>
+    <string name="choose_1_or_more_categorie_s">Choose 1 or more categorie(s)</string>
+    <string name="choose_a_difficulty">Choose a difficulty</string>
 </resources>
