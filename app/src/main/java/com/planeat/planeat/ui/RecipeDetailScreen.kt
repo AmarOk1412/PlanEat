@@ -75,6 +75,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.debugInspectorInfo
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.Dp
@@ -216,12 +217,25 @@ fun RecipeDetailScreen(
                     .fillMaxWidth().height(200.dp)
                     .clip(CardDefaults.shape)
             ) {
-                AsyncImage(
-                    model = selectedRecipe.image,
-                    contentDescription = selectedRecipe.title,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                )
+                var showDefault by remember { mutableStateOf(false) }
+                if (!showDefault) {
+                    AsyncImage(
+                        model = selectedRecipe.image,
+                        contentDescription = selectedRecipe.title,
+                        modifier = Modifier.fillMaxSize(),
+                        onError = {
+                            showDefault = true
+                        },
+                        contentScale = ContentScale.Crop,
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.empty_image_recipe),
+                        contentDescription = selectedRecipe.title,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
 
 

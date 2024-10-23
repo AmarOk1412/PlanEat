@@ -58,6 +58,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.onPrimaryContainerLight
 import com.example.compose.primaryContainerLight
+import com.example.compose.primaryLight
 import com.example.compose.surfaceContainerLowestLight
 import com.example.compose.surfaceLight
 import com.planeat.planeat.R
@@ -132,9 +133,8 @@ fun DiscoverScreen(
                     inputField = {
                         SearchBarDefaults.InputField(
                             modifier = Modifier
-                                .border(
-                                    2.dp,
-                                    if (expanded) Color(0xFF00AF45) else Color(0x00000000),
+                                .border(1.dp,
+                                    if (expanded) primaryLight else Color(0x00000000),
                                     RoundedCornerShape(100.dp)
                                 )
                                 .testTag("search_input")
@@ -308,7 +308,7 @@ fun DiscoverScreen(
                                         toPlanRecipe = r
                                         openBottomSheet = true
                                     },
-                                    modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.75f).dp))
+                                    modifier = Modifier.fillMaxWidth())
 
                                 HorizontalDivider(color = surfaceLight)
                             }

@@ -25,9 +25,11 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -327,7 +329,12 @@ fun EditRecipeScreen(
             }
         ) { innerPadding ->
             Column(
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = innerPadding.calculateTopPadding(), bottom = innerPadding.calculateBottomPadding()),
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 16.dp, top = innerPadding.calculateTopPadding(), bottom = innerPadding.calculateBottomPadding())
+                    .consumeWindowInsets(innerPadding)
+                    .imePadding()
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
 
@@ -515,8 +522,6 @@ fun EditRecipeScreen(
                     Text(stringResource(R.string.categories), style = MaterialTheme.typography.headlineSmall)
                 }
 
-
-
                 Text(stringResource(R.string.choose_a_difficulty), style = MaterialTheme.typography.labelSmall, color = onSurfaceVariantLight)
 
                 FlowRow(
@@ -662,6 +667,7 @@ fun EditRecipeScreen(
                 }
 
                 Column(modifier = Modifier.fillMaxSize()
+                    .imePadding()
                     .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(12.dp)) {
 
@@ -755,7 +761,7 @@ fun EditRecipeScreen(
                                 .align(Alignment.CenterVertically)
                         )
                     }
-
+                    // Adjust Spacer height based on keyboard height
                     Spacer(modifier = Modifier.weight(1.0f))
 
                     // Save button
@@ -812,7 +818,8 @@ fun EditRecipeScreen(
                 }
 
 
-                Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(modifier = Modifier.fillMaxSize().imePadding().verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)) {
 
                     // Steps
                     stepList.forEachIndexed { index, step ->

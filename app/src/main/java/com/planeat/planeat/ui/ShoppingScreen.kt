@@ -89,6 +89,7 @@ import com.example.compose.onPrimaryContainerLight
 import com.example.compose.onSurfaceVariantLight
 import com.example.compose.outlineVariantLight
 import com.example.compose.primaryContainerLight
+import com.example.compose.primaryLight
 import com.example.compose.secondaryContainerLight
 import com.example.compose.surfaceContainerLowestLight
 import com.example.compose.surfaceLight
@@ -389,8 +390,8 @@ fun ShoppingScreen(
                                 .focusRequester(focusRequester)
                                 .testTag("search_input")
                                 .border(
-                                    2.dp,
-                                    if (expanded) Color(0xFF00AF45) else Color(0x00000000),
+                                    1.dp,
+                                    if (expanded) primaryLight else Color(0x00000000),
                                     RoundedCornerShape(100.dp)
                                 )
                                 .padding(start = 8.dp),
