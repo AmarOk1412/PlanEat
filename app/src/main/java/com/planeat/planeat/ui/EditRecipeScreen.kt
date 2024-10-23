@@ -89,6 +89,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -433,7 +434,7 @@ fun EditRecipeScreen(
                         focusedPlaceholderColor = onSurfaceVariantLight,
                     ),
                     visualTransformation = if (title.isEmpty())
-                            PlaceholderTransformation(stringResource(R.string.add_a_title_to_your_recipe))
+                            PlaceholderTransformation(" ")
                         else VisualTransformation.None,
                     modifier = Modifier
                         .testTag("title_input")
@@ -444,7 +445,7 @@ fun EditRecipeScreen(
                     var baseTime by remember { mutableStateOf((r.cookingTime.toFloat() / 60.0f).toString()) }
                     // Cooking Time input
                     OutlinedTextField(
-                        trailingIcon = { Text(text = stringResource(R.string.hours)) },
+                        trailingIcon = { Text(text = stringResource(R.string.hours), color = outlineVariantLight) },
                         keyboardOptions = KeyboardOptions(
                             capitalization = KeyboardCapitalization.None,
                             autoCorrectEnabled = true,
@@ -1047,7 +1048,7 @@ fun SeasonalityTextField(
         enabled = false,
         interactionSource = source,
         visualTransformation = if (recipeSeason.isEmpty())
-            PlaceholderTransformation(" ")
+            PlaceholderTransformation(stringResource(R.string.choose))
         else VisualTransformation.None,
         onValueChange = { },
         label = { Text(text = stringResource(R.string.season)) },
@@ -1157,14 +1158,20 @@ fun BottomSeasonality(
     }
 }
 
-class PlaceholderTransformation(val placeholder: String) : VisualTransformation {
+class PlaceholderTransformation(
+    val placeholder: String,
+    val placeholderColor: Color = outlineVariantLight
+) : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        return PlaceholderFilter(text, placeholder)
+        return PlaceholderFilter(text, placeholder, placeholderColor)
     }
 }
 
-fun PlaceholderFilter(text: AnnotatedString, placeholder: String): TransformedText {
-
+fun PlaceholderFilter(
+    text: AnnotatedString,
+    placeholder: String,
+    placeholderColor: Color
+): TransformedText {
     val numberOffsetTranslator = object : OffsetMapping {
         override fun originalToTransformed(offset: Int): Int {
             return 0
@@ -1175,5 +1182,10 @@ fun PlaceholderFilter(text: AnnotatedString, placeholder: String): TransformedTe
         }
     }
 
-    return TransformedText(AnnotatedString(placeholder), numberOffsetTranslator)
+    val placeholderText = AnnotatedString(
+        text = placeholder,
+        spanStyle = SpanStyle(color = placeholderColor)
+    )
+
+    return TransformedText(placeholderText, numberOffsetTranslator)
 }

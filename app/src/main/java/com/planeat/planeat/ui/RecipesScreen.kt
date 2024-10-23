@@ -92,7 +92,7 @@ fun RecipesScreen(
 ) {
     var filter by remember { mutableStateOf("") }
     var currentTag by remember { mutableStateOf(model.currentTag.value) }
-
+    var context = LocalContext.current
 
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
@@ -329,18 +329,45 @@ fun RecipesScreen(
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                     ) {
                         favoritesRecipes.take(5).forEach { recipe ->
-                            /*TODO
-                            *
-                                onPlanRecipe = { r ->
-                                    toPlanRecipe = r
-                                    openBottomSheet = true
-                                },
-                                modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.75f).dp)
-                                *
-                                * */
                             MinimalRecipeItemList(
                                 recipe,
-                                onRecipeSelected = goToDetails
+                                onRecipeSelected = { r ->
+                                    if (model.selectedDate.value == null) {
+                                        goToDetails(r)
+                                    } else {
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            // If id == 0, recipe is not in db yet, add it first
+                                            var id = r.recipeId
+                                            val rdb = RecipesDb.getDatabase(context)
+                                            val newRecipe = r
+                                            newRecipe.planified += 1
+                                            if (id == 0.toLong()) {
+                                                // If a search result, add it to recipes first
+                                                model.add(recipe)
+                                                val res = rdb.recipeDao().findByUrl(recipe.url)
+                                                id = res.recipeId
+                                                newRecipe.recipeId = res.recipeId
+                                            }
+
+                                            // Increment planified value
+                                            rdb.recipeDao().update(newRecipe)
+                                            val res2 = rdb.recipeDao().findByUrl(recipe.url)
+                                            // Then add it to agenda
+                                            Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
+                                            val dateMidday = model.selectedDate.value!!
+                                                .atTime(12, 0)
+                                                .toInstant(ZoneOffset.UTC)
+                                                .toEpochMilli()
+
+                                            Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
+                                            model.planify(Agenda(
+                                                date = dateMidday,
+                                                recipeId = id
+                                            ))
+                                            goToAgenda()
+                                        }
+                                    }
+                                }
                             )
                         }
                     }
@@ -404,18 +431,45 @@ fun RecipesScreen(
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                     ) {
                         editedRecipes.take(5).forEach { recipe ->
-                            /*TODO
-                            *
-                                onPlanRecipe = { r ->
-                                    toPlanRecipe = r
-                                    openBottomSheet = true
-                                },
-                                modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.75f).dp)
-                                *
-                                * */
                             MinimalRecipeItemList(
                                 recipe,
-                                onRecipeSelected = goToDetails
+                                onRecipeSelected = { r ->
+                                    if (model.selectedDate.value == null) {
+                                        goToDetails(r)
+                                    } else {
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            // If id == 0, recipe is not in db yet, add it first
+                                            var id = r.recipeId
+                                            val rdb = RecipesDb.getDatabase(context)
+                                            val newRecipe = r
+                                            newRecipe.planified += 1
+                                            if (id == 0.toLong()) {
+                                                // If a search result, add it to recipes first
+                                                model.add(recipe)
+                                                val res = rdb.recipeDao().findByUrl(recipe.url)
+                                                id = res.recipeId
+                                                newRecipe.recipeId = res.recipeId
+                                            }
+
+                                            // Increment planified value
+                                            rdb.recipeDao().update(newRecipe)
+                                            val res2 = rdb.recipeDao().findByUrl(recipe.url)
+                                            // Then add it to agenda
+                                            Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
+                                            val dateMidday = model.selectedDate.value!!
+                                                .atTime(12, 0)
+                                                .toInstant(ZoneOffset.UTC)
+                                                .toEpochMilli()
+
+                                            Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
+                                            model.planify(Agenda(
+                                                date = dateMidday,
+                                                recipeId = id
+                                            ))
+                                            goToAgenda()
+                                        }
+                                    }
+                                }
                             )
                         }
                     }

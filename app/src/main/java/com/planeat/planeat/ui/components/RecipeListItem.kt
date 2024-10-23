@@ -169,7 +169,7 @@ fun RecipeListItem(
                             maxLines = 1,
                             style = MaterialTheme.typography.bodySmall,
                         ) },
-                        onClick = {},
+                        onClick = { onRecipeSelected(recipe) },
                         border = null,
                         colors = SuggestionChipDefaults.suggestionChipColors(
                             containerColor = Color(0xCCFFFFFF),

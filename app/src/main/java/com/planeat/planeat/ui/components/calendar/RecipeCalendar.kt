@@ -1,7 +1,6 @@
 package com.planeat.planeat.ui.components.calendar
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -278,7 +277,16 @@ fun AddRecipeCard(
         ) {
             if (showLabel) {
                 Row(modifier = Modifier.fillMaxSize().padding(start = 12.dp)) {
-                    IconButton(onClick = { },
+                    IconButton(onClick = {
+                            updateDate(dataUi.copy(
+                                selectedDate = date,
+                                visibleDates = dataUi.visibleDates.map {
+                                    it.copy(
+                                        isSelected = it.date.isEqual(date.date)
+                                    )
+                                }
+                            ), true)
+                         },
                         colors = IconButtonDefaults.iconButtonColors(
                             containerColor = primaryContainerLight,
                             contentColor = onPrimaryContainerLight,
@@ -303,7 +311,16 @@ fun AddRecipeCard(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    IconButton(onClick = { },
+                    IconButton(onClick = {
+                            updateDate(dataUi.copy(
+                                selectedDate = date,
+                                visibleDates = dataUi.visibleDates.map {
+                                    it.copy(
+                                        isSelected = it.date.isEqual(date.date)
+                                    )
+                                }
+                            ), true)
+                        },
                         colors = IconButtonDefaults.iconButtonColors(
                             containerColor = primaryContainerLight,
                             contentColor = onPrimaryContainerLight,
