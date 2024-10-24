@@ -122,4 +122,5 @@
     <string name="choose_1_or_more_categorie_s">Choisissez 1 ou plusieurs catégorie(s)</string>
     <string name="choose_a_difficulty">Choisir une difficulté</string>
     <string name="choose">Choisir</string>
+    <string name="add_a_picture_optional">Ajoutez une image (optionel)</string>
 </resources>

@@ -231,6 +231,95 @@ fun PickImageCard(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.P)
+@Composable
+fun StepImagePermission(hasImage: Boolean, imageBitmap: MutableState<ImageBitmap>, onUriSelected: (Uri) -> Unit) {
+    val launcher = rememberLauncherForActivityResult(contract =
+    ActivityResultContracts.GetContent()) { uri: Uri? ->
+        Log.d("PlanEat", "RequestContentPermission: $uri")
+        if (uri != null) {
+            Log.d("PlanEat", "RequestContentPermission: $uri")
+            onUriSelected(uri)
+        }
+    }
+
+    if (hasImage) {
+        Box(
+            modifier = Modifier
+                .height(200.dp)
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center),
+        ) {
+            Image(bitmap = imageBitmap.value,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .clip(CardDefaults.shape)
+            )
+
+            IconButton(modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(8.dp),
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = Color(0xFFFFFFFF)
+                ),
+                onClick = {
+                    launcher.launch("image/*")
+                })
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Edit,
+                    contentDescription = stringResource(R.string.edit)
+                )
+            }
+        }
+    } else {
+        PickImageRow(onClick = {
+            launcher.launch("image/*")
+        })
+    }
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun PickImageRow(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+
+    Row(modifier = Modifier
+        .fillMaxSize()
+        .combinedClickable(onClick = onClick)
+        .padding(start = 12.dp)) {
+        IconButton(onClick = onClick,
+            colors = IconButtonDefaults.iconButtonColors(
+                containerColor = primaryContainerLight,
+                contentColor = onPrimaryContainerLight,
+            ),
+            modifier = Modifier
+                .size(40.dp)
+                .align(Alignment.CenterVertically)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = stringResource(R.string.add_a_picture_optional)
+            )
+        }
+
+        Text(
+            text = stringResource(R.string.add_a_picture_optional),
+            style = MaterialTheme.typography.titleSmall.copy(color = onPrimaryContainerLight),
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .align(Alignment.CenterVertically)
+        )
+    }
+}
+
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class,
     ExperimentalMaterial3Api::class
@@ -241,9 +330,7 @@ fun PickImageCard(
 fun EditRecipeScreen(
     model: AppModel,
     goBack: () -> Unit,
-    modifier: Modifier = Modifier,
     onRecipeUpdated: (Recipe) -> Unit,
-    onRecipeDeleted: (Recipe) -> Unit
 ) {
 
     val r = model.openedRecipe.value!!
@@ -274,7 +361,7 @@ fun EditRecipeScreen(
     val difficultyTags = listOf(Tags.Easy, Tags.Medium, Tags.Hard)
 
     // Ingredients
-    val ingredientList = remember { mutableStateListOf<IngredientItem>() }
+    var ingredientList = remember { mutableStateListOf<IngredientItem>() }
     LaunchedEffect(r.parsed_ingredients) {
         if (r.parsed_ingredients.isNotEmpty()) {
             ingredientList.clear() // Clear existing tags to avoid duplication.
@@ -331,7 +418,12 @@ fun EditRecipeScreen(
         ) { innerPadding ->
             Column(
                 modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp, top = innerPadding.calculateTopPadding(), bottom = innerPadding.calculateBottomPadding())
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = innerPadding.calculateTopPadding(),
+                        bottom = innerPadding.calculateBottomPadding()
+                    )
                     .consumeWindowInsets(innerPadding)
                     .imePadding()
                     .fillMaxSize()
@@ -667,7 +759,8 @@ fun EditRecipeScreen(
                     }
                 }
 
-                Column(modifier = Modifier.fillMaxSize()
+                Column(modifier = Modifier
+                    .fillMaxSize()
                     .imePadding()
                     .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -678,22 +771,33 @@ fun EditRecipeScreen(
                                 HorizontalDivider(color = surfaceLight)
                             }
 
-                            OutlinedTextFieldWithAutoComplete(
-                                value = TextFieldValue(
-                                    ingredient.name,
-                                    TextRange(ingredient.name.length)
-                                ),
-                                onValueChange = { newValue ->
-                                    autoCompleteList = ingredientsList.filter { it.name.contains(newValue.text) }
-                                    val ig = ingredient.copy()
-                                    ig.name = newValue.text
-                                    ingredientList[index] = ig
-                                },
-                                list = autoCompleteList,
-                                modifier = Modifier
-                                    .padding(bottom = 16.dp)
-                                    .fillMaxWidth()
-                            )
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                OutlinedTextFieldWithAutoComplete(
+                                    value = TextFieldValue(
+                                        ingredient.name,
+                                        TextRange(ingredient.name.length)
+                                    ),
+                                    onValueChange = { newValue ->
+                                        autoCompleteList = ingredientsList.filter { it.name.contains(newValue.text) }
+                                        val ig = ingredient.copy()
+                                        ig.name = newValue.text
+                                        ingredientList[index] = ig
+                                    },
+                                    list = autoCompleteList,
+                                    modifier = Modifier
+                                        .padding(bottom = 16.dp)
+                                        .weight(1.0f)
+                                        .align(Alignment.CenterVertically)
+                                )
+
+                                IconButton(onClick = { ingredientList.removeAt(index) },
+                                    modifier = Modifier.align(Alignment.CenterVertically)) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Close,
+                                        contentDescription = "Remove step"
+                                    )
+                                }
+                            }
 
                             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                                 OutlinedTextField(
@@ -819,7 +923,10 @@ fun EditRecipeScreen(
                 }
 
 
-                Column(modifier = Modifier.fillMaxSize().imePadding().verticalScroll(rememberScrollState()),
+                Column(modifier = Modifier
+                    .fillMaxSize()
+                    .imePadding()
+                    .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(12.dp)) {
 
                     // Steps
@@ -829,11 +936,113 @@ fun EditRecipeScreen(
                                 HorizontalDivider(color = surfaceLight)
                             }
 
-                            Text(
-                                text = stringResource(R.string.step, index + 1),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = onSurfaceVariantLight
-                            )
+                            Row {
+                                Text(
+                                    text = stringResource(R.string.step, index + 1),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = onSurfaceVariantLight,
+                                    modifier = Modifier.align(Alignment.CenterVertically)
+                                )
+
+                                Spacer(modifier = Modifier.weight(1.0f))
+
+                                IconButton(onClick = {
+                                        stepList = stepList.toMutableList().also {
+                                            it.removeAt(index)
+                                        }
+                                    },
+                                    modifier = Modifier.align(Alignment.CenterVertically).size(16.dp)) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Close,
+                                        contentDescription = "Remove step"
+                                    )
+                                }
+                            }
+
+
+                            val stepImage = remember {
+                                mutableStateOf(bitmap.asImageBitmap())
+                            }
+                            var hasStepImage by remember { mutableStateOf(step.image.isNotEmpty()) }
+
+
+                            // For recipe.image = imagePath
+                            LaunchedEffect(Unit) {
+                                // For network operation
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    var imagePath = step.image
+                                    if (imagePath.startsWith("http")) {
+                                        val imageUrl = URL(imagePath)
+                                        val connection = imageUrl.openConnection() as HttpURLConnection
+                                        connection.doInput = true
+                                        connection.connect()
+                                        val inputStream = connection.inputStream
+                                        if (inputStream != null) {
+                                            // TODO if recipe deleted, cache deleted
+                                            if (imagePath.isEmpty()) {
+                                                imagePath = "recipe_${System.currentTimeMillis()}"
+                                            }
+                                            val outputFile = File(context.cacheDir, imagePath)
+                                            outputFile.parentFile?.mkdirs() // Create parent directories if they don't exist
+                                            val outputStream = FileOutputStream(outputFile)
+                                            val buffer = ByteArray(4 * 1024)
+                                            var bytesRead: Int
+                                            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                                                outputStream.write(buffer, 0, bytesRead)
+                                            }
+                                            outputStream.flush()
+                                            outputStream.close()
+                                            inputStream.close()
+                                            imagePath = Uri.fromFile(outputFile).toString()
+                                            recipe.image = imagePath
+                                            val source = ImageDecoder
+                                                .createSource(context.contentResolver, imagePath.toUri())
+                                            val drawable = ImageDecoder.decodeBitmap(source)
+                                            stepImage.value = drawable.asImageBitmap()
+                                            hasStepImage = true
+                                        }
+                                    } else if (imagePath.isNotEmpty()) {
+                                        val source = ImageDecoder
+                                            .createSource(context.contentResolver,  imagePath.toUri())
+                                        val drawable = ImageDecoder.decodeBitmap(source)
+                                        stepImage.value = drawable.asImageBitmap()
+                                        hasStepImage = true
+                                    }
+                                }
+                            }
+
+
+                            // Image input
+                            StepImagePermission(hasStepImage, stepImage, onUriSelected = { uri ->
+                                val cacheDir = context.cacheDir
+                                val inputStream = context.contentResolver.openInputStream(uri)
+                                if (inputStream != null) {
+                                    var imagePath = r.image
+                                    if (imagePath.isEmpty() || imagePath.startsWith("http") || imagePath.startsWith("file")) {
+                                        imagePath = "recipe_${System.currentTimeMillis()}_step_${index}"
+                                    }
+                                    val outputFile = File(cacheDir, imagePath)
+                                    val outputStream = FileOutputStream(outputFile)
+                                    val buffer = ByteArray(4 * 1024)
+                                    var bytesRead: Int
+                                    while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                                        outputStream.write(buffer, 0, bytesRead)
+                                    }
+                                    outputStream.flush()
+                                    outputStream.close()
+                                    inputStream.close()
+                                    imagePath = Uri.fromFile(outputFile).toString()
+                                    recipe.image = imagePath
+                                    val source = ImageDecoder
+                                        .createSource(context.contentResolver, imagePath.toUri())
+                                    val drawable = ImageDecoder.decodeBitmap(source)
+                                    stepImage.value = drawable.asImageBitmap()
+                                    hasStepImage = true
+                                    stepList = stepList.toMutableList().apply {
+                                        this[index] = step.copy(image = imagePath)
+                                    }
+                                }
+                            })
 
                             OutlinedTextField(
                                 value = step.text,
@@ -863,7 +1072,14 @@ fun EditRecipeScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxSize()
-                            .combinedClickable(onClick = { stepList.add(Step(text = "", image = "")) })
+                            .combinedClickable(onClick = {
+                                stepList.add(
+                                    Step(
+                                        text = "",
+                                        image = ""
+                                    )
+                                )
+                            })
                     ) {
                         IconButton(
                             onClick = {
@@ -1027,7 +1243,6 @@ fun OutlinedTextFieldWithAutoComplete(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SeasonalityTextField(
