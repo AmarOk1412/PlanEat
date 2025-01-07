@@ -353,7 +353,11 @@ fun EditRecipeScreen(
     LaunchedEffect(r.tags) {
         if (r.tags.isNotEmpty()) {
             currentTags.clear() // Clear existing tags to avoid duplication.
-            currentTags.addAll(r.tags.map { Tags.valueOf(it) })
+            try {
+                currentTags.addAll(r.tags.map { Tags.valueOf(it) })
+            } catch (e: Exception) {
+                Log.d("PlanEat", "EditRecipeScreen: ${e.message}")
+            }
         }
     }
     var filters = Tags.entries.map { it }
@@ -980,7 +984,7 @@ fun EditRecipeScreen(
                                         if (inputStream != null) {
                                             // TODO if recipe deleted, cache deleted
                                             if (imagePath.isEmpty()) {
-                                                imagePath = "recipe_${System.currentTimeMillis()}"
+                                                imagePath = "recipe_${System.currentTimeMillis()}_step_${index}"
                                             }
                                             val outputFile = File(context.cacheDir, imagePath)
                                             outputFile.parentFile?.mkdirs() // Create parent directories if they don't exist
@@ -994,7 +998,6 @@ fun EditRecipeScreen(
                                             outputStream.close()
                                             inputStream.close()
                                             imagePath = Uri.fromFile(outputFile).toString()
-                                            recipe.image = imagePath
                                             val source = ImageDecoder
                                                 .createSource(context.contentResolver, imagePath.toUri())
                                             val drawable = ImageDecoder.decodeBitmap(source)
@@ -1017,7 +1020,7 @@ fun EditRecipeScreen(
                                 val cacheDir = context.cacheDir
                                 val inputStream = context.contentResolver.openInputStream(uri)
                                 if (inputStream != null) {
-                                    var imagePath = r.image
+                                    var imagePath = step.image
                                     if (imagePath.isEmpty() || imagePath.startsWith("http") || imagePath.startsWith("file")) {
                                         imagePath = "recipe_${System.currentTimeMillis()}_step_${index}"
                                     }
@@ -1032,7 +1035,6 @@ fun EditRecipeScreen(
                                     outputStream.close()
                                     inputStream.close()
                                     imagePath = Uri.fromFile(outputFile).toString()
-                                    recipe.image = imagePath
                                     val source = ImageDecoder
                                         .createSource(context.contentResolver, imagePath.toUri())
                                     val drawable = ImageDecoder.decodeBitmap(source)

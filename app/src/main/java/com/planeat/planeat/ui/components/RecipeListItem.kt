@@ -9,6 +9,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -215,12 +217,20 @@ fun RecipeListItem(
 
             Spacer(modifier = Modifier.weight(1f))
 
+
+            val interactionSource = remember { MutableInteractionSource() }
+            val isPressed by interactionSource.collectIsPressedAsState()
+
+            // Use the state to change the background color
+            val backgroundColor = if (isPressed) secondaryContainerLight else surfaceContainerLowestLight
+
             IconButton(
                 onClick = { showDialog.value = true },
+                interactionSource = interactionSource,
                 modifier = Modifier
                     .clip(CircleShape)
                     .align(Alignment.CenterVertically)
-                    .background(surfaceContainerLowestLight)
+                    .background(backgroundColor)
                     .size(40.dp)
                     .testTag("favorite_button")
             ) {

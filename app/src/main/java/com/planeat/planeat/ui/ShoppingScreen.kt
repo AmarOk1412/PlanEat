@@ -29,6 +29,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -349,8 +351,7 @@ fun ShoppingScreen(
                 )
             }
         ) { Column(modifier= Modifier
-            .padding(top = 64.dp)
-            .verticalScroll(rememberScrollState())) {
+            .padding(top = 64.dp)) {
                 var ingredients by remember {
                     mutableStateOf<List<Ingredient>>(emptyList())
                 }
@@ -398,7 +399,7 @@ fun ShoppingScreen(
                             query = text,
                             onQueryChange = {
                                 text = it
-                                filtered = ingredients.filter { ingredient -> ingredient.name.contains(text) }
+                                filtered = ingredients.filter { ingredient -> ingredient.name.contains(text) }.toList()
                             },
                             expanded = expanded,
                             onExpandedChange = { expanded = it },
@@ -414,68 +415,70 @@ fun ShoppingScreen(
                 ) {}
 
                 val scope = rememberCoroutineScope()
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(16.dp)) {
-                    val matchingIngredient = filtered.find { it.name == text }
-                    if (matchingIngredient == null && text.isNotEmpty()) {
-                        // Search result
-                        Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    item() {
+                        val matchingIngredient = filtered.find { it.name == text }
+                        if (matchingIngredient == null && text.isNotEmpty()) {
+                            // Search result
+                            Row(modifier = Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)) {
 
-                            var res by remember { mutableStateOf<Int?>(null) }
-                            val db = IngredientsDb.getDatabase(context)
-                            LaunchedEffect(text) {
-                                withContext(Dispatchers.IO) {
-                                    val ingredientItem = IngredientItem(text)
-                                    res = toIngredientIcon(ingredientItem.name.lowercase(), db, context)
+                                var res by remember { mutableStateOf<Int?>(null) }
+                                val db = IngredientsDb.getDatabase(context)
+                                LaunchedEffect(Unit) {
+                                    withContext(Dispatchers.IO) {
+                                        val ingredientItem = IngredientItem(text)
+                                        res = toIngredientIcon(ingredientItem.name.lowercase(), db, context)
+                                    }
+                                }
+
+                                if (res != null) {
+                                    val painter = rememberAsyncImagePainter(res)
+                                    Image(painter = painter,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(36.dp).align(Alignment.CenterVertically),
+                                    )
+                                } else {
+                                    Spacer(modifier = Modifier.width(36.dp))
+                                }
+
+                                Text(
+                                    text = text.replaceFirstChar(Char::titlecase),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    modifier = Modifier .align(Alignment.CenterVertically)
+                                )
+
+                                Spacer(modifier = Modifier.weight(1f))
+
+                                IconButton(
+                                    modifier = Modifier
+                                        .testTag("add_ingredient")
+                                        .align(Alignment.CenterVertically)
+                                        .size(28.dp),
+                                    onClick = {
+                                        scope.launch {
+                                            withContext(Dispatchers.IO) {
+                                                shoppingList!!.addIngredient(IngredientItem(text.lowercase()))
+                                                searchItem = false
+                                            }
+                                        }
+                                    },
+                                    colors = IconButtonDefaults.iconButtonColors(
+                                        containerColor =  primaryContainerLight,
+                                        contentColor = onPrimaryContainerLight
+                                    )) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Add,
+                                        modifier = Modifier.size(14.dp),
+                                        contentDescription = stringResource(R.string.add_ingredient),
+                                    )
                                 }
                             }
-
-                            if (res != null) {
-                                val painter = rememberAsyncImagePainter(res)
-                                Image(painter = painter,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(36.dp).align(Alignment.CenterVertically),
-                                )
-                            } else {
-                                Spacer(modifier = Modifier.width(36.dp))
-                            }
-
-                            Text(
-                                text = text.replaceFirstChar(Char::titlecase),
-                                style = MaterialTheme.typography.labelLarge,
-                                modifier = Modifier .align(Alignment.CenterVertically)
-                            )
-
-                            Spacer(modifier = Modifier.weight(1f))
-
-                            IconButton(
-                                modifier = Modifier
-                                    .testTag("add_ingredient")
-                                    .align(Alignment.CenterVertically)
-                                    .size(28.dp),
-                                onClick = {
-                                    scope.launch {
-                                        withContext(Dispatchers.IO) {
-                                            shoppingList!!.addIngredient(IngredientItem(text.lowercase()))
-                                            searchItem = false
-                                        }
-                                    }
-                                },
-                                colors = IconButtonDefaults.iconButtonColors(
-                                    containerColor = Color(0xFF599e39),// TODO primaryContainerLight,
-                                    contentColor = Color(0xFFFFFFFF)
-                                )) {
-                                Icon(
-                                    imageVector = Icons.Filled.Add,
-                                    modifier = Modifier.size(14.dp),
-                                    contentDescription = stringResource(R.string.add_ingredient),
-                                )
-                            }
                         }
-                    }
 
-                    filtered.forEach {
-                        IngredientToAdd(ingredient = it, onIngredientAdded = {
+                    }
+                    items(ingredients.filter { ingredient -> ingredient.name.contains(text) }, key = { ingredient -> ingredient.name }) { ingredient ->
+                        IngredientToAdd(ingredient = ingredient, onIngredientAdded = {
                             scope.launch {
                                 withContext(Dispatchers.IO) {
                                     shoppingList!!.addIngredient(it)

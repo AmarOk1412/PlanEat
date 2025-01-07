@@ -109,11 +109,6 @@ fun DiscoverScreen(
                     expanded = false
                 }
 
-                LaunchedEffect(Unit) {
-                    text = ""
-                    expanded = false
-                }
-
                 LaunchedEffect(text) {
                     delay(300)
                     onQueryChanged.invoke(text, false)

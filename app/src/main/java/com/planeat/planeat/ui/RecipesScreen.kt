@@ -168,11 +168,6 @@ fun RecipesScreen(
             var expanded by rememberSaveable { mutableStateOf(false) }
             val filters = Tags.entries.map { it }
 
-            LaunchedEffect(Unit) {
-                text = ""
-                expanded = false
-            }
-
             LaunchedEffect(text) {
                 delay(300)
                 onQueryChanged.invoke(text, true)
