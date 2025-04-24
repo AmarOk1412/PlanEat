@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 
 @Dao
@@ -20,8 +21,9 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE title IN (:title)")
     fun findByTitle(title: String): Recipe
 
+    @Transaction
     @Insert
-    fun insertAll(vararg recipe: Recipe)
+    fun insertAll(recipes: List<Recipe>)
 
     @Update
     fun update(recipe: Recipe)

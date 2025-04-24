@@ -143,7 +143,7 @@ fun BottomPlanifier(
                             if (newRecipe != null) {
                                 toPlanRecipe.recipeId = newRecipe.recipeId
                             } else {
-                                recipesDb.recipeDao().insertAll(toPlanRecipe)
+                                recipesDb.recipeDao().insertAll(listOf(toPlanRecipe))
                                 val newRecipe = recipesDb.recipeDao().findByUrl(toPlanRecipe.url)
                                 if (newRecipe != null) {
                                     toPlanRecipe.recipeId = newRecipe.recipeId
@@ -164,11 +164,11 @@ fun BottomPlanifier(
                             Log.w("PlanEat", "Recipe: ${toPlanRecipe.recipeId}, Date: ${dateMidday}")
                             agendaDb
                                 .agendaDao()
-                                .insertAll(
+                                .insertAll(listOf(
                                     Agenda(
                                         date = dateMidday,
-                                        recipeId = toPlanRecipe!!.recipeId
-                                    )
+                                        recipeId = toPlanRecipe.recipeId
+                                    ))
                                 )
                         }
                         goToAgenda()

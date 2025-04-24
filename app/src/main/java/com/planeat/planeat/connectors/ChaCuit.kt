@@ -109,8 +109,10 @@ class ChaCuit : Connector {
                 val optionalH2Elements = document.select("#ingrédients + h2")
                 for (h2Element in optionalH2Elements) {
                     val nextUlElement = h2Element.nextElementSibling()
-                    if (nextUlElement.tagName() == "ul") {
-                        ingredientElements.addAll(nextUlElement.select("li"))
+                    if (nextUlElement != null) {
+                        if (nextUlElement.tagName() == "ul") {
+                            ingredientElements.addAll(nextUlElement.select("li"))
+                        }
                     }
                 }
             }

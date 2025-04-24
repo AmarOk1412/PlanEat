@@ -19,7 +19,7 @@ interface AgendaDao {
 
     @Transaction
     @Insert
-    fun insertAll(vararg agenda: Agenda)
+    fun insertAll(agenda: List<Agenda>)
 
     @Delete
     fun delete(agenda: Agenda)

@@ -8,12 +8,10 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -76,7 +74,6 @@ import java.net.SocketTimeoutException
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 
@@ -440,7 +437,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
             coroutineScope {
                 async(Dispatchers.IO) {
                     try {
-                        db.recipeDao().insertAll(recipe)
+                        db.recipeDao().insertAll(listOf(recipe))
                         val res = db.recipeDao().findByUrl(recipe.url)
                         if (res != null) {
                             recipesInDb.add(res)
@@ -461,7 +458,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     fun planify(agenda: Agenda) {
 
         val adb = AgendaDb.getDatabase(context)
-        adb.agendaDao().insertAll(agenda)
+        adb.agendaDao().insertAll(listOf(agenda))
 
         val res = db.recipeDao().findById(agenda.recipeId)
         if (res != null) {
@@ -522,7 +519,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                 val r = recipe.copy()
                 r.recipeId = 0
                 // Recipe does not exist, insert the new recipe and get the new id
-                db.recipeDao().insertAll(r)
+                db.recipeDao().insertAll(listOf(r))
                 val newRecipe = db.recipeDao().findByUrl(r.url)
                 newRecipe.recipeId // Retrieve the inserted recipe's ID (assume ID is auto-assigned)
             }
@@ -537,7 +534,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                 }
                 Log.i("PlanEat", "Recipe removed from agenda with ID: $recipeId")
             } else {
-                agendaDb.agendaDao().insertAll(newAgenda)
+                agendaDb.agendaDao().insertAll(listOf(newAgenda))
                 Log.i("PlanEat", "Recipe added to agenda with ID: $recipeId")
             }
 
@@ -551,7 +548,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         coroutineScope {
             launch(Dispatchers.IO) {
                 Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
-                db.recipeDao().insertAll(recipe)
+                db.recipeDao().insertAll(listOf(recipe))
                 val res = db.recipeDao().findByUrl(recipe.url)
                 recipesInDb.add(res)
                 recipesInDb.sortWith(compareBy({ -it.planified }, { it.title }))
@@ -698,6 +695,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
 }
 
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlanEatApp(

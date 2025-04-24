@@ -116,7 +116,7 @@ fun toIngredientIcon(ingredientName: String, db: IngredientsDb, context: Context
             update = false
             val newIngredient = Ingredient(name = ingredientName, icon = iconResId)
             try {
-                db.ingredientDao().insertAll(newIngredient)
+                db.ingredientDao().insertAll(listOf(newIngredient))
             } catch (error: Exception) {
                 Log.w("PlanEat", "Error inserting ingredient: $error")
             }
@@ -170,7 +170,7 @@ fun toIngredientCategory(
         Log.d("PlanEat", "classify $ingredientName with $category")
         val ingredient = Ingredient(name=ingredientName, category=category)
         try {
-            db.ingredientDao().insertAll(ingredient)
+            db.ingredientDao().insertAll(listOf(ingredient))
         } catch (error: Exception) {
             Log.w("PlanEat", "Error: $error")
         }

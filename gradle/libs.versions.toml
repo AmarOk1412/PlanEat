@@ -5,7 +5,7 @@
 [versions]
 accompanist = "0.34.0"
 accompanistAdaptive = "0.26.2-beta"
-androidGradlePlugin = "8.7.3"
+androidGradlePlugin = "8.9.2"
 androidx-activity-compose = "1.8.2"
 androidx-appcompat = "1.6.1"
 androidx-benchmark = "1.2.0"
@@ -46,6 +46,7 @@ jsoup = "1.17.2"
 junit = "4.13.2"
 # @pin Update in conjuction with Compose Compiler
 kotlin = "1.9.20"
+kotlinMetadataJvm = "2.1.20"
 kotlinx_immutable = "0.3.5"
 kotlinxSerializationJson = "1.7.1"
 ksp = "1.9.20-1.0.14"
@@ -157,6 +158,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.re
 hilt-ext-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltExt" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 junit = { module = "junit:junit", version.ref = "junit" }
+kotlin-metadata-jvm = { module = "org.jetbrains.kotlin:kotlin-metadata-jvm", version.ref = "kotlinMetadataJvm" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx_immutable" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }

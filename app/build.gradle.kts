@@ -18,30 +18,27 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 
-    kotlin("kapt") version "1.9.20"
-
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.20"
-    kotlin("plugin.serialization") version "2.0.20"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.1.20"
+    kotlin("plugin.serialization") version "2.1.20"
+    id("com.google.devtools.ksp") version "2.1.20-2.0.0"
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "com.planeat.planeat"
 
     defaultConfig {
         applicationId = "com.planeat.planeat"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 14
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments.put("room.schemaLocation", "$projectDir/schemas")
-            }
-        }
+    }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 
     signingConfigs {
@@ -132,7 +129,7 @@ dependencies {
     implementation(libs.androidx.runner)
     implementation(libs.androidx.rules)
     annotationProcessor(libs.room.compiler.v261)
-    kapt(libs.room.compiler.v261)
+    ksp(libs.room.compiler.v261)
     implementation(libs.kotlinx.serialization.json)
     // Parsing
     api(libs.jsoup)
