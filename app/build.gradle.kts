@@ -18,9 +18,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 
-    id("org.jetbrains.kotlin.plugin.compose") version "2.1.20"
-    kotlin("plugin.serialization") version "2.1.20"
-    id("com.google.devtools.ksp") version "2.1.20-2.0.0"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.2.0-RC"
+    kotlin("plugin.serialization") version "2.2.0-RC"
+    id("com.google.devtools.ksp") version "2.2.0-RC-2.0.1"
 }
 
 android {
@@ -122,7 +122,7 @@ dependencies {
     implementation(libs.transport.runtime)
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlinx.coroutines.android)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
     implementation(libs.error.prone.annotations)
     // Database
     implementation(libs.androidx.room.runtime.v261)
