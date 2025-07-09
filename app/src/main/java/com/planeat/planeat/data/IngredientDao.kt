@@ -13,7 +13,7 @@ interface IngredientDao {
     fun getAll(): List<Ingredient>
 
     @Query("SELECT * FROM ingredients WHERE name = :name")
-    fun findByName(name: String): Ingredient
+    fun findByName(name: String): Ingredient?
 
     @Query("SELECT * FROM ingredients")
     fun selectAll(): List<Ingredient>

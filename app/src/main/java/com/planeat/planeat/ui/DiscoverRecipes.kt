@@ -120,9 +120,6 @@ fun DiscoverScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
-                    colors = SearchBarDefaults.colors(
-                        containerColor = surfaceLight,
-                    ),
                     expanded = false,
                     onExpandedChange = { },
                     inputField = {

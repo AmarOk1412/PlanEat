@@ -98,6 +98,7 @@ fun toIngredientIcon(ingredientName: String, db: IngredientsDb, context: Context
     // Initialize iconResId with a default value (not null)
     var iconResId = R.drawable.bagel_3d
 
+
     var ingredient = db.ingredientDao().findByName(singularName)
     if (ingredient == null) {
         ingredient = db.ingredientDao().findByName(ingredientName.lowercase())
@@ -127,10 +128,11 @@ fun toIngredientIcon(ingredientName: String, db: IngredientsDb, context: Context
         val res = fetchIconForIngredient(ingredientName)
 
         if (res != 0) {
-            val newIngredient = ingredient.copy(icon = res?: R.drawable.bagel_3d)
+            val newIngredient = ingredient?.copy(icon = res?: R.drawable.bagel_3d)
             iconResId = res!!
             try {
-                db.ingredientDao().update(newIngredient)
+                if (newIngredient != null)
+                    db.ingredientDao().update(newIngredient)
             } catch (error: Exception) {
                 Log.w("PlanEat", "Error updating ingredient: $error")
             }

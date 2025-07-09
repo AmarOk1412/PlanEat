@@ -114,10 +114,11 @@ fun BottomPlanifier(
                             DateTimeFormatter.ofPattern("EEEE d")
                         ),
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).align(Alignment.CenterVertically),
                     )
                     Checkbox(
                         checked = selectedDates.contains(date.date),
+                        modifier = Modifier.align(Alignment.CenterVertically),
                         colors = CheckboxDefaults.colors(uncheckedColor = outlineVariantLight, checkedColor = onBackgroundLight),
                         onCheckedChange = { isChecked ->
                             if (isChecked) {

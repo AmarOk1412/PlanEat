@@ -180,9 +180,6 @@ fun RecipesScreen(
                     .fillMaxWidth()
                     .focusRequester(focusRequester)
                     .padding(horizontal = 16.dp),
-                colors = SearchBarDefaults.colors(
-                    containerColor = surfaceLight,
-                ),
                 expanded = false,
                 onExpandedChange = { },
                 inputField = {

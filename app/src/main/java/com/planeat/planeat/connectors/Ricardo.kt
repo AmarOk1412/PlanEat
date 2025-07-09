@@ -33,7 +33,7 @@ class Ricardo : Connector {
                 if (braceStack.isEmpty()) {
                     throw Error("Invalid scriptContent: unexpected }")
                 }
-                braceStack.removeLast()
+                braceStack.removeAt(braceStack.lastIndex)
                 if (braceStack.isEmpty()) {
                     endPos = i
                     break

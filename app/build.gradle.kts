@@ -31,7 +31,7 @@ android {
         applicationId = "com.planeat.planeat"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = 35
-        versionCode = 14
+        versionCode = 17
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -113,7 +113,7 @@ dependencies {
     implementation("com.google.mlkit:translate:17.0.3")
     // Classify recipes
     implementation(libs.litert)
-    implementation("org.tensorflow:tensorflow-lite-select-tf-ops:+")
+    implementation("org.tensorflow:tensorflow-lite-select-tf-ops:2.16.1")
     implementation(libs.litert.metadata)
     implementation(libs.litert.support.api)
     // FOR RELEASE KEEP THIS
@@ -134,6 +134,7 @@ dependencies {
     // Parsing
     api(libs.jsoup)
     // Compose UI
+    implementation("androidx.compose.foundation:foundation:1.9.0-alpha03")
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.compose.material)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -147,9 +148,9 @@ dependencies {
     implementation(libs.coil.compose.v260)
 
     // Test rules and transitive dependencies:
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.2")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.9.0-alpha03")
     // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>():
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.2")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.9.0-alpha03")
 
     // QrCode
     implementation(libs.compose.qr.code)
