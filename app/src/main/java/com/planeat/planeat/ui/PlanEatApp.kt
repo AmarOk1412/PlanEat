@@ -521,6 +521,10 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                 // Recipe does not exist, insert the new recipe and get the new id
                 db.recipeDao().insertAll(listOf(r))
                 val newRecipe = db.recipeDao().findByUrl(r.url)
+                if (newRecipe == null) {
+                    Log.e("PlanEat", "Recipe not found")
+                    return
+                }
                 newRecipe.recipeId // Retrieve the inserted recipe's ID (assume ID is auto-assigned)
             }
 
@@ -548,8 +552,15 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         coroutineScope {
             launch(Dispatchers.IO) {
                 Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
-                db.recipeDao().insertAll(listOf(recipe))
+                if (recipe.recipeId == 0L)
+                {
+                    db.recipeDao().insertAll(listOf(recipe))
+                }
                 val res = db.recipeDao().findByUrl(recipe.url)
+                if (res == null) {
+                    Log.e("PlanEat", "Recipe not found")
+                    return@launch
+                }
                 recipesInDb.add(res)
                 recipesInDb.sortWith(compareBy({ -it.planified }, { it.title }))
                 // Update visibiliy

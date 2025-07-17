@@ -337,6 +337,10 @@ fun RecipesScreen(
                                                 // If a search result, add it to recipes first
                                                 model.add(recipe)
                                                 val res = rdb.recipeDao().findByUrl(recipe.url)
+                                                if (res == null)
+                                                {
+                                                    return@launch
+                                                }
                                                 id = res.recipeId
                                                 newRecipe.recipeId = res.recipeId
                                             }
@@ -439,6 +443,8 @@ fun RecipesScreen(
                                                 // If a search result, add it to recipes first
                                                 model.add(recipe)
                                                 val res = rdb.recipeDao().findByUrl(recipe.url)
+                                                if (res == null)
+                                                    return@launch
                                                 id = res.recipeId
                                                 newRecipe.recipeId = res.recipeId
                                             }
@@ -587,6 +593,8 @@ fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
                         // If a search result, add it to recipes first
                         model.add(recipe)
                         val res = rdb.recipeDao().findByUrl(recipe.url)
+                        if (res == null)
+                            return@launch
                         id = res.recipeId
                         newRecipe.recipeId = res.recipeId
                     }

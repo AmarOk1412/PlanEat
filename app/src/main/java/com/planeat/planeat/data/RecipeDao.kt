@@ -13,13 +13,13 @@ interface RecipeDao {
     fun getAll(): List<Recipe>
 
     @Query("SELECT * FROM recipes WHERE id IN (:id)")
-    fun findById(id: Long): Recipe
+    fun findById(id: Long): Recipe?
 
     @Query("SELECT * FROM recipes WHERE url IN (:url)")
-    fun findByUrl(url: String): Recipe
+    fun findByUrl(url: String): Recipe?
 
     @Query("SELECT * FROM recipes WHERE title IN (:title)")
-    fun findByTitle(title: String): Recipe
+    fun findByTitle(title: String): Recipe?
 
     @Transaction
     @Insert

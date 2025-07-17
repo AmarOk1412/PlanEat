@@ -268,6 +268,9 @@ fun RecipeListItem(
                                                 Log.d("PlanEat", "Add recipe: ${recipe.title}")
                                                 model.add(recipe)
                                                 val res = rdb.recipeDao().findByUrl(recipe.url)
+                                                if (res == null) {
+                                                    return@launch
+                                                }
                                                 onPlanRecipe(res)
                                             }
                                         } else {

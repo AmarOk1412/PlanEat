@@ -197,10 +197,11 @@ fun ContentItem(
                                             model.unplanify(it)
                                         } else {
                                             val r = rdb.recipeDao().findById(it.recipeId)
-                                            newRecipesPlanned += RecipeAgenda(
-                                                recipe = r,
-                                                agenda = it
-                                            )
+                                            if (r != null)
+                                                newRecipesPlanned += RecipeAgenda(
+                                                    recipe = r,
+                                                    agenda = it
+                                                )
                                         }
                                     }
                                     withContext(Dispatchers.Main) {

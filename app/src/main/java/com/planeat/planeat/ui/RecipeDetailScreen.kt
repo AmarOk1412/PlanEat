@@ -318,7 +318,17 @@ fun RecipeDetailScreen(
                                     model.add(selectedRecipe)
                                     val rdb = RecipesDb.getDatabase(context)
                                     val res = rdb.recipeDao().findByUrl(selectedRecipe.url)
-                                    if (res != null) {
+                                    if (res == null)
+                                    {
+                                        rdb.recipeDao().insertAll(listOf(selectedRecipe))
+
+                                        val res = rdb.recipeDao().findByUrl(selectedRecipe.url)
+                                        if (res != null) {
+                                            selectedRecipe.recipeId = res.recipeId
+                                        } else {
+                                            Log.e("PlanEat", "Recipe not found")
+                                        }
+                                    } else {
                                         selectedRecipe.recipeId = res.recipeId
                                     }
                                 } else {
