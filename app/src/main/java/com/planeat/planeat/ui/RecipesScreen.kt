@@ -97,7 +97,6 @@ fun RecipesScreen(
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var toPlanRecipe by remember { mutableStateOf<Recipe?>(null) }
 
-
     val favoritesRecipes = model.recipesInDbShown.filter { it.favorite }
     val editedRecipes = model.recipesInDbShown.filter { !it.url.startsWith("http") || it.edited }
 

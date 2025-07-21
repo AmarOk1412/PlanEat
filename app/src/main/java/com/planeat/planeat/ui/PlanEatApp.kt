@@ -426,6 +426,17 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
             coroutineScope {
                 async(Dispatchers.IO) {
                     try {
+
+                        // Update visibiliy
+                        if (recipesInDb.any { it.url == recipe.url }) {
+                            recipesInDb.remove(recipe)
+                        }
+                        recipesInDb.add(recipe)
+                        if (recipesInDbShown.any { it.url == recipe.url }) {
+                            recipesInDbShown.remove(recipe)
+                        }
+                        recipesInDbShown.add(recipe)
+
                         db.recipeDao().update(recipe)
                         classifyRecipeAndIngredients(recipe)
                     } catch (error: Exception) {

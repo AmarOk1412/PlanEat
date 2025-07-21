@@ -78,6 +78,7 @@ import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -256,8 +257,9 @@ fun RecipeDetailScreen(
             Text(
                 text = selectedRecipe.title,
                 style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .padding(vertical = 8.dp)
+                    .padding(vertical = 8.dp, horizontal = 16.dp)
                     .align(Alignment.CenterHorizontally)
                     .onGloballyPositioned { coordinates ->
                         // Get the Y position of this text element on the screen
