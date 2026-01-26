@@ -18,19 +18,19 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 
-    id("org.jetbrains.kotlin.plugin.compose") version "2.2.0-RC"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
     kotlin("plugin.serialization") version "2.2.0-RC"
-    id("com.google.devtools.ksp") version "2.2.0-RC-2.0.1"
+    id("com.google.devtools.ksp") version "2.3.2"
 }
 
 android {
-    compileSdk = 35
+    compileSdk = 36
     namespace = "com.planeat.planeat"
 
     defaultConfig {
         applicationId = "com.planeat.planeat"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 18
         versionName = "1.1.0"
         vectorDrawables.useSupportLibrary = true
@@ -84,12 +84,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     buildFeatures {
@@ -99,21 +95,21 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
+    androidResources {
+        noCompress += listOf("tflite")
+    }
 
     // Specify tflite file should not be compressed for the app apk
-    aaptOptions {
-        noCompress("tflite")
-    }
 
 
 }
 
 dependencies {
     // Translation
-    implementation("com.google.mlkit:translate:17.0.3")
+    implementation(libs.translate)
     // Classify recipes
     implementation(libs.litert)
-    implementation("org.tensorflow:tensorflow-lite-select-tf-ops:2.16.1")
+    implementation(libs.tensorflow.lite.select.tf.ops)
     implementation(libs.litert.metadata)
     implementation(libs.litert.support.api)
     // FOR RELEASE KEEP THIS
@@ -122,7 +118,7 @@ dependencies {
     implementation(libs.transport.runtime)
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlin.stdlib)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+    implementation(libs.kotlinx.coroutines.android.v1102)
     implementation(libs.error.prone.annotations)
     // Database
     implementation(libs.androidx.room.runtime.v261)
@@ -134,7 +130,7 @@ dependencies {
     // Parsing
     api(libs.jsoup)
     // Compose UI
-    implementation("androidx.compose.foundation:foundation:1.9.0-alpha03")
+    implementation(libs.androidx.foundation)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.compose.material)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -148,9 +144,9 @@ dependencies {
     implementation(libs.coil.compose.v260)
 
     // Test rules and transitive dependencies:
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.9.0-alpha03")
+    androidTestImplementation(libs.androidx.ui.test.junit4)
     // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>():
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.9.0-alpha03")
+    debugImplementation(libs.androidx.ui.test.manifest)
 
     // QrCode
     implementation(libs.compose.qr.code)
