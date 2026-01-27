@@ -55,6 +55,13 @@ import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
 import com.planeat.planeat.ui.utils.IngredientClassifier
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import com.planeat.planeat.ui.utils.TagClassifier
+import java.io.File
+import java.io.FileWriter
+import java.net.SocketTimeoutException
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -65,24 +72,20 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
+import org.json.JSONObject
 import org.jsoup.Connection
 import org.jsoup.Jsoup
-import org.json.JSONObject
-import java.io.File
-import java.io.FileWriter
-import java.net.SocketTimeoutException
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-
 
 @SuppressLint("NewApi")
-class AppModel(private val maxResult: Int, private val db: RecipesDb, private val context: Context) {
+class AppModel(
+        private val maxResult: Int,
+        private val db: RecipesDb,
+        private val context: Context
+) {
     private val connectors: List<Connector>
 
     var currentTag = mutableStateOf(Tags.All)
-    var onAgendaChanged = mutableStateOf<()->Unit>({})
+    var onAgendaChanged = mutableStateOf<() -> Unit>({})
 
     var recipesInDb = mutableListOf<Recipe>()
     var recipesInDbShown = mutableStateListOf<Recipe>()
@@ -150,7 +153,6 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         return (currentTime - lastModifiedTime) > oneWeekInMillis
     }
 
-
     init {
         val marmiton = Marmiton(maxResult)
         val ricardo = Ricardo(maxResult)
@@ -163,59 +165,95 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
 
     suspend fun gigaDataset() {
         val categoriesUrl = mutableMapOf<Tags, List<String>>()
-        categoriesUrl[Tags.Appetizer] = listOf("https://www.marmiton.org/recettes/index/categorie/aperitif-ou-buffet/PAGE")
-        categoriesUrl[Tags.Healthy] = listOf("https://www.ricardocuisine.com/themes/sante?sort=recent&content-type=theme&grouping-type=4&grouping-id=60&currentPage=PAGE")
-        categoriesUrl[Tags.MiddleEastern] = listOf("https://www.marmiton.org/recettes/selection_merveilles-du-maghreb-et-de-l-orient.aspx?p=PAGE", "https://www.ricardocuisine.com/themes/mediterraneen?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2447&currentPage=PAGE")
-        categoriesUrl[Tags.Drinks] = listOf("https://www.marmiton.org/recettes?type=boisson&page=PAGE")
-        categoriesUrl[Tags.American] = listOf("https://www.ricardocuisine.com/themes/cuisine-americaine?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2545&currentPage=PAGE")
-        categoriesUrl[Tags.Seafood] = listOf("https://www.ricardocuisine.com/themes/bord-de-mer?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2540&currentPage=PAGE")
-        categoriesUrl[Tags.Bakery] = listOf("https://www.ricardocuisine.com/themes/meilleurs-gateaux?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2286&currentPage=PAGE")
-        categoriesUrl[Tags.European] = listOf("https://www.marmiton.org/recettes/selection_recettes_portugaises.aspx?p=PAGE", "https://www.marmiton.org/recettes/selection_belgique.aspx?p=PAGE", "https://www.marmiton.org/recettes/selection_recettes_grecques.aspx?p=PAGE", "https://www.marmiton.org/recettes/selection_recettes_francaises.aspx?p=PAGE", "https://www.ricardocuisine.com/themes/cuisine-espagnole?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2552&currentPage=PAGE", "https://www.ricardocuisine.com/themes/cuisine-italienne?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2429&currentPage=PAGE")
-        categoriesUrl[Tags.Asian] = listOf(" https://www.ricardocuisine.com/themes/cuisine-chinoise?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2663&currentPage=PAGE", "https://www.ricardocuisine.com/themes/cuisine-coreenne?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2661&currentPage=PAGE", "https://www.ricardocuisine.com/themes/cuisine-japonaise?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2660&currentPage=PAGE")
-        categoriesUrl[Tags.Vegetarian] = listOf("https://www.ricardocuisine.com/themes/vegetarien?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2547&currentPage=PAGE")
-        categoriesUrl[Tags.Desserts] = listOf("https://www.marmiton.org/recettes/index/categorie/dessert/PAGE")
-        categoriesUrl[Tags.ComfortFood] = listOf("https://www.ricardocuisine.com/themes/comfort-food?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2266&currentPage=PAGE")
+        categoriesUrl[Tags.Appetizer] =
+                listOf("https://www.marmiton.org/recettes/index/categorie/aperitif-ou-buffet/PAGE")
+        categoriesUrl[Tags.Healthy] =
+                listOf(
+                        "https://www.ricardocuisine.com/themes/sante?sort=recent&content-type=theme&grouping-type=4&grouping-id=60&currentPage=PAGE"
+                )
+        categoriesUrl[Tags.MiddleEastern] =
+                listOf(
+                        "https://www.marmiton.org/recettes/selection_merveilles-du-maghreb-et-de-l-orient.aspx?p=PAGE",
+                        "https://www.ricardocuisine.com/themes/mediterraneen?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2447&currentPage=PAGE"
+                )
+        categoriesUrl[Tags.Drinks] =
+                listOf("https://www.marmiton.org/recettes?type=boisson&page=PAGE")
+        categoriesUrl[Tags.American] =
+                listOf(
+                        "https://www.ricardocuisine.com/themes/cuisine-americaine?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2545&currentPage=PAGE"
+                )
+        categoriesUrl[Tags.Seafood] =
+                listOf(
+                        "https://www.ricardocuisine.com/themes/bord-de-mer?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2540&currentPage=PAGE"
+                )
+        categoriesUrl[Tags.Bakery] =
+                listOf(
+                        "https://www.ricardocuisine.com/themes/meilleurs-gateaux?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2286&currentPage=PAGE"
+                )
+        categoriesUrl[Tags.European] =
+                listOf(
+                        "https://www.marmiton.org/recettes/selection_recettes_portugaises.aspx?p=PAGE",
+                        "https://www.marmiton.org/recettes/selection_belgique.aspx?p=PAGE",
+                        "https://www.marmiton.org/recettes/selection_recettes_grecques.aspx?p=PAGE",
+                        "https://www.marmiton.org/recettes/selection_recettes_francaises.aspx?p=PAGE",
+                        "https://www.ricardocuisine.com/themes/cuisine-espagnole?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2552&currentPage=PAGE",
+                        "https://www.ricardocuisine.com/themes/cuisine-italienne?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2429&currentPage=PAGE"
+                )
+        categoriesUrl[Tags.Asian] =
+                listOf(
+                        " https://www.ricardocuisine.com/themes/cuisine-chinoise?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2663&currentPage=PAGE",
+                        "https://www.ricardocuisine.com/themes/cuisine-coreenne?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2661&currentPage=PAGE",
+                        "https://www.ricardocuisine.com/themes/cuisine-japonaise?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2660&currentPage=PAGE"
+                )
+        categoriesUrl[Tags.Vegetarian] =
+                listOf(
+                        "https://www.ricardocuisine.com/themes/vegetarien?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2547&currentPage=PAGE"
+                )
+        categoriesUrl[Tags.Desserts] =
+                listOf("https://www.marmiton.org/recettes/index/categorie/dessert/PAGE")
+        categoriesUrl[Tags.ComfortFood] =
+                listOf(
+                        "https://www.ricardocuisine.com/themes/comfort-food?searchValue=&sort=recent&content-type=theme&grouping-type=4&grouping-id=2266&currentPage=PAGE"
+                )
 
         var dataset = mutableMapOf<Recipe, List<Tags>>()
         coroutineScope {
-
             val marmiton = Marmiton(3)
             val ricardo = Ricardo(3)
             var i = 0
             launch(Dispatchers.IO) {
-                categoriesUrl.forEach {tag, listUrls ->
-
-                    val onRecipe: (Recipe) -> Unit = { r->
+                categoriesUrl.forEach { tag, listUrls ->
+                    val onRecipe: (Recipe) -> Unit = { r ->
                         val result = emptyList<Tags>().toMutableList()
                         result += tag
-                        if (r.tags.any { it.contains("boisson") })
-                            result += Tags.Drinks
-                        if (r.tags.any { it.contains("maroc") })
-                            result += Tags.MiddleEastern
-                        if (r.tags.any { it.contains("oriental") })
-                            result += Tags.MiddleEastern
-                        if (r.tags.any { it.contains("amuse-gueule") })
-                            result += Tags.Appetizer
-                        if (r.tags.any { it.contains("comfort") })
-                            result += Tags.ComfortFood
-                        if (r.tags.any { it.contains("sant") })
-                            result += Tags.Healthy
-                        if (r.tags.any { it.contains("fruits de mer") } || r.tags.any { it.contains("crustacés") })
-                            result += Tags.Seafood
-                        if (r.tags.any { it.contains("méditerranée") })
-                            result += Tags.MiddleEastern
-                        if (r.tags.any { it.contains("asia") } || r.tags.any { it.contains("japonais") })
-                            result += Tags.Asian
-                        if (r.tags.any { it.contains("été") })
-                            result += Tags.ComfortFood
-                        if (r.tags.any { it.contains("américain") })
-                            result += Tags.American
-                        if (r.tags.any { it.contains("grec") } || r.tags.any { it.contains("italie") } || r.tags.any { it.contains("portugua") } || r.tags.any { it.contains("fran") })
-                            result += Tags.European
-                        if (r.tags.any { it.contains("végétarien") })
-                            result += Tags.Vegetarian
-                        if (r.tags.any { it.contains("dessert") } || r.tags.any { it.contains("gâteau") })
-                            result += Tags.Desserts
+                        if (r.tags.any { it.contains("boisson") }) result += Tags.Drinks
+                        if (r.tags.any { it.contains("maroc") }) result += Tags.MiddleEastern
+                        if (r.tags.any { it.contains("oriental") }) result += Tags.MiddleEastern
+                        if (r.tags.any { it.contains("amuse-gueule") }) result += Tags.Appetizer
+                        if (r.tags.any { it.contains("comfort") }) result += Tags.ComfortFood
+                        if (r.tags.any { it.contains("sant") }) result += Tags.Healthy
+                        if (r.tags.any { it.contains("fruits de mer") } ||
+                                        r.tags.any { it.contains("crustacés") }
+                        )
+                                result += Tags.Seafood
+                        if (r.tags.any { it.contains("méditerranée") }) result += Tags.MiddleEastern
+                        if (r.tags.any { it.contains("asia") } ||
+                                        r.tags.any { it.contains("japonais") }
+                        )
+                                result += Tags.Asian
+                        if (r.tags.any { it.contains("été") }) result += Tags.ComfortFood
+                        if (r.tags.any { it.contains("américain") }) result += Tags.American
+                        if (r.tags.any { it.contains("grec") } ||
+                                        r.tags.any { it.contains("italie") } ||
+                                        r.tags.any { it.contains("portugua") } ||
+                                        r.tags.any { it.contains("fran") }
+                        )
+                                result += Tags.European
+                        if (r.tags.any { it.contains("végétarien") }) result += Tags.Vegetarian
+                        if (r.tags.any { it.contains("dessert") } ||
+                                        r.tags.any { it.contains("gâteau") }
+                        )
+                                result += Tags.Desserts
                         synchronized(dataset) {
                             dataset[r] = result
                             i += 1
@@ -225,11 +263,20 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                                     val file = File(context.filesDir, "input.csv")
                                     FileWriter(file, true).use { writer ->
                                         dataset.forEach { recipe, tags ->
-                                            // Convert recipe to JSON string and tags to a string separated by commas
-                                            val recipeJson = recipe.toSmallJson() // Assuming this is your JSON conversion method
-                                            val tagsString = tags.distinct().joinToString(",") // Convert list of tags to comma-separated string
+                                            // Convert recipe to JSON string and tags to a string
+                                            // separated by commas
+                                            val recipeJson =
+                                                    recipe.toSmallJson() // Assuming this is your
+                                            // JSON conversion method
+                                            val tagsString =
+                                                    tags.distinct()
+                                                            .joinToString(
+                                                                    ","
+                                                            ) // Convert list of tags to
+                                            // comma-separated string
 
-                                            // Append to the CSV file, separating the columns with '@'
+                                            // Append to the CSV file, separating the columns with
+                                            // '@'
                                             writer.appendLine("$recipeJson@$tagsString")
                                         }
                                     }
@@ -267,24 +314,25 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
             } catch (e: NumberFormatException) {
                 1.0f // Default to 1.0 if parsing fails
             }
-        } ?: 1.0f  // Default to 1.0 if qty is absent or null
+        }
+                ?: 1.0f // Default to 1.0 if qty is absent or null
     }
 
     fun postIngredients(ingredientsData: String): List<IngredientItem> {
-        if (!hasConnection.value)
-            return emptyList()
+        if (!hasConnection.value) return emptyList()
 
         val ic = IngredientClassifier()
         val db = IngredientsDb.getDatabase(context)
         try {
             // Use Jsoup to send a POST request
-            val response = Jsoup.connect("https://cha-cu.it/parse")
-                .method(Connection.Method.POST)
-                .header("Content-Type", "text/plain")
-                .requestBody(ingredientsData)
-                .timeout(2000)
-                .ignoreContentType(true) // We want to handle the JSON response
-                .execute()
+            val response =
+                    Jsoup.connect("https://cha-cu.it/parse")
+                            .method(Connection.Method.POST)
+                            .header("Content-Type", "text/plain")
+                            .requestBody(ingredientsData)
+                            .timeout(2000)
+                            .ignoreContentType(true) // We want to handle the JSON response
+                            .execute()
 
             // Get the response body as a string (JSON)
             val jsonResponse = response.body()
@@ -298,17 +346,18 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
             return parsedIngredients.mapNotNull { parsedIngredient ->
                 parsedIngredient.name?.let { // Ignore if name is absent
                     IngredientItem(
-                        quantity = parseQuantity(parsedIngredient.qty),
-                        unit = parsedIngredient.unit ?: "",  // Default to empty string if unit is null
-                        name = it,
-                        category = toIngredientCategory(it, ic, db)
+                            quantity = parseQuantity(parsedIngredient.qty),
+                            unit = parsedIngredient.unit
+                                            ?: "", // Default to empty string if unit is null
+                            name = it,
+                            category = toIngredientCategory(it, ic, db)
                     )
                 }
             }
         } catch (error: SocketTimeoutException) {
             hasConnection.value = false
             startCheckConnection()
-        } catch(error: Exception) {
+        } catch (error: Exception) {
             Log.d("PlanEat", "Error: $error")
         }
         return emptyList()
@@ -319,38 +368,42 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
             val scope = CoroutineScope(Dispatchers.Default)
 
             // Launch a job that checks the connection every minute
-            checkConnectionJob.value = scope.launch {
-                while (!hasConnection.value) {
-                    // Perform your connection check here
-                    Log.e("PlanEat", "Checking connection to parse ingredients.")
+            checkConnectionJob.value =
+                    scope.launch {
+                        while (!hasConnection.value) {
+                            // Perform your connection check here
+                            Log.e("PlanEat", "Checking connection to parse ingredients.")
 
-                    // Wait for 1 minute
-                    delay(60 * 1000L)
+                            // Wait for 1 minute
+                            delay(60 * 1000L)
 
-                    try {
-                        // Use Jsoup to send a POST request
-                        val response = Jsoup.connect("https://cha-cu.it/parse")
-                            .method(Connection.Method.POST)
-                            .header("Content-Type", "text/plain")
-                            .requestBody("eggs")
-                            .timeout(2000)
-                            .ignoreContentType(true) // We want to handle the JSON response
-                            .execute()
+                            try {
+                                // Use Jsoup to send a POST request
+                                val response =
+                                        Jsoup.connect("https://cha-cu.it/parse")
+                                                .method(Connection.Method.POST)
+                                                .header("Content-Type", "text/plain")
+                                                .requestBody("eggs")
+                                                .timeout(2000)
+                                                .ignoreContentType(
+                                                        true
+                                                ) // We want to handle the JSON response
+                                                .execute()
 
-                        // Get the response body as a string (JSON)
-                        response.body()
-                        hasConnection.value = true
-                        Log.d("PlanEat", "Connection to parse ingredients is back!")
-                    } catch (error: Exception) {
-                        Log.d("PlanEat", "Error: $error")
-                        continue
+                                // Get the response body as a string (JSON)
+                                response.body()
+                                hasConnection.value = true
+                                Log.d("PlanEat", "Connection to parse ingredients is back!")
+                            } catch (error: Exception) {
+                                Log.d("PlanEat", "Error: $error")
+                                continue
+                            }
+                        }
+
+                        // When hasConnection becomes false, stop the job and set it to null
+                        println("No connection, stopping job.")
+                        checkConnectionJob.value = null
                     }
-                }
-
-                // When hasConnection becomes false, stop the job and set it to null
-                println("No connection, stopping job.")
-                checkConnectionJob.value = null
-            }
         }
     }
 
@@ -365,40 +418,41 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     }
 
     suspend fun classifyRecipeAndIngredients(recipes: List<Recipe>) {
-        recipes.forEach { recipe ->
-            classifyRecipeAndIngredients(recipe)
-        }
+        recipes.forEach { recipe -> classifyRecipeAndIngredients(recipe) }
     }
 
     fun filter(tag: Tags) {
         currentTag.value = tag
 
         // Update my recipes
-        var newList = if (tag == Tags.All) {
-            recipesInDb
-        } else {
-            recipesInDb.filter { recipe -> toTags(recipe).contains(tag) }
-        }
+        var newList =
+                if (tag == Tags.All) {
+                    recipesInDb
+                } else {
+                    recipesInDb.filter { recipe -> toTags(recipe).contains(tag) }
+                }
         recipesInDbShown.clear()
         for (r in newList) {
             recipesInDbShown.add(r)
         }
         // Update results
-        newList = if (tag == Tags.All) {
-            recipesSearched
-        } else {
-            recipesSearched.filter { recipe -> toTags(recipe).contains(tag) }
-        }
+        newList =
+                if (tag == Tags.All) {
+                    recipesSearched
+                } else {
+                    recipesSearched.filter { recipe -> toTags(recipe).contains(tag) }
+                }
         recipesSearchedShown.clear()
         for (r in newList) {
             recipesSearchedShown.add(r)
         }
         // Update suggested
-        newList = if (tag == Tags.All) {
-            suggestedRecipes
-        } else {
-            suggestedRecipes.filter { recipe -> toTags(recipe).contains(tag) }
-        }
+        newList =
+                if (tag == Tags.All) {
+                    suggestedRecipes
+                } else {
+                    suggestedRecipes.filter { recipe -> toTags(recipe).contains(tag) }
+                }
         suggestedRecipesShown.clear()
         for (r in newList) {
             suggestedRecipesShown.add(r)
@@ -509,9 +563,10 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
             val date = jsonObj.getLong("date")
             val remove = jsonObj.optBoolean("remove").or(false)
 
-            val formattedDate = Instant.ofEpochMilli(date)
-                .atZone(ZoneId.systemDefault())
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+            val formattedDate =
+                    Instant.ofEpochMilli(date)
+                            .atZone(ZoneId.systemDefault())
+                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
             println("Formatted Date: $formattedDate")
 
@@ -523,21 +578,23 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
             // Check if the recipe already exists in the database
             val existingRecipe = db.recipeDao().findByUrl(recipe.url)
 
-            val recipeId = if (existingRecipe != null) {
-                // Recipe exists, use the existing id
-                existingRecipe.recipeId
-            } else {
-                val r = recipe.copy()
-                r.recipeId = 0
-                // Recipe does not exist, insert the new recipe and get the new id
-                db.recipeDao().insertAll(listOf(r))
-                val newRecipe = db.recipeDao().findByUrl(r.url)
-                if (newRecipe == null) {
-                    Log.e("PlanEat", "Recipe not found")
-                    return
-                }
-                newRecipe.recipeId // Retrieve the inserted recipe's ID (assume ID is auto-assigned)
-            }
+            val recipeId =
+                    if (existingRecipe != null) {
+                        // Recipe exists, use the existing id
+                        existingRecipe.recipeId
+                    } else {
+                        val r = recipe.copy()
+                        r.recipeId = 0
+                        // Recipe does not exist, insert the new recipe and get the new id
+                        db.recipeDao().insertAll(listOf(r))
+                        val newRecipe = db.recipeDao().findByUrl(r.url)
+                        if (newRecipe == null) {
+                            Log.e("PlanEat", "Recipe not found")
+                            return
+                        }
+                        newRecipe.recipeId // Retrieve the inserted recipe's ID (assume ID is
+                        // auto-assigned)
+                    }
 
             // Create and insert a new agenda entry
             val newAgenda = Agenda(date, recipeId)
@@ -563,8 +620,7 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
         coroutineScope {
             launch(Dispatchers.IO) {
                 Log.w("PlanEat", "Insert new recipe: ${recipe.title}")
-                if (recipe.recipeId == 0L)
-                {
+                if (recipe.recipeId == 0L) {
                     db.recipeDao().insertAll(listOf(recipe))
                 }
                 val res = db.recipeDao().findByUrl(recipe.url)
@@ -612,22 +668,15 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                     }
 
                     if (suggestedRecipes.isEmpty()) {
-                        if (!isMoreThanOneWeekSinceLastModified(
-                                "suggestions.json"
-                            )
-                        ) {
-                            val suggestions =
-                                loadRecipesFromFile("suggestions.json")
+                        if (!isMoreThanOneWeekSinceLastModified("suggestions.json")) {
+                            val suggestions = loadRecipesFromFile("suggestions.json")
                             suggestions?.forEach { recipe ->
                                 if (!recipesInDb.any { it.url == recipe.url }) {
                                     suggestedRecipes.add(recipe)
                                     suggestedRecipesShown.add(recipe)
                                     if (recipe.parsed_ingredients.isEmpty()) {
                                         classifyRecipeAndIngredients(recipe)
-                                        writeRecipesToFile(
-                                            suggestedRecipes,
-                                            "suggestions.json"
-                                        )
+                                        writeRecipesToFile(suggestedRecipes, "suggestions.json")
                                     }
                                 }
                             }
@@ -635,28 +684,31 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                         // If nothing cached
                         if (suggestedRecipes.isEmpty()) {
                             connectors.map { connector ->
-                                searchJobs += launch(Dispatchers.IO) {
-                                    // If no suggestions, find new one
-                                    connector.suggest(onRecipe = { recipe ->
-                                        // Add new recipes to results
-                                        if (!recipesInDb.any { it.url == recipe.url }) {
-                                            suggestedRecipes.add(recipe)
-                                            suggestedRecipesShown.add(recipe)
-                                            launch(Dispatchers.IO) {
-                                                classifyRecipeAndIngredients(recipe)
-                                                writeRecipesToFile(
-                                                    suggestedRecipes,
-                                                    "suggestions.json"
-                                                )
-                                            }
+                                searchJobs +=
+                                        launch(Dispatchers.IO) {
+                                            // If no suggestions, find new one
+                                            connector.suggest(
+                                                    onRecipe = { recipe ->
+                                                        // Add new recipes to results
+                                                        if (!recipesInDb.any {
+                                                                    it.url == recipe.url
+                                                                }
+                                                        ) {
+                                                            suggestedRecipes.add(recipe)
+                                                            suggestedRecipesShown.add(recipe)
+                                                            launch(Dispatchers.IO) {
+                                                                classifyRecipeAndIngredients(recipe)
+                                                                writeRecipesToFile(
+                                                                        suggestedRecipes,
+                                                                        "suggestions.json"
+                                                                )
+                                                            }
+                                                        }
+                                                    }
+                                            )
+                                            // Cache it
+                                            writeRecipesToFile(suggestedRecipes, "suggestions.json")
                                         }
-                                    })
-                                    // Cache it
-                                    writeRecipesToFile(
-                                        suggestedRecipes,
-                                        "suggestions.json"
-                                    )
-                                }
                             }
                         }
                     }
@@ -696,18 +748,25 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
                 }
                 if (!noExternal) {
                     connectors.map { connector ->
-                        searchJobs += launch(Dispatchers.IO) {
-                            connector.search(searchTerm, onRecipe = { recipe ->
-                                if (searchTerm == currentSearchTerm) {
-                                    Log.w("PlanEat", "Adding recipe $recipe")
-                                    // Add new recipes to results
-                                    if (!recipesInDbShown.any { it.url == recipe.url }) {
-                                        recipesSearchedShown.add(recipe)
-                                        recipesSearched.add(recipe)
-                                    }
+                        searchJobs +=
+                                launch(Dispatchers.IO) {
+                                    connector.search(
+                                            searchTerm,
+                                            onRecipe = { recipe ->
+                                                if (searchTerm == currentSearchTerm) {
+                                                    Log.w("PlanEat", "Adding recipe $recipe")
+                                                    // Add new recipes to results
+                                                    if (!recipesInDbShown.any {
+                                                                it.url == recipe.url
+                                                            }
+                                                    ) {
+                                                        recipesSearchedShown.add(recipe)
+                                                        recipesSearched.add(recipe)
+                                                    }
+                                                }
+                                            }
+                                    )
                                 }
-                            })
-                        }
                     }
                 }
             }
@@ -716,12 +775,11 @@ class AppModel(private val maxResult: Int, private val db: RecipesDb, private va
     }
 }
 
-
 @SuppressLint("CoroutineCreationDuringComposition")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlanEatApp(
-    windowSize: WindowSizeClass,
+        windowSize: WindowSizeClass,
 ) {
     /**
      * This will help us select type of navigation and content type depending on window size and
@@ -731,17 +789,16 @@ fun PlanEatApp(
 
     val context = LocalContext.current
     val db = RecipesDb.getDatabase(context)
-    val model = AppModel(3, db, context);
+    val model = AppModel(3, db, context)
 
-    //model.bertQaHelper = BertQaHelper(context = context, answererListener = model)
+    // model.bertQaHelper = BertQaHelper(context = context, answererListener = model)
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     scope.launch {
 
-       // model.gigaDataset()
+        // model.gigaDataset()
         model.initSuggestions()
     }
-
 
     when (windowSize.widthSizeClass) {
         WindowWidthSizeClass.Compact -> {
@@ -758,102 +815,89 @@ fun PlanEatApp(
         }
     }
 
-
     NavigationWrapper(
-        model = model,
-        onQueryChanged = { value, noExternal -> scope.launch {
-            model.search(value, context, noExternal)
-        } },
-        onRecipeDeleted = {recipe -> scope.launch {
-            model.remove(recipe)
-        } },
-        onRecipeUpdated = {recipe -> scope.launch {
-            model.update(recipe, true)
-        } },
-        navigationType = navigationType,
+            model = model,
+            onQueryChanged = { value, noExternal ->
+                scope.launch { model.search(value, context, noExternal) }
+            },
+            onRecipeDeleted = { recipe -> scope.launch { model.remove(recipe) } },
+            onRecipeUpdated = { recipe -> scope.launch { model.update(recipe, true) } },
+            navigationType = navigationType,
     )
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun NavigationWrapper(
-    model: AppModel,
-    onQueryChanged: (String, Boolean) -> Unit,
-    onRecipeDeleted: (Recipe) -> Unit,
-    onRecipeUpdated: (Recipe) -> Unit,
-    navigationType: PlanEatNavigationType,
+        model: AppModel,
+        onQueryChanged: (String, Boolean) -> Unit,
+        onRecipeDeleted: (Recipe) -> Unit,
+        onRecipeUpdated: (Recipe) -> Unit,
+        navigationType: PlanEatNavigationType,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     val navController = rememberNavController()
-    val navigationActions = remember(navController) {
-        PlanEatNavigationActions(navController)
-    }
+    val navigationActions = remember(navController) { PlanEatNavigationActions(navController) }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val selectedDestination =
-        navBackStackEntry?.destination?.route ?: PlanEatRoute.AGENDA
+    val selectedDestination = navBackStackEntry?.destination?.route ?: PlanEatRoute.AGENDA
 
     AppContent(
-        model = model,
-        onQueryChanged = onQueryChanged,
-        onRecipeDeleted = onRecipeDeleted,
-        onRecipeUpdated = onRecipeUpdated,
-        navigationType = navigationType,
-        navController = navController,
-        selectedDestination = selectedDestination,
-        navigateToTopLevelDestination = navigationActions::navigateTo,
-    ) {
-        scope.launch {
-            drawerState.open()
-        }
-    }
+            model = model,
+            onQueryChanged = onQueryChanged,
+            onRecipeDeleted = onRecipeDeleted,
+            onRecipeUpdated = onRecipeUpdated,
+            navigationType = navigationType,
+            navController = navController,
+            selectedDestination = selectedDestination,
+            navigateToTopLevelDestination = navigationActions::navigateTo,
+    ) { scope.launch { drawerState.open() } }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppContent(
-    modifier: Modifier = Modifier,
-    model: AppModel,
-    onQueryChanged: (String, Boolean) -> Unit,
-    onRecipeDeleted: (Recipe) -> Unit,
-    onRecipeUpdated: (Recipe) -> Unit,
-    navigationType: PlanEatNavigationType,
-    navController: NavHostController,
-    selectedDestination: String,
-    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
-    onDrawerClicked: () -> Unit = {}
+        modifier: Modifier = Modifier,
+        model: AppModel,
+        onQueryChanged: (String, Boolean) -> Unit,
+        onRecipeDeleted: (Recipe) -> Unit,
+        onRecipeUpdated: (Recipe) -> Unit,
+        navigationType: PlanEatNavigationType,
+        navController: NavHostController,
+        selectedDestination: String,
+        navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit,
+        onDrawerClicked: () -> Unit = {}
 ) {
-    val navTo : (PlanEatTopLevelDestination) -> Unit = { it ->
+    val navTo: (PlanEatTopLevelDestination) -> Unit = { it ->
         model.selectedDate.value = null
         navigateToTopLevelDestination(it)
     }
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == PlanEatNavigationType.NAVIGATION_RAIL) {
             PlanEatNavigationRail(
-                selectedDestination = selectedDestination,
-                navigateToTopLevelDestination = navTo,
-                onDrawerClicked = onDrawerClicked,
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            NavHost(
-                model = model,
-                navController = navController,
-                modifier = Modifier.weight(1f),
-                onQueryChanged = onQueryChanged,
-                onRecipeDeleted = onRecipeDeleted,
-                onRecipeUpdated = onRecipeUpdated,
-                navigateToTopLevelDestination = navTo
-            )
-            AnimatedVisibility(visible = navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION) {
-                PlanEatBottomNavigationBar(
                     selectedDestination = selectedDestination,
                     navigateToTopLevelDestination = navTo,
-                    bottomBarState = model.openedRecipe
+                    onDrawerClicked = onDrawerClicked,
+            )
+        }
+        Column(modifier = Modifier.fillMaxSize()) {
+            NavHost(
+                    model = model,
+                    navController = navController,
+                    modifier = Modifier.weight(1f),
+                    onQueryChanged = onQueryChanged,
+                    onRecipeDeleted = onRecipeDeleted,
+                    onRecipeUpdated = onRecipeUpdated,
+                    navigateToTopLevelDestination = navTo
+            )
+            AnimatedVisibility(
+                    visible = navigationType == PlanEatNavigationType.BOTTOM_NAVIGATION
+            ) {
+                PlanEatBottomNavigationBar(
+                        selectedDestination = selectedDestination,
+                        navigateToTopLevelDestination = navTo,
+                        bottomBarState = model.openedRecipe
                 )
             }
         }
@@ -863,160 +907,42 @@ fun AppContent(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun NavHost(
-    model: AppModel,
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onQueryChanged: (String, Boolean) -> Unit,
-    onRecipeDeleted: (Recipe) -> Unit,
-    onRecipeUpdated: (Recipe) -> Unit,
-    navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
+        model: AppModel,
+        navController: NavHostController,
+        modifier: Modifier = Modifier,
+        onQueryChanged: (String, Boolean) -> Unit,
+        onRecipeDeleted: (Recipe) -> Unit,
+        onRecipeUpdated: (Recipe) -> Unit,
+        navigateToTopLevelDestination: (PlanEatTopLevelDestination) -> Unit
 ) {
     val dataSource by remember { mutableStateOf(CalendarDataSource()) }
-    var dataUi by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
+    var dataUi by remember {
+        mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today))
+    }
 
     NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = PlanEatRoute.AGENDA,
+            modifier = modifier,
+            navController = navController,
+            startDestination = PlanEatRoute.AGENDA,
     ) {
         composable(PlanEatRoute.AGENDA) {
-            AgendaScreen(model = model, dataSource = dataSource, dataUi = dataUi,
-                updateDate = { newUi: CalendarUiModel, changePage: Boolean ->
-                    dataUi = newUi
-                    if (changePage) {
-                        navigateToTopLevelDestination(
-                            PlanEatTopLevelDestination(
-                                PlanEatRoute.SAVED,
-                                0,
-                                0
-                            )
-                        )
-                    }
-                    model.selectedDate.value = newUi.selectedDate.date
-                },
-                goToDetails = { r ->
-                    model.openedRecipe.value = r
-                    Handler(Looper.getMainLooper()).post {
-                        navController.navigate(PlanEatRoute.DETAILS)
-                    }
-                },
-                goToEdition = { r ->
-                    model.openedRecipe.value = r
-                    Handler(Looper.getMainLooper()).post {
-                        navController.navigate(PlanEatRoute.EDITION)
-                    }
-                },
-                goToAccount = {
-                    Handler(Looper.getMainLooper()).post {
-                        navController.navigate(PlanEatRoute.ACCOUNT)
-                    }
-                },
-                onRecipeDeleted = onRecipeDeleted)
-        }
-        composable(PlanEatRoute.ACCOUNT) {
-            AccountScreen(account=model.account.value!!)
-        }
-        composable(PlanEatRoute.SEARCH) {
-            DiscoverScreen(
-                model = model,
-                onQueryChanged = onQueryChanged,
-                onRecipeDeleted = onRecipeDeleted,
-                onFilterClicked = { filter ->
-                    model.filter(filter)
-                },
-                goToAgenda = {
-                    model.openedRecipe.value = null
-                    Handler(Looper.getMainLooper()).post {
-                        navigateToTopLevelDestination(
-                            PlanEatTopLevelDestination(
-                                PlanEatRoute.AGENDA,
-                                0,
-                                0
-                            )
-                        )
-                    }
-                },
-                goToDetails = { r ->
-                    model.openedRecipe.value = r
-                    Handler(Looper.getMainLooper()).post {
-                        navController.navigate(PlanEatRoute.DETAILS)
-                    }
-                },
-                goToEdition = { r ->
-                    model.openedRecipe.value = r
-                    Handler(Looper.getMainLooper()).post {
-                        navController.navigate(PlanEatRoute.EDITION)
-                    }
-                }
-            )
-        }
-        composable(PlanEatRoute.SAVED) {
-            RecipesScreen(
-                model = model,
-                onQueryChanged = onQueryChanged,
-                onRecipeDeleted = onRecipeDeleted,
-                onFilterClicked = { filter ->
-                    model.filter(filter)
-                },
-                goToAgenda = {
-                    model.openedRecipe.value = null
-                    Handler(Looper.getMainLooper()).post {
-                        navigateToTopLevelDestination(
-                            PlanEatTopLevelDestination(
-                                PlanEatRoute.AGENDA,
-                                0,
-                                0
-                            )
-                        )
-                    }
-                },
-                goToDetails = { r ->
-                    model.openedRecipe.value = r
-                    Handler(Looper.getMainLooper()).post {
-                        navController.navigate(PlanEatRoute.DETAILS)
-                    }
-                },
-                goToEdition = { r ->
-                    model.openedRecipe.value = r
-                    Handler(Looper.getMainLooper()).post {
-                        navController.navigate(PlanEatRoute.EDITION)
-                    }
-                }
-            )
-        }
-        composable(PlanEatRoute.SHOPPING_LIST) {
-            ShoppingScreen(
-                onRecipeSelected = { r ->
-                    model.openedRecipe.value = r
-                    Handler(Looper.getMainLooper()).post {
-                        navController.navigate(PlanEatRoute.DETAILS)
-                    }
-                },
-                goToAgenda = {
-                    model.openedRecipe.value = null
-                    Handler(Looper.getMainLooper()).post {
-                        navController.navigate(PlanEatRoute.AGENDA)
-                    }
-                }
-            )
-        }
-        composable(PlanEatRoute.DETAILS) {
-            if (model.openedRecipe.value != null) {
-                RecipeDetailScreen(
-                    selectedRecipe = model.openedRecipe.value!!,
-                    dataUi = dataUi,
+            AgendaScreen(
                     model = model,
-                    goToAgenda = {
-                        model.openedRecipe.value = null
-                        Handler(Looper.getMainLooper()).post {
-                            navController.popBackStack()
+                    dataSource = dataSource,
+                    dataUi = dataUi,
+                    updateDate = { newUi: CalendarUiModel, changePage: Boolean ->
+                        dataUi = newUi
+                        if (changePage) {
                             navigateToTopLevelDestination(
-                                PlanEatTopLevelDestination(
-                                    PlanEatRoute.AGENDA,
-                                    0,
-                                    0
-                                )
+                                    PlanEatTopLevelDestination(PlanEatRoute.SAVED, 0, 0)
                             )
+                        }
+                        model.selectedDate.value = newUi.selectedDate.date
+                    },
+                    goToDetails = { r ->
+                        model.openedRecipe.value = r
+                        Handler(Looper.getMainLooper()).post {
+                            navController.navigate(PlanEatRoute.DETAILS)
                         }
                     },
                     goToEdition = { r ->
@@ -1025,34 +951,140 @@ private fun NavHost(
                             navController.navigate(PlanEatRoute.EDITION)
                         }
                     },
-                    goBack = {
+                    goToAccount = {
+                        Handler(Looper.getMainLooper()).post {
+                            navController.navigate(PlanEatRoute.ACCOUNT)
+                        }
+                    },
+                    onRecipeDeleted = onRecipeDeleted
+            )
+        }
+        composable(PlanEatRoute.ACCOUNT) { AccountScreen(account = model.account.value!!) }
+        composable(PlanEatRoute.SEARCH) {
+            DiscoverScreen(
+                    model = model,
+                    onQueryChanged = onQueryChanged,
+                    onRecipeDeleted = onRecipeDeleted,
+                    onFilterClicked = { filter -> model.filter(filter) },
+                    goToAgenda = {
                         model.openedRecipe.value = null
-                        navController.popBackStack()
+                        Handler(Looper.getMainLooper()).post {
+                            navigateToTopLevelDestination(
+                                    PlanEatTopLevelDestination(PlanEatRoute.AGENDA, 0, 0)
+                            )
+                        }
+                    },
+                    goToDetails = { r ->
+                        model.openedRecipe.value = r
+                        Handler(Looper.getMainLooper()).post {
+                            navController.navigate(PlanEatRoute.DETAILS)
+                        }
+                    },
+                    goToEdition = { r ->
+                        model.openedRecipe.value = r
+                        Handler(Looper.getMainLooper()).post {
+                            navController.navigate(PlanEatRoute.EDITION)
+                        }
                     }
+            )
+        }
+        composable(PlanEatRoute.SAVED) {
+            RecipesScreen(
+                    model = model,
+                    onQueryChanged = onQueryChanged,
+                    onRecipeDeleted = onRecipeDeleted,
+                    onFilterClicked = { filter -> model.filter(filter) },
+                    goToAgenda = {
+                        model.openedRecipe.value = null
+                        Handler(Looper.getMainLooper()).post {
+                            navigateToTopLevelDestination(
+                                    PlanEatTopLevelDestination(PlanEatRoute.AGENDA, 0, 0)
+                            )
+                        }
+                    },
+                    goToDetails = { r ->
+                        model.openedRecipe.value = r
+                        Handler(Looper.getMainLooper()).post {
+                            navController.navigate(PlanEatRoute.DETAILS)
+                        }
+                    },
+                    goToEdition = { r ->
+                        model.openedRecipe.value = r
+                        Handler(Looper.getMainLooper()).post {
+                            navController.navigate(PlanEatRoute.EDITION)
+                        }
+                    }
+            )
+        }
+        composable(PlanEatRoute.SHOPPING_LIST) {
+            ShoppingScreen(
+                    onRecipeSelected = { r ->
+                        model.openedRecipe.value = r
+                        Handler(Looper.getMainLooper()).post {
+                            navController.navigate(PlanEatRoute.DETAILS)
+                        }
+                    },
+                    goToAgenda = {
+                        model.openedRecipe.value = null
+                        Handler(Looper.getMainLooper()).post {
+                            navController.navigate(PlanEatRoute.AGENDA)
+                        }
+                    }
+            )
+        }
+        composable(PlanEatRoute.DETAILS) {
+            if (model.openedRecipe.value != null) {
+                RecipeDetailScreen(
+                        selectedRecipe = model.openedRecipe.value!!,
+                        dataUi = dataUi,
+                        model = model,
+                        goToAgenda = {
+                            model.openedRecipe.value = null
+                            Handler(Looper.getMainLooper()).post {
+                                navController.popBackStack()
+                                navigateToTopLevelDestination(
+                                        PlanEatTopLevelDestination(PlanEatRoute.AGENDA, 0, 0)
+                                )
+                            }
+                        },
+                        goToEdition = { r ->
+                            model.openedRecipe.value = r
+                            Handler(Looper.getMainLooper()).post {
+                                navController.navigate(PlanEatRoute.EDITION)
+                            }
+                        },
+                        goBack = {
+                            model.openedRecipe.value = null
+                            navController.popBackStack()
+                        }
                 )
             }
         }
         composable(PlanEatRoute.EDITION) {
             if (model.openedRecipe.value != null) {
                 EditRecipeScreen(
-                    model = model,
-                    onRecipeUpdated = { r ->
-                        onRecipeUpdated(r)
-                        model.openedRecipe.value = null
-                        navController.popBackStack()
-                        val isDetailsPage = navController.currentBackStackEntry?.destination?.route == PlanEatRoute.DETAILS
-                        if (isDetailsPage) {
+                        model = model,
+                        onRecipeUpdated = { r ->
+                            onRecipeUpdated(r)
+                            model.openedRecipe.value = null
                             navController.popBackStack()
-                        }
-                    },
-                    goBack = {
-                        model.openedRecipe.value = null
-                        navController.popBackStack()
-                        val isDetailsPage = navController.currentBackStackEntry?.destination?.route == PlanEatRoute.DETAILS
-                        if (isDetailsPage) {
+                            val isDetailsPage =
+                                    navController.currentBackStackEntry?.destination?.route ==
+                                            PlanEatRoute.DETAILS
+                            if (isDetailsPage) {
+                                navController.popBackStack()
+                            }
+                        },
+                        goBack = {
+                            model.openedRecipe.value = null
                             navController.popBackStack()
+                            val isDetailsPage =
+                                    navController.currentBackStackEntry?.destination?.route ==
+                                            PlanEatRoute.DETAILS
+                            if (isDetailsPage) {
+                                navController.popBackStack()
+                            }
                         }
-                    }
                 )
             }
         }

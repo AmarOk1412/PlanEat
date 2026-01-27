@@ -64,12 +64,13 @@ import com.example.compose.surfaceLight
 import com.planeat.planeat.R
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.Tags
+import com.planeat.planeat.ui.components.RecipeListItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "ConfigurationScreenWidthHeight")
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -222,17 +223,18 @@ fun DiscoverScreen(
                         items(
                             model.suggestedRecipesShown,
                             key = { recipe -> recipe.url }) { recipe ->
-                            RecipeItem(
-                                recipe,
-                                model,
-                                goToDetails = { goToDetails(it) },
-                                goToAgenda = { goToAgenda() },
-                                goToEdition = { goToEdition(it) },
-                                onRecipeDeleted = { onRecipeDeleted(it) },
-                                onPlanRecipe = { r ->
-                                    toPlanRecipe = r
-                                    openBottomSheet = true
-                                })
+                                RecipeListItem(
+                                    recipe = recipe,
+                                    model = model,
+                                    onRecipeSelected = goToDetails,
+                                    onEditRecipe = goToEdition,
+                                    onPlanRecipe = { r ->
+                                        toPlanRecipe = r
+                                        openBottomSheet = true
+                                    },
+                                    onRecipeDeleted = onRecipeDeleted,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
 
                             HorizontalDivider(color = surfaceLight)
                         }
@@ -262,23 +264,23 @@ fun DiscoverScreen(
                                 items(
                                     model.recipesInDbShown,
                                     key = { recipe -> recipe.url }) { recipe ->
-                                    RecipeItem(
-                                        recipe,
-                                        model,
-                                        goToDetails,
-                                        goToAgenda,
-                                        goToEdition,
-                                        onRecipeDeleted,
+                                    RecipeListItem(
+                                        recipe = recipe,
+                                        model = model,
+                                        onRecipeSelected = goToDetails,
+                                        onEditRecipe = goToEdition,
                                         onPlanRecipe = { r ->
                                             toPlanRecipe = r
                                             openBottomSheet = true
                                         },
-                                        modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.75f).dp))
+                                        onRecipeDeleted = onRecipeDeleted,
+                                        modifier = Modifier.width((LocalConfiguration.current.screenWidthDp * 0.75f).dp)
+                                    )
                                 }
                             }
                         }
 
-                        if (model.recipesSearchedShown.size > 0) {
+                        if (model.recipesSearchedShown.isNotEmpty()) {
                             item {
                                 Text(
                                     text = stringResource(R.string.new_recipes),
@@ -289,18 +291,18 @@ fun DiscoverScreen(
                             items(
                                 model.recipesSearchedShown,
                                 key = { recipe -> recipe.url }) { recipe ->
-                                RecipeItem(
-                                    recipe,
-                                    model,
-                                    goToDetails,
-                                    goToAgenda,
-                                    goToEdition,
-                                    onRecipeDeleted,
+                                RecipeListItem(
+                                    recipe = recipe,
+                                    model = model,
+                                    onRecipeSelected = goToDetails,
+                                    onEditRecipe = goToEdition,
                                     onPlanRecipe = { r ->
                                         toPlanRecipe = r
                                         openBottomSheet = true
                                     },
-                                    modifier = Modifier.fillMaxWidth())
+                                    onRecipeDeleted = onRecipeDeleted,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
 
                                 HorizontalDivider(color = surfaceLight)
                             }

@@ -70,25 +70,25 @@ import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.ui.components.MinimalRecipeItemList
 import com.planeat.planeat.ui.components.RecipeListItem
+import java.time.ZoneOffset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.time.ZoneOffset
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecipesScreen(
-    model: AppModel,
-    modifier: Modifier = Modifier,
-    onQueryChanged: (String, Boolean) -> Unit,
-    onRecipeDeleted: (Recipe) -> Unit,
-    goToAgenda: () -> Unit,
-    goToDetails: (Recipe) -> Unit,
-    goToEdition: (Recipe) -> Unit,
-    onFilterClicked: (Tags) -> Unit,
+        model: AppModel,
+        modifier: Modifier = Modifier,
+        onQueryChanged: (String, Boolean) -> Unit,
+        onRecipeDeleted: (Recipe) -> Unit,
+        goToAgenda: () -> Unit,
+        goToDetails: (Recipe) -> Unit,
+        goToEdition: (Recipe) -> Unit,
+        onFilterClicked: (Tags) -> Unit,
 ) {
     var filter by remember { mutableStateOf("") }
     var currentTag by remember { mutableStateOf(model.currentTag.value) }
@@ -100,161 +100,209 @@ fun RecipesScreen(
     val favoritesRecipes = model.recipesInDbShown.filter { it.favorite }
     val editedRecipes = model.recipesInDbShown.filter { !it.url.startsWith("http") || it.edited }
 
-    if (filter.isNotEmpty()) {
-        BackHandler {
-            filter = ""
+    var handleGoToDetails: (Recipe) -> Unit = { r ->
+        if (model.selectedDate.value == null) {
+            goToDetails(r)
+        } else {
+            CoroutineScope(Dispatchers.IO).launch {
+                // If id == 0, recipe is not in db yet, add it first
+                var id = r.recipeId
+                val rdb = RecipesDb.getDatabase(context)
+                val newRecipe = r
+                newRecipe.planified += 1
+                if (id == 0.toLong()) {
+                    // If a search result, add it to recipes first
+                    model.add(r)
+                    val res = rdb.recipeDao().findByUrl(r.url)
+                    if (res == null) {
+                        return@launch
+                    }
+                    id = res.recipeId
+                    newRecipe.recipeId = res.recipeId
+                }
+
+                // Increment planified value
+                rdb.recipeDao().update(newRecipe)
+                val res2 = rdb.recipeDao().findByUrl(r.url)
+                // Then add it to agenda
+                Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
+                val dateMidday =
+                        model.selectedDate.value!!
+                                .atTime(12, 0)
+                                .toInstant(ZoneOffset.UTC)
+                                .toEpochMilli()
+
+                Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
+                model.planify(Agenda(date = dateMidday, recipeId = id))
+                goToAgenda()
+            }
         }
+    }
+
+    if (filter.isNotEmpty()) {
+        BackHandler { filter = "" }
 
         Scaffold(
-            topBar = {
-                TopAppBar(title = { Text(text = if (filter == "favorites") {
-                            "Favorites"
-                        } else {
-                            "My recipes"
-                        },
-                        style = MaterialTheme.typography.headlineSmall
-                        ) },
-                    navigationIcon = {
-                        IconButton(onClick = { filter = "" }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Go back"
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = surfaceContainerLowestLight)
-                )
-            }
+                topBar = {
+                    TopAppBar(
+                            title = {
+                                Text(
+                                        text =
+                                                if (filter == "favorites") {
+                                                    "Favorites"
+                                                } else {
+                                                    "My recipes"
+                                                },
+                                        style = MaterialTheme.typography.headlineSmall
+                                )
+                            },
+                            navigationIcon = {
+                                IconButton(onClick = { filter = "" }) {
+                                    Icon(
+                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                            contentDescription = "Go back"
+                                    )
+                                }
+                            },
+                            colors =
+                                    TopAppBarDefaults.topAppBarColors(
+                                            containerColor = surfaceContainerLowestLight
+                                    )
+                    )
+                }
         ) { innerPadding ->
             LazyColumn(
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = innerPadding.calculateTopPadding()),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier =
+                            Modifier.padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    top = innerPadding.calculateTopPadding()
+                            ),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                items(if (filter == "favorites") {
-                    favoritesRecipes
-                } else {
-                    editedRecipes
-                }, key = { recipe -> recipe.url }) { recipe ->
-                    RecipeItem(
-                        recipe,
-                        model,
-                        goToDetails,
-                        goToAgenda,
-                        goToEdition,
-                        onRecipeDeleted,
-                        onPlanRecipe = { r ->
-                            toPlanRecipe = r
-                            openBottomSheet = true
+                items(
+                        if (filter == "favorites") {
+                            favoritesRecipes
+                        } else {
+                            editedRecipes
                         },
-                        modifier = Modifier.fillMaxWidth())
+                        key = { recipe -> recipe.url }
+                ) { recipe ->
+                    RecipeListItem(
+                            recipe = recipe,
+                            model = model,
+                            onRecipeSelected = handleGoToDetails,
+                            onEditRecipe = goToEdition,
+                            onPlanRecipe = { r ->
+                                toPlanRecipe = r
+                                openBottomSheet = true
+                            },
+                            onRecipeDeleted = onRecipeDeleted,
+                            modifier = Modifier.fillMaxWidth()
+                    )
 
                     HorizontalDivider(color = surfaceLight)
                 }
 
-                item() {
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
+                item() { Spacer(modifier = Modifier.height(8.dp)) }
             }
         }
     } else {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(surfaceContainerLowestLight)
-        ) {
-
+        Column(modifier = Modifier.fillMaxWidth().background(surfaceContainerLowestLight)) {
             var text by rememberSaveable { mutableStateOf("") }
             var expanded by rememberSaveable { mutableStateOf(false) }
             val filters = Tags.entries.map { it }
 
             LaunchedEffect(text) {
                 delay(300)
-                onQueryChanged.invoke(text, true)
+                onQueryChanged.invoke(text, false)
             }
 
             val focusRequester = remember { FocusRequester() }
 
             SearchBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(focusRequester)
-                    .padding(horizontal = 16.dp),
-                expanded = false,
-                onExpandedChange = { },
-                inputField = {
-                    SearchBarDefaults.InputField(
-                        modifier = Modifier
-                            .border(
-                                1.dp,
-                                if (expanded) primaryLight else Color(0x00000000),
-                                RoundedCornerShape(100.dp)
-                            )
-                            .padding(start = 8.dp),
-                        query = text,
-                        onQueryChange = {
-                            text = it
-                        },
-                        expanded = expanded,
-                        onExpandedChange = { expanded = it },
-                        onSearch = { expanded = false },
-                        placeholder = {
-                            Text(
-                                stringResource(id = R.string.search_placeholder),
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                if (expanded) text = "" else focusRequester.requestFocus()
-                            }) {
-                                Icon(
-                                    if (expanded) Icons.Filled.Close else Icons.Default.Search,
-                                    contentDescription = null
-                                )
-                            }
-                        }
-                    )
-                }
+                    modifier =
+                            Modifier.fillMaxWidth()
+                                    .focusRequester(focusRequester)
+                                    .padding(horizontal = 16.dp),
+                    expanded = false,
+                    onExpandedChange = {},
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                                modifier =
+                                        Modifier.border(
+                                                        1.dp,
+                                                        if (expanded) primaryLight
+                                                        else Color(0x00000000),
+                                                        RoundedCornerShape(100.dp)
+                                                )
+                                                .padding(start = 8.dp),
+                                query = text,
+                                onQueryChange = { text = it },
+                                expanded = expanded,
+                                onExpandedChange = { expanded = it },
+                                onSearch = { expanded = false },
+                                placeholder = {
+                                    Text(
+                                            stringResource(id = R.string.search_placeholder),
+                                            style = MaterialTheme.typography.bodyLarge
+                                    )
+                                },
+                                trailingIcon = {
+                                    IconButton(
+                                            onClick = {
+                                                if (expanded) text = ""
+                                                else focusRequester.requestFocus()
+                                            }
+                                    ) {
+                                        Icon(
+                                                if (expanded) Icons.Filled.Close
+                                                else Icons.Default.Search,
+                                                contentDescription = null
+                                        )
+                                    }
+                                }
+                        )
+                    }
             ) {}
 
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp, bottom = 12.dp)
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    modifier =
+                            Modifier.fillMaxWidth()
+                                    .padding(top = 8.dp, bottom = 12.dp)
+                                    .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Spacer(modifier = Modifier.width(16.dp))
 
                 filters.forEach { filter ->
                     Button(
-                        onClick = {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                currentTag = filter
-                                onFilterClicked(filter)
-                            }
-                        },
-                        shape = RoundedCornerShape(100.dp),
-                        elevation = ButtonDefaults.buttonElevation(
-                            defaultElevation = 6.dp
-                        ),
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (currentTag == filter) primaryContainerLight else surfaceContainerLowestLight,
-                            contentColor = if (currentTag == filter) onPrimaryContainerLight else Color.Black
-                        ),
-                        modifier = Modifier.padding(end = 8.dp)
+                            onClick = {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    currentTag = filter
+                                    onFilterClicked(filter)
+                                }
+                            },
+                            shape = RoundedCornerShape(100.dp),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 6.dp),
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
+                            colors =
+                                    ButtonDefaults.buttonColors(
+                                            containerColor =
+                                                    if (currentTag == filter) primaryContainerLight
+                                                    else surfaceContainerLowestLight,
+                                            contentColor =
+                                                    if (currentTag == filter)
+                                                            onPrimaryContainerLight
+                                                    else Color.Black
+                                    ),
+                            modifier = Modifier.padding(end = 8.dp)
                     ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
+                        Row(modifier = Modifier.fillMaxWidth()) {
                             Text(
-                                text = filter.getString(LocalContext.current),
-                                fontSize = with(LocalDensity.current) {
-                                    14.dp.toSp()
-                                },
-                                modifier = Modifier
-                                    .align(Alignment.CenterVertically)
+                                    text = filter.getString(LocalContext.current),
+                                    fontSize = with(LocalDensity.current) { 14.dp.toSp() },
+                                    modifier = Modifier.align(Alignment.CenterVertically)
                             )
                         }
                     }
@@ -265,33 +313,32 @@ fun RecipesScreen(
                 if (favoritesRecipes.isNotEmpty()) {
 
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                            modifier =
+                                    Modifier.fillMaxWidth()
+                                            .padding(horizontal = 16.dp, vertical = 12.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.favorites),
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.align(Alignment.CenterVertically)
+                                text = stringResource(R.string.favorites),
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.align(Alignment.CenterVertically)
                         )
                         Card(
-                            modifier = modifier
-                                .align(Alignment.CenterVertically)
-                                .clip(CardDefaults.shape)
-                                .padding(start = 8.dp),
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 0.dp
-                            ),
-                            colors = CardDefaults.cardColors(
-                                containerColor = surfaceLight,
-                            ),
+                                modifier =
+                                        modifier.align(Alignment.CenterVertically)
+                                                .clip(CardDefaults.shape)
+                                                .padding(start = 8.dp),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                                colors =
+                                        CardDefaults.cardColors(
+                                                containerColor = surfaceLight,
+                                        ),
                         ) {
                             Text(
-                                text = favoritesRecipes.size.toString(),
-                                maxLines = 1,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = Color(0xFF000000),
-                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                                    text = favoritesRecipes.size.toString(),
+                                    maxLines = 1,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = Color(0xFF000000),
+                                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                             )
                         }
 
@@ -299,105 +346,59 @@ fun RecipesScreen(
 
                         if (favoritesRecipes.size > 2) {
                             TextButton(
-                                onClick = {
-                                    filter = "favorites"
-                                },
-                                modifier = Modifier.align(Alignment.CenterVertically)
+                                    onClick = { filter = "favorites" },
+                                    modifier = Modifier.align(Alignment.CenterVertically)
                             ) {
                                 Text(
-                                    stringResource(R.string.see_more),
-                                    style = MaterialTheme.typography.labelLarge
+                                        stringResource(R.string.see_more),
+                                        style = MaterialTheme.typography.labelLarge
                                 )
                             }
                         }
                     }
 
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .horizontalScroll(rememberScrollState())
-                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            modifier =
+                                    Modifier.fillMaxWidth()
+                                            .horizontalScroll(rememberScrollState())
+                                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                     ) {
                         favoritesRecipes.take(5).forEach { recipe ->
-                            MinimalRecipeItemList(
-                                recipe,
-                                onRecipeSelected = { r ->
-                                    if (model.selectedDate.value == null) {
-                                        goToDetails(r)
-                                    } else {
-                                        CoroutineScope(Dispatchers.IO).launch {
-                                            // If id == 0, recipe is not in db yet, add it first
-                                            var id = r.recipeId
-                                            val rdb = RecipesDb.getDatabase(context)
-                                            val newRecipe = r
-                                            newRecipe.planified += 1
-                                            if (id == 0.toLong()) {
-                                                // If a search result, add it to recipes first
-                                                model.add(recipe)
-                                                val res = rdb.recipeDao().findByUrl(recipe.url)
-                                                if (res == null)
-                                                {
-                                                    return@launch
-                                                }
-                                                id = res.recipeId
-                                                newRecipe.recipeId = res.recipeId
-                                            }
-
-                                            // Increment planified value
-                                            rdb.recipeDao().update(newRecipe)
-                                            val res2 = rdb.recipeDao().findByUrl(recipe.url)
-                                            // Then add it to agenda
-                                            Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
-                                            val dateMidday = model.selectedDate.value!!
-                                                .atTime(12, 0)
-                                                .toInstant(ZoneOffset.UTC)
-                                                .toEpochMilli()
-
-                                            Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
-                                            model.planify(Agenda(
-                                                date = dateMidday,
-                                                recipeId = id
-                                            ))
-                                            goToAgenda()
-                                        }
-                                    }
-                                }
-                            )
+                            MinimalRecipeItemList(recipe, onRecipeSelected = handleGoToDetails)
                         }
                     }
                 }
 
                 if (editedRecipes.isNotEmpty()) {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                            modifier =
+                                    Modifier.fillMaxWidth()
+                                            .padding(horizontal = 16.dp, vertical = 12.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.my_creations),
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.align(Alignment.CenterVertically)
+                                text = stringResource(R.string.my_creations),
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.align(Alignment.CenterVertically)
                         )
 
                         Card(
-                            modifier = modifier
-                                .align(Alignment.CenterVertically)
-                                .clip(CardDefaults.shape)
-                                .padding(start = 8.dp),
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 0.dp
-                            ),
-                            colors = CardDefaults.cardColors(
-                                containerColor = surfaceLight,
-                            ),
+                                modifier =
+                                        modifier.align(Alignment.CenterVertically)
+                                                .clip(CardDefaults.shape)
+                                                .padding(start = 8.dp),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                                colors =
+                                        CardDefaults.cardColors(
+                                                containerColor = surfaceLight,
+                                        ),
                         ) {
                             Text(
-                                text = editedRecipes.size.toString(),
-                                maxLines = 1,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = Color(0xFF000000),
-                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                                    text = editedRecipes.size.toString(),
+                                    maxLines = 1,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = Color(0xFF000000),
+                                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                             )
                         }
 
@@ -405,101 +406,56 @@ fun RecipesScreen(
 
                         if (editedRecipes.size > 2) {
                             TextButton(
-                                onClick = {
-                                    filter = "edited"
-                                },
-                                modifier = Modifier.align(Alignment.CenterVertically)
+                                    onClick = { filter = "edited" },
+                                    modifier = Modifier.align(Alignment.CenterVertically)
                             ) {
                                 Text(
-                                    stringResource(R.string.see_more),
-                                    style = MaterialTheme.typography.labelLarge
+                                        stringResource(R.string.see_more),
+                                        style = MaterialTheme.typography.labelLarge
                                 )
                             }
                         }
                     }
 
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .horizontalScroll(rememberScrollState())
-                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            modifier =
+                                    Modifier.fillMaxWidth()
+                                            .horizontalScroll(rememberScrollState())
+                                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                     ) {
                         editedRecipes.take(5).forEach { recipe ->
-                            MinimalRecipeItemList(
-                                recipe,
-                                onRecipeSelected = { r ->
-                                    if (model.selectedDate.value == null) {
-                                        goToDetails(r)
-                                    } else {
-                                        CoroutineScope(Dispatchers.IO).launch {
-                                            // If id == 0, recipe is not in db yet, add it first
-                                            var id = r.recipeId
-                                            val rdb = RecipesDb.getDatabase(context)
-                                            val newRecipe = r
-                                            newRecipe.planified += 1
-                                            if (id == 0.toLong()) {
-                                                // If a search result, add it to recipes first
-                                                model.add(recipe)
-                                                val res = rdb.recipeDao().findByUrl(recipe.url)
-                                                if (res == null)
-                                                    return@launch
-                                                id = res.recipeId
-                                                newRecipe.recipeId = res.recipeId
-                                            }
-
-                                            // Increment planified value
-                                            rdb.recipeDao().update(newRecipe)
-                                            val res2 = rdb.recipeDao().findByUrl(recipe.url)
-                                            // Then add it to agenda
-                                            Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
-                                            val dateMidday = model.selectedDate.value!!
-                                                .atTime(12, 0)
-                                                .toInstant(ZoneOffset.UTC)
-                                                .toEpochMilli()
-
-                                            Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
-                                            model.planify(Agenda(
-                                                date = dateMidday,
-                                                recipeId = id
-                                            ))
-                                            goToAgenda()
-                                        }
-                                    }
-                                }
-                            )
+                            MinimalRecipeItemList(recipe, onRecipeSelected = handleGoToDetails)
                         }
                     }
                 }
-
             } else {
 
                 LazyColumn(
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (favoritesRecipes.isNotEmpty()) {
                         item {
                             Text(
-                                text = stringResource(R.string.my_favorites),
-                                style = MaterialTheme.typography.headlineSmall,
-                                modifier = Modifier.padding(vertical = 16.dp)
+                                    text = stringResource(R.string.my_favorites),
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    modifier = Modifier.padding(vertical = 16.dp)
                             )
                         }
                     }
                     items(favoritesRecipes, key = { recipe -> recipe.url }) { recipe ->
-                        RecipeItem(
-                            recipe,
-                            model,
-                            goToDetails,
-                            goToAgenda,
-                            goToEdition,
-                            onRecipeDeleted,
-                            onPlanRecipe = { r ->
-                                toPlanRecipe = r
-                                openBottomSheet = true
-                            },
-                            modifier = Modifier.fillMaxWidth()
+                        RecipeListItem(
+                                recipe = recipe,
+                                model = model,
+                                onRecipeSelected = handleGoToDetails,
+                                onEditRecipe = goToEdition,
+                                onPlanRecipe = { r ->
+                                    toPlanRecipe = r
+                                    openBottomSheet = true
+                                },
+                                onRecipeDeleted = onRecipeDeleted,
+                                modifier = Modifier.fillMaxWidth()
                         )
 
                         HorizontalDivider(color = surfaceLight)
@@ -509,29 +465,60 @@ fun RecipesScreen(
                     if (editedRecipes.isNotEmpty()) {
                         item {
                             Text(
-                                text = stringResource(R.string.my_creations),
-                                style = MaterialTheme.typography.headlineSmall,
-                                modifier = Modifier.padding(vertical = 16.dp)
+                                    text = stringResource(R.string.my_creations),
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    modifier = Modifier.padding(vertical = 16.dp)
                             )
                         }
                     }
-                    items(editedRecipes.filter { !it.favorite }, key = { recipe -> recipe.url }) { recipe ->
-                        RecipeItem(
-                            recipe,
-                            model,
-                            goToDetails,
-                            goToAgenda,
-                            goToEdition,
-                            onRecipeDeleted,
-                            onPlanRecipe = { r ->
-                                toPlanRecipe = r
-                                openBottomSheet = true
-                            },
-                            modifier = Modifier.fillMaxWidth()
+                    items(editedRecipes.filter { !it.favorite }, key = { recipe -> recipe.url }) {
+                            recipe ->
+                        RecipeListItem(
+                                recipe = recipe,
+                                model = model,
+                                onRecipeSelected = handleGoToDetails,
+                                onEditRecipe = goToEdition,
+                                onPlanRecipe = { r ->
+                                    toPlanRecipe = r
+                                    openBottomSheet = true
+                                },
+                                onRecipeDeleted = onRecipeDeleted,
+                                modifier = Modifier.fillMaxWidth()
                         )
 
                         HorizontalDivider(color = surfaceLight)
                     }
+
+                    // New recipes from search
+
+                    if (model.recipesSearchedShown.size > 0) {
+                        item {
+                            Text(
+                                    text = stringResource(R.string.new_recipes),
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    modifier = Modifier.padding(top = 20.dp)
+                            )
+                        }
+                        items(model.recipesSearchedShown, key = { recipe -> recipe.url }) { recipe
+                            ->
+                            RecipeListItem(
+                                    recipe = recipe,
+                                    model = model,
+                                    onRecipeSelected = handleGoToDetails,
+                                    onEditRecipe = goToEdition,
+                                    onPlanRecipe = { r ->
+                                        toPlanRecipe = r
+                                        openBottomSheet = true
+                                    },
+                                    onRecipeDeleted = onRecipeDeleted,
+                                    modifier = Modifier.fillMaxWidth()
+                            )
+
+                            HorizontalDivider(color = surfaceLight)
+                        }
+                    }
+
+                    item { Spacer(modifier = Modifier.height(8.dp)) }
                 }
             }
 
@@ -539,87 +526,27 @@ fun RecipesScreen(
 
             HorizontalDivider(color = surfaceLight)
 
-            Button(onClick = { goToEdition(Recipe()) },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = primaryContainerLight,
-                    contentColor = onPrimaryContainerLight
-                ),
-                shape = RoundedCornerShape(100.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp)) {
-                Text(stringResource(R.string.create_a_recipe))
-            }
+            Button(
+                    onClick = { goToEdition(Recipe()) },
+                    colors =
+                            ButtonDefaults.buttonColors(
+                                    containerColor = primaryContainerLight,
+                                    contentColor = onPrimaryContainerLight
+                            ),
+                    shape = RoundedCornerShape(100.dp),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp)
+            ) { Text(stringResource(R.string.create_a_recipe)) }
         }
     }
 
-
     if (openBottomSheet) {
         BottomPlanifier(
-            onDismissRequest = { openBottomSheet = false },
-            toPlanRecipe = toPlanRecipe!!,
-            goToAgenda = {
-                openBottomSheet = false
-                goToAgenda()
-            }
-        )
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun RecipeItem(recipe: Recipe, model: AppModel, goToDetails: (Recipe) -> Unit,
-               goToAgenda: () -> Unit,
-               goToEdition: (Recipe) -> Unit,
-               onRecipeDeleted: (Recipe) -> Unit,
-               onPlanRecipe: (Recipe) -> Unit,
-               modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    RecipeListItem(
-        recipe = recipe,
-        model = model,
-        onRecipeSelected = { r ->
-            if (model.selectedDate.value == null) {
-                goToDetails(r)
-            } else {
-                CoroutineScope(Dispatchers.IO).launch {
-                    // If id == 0, recipe is not in db yet, add it first
-                    var id = r.recipeId
-                    val rdb = RecipesDb.getDatabase(context)
-                    val newRecipe = r
-                    newRecipe.planified += 1
-                    if (id == 0.toLong()) {
-                        // If a search result, add it to recipes first
-                        model.add(recipe)
-                        val res = rdb.recipeDao().findByUrl(recipe.url)
-                        if (res == null)
-                            return@launch
-                        id = res.recipeId
-                        newRecipe.recipeId = res.recipeId
-                    }
-
-                    // Increment planified value
-                    rdb.recipeDao().update(newRecipe)
-                    val res2 = rdb.recipeDao().findByUrl(recipe.url)
-                    // Then add it to agenda
-                    Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
-                    val dateMidday = model.selectedDate.value!!
-                        .atTime(12, 0)
-                        .toInstant(ZoneOffset.UTC)
-                        .toEpochMilli()
-
-                    Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
-                    model.planify(Agenda(
-                        date = dateMidday,
-                        recipeId = id
-                    ))
+                onDismissRequest = { openBottomSheet = false },
+                toPlanRecipe = toPlanRecipe!!,
+                goToAgenda = {
+                    openBottomSheet = false
                     goToAgenda()
                 }
-            }
-        },
-        onEditRecipe = goToEdition,
-        onPlanRecipe = onPlanRecipe,
-        onRecipeDeleted = onRecipeDeleted,
-        modifier = modifier
-    )
+        )
+    }
 }
