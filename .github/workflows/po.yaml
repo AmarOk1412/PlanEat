@@ -86,17 +86,17 @@ jobs:
             const priority = '${{ github.event.inputs.issue_priority }}';
 
             // Build issue body from template
-            let body = `## Description\n${description}\n\n`;
+            let body = description + '\n\n';
 
             if (issueType === 'bug') {
-              body += `## Steps to Reproduce\n1. \n\n## Expected Behavior\n\n## Actual Behavior\n\n`;
+              // Description should already contain the full bug report
             } else if (issueType === 'feature') {
               body += `## Feature Description\n\n## Acceptance Criteria\n- [ ] \n\n## Implementation Notes\n\n`;
             } else if (issueType === 'task') {
               body += `## Task Scope\n\n## Deliverables\n- [ ] \n\n## Notes\n\n`;
             }
 
-            body += `**Priority**: ${priority}\n**Type**: ${issueType}\n**Created by**: PO Agent`;
+            body += `\n**Priority**: ${priority}\n**Type**: ${issueType}\n**Created by**: PO Agent`;
 
             try {
               const response = await github.rest.issues.create({
