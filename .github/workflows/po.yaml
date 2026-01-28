@@ -78,12 +78,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v7
+        env:
+          ISSUE_TITLE: ${{ github.event.inputs.issue_title }}
+          ISSUE_TYPE: ${{ github.event.inputs.issue_type }}
+          ISSUE_DESCRIPTION: ${{ github.event.inputs.issue_description }}
+          ISSUE_PRIORITY: ${{ github.event.inputs.issue_priority }}
         with:
           script: |
-            const title = '${{ github.event.inputs.issue_title }}';
-            const issueType = '${{ github.event.inputs.issue_type }}';
-            const description = '${{ github.event.inputs.issue_description }}';
-            const priority = '${{ github.event.inputs.issue_priority }}';
+            const title = process.env.ISSUE_TITLE;
+            const issueType = process.env.ISSUE_TYPE;
+            const description = process.env.ISSUE_DESCRIPTION;
+            const priority = process.env.ISSUE_PRIORITY;
 
             // Build issue body from template
             let body = description + '\n\n';

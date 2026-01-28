@@ -173,8 +173,7 @@ trigger_workflow() {
 
     # Check for errors
     if echo "$response" | grep -q "message"; then
-        local error_msg=$(echo "$response" | grep -o '"message":"[^"]*' | cut -d'"' -f4)
-        log_error "GitHub API error: $error_msg"
+        log_error "GitHub API error: $response"
     fi
 
     log_success "Workflow triggered successfully!"
