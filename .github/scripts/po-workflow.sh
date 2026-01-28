@@ -126,35 +126,44 @@ done
 # Validate token
 validate_token
 
-# Build workflow inputs JSON
+# Build workflow inputs JSON using jq for proper escaping
 build_inputs_json() {
     local action=$1
-    local json="{\"action\": \"$action\""
 
     case $action in
         add-label)
             [[ -z "$ISSUE_NUMBER" ]] && log_error "add-label requires --issue"
             [[ -z "$LABEL" ]] && log_error "add-label requires --label"
-            json+=", \"issue_number\": \"$ISSUE_NUMBER\", \"label\": \"$LABEL\""
+            jq -n \
+                --arg action "add-label" \
+                --arg issue_number "$ISSUE_NUMBER" \
+                --arg label "$LABEL" \
+                '{action: $action, issue_number: $issue_number, label: $label}'
             ;;
         create-issue)
             [[ -z "$ISSUE_TITLE" ]] && log_error "create-issue requires --title"
             [[ -z "$ISSUE_TYPE" ]] && log_error "create-issue requires --type"
             [[ -z "$PRIORITY" ]] && log_error "create-issue requires --priority"
             [[ -z "$DESCRIPTION" ]] && log_error "create-issue requires --description"
-            json+=", \"issue_title\": \"$ISSUE_TITLE\", \"issue_type\": \"$ISSUE_TYPE\", \"issue_priority\": \"$PRIORITY\", \"issue_description\": \"$DESCRIPTION\""
+            jq -n \
+                --arg action "create-issue" \
+                --arg issue_title "$ISSUE_TITLE" \
+                --arg issue_type "$ISSUE_TYPE" \
+                --arg issue_priority "$PRIORITY" \
+                --arg issue_description "$DESCRIPTION" \
+                '{action: $action, issue_title: $issue_title, issue_type: $issue_type, issue_priority: $issue_priority, issue_description: $issue_description}'
             ;;
         close-issue)
             [[ -z "$ISSUE_NUMBER" ]] && log_error "close-issue requires --issue"
-            json+=", \"issue_number\": \"$ISSUE_NUMBER\""
+            jq -n \
+                --arg action "close-issue" \
+                --arg issue_number "$ISSUE_NUMBER" \
+                '{action: $action, issue_number: $issue_number}'
             ;;
         *)
             log_error "Unknown action: $action"
             ;;
     esac
-
-    json+="}"
-    echo "$json"
 }
 
 # Trigger workflow
