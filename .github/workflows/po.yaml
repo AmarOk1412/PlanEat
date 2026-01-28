@@ -1,0 +1,141 @@
+name: PO Issue Management
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        type: choice
+        options:
+          - add-label
+          - create-issue
+          - close-issue
+      issue_number:
+        description: 'Issue number (for add-label and close-issue)'
+        required: false
+        type: string
+      label:
+        description: 'Label to add (for add-label)'
+        required: false
+        type: string
+      issue_title:
+        description: 'Issue title (for create-issue)'
+        required: false
+        type: string
+      issue_type:
+        description: 'Issue type template (for create-issue)'
+        required: false
+        type: choice
+        options:
+          - bug
+          - feature
+          - task
+      issue_description:
+        description: 'Issue description (for create-issue)'
+        required: false
+        type: string
+      issue_priority:
+        description: 'Priority level (for create-issue)'
+        required: false
+        type: choice
+        options:
+          - critical
+          - high
+          - medium
+          - low
+
+jobs:
+  add-label:
+    if: github.event.inputs.action == 'add-label'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = parseInt('${{ github.event.inputs.issue_number }}');
+            const label = '${{ github.event.inputs.label }}';
+
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                labels: [label]
+              });
+              console.log(`✅ Added label "${label}" to issue #${issueNumber}`);
+            } catch (error) {
+              console.error(`❌ Failed to add label: ${error.message}`);
+              process.exit(1);
+            }
+
+  create-issue:
+    if: github.event.inputs.action == 'create-issue'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const title = '${{ github.event.inputs.issue_title }}';
+            const issueType = '${{ github.event.inputs.issue_type }}';
+            const description = '${{ github.event.inputs.issue_description }}';
+            const priority = '${{ github.event.inputs.issue_priority }}';
+
+            // Build issue body from template
+            let body = `## Description\n${description}\n\n`;
+
+            if (issueType === 'bug') {
+              body += `## Steps to Reproduce\n1. \n\n## Expected Behavior\n\n## Actual Behavior\n\n`;
+            } else if (issueType === 'feature') {
+              body += `## Feature Description\n\n## Acceptance Criteria\n- [ ] \n\n## Implementation Notes\n\n`;
+            } else if (issueType === 'task') {
+              body += `## Task Scope\n\n## Deliverables\n- [ ] \n\n## Notes\n\n`;
+            }
+
+            body += `**Priority**: ${priority}\n**Type**: ${issueType}\n**Created by**: PO Agent`;
+
+            try {
+              const response = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: [issueType, priority]
+              });
+              console.log(`✅ Created issue #${response.data.number}: ${title}`);
+            } catch (error) {
+              console.error(`❌ Failed to create issue: ${error.message}`);
+              process.exit(1);
+            }
+
+  close-issue:
+    if: github.event.inputs.action == 'close-issue'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = parseInt('${{ github.event.inputs.issue_number }}');
+
+            try {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                state: 'closed',
+                state_reason: 'completed'
+              });
+
+              // Add "Done" label
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                labels: ['done']
+              });
+
+              console.log(`✅ Closed issue #${issueNumber} as Done`);
+            } catch (error) {
+              console.error(`❌ Failed to close issue: ${error.message}`);
+              process.exit(1);
+            }
