@@ -1,4 +1,3 @@
-
 import android.content.Context
 import android.os.Build
 import androidx.compose.ui.test.assertIsDisplayed
@@ -19,14 +18,14 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
 import com.planeat.planeat.ui.MainActivity
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
 
 // file: app/src/androidTest/java/com/package/MyComposeTest.kt
 
@@ -37,7 +36,11 @@ class PlanEatTest {
         override fun apply(base: Statement, description: Description): Statement {
             return object : Statement() {
 
-                fun copyTestAssetToAppStorage(context: Context, fileName: String, targetPath: String) {
+                fun copyTestAssetToAppStorage(
+                        context: Context,
+                        fileName: String,
+                        targetPath: String
+                ) {
                     val assetManager = context.assets
                     val inputStream: InputStream = assetManager.open(fileName)
                     val outputFile = File(targetPath)
@@ -58,7 +61,8 @@ class PlanEatTest {
                     val testContext = InstrumentationRegistry.getInstrumentation().context
                     val appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
-                    // Path where the application loads the suggestions.json from (e.g., internal storage)
+                    // Path where the application loads the suggestions.json from (e.g., internal
+                    // storage)
                     val suggestionsFilePath = File(appContext.filesDir, "suggestions.json").path
 
                     // Copy the suggestions.json from androidTest/assets to internal storage
@@ -71,87 +75,143 @@ class PlanEatTest {
         }
     }
 
-    @get:Rule
-    val copyFileBeforeLaunchRule = CopyFileBeforeLaunchRule()
+    @get:Rule val copyFileBeforeLaunchRule = CopyFileBeforeLaunchRule()
 
-    @get:Rule
-    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+    @get:Rule val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
-    @get:Rule
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+    @get:Rule val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     fun testFilterSuggestion() {
-        composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText(
+                        "Discover",
+                )
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
 
         // Click on Drinks
-        composeTestRule.onNodeWithText("Drinks").performScrollTo().assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText("Drinks")
+                .performScrollTo()
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("You may like").assertIsNotDisplayed()
 
-        composeTestRule.onNodeWithText("European").performScrollTo().assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText("European")
+                .performScrollTo()
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
 
-        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertExists()
+        composeTestRule.onAllNodesWithTag("three_dot_button").onFirst().assertExists()
     }
 
     fun addNewRecipe() {
-        composeTestRule.onNodeWithText("Favorites",).assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText(
+                        "Favorites",
+                )
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("Create a recipe").assertIsDisplayed()
         composeTestRule.onNodeWithText("My recipes").assertIsNotDisplayed()
         composeTestRule.onNodeWithText("Create a recipe").assertIsDisplayed().performClick()
 
         // Save recipe
         // Add "Foo" as the title
-        composeTestRule.onNodeWithTag("title_input") // Add a test tag to the title TextField
-            .performTextInput("Foo")
+        composeTestRule
+                .onNodeWithTag("title_input") // Add a test tag to the title TextField
+                .performTextInput("Foo")
 
         // Set "60" as cooking time
-        composeTestRule.onNodeWithTag("cooking_time_input") // Add a test tag to the cooking time TextField
-            .performTextInput("60")
+        composeTestRule
+                .onNodeWithTag("cooking_time_input") // Add a test tag to the cooking time TextField
+                .performTextInput("60")
 
         // Click on Save button
         composeTestRule.onNodeWithText("Save").performScrollTo()
         composeTestRule.onNodeWithText("Save").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Save") // If button text is Save
-            .performClick()
+        composeTestRule
+                .onNodeWithText("Save") // If button text is Save
+                .performClick()
 
-        // Optionally, verify that the recipe is saved and updated correctly by checking if "Foo" is displayed
+        // Optionally, verify that the recipe is saved and updated correctly by checking if "Foo" is
+        // displayed
         composeTestRule.onNodeWithText("My recipes").assertIsDisplayed()
         composeTestRule.onNodeWithText("Foo").assertIsDisplayed()
     }
 
     fun saveSuggestion() {
         // Recipes should be empty
-        composeTestRule.onAllNodesWithText("Favorites",).onLast().assertIsDisplayed().performClick()
+        composeTestRule
+                .onAllNodesWithText(
+                        "Favorites",
+                )
+                .onLast()
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsNotDisplayed()
 
-        composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText(
+                        "Discover",
+                )
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
 
         // Save one recipe
-        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed().performClick()
+        composeTestRule
+                .onAllNodesWithTag("three_dot_button")
+                .onFirst()
+                .assertIsDisplayed()
+                .performClick()
 
         // Should appear in favorites
-        composeTestRule.onNodeWithText("Favorites",).assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText(
+                        "Favorites",
+                )
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
     }
 
     fun filterRecipes() {
-        composeTestRule.onAllNodesWithText("Favorites",).onLast().performClick()
+        composeTestRule
+                .onAllNodesWithText(
+                        "Favorites",
+                )
+                .onLast()
+                .performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
         composeTestRule.onNodeWithText("My recipes").assertIsDisplayed()
 
         // Click on European (one saved from previous test)
         // TODO!
-        composeTestRule.onNodeWithText("European").performScrollTo().assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText("European")
+                .performScrollTo()
+                .assertIsDisplayed()
+                .performClick()
         if (!composeTestRule.onNodeWithText("Favorite").isDisplayed()) {
-            composeTestRule.onNodeWithText("Asian").performScrollTo().assertIsDisplayed().performClick()
+            composeTestRule
+                    .onNodeWithText("Asian")
+                    .performScrollTo()
+                    .assertIsDisplayed()
+                    .performClick()
         }
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
         composeTestRule.onNodeWithText("My recipes").assertIsNotDisplayed()
 
         // Click on Drinks (one saved from previous test)
-        composeTestRule.onNodeWithText("Drinks").performScrollTo().assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText("Drinks")
+                .performScrollTo()
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsNotDisplayed()
         composeTestRule.onNodeWithText("My recipes").assertIsNotDisplayed()
 
@@ -162,30 +222,54 @@ class PlanEatTest {
     }
 
     fun addToAgenda() {
-        composeTestRule.onAllNodesWithText("Favorites",).onFirst().assertIsDisplayed().performClick()
+        composeTestRule
+                .onAllNodesWithText(
+                        "Favorites",
+                )
+                .onFirst()
+                .assertIsDisplayed()
+                .performClick()
 
-        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed().performClick()
-        composeTestRule.onNodeWithText("Add to agenda",).assertIsDisplayed().performClick()
+        composeTestRule
+                .onAllNodesWithTag("three_dot_button")
+                .onFirst()
+                .assertIsDisplayed()
+                .performClick()
+        composeTestRule
+                .onNodeWithText(
+                        "Add to agenda",
+                )
+                .assertIsDisplayed()
+                .performClick()
 
-        composeTestRule.onNodeWithText("Plan it",).assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText(
+                        "Plan it",
+                )
+                .assertIsDisplayed()
+                .performClick()
 
         // Should get to agenda screen
         composeTestRule.onNodeWithText("Today")
         // And one recipe shown at least
         // NOTE: seems agenda is scrolled one time...
-        if (!composeTestRule.onAllNodesWithTag("favorite_button").onFirst().isDisplayed()) {
+        if (!composeTestRule.onAllNodesWithTag("three_dot_button").onFirst().isDisplayed()) {
             // Scroll to previous
             composeTestRule.onNodeWithContentDescription("Back").assertIsDisplayed().performClick()
-            composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed()
+            composeTestRule.onAllNodesWithTag("three_dot_button").onFirst().assertIsDisplayed()
         }
     }
 
     fun deleteRecipe() {
-        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed().performClick()
+        composeTestRule
+                .onAllNodesWithTag("three_dot_button")
+                .onFirst()
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("Delete").assertIsDisplayed().performClick()
 
         composeTestRule.onNodeWithText("Confirm").assertIsDisplayed().performClick()
-        composeTestRule.onNodeWithTag("favorite_button").assertIsNotDisplayed()
+        composeTestRule.onNodeWithTag("three_dot_button").assertIsNotDisplayed()
     }
 
     fun testScenarioAddAndDeleteRecipe() {
@@ -196,7 +280,13 @@ class PlanEatTest {
     }
 
     private fun shoppingListNotEmpty() {
-        composeTestRule.onAllNodesWithText("Shopping List",).onFirst().assertIsDisplayed().performClick()
+        composeTestRule
+                .onAllNodesWithText(
+                        "Shopping List",
+                )
+                .onFirst()
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("1 recipe").assertExists()
     }
 
@@ -213,7 +303,10 @@ class PlanEatTest {
         composeTestRule.onNodeWithTag("sort_button").assertIsDisplayed().performClick()
         composeTestRule.onNodeWithTag("sort_recipe").assertIsDisplayed().performClick()
         composeTestRule.waitUntil(3000) {
-            composeTestRule.onAllNodesWithText(title.replaceFirstChar(Char::titlecase)).fetchSemanticsNodes().size != 0
+            composeTestRule
+                    .onAllNodesWithText(title.replaceFirstChar(Char::titlecase))
+                    .fetchSemanticsNodes()
+                    .size != 0
         }
         composeTestRule.onNodeWithText(title.replaceFirstChar(Char::titlecase)).assertExists()
         composeTestRule.onNodeWithText("Recipe").isDisplayed()
@@ -222,7 +315,10 @@ class PlanEatTest {
         composeTestRule.onNodeWithTag("sort_button").assertIsDisplayed().performClick()
         composeTestRule.onNodeWithTag("sort_aisle").assertIsDisplayed().performClick()
         composeTestRule.waitUntil(3000) {
-            composeTestRule.onAllNodesWithText(title.replaceFirstChar(Char::titlecase)).fetchSemanticsNodes().size == 0
+            composeTestRule
+                    .onAllNodesWithText(title.replaceFirstChar(Char::titlecase))
+                    .fetchSemanticsNodes()
+                    .size == 0
         }
         composeTestRule.onNodeWithText(title.replaceFirstChar(Char::titlecase)).assertDoesNotExist()
         composeTestRule.onNodeWithText("Aisle").isDisplayed()
@@ -230,12 +326,18 @@ class PlanEatTest {
 
     fun validateOneIngredient() {
         composeTestRule.onNodeWithText("Validated Ingredients").assertDoesNotExist()
-        composeTestRule.onAllNodesWithTag("ingredient_checkbox").onFirst().assertIsDisplayed().performClick()
+        composeTestRule
+                .onAllNodesWithTag("ingredient_checkbox")
+                .onFirst()
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.waitUntil(3000) {
-            composeTestRule.onAllNodesWithText("Validated Ingredients").fetchSemanticsNodes().size != 0
+            composeTestRule
+                    .onAllNodesWithText("Validated Ingredients")
+                    .fetchSemanticsNodes()
+                    .size != 0
         }
         composeTestRule.onNodeWithText("Validated Ingredients").assertExists()
-
     }
 
     fun testScenarioSortAndValidateIngredient() {
@@ -246,28 +348,49 @@ class PlanEatTest {
         validateOneIngredient()
     }
 
-
     fun searchAndAddEggs() {
-        composeTestRule.onNodeWithText("Discover",).assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText(
+                        "Discover",
+                )
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("You may like").assertIsDisplayed()
 
         // Search for "eggs"
         composeTestRule.onNodeWithTag("search_input").performTextInput("eggs")
 
         composeTestRule.waitUntil(3000) {
-            composeTestRule.onNodeWithText("New recipes",).isDisplayed()
+            composeTestRule
+                    .onNodeWithText(
+                            "New recipes",
+                    )
+                    .isDisplayed()
         }
 
         // Save one recipe
-        composeTestRule.onNodeWithText("New recipes",).assertIsDisplayed()
-        composeTestRule.onAllNodesWithTag("favorite_button").onLast().assertIsDisplayed().performClick()
+        composeTestRule
+                .onNodeWithText(
+                        "New recipes",
+                )
+                .assertIsDisplayed()
+        composeTestRule
+                .onAllNodesWithTag("three_dot_button")
+                .onLast()
+                .assertIsDisplayed()
+                .performClick()
 
         // Should have 2 recipes in favorites + 1 in my recipes
-        composeTestRule.onAllNodesWithText("Favorites",).onLast().assertIsDisplayed().performClick()
+        composeTestRule
+                .onAllNodesWithText(
+                        "Favorites",
+                )
+                .onLast()
+                .assertIsDisplayed()
+                .performClick()
         composeTestRule.onNodeWithText("Favorite").assertIsDisplayed()
-        composeTestRule.onAllNodesWithTag("favorite_button").onFirst().assertIsDisplayed()
+        composeTestRule.onAllNodesWithTag("three_dot_button").onFirst().assertIsDisplayed()
     }
-
 
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     @Test
@@ -278,6 +401,4 @@ class PlanEatTest {
         testFilterSuggestion()
         searchAndAddEggs()
     }
-
 }
-

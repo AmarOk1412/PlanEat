@@ -70,11 +70,11 @@ import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.ui.components.MinimalRecipeItemList
 import com.planeat.planeat.ui.components.RecipeListItem
-import java.time.ZoneOffset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.ZoneOffset
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -91,6 +91,8 @@ fun RecipesScreen(
         onFilterClicked: (Tags) -> Unit,
 ) {
     var filter by remember { mutableStateOf("") }
+    var current_search by rememberSaveable { mutableStateOf("") }
+
     var currentTag by remember { mutableStateOf(model.currentTag.value) }
     var context = LocalContext.current
 
@@ -112,6 +114,7 @@ fun RecipesScreen(
                 newRecipe.planified += 1
                 if (id == 0.toLong()) {
                     // If a search result, add it to recipes first
+                    // TODO once model will be local, check if this is still slow
                     model.add(r)
                     val res = rdb.recipeDao().findByUrl(r.url)
                     if (res == null) {
@@ -125,6 +128,7 @@ fun RecipesScreen(
                 rdb.recipeDao().update(newRecipe)
                 val res2 = rdb.recipeDao().findByUrl(r.url)
                 // Then add it to agenda
+                // TODO may fail if an operation is already in progress.
                 Log.w("PlanEat", "Selected date: ${model.selectedDate.value!!}")
                 val dateMidday =
                         model.selectedDate.value!!
@@ -134,13 +138,18 @@ fun RecipesScreen(
 
                 Log.w("PlanEat", "Recipe: ${id}, Date: ${dateMidday}")
                 model.planify(Agenda(date = dateMidday, recipeId = id))
+                // Clear search bar
+                current_search = ""
+                // Go to agenda
                 goToAgenda()
             }
         }
     }
 
     if (filter.isNotEmpty()) {
-        BackHandler { filter = "" }
+        BackHandler {
+            filter = ""
+        }
 
         Scaffold(
                 topBar = {
@@ -209,13 +218,12 @@ fun RecipesScreen(
         }
     } else {
         Column(modifier = Modifier.fillMaxWidth().background(surfaceContainerLowestLight)) {
-            var text by rememberSaveable { mutableStateOf("") }
             var expanded by rememberSaveable { mutableStateOf(false) }
             val filters = Tags.entries.map { it }
 
-            LaunchedEffect(text) {
+            LaunchedEffect(current_search) {
                 delay(300)
-                onQueryChanged.invoke(text, false)
+                onQueryChanged.invoke(current_search, false)
             }
 
             val focusRequester = remember { FocusRequester() }
@@ -237,8 +245,8 @@ fun RecipesScreen(
                                                         RoundedCornerShape(100.dp)
                                                 )
                                                 .padding(start = 8.dp),
-                                query = text,
-                                onQueryChange = { text = it },
+                                query = current_search,
+                                onQueryChange = { current_search = it },
                                 expanded = expanded,
                                 onExpandedChange = { expanded = it },
                                 onSearch = { expanded = false },
@@ -251,7 +259,7 @@ fun RecipesScreen(
                                 trailingIcon = {
                                     IconButton(
                                             onClick = {
-                                                if (expanded) text = ""
+                                                if (expanded) current_search = ""
                                                 else focusRequester.requestFocus()
                                             }
                                     ) {
@@ -309,7 +317,7 @@ fun RecipesScreen(
                 }
             }
 
-            if (text.isEmpty()) {
+            if (current_search.isEmpty()) {
                 if (favoritesRecipes.isNotEmpty()) {
 
                     Row(
