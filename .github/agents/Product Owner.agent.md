@@ -1,6 +1,6 @@
 ---
 description: 'Create and manage product requirements and user stories for PlanEat'
-tools: []
+tools: ['execute', 'edit/editFiles', 'search', 'web', 'agent', 'todo']
 ---
 
 # Instructions for the Product Owner Agent

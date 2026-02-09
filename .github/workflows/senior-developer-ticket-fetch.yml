@@ -1,0 +1,50 @@
+name: Senior Developer — Fetch latest bug/feature ticket
+
+on:
+  workflow_dispatch:
+    inputs:
+      include_closed:
+        description: 'Include closed issues (true/false)'
+        required: false
+        default: 'false'
+
+permissions:
+  issues: read
+
+jobs:
+  fetch_latest_ticket:
+    runs-on: ubuntu-latest
+    outputs:
+      title: ${{ steps.fetch.outputs.title }}
+      body: ${{ steps.fetch.outputs.body }}
+      found: ${{ steps.fetch.outputs.found }}
+    steps:
+      - name: Fetch latest issue with label bug or feature request
+        id: fetch
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const core = require('@actions/core');
+            const q = `repo:${context.repo.owner}/${context.repo.repo} is:issue state:open (label:bug OR label:"feature request")`;
+            const res = await github.rest.search.issuesAndPullRequests({ q, sort: 'created', order: 'desc', per_page: 1 });
+            if (!res || !res.data || res.data.total_count === 0) {
+              core.setOutput('found','false');
+              core.setOutput('title','');
+              core.setOutput('body','');
+              core.info('No matching issues found.');
+            } else {
+              const issue = res.data.items[0];
+              core.setOutput('found','true');
+              core.setOutput('title', issue.title || '');
+              core.setOutput('body', issue.body || '');
+              core.info(`Title: ${issue.title}`);
+              core.info('---');
+              core.info(issue.body || '(no description)');
+            }
+
+      - name: Show fetched ticket
+        run: |
+          echo "Found: ${{ steps.fetch.outputs.found }}"
+          echo "Title: ${{ steps.fetch.outputs.title }}"
+          echo "Body:"
+          echo "${{ steps.fetch.outputs.body }}"
