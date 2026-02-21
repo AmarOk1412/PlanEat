@@ -16,15 +16,19 @@
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
 
-    id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.3.10"
     kotlin("plugin.serialization") version "2.2.0-RC"
     id("com.google.devtools.ksp") version "2.3.2"
+    id("com.chaquo.python")
 }
 
 android {
-    compileSdk = 36
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
     namespace = "com.planeat.planeat"
 
     defaultConfig {
@@ -35,6 +39,10 @@ android {
         versionName = "1.1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters += listOf("arm64-v8a", "x86_64")
+        }
 
     }
     ksp {
@@ -72,17 +80,6 @@ android {
         }
     }
 
-    // Tests can be Robolectric or instrumented tests
-    sourceSets {
-        val sharedTestDir = "src/sharedTest/java"
-        getByName("test") {
-            java.srcDir(sharedTestDir)
-        }
-        getByName("androidTest") {
-            java.srcDir(sharedTestDir)
-        }
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
@@ -100,8 +97,6 @@ android {
     }
 
     // Specify tflite file should not be compressed for the app apk
-
-
 }
 
 dependencies {
@@ -155,5 +150,6 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
     implementation(libs.barcode.scanning)
+
 
 }

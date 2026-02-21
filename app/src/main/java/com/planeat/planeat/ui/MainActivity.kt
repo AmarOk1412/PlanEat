@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import com.chaquo.python.Python
+import com.chaquo.python.android.AndroidPlatform
 import com.example.compose.AppTheme
 import com.google.accompanist.adaptive.calculateDisplayFeatures
 
@@ -19,6 +21,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        if (!Python.isStarted()) {
+            Python.start(AndroidPlatform(this))
+        }
 
         setContent {
             AppTheme(dynamicColor=false, darkTheme=false) {
