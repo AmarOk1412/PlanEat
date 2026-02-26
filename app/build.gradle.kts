@@ -41,9 +41,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters += listOf("arm64-v8a", "x86_64")
+            abiFilters += listOf("arm64-v8a")
         }
-
     }
     ksp {
         arg("room.schemaLocation", "$projectDir/schemas")
@@ -96,7 +95,17 @@ android {
         noCompress += listOf("tflite")
     }
 
-    // Specify tflite file should not be compressed for the app apk
+    // Specify tflite file should not be compressed for the app
+}
+
+chaquopy {
+    defaultConfig {
+        version = "3.13"
+        pip {
+            install("src/main/assets/python_crfsuite-0.9.12-py3-none-any.whl")
+            install("ingredient_parser_nlp")
+        }
+    }
 }
 
 dependencies {
@@ -119,6 +128,7 @@ dependencies {
     implementation(libs.androidx.room.runtime.v261)
     implementation(libs.androidx.runner)
     implementation(libs.androidx.rules)
+    implementation(libs.language.id.common)
     annotationProcessor(libs.room.compiler.v261)
     ksp(libs.room.compiler.v261)
     implementation(libs.kotlinx.serialization.json)

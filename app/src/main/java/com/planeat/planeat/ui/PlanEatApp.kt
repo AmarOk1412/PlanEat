@@ -29,6 +29,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.chaquo.python.PyException
+import com.chaquo.python.Python
 import com.planeat.planeat.connectors.ChaCuit
 import com.planeat.planeat.connectors.Connector
 import com.planeat.planeat.connectors.Marmiton
@@ -55,6 +57,7 @@ import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
 import com.planeat.planeat.ui.utils.IngredientClassifier
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
 import com.planeat.planeat.ui.utils.TagClassifier
+import com.planeat.planeat.ui.utils.Translator
 import java.io.File
 import java.io.FileWriter
 import java.net.SocketTimeoutException
@@ -69,6 +72,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -98,9 +102,6 @@ class AppModel(
     var selectedDate = mutableStateOf<LocalDate?>(null)
 
     var searchJobs = mutableListOf<Job>()
-
-    private val hasConnection = mutableStateOf(true)
-    private val checkConnectionJob = mutableStateOf<Job?>(null)
 
     var account = mutableStateOf<Account?>(null)
 
@@ -301,6 +302,12 @@ class AppModel(
     private var listJob: Job? = null
     var currentSearchTerm: String = ""
 
+    private var translator = Translator()
+
+    private val py = Python.getInstance()
+    private val ingredientParserModule = py.getModule("ingredient_parser")
+    private val parseIngredientFunc = ingredientParserModule["parse_ingredient"]
+
     fun parseQuantity(qty: String?): Float {
         return qty?.let {
             try {
@@ -318,99 +325,93 @@ class AppModel(
                 ?: 1.0f // Default to 1.0 if qty is absent or null
     }
 
-    fun postIngredients(ingredientsData: String): List<IngredientItem> {
-        if (!hasConnection.value) return emptyList()
+    fun parseIngredient(ingredientData: String, locale: String): List<IngredientItem> {
 
-        val ic = IngredientClassifier()
-        val db = IngredientsDb.getDatabase(context)
-        try {
-            // Use Jsoup to send a POST request
-            val response =
-                    Jsoup.connect("https://cha-cu.it/parse")
-                            .method(Connection.Method.POST)
-                            .header("Content-Type", "text/plain")
-                            .requestBody(ingredientsData)
-                            .timeout(2000)
-                            .ignoreContentType(true) // We want to handle the JSON response
-                            .execute()
-
-            // Get the response body as a string (JSON)
-            val jsonResponse = response.body()
-
-            val json = Json { ignoreUnknownKeys = true }
-
-            // Decode the JSON response to a List of ParsedIngredient
-            val parsedIngredients = json.decodeFromString<List<ParsedIngredient>>(jsonResponse)
-
-            // Convert ParsedIngredient to List<IngredientItem> with the necessary transformations
-            return parsedIngredients.mapNotNull { parsedIngredient ->
-                parsedIngredient.name?.let { // Ignore if name is absent
-                    IngredientItem(
-                            quantity = parseQuantity(parsedIngredient.qty),
-                            unit = parsedIngredient.unit
-                                            ?: "", // Default to empty string if unit is null
-                            name = it,
-                            category = toIngredientCategory(it, ic, db)
-                    )
-                }
-            }
-        } catch (error: SocketTimeoutException) {
-            hasConnection.value = false
-            startCheckConnection()
-        } catch (error: Exception) {
-            Log.d("PlanEat", "Error: $error")
+        val translatedIngredientData = runBlocking {
+            async { translator.toEnglish(ingredientData, locale) }.await()
         }
-        return emptyList()
-    }
 
-    private fun startCheckConnection() {
-        if (checkConnectionJob.value == null) { // Only start if no job is running
-            val scope = CoroutineScope(Dispatchers.Default)
+        val result: MutableList<IngredientItem> = mutableListOf()
+        try {
+            val ingredient = parseIngredientFunc?.call(translatedIngredientData)
 
-            // Launch a job that checks the connection every minute
-            checkConnectionJob.value =
-                    scope.launch {
-                        while (!hasConnection.value) {
-                            // Perform your connection check here
-                            Log.e("PlanEat", "Checking connection to parse ingredients.")
+            if (ingredient != null && ingredient["name"]?.asList()?.isNotEmpty() == true) {
+                val name = ingredient["name"]?.asList()[0]?.get("text")?.toString()!!
+                var unit: String = ""
+                var quantity: Float = 1.0f
+                try {
+                    if (ingredient["amount"] != null &&
+                        ingredient["amount"]?.asList()?.isNotEmpty() == true
+                    ) {
+                        val amountList = ingredient["amount"]?.asList()
+                        var bestIndex: Int? =
+                                amountList?.indexOfFirst {
+                                    it["unit_system"].toString() == "metric"
+                                }
+                        if (bestIndex == null || bestIndex == -1) {
+                            bestIndex = 0
+                        }
+                        unit = ingredient["amount"]?.asList()[bestIndex]?.get("unit")?.toString()!!
+                        val fraction = ingredient["amount"]?.asList()[bestIndex]?.get("quantity")
+                        if (fraction != null) {
+                            val fractionStr = fraction.toString()
+                            val parts = fractionStr.split("/")
+                            if (parts.size == 2) {
+                                val numeratorString = parts[0]
+                                val denominatorString = parts[1]
 
-                            // Wait for 1 minute
-                            delay(60 * 1000L)
+                                try {
+                                    val numerator = numeratorString.toFloat()
+                                    val denominator = denominatorString.toFloat()
 
-                            try {
-                                // Use Jsoup to send a POST request
-                                val response =
-                                        Jsoup.connect("https://cha-cu.it/parse")
-                                                .method(Connection.Method.POST)
-                                                .header("Content-Type", "text/plain")
-                                                .requestBody("eggs")
-                                                .timeout(2000)
-                                                .ignoreContentType(
-                                                        true
-                                                ) // We want to handle the JSON response
-                                                .execute()
+                                    // Perform the division
+                                    quantity = numerator / denominator
 
-                                // Get the response body as a string (JSON)
-                                response.body()
-                                hasConnection.value = true
-                                Log.d("PlanEat", "Connection to parse ingredients is back!")
-                            } catch (error: Exception) {
-                                Log.d("PlanEat", "Error: $error")
-                                continue
+                                } catch (e: NumberFormatException) {
+                                    println("Error: Invalid number format in the string")
+                                }
+                            } else {
+                                quantity = fractionStr.toFloat()
                             }
                         }
-
-                        // When hasConnection becomes false, stop the job and set it to null
-                        println("No connection, stopping job.")
-                        checkConnectionJob.value = null
                     }
+                } catch (e: PyException) {
+                    Log.e("PlanEat", "Exception during quantity parsing: $e")
+                }
+                val ic = IngredientClassifier()
+                val db = IngredientsDb.getDatabase(context)
+
+                result.add(IngredientItem(name, quantity, unit, category = toIngredientCategory(name, ic, db)))
+            }
+        } catch (e: PyException) {
+            Log.e("PlanEat", "Exception during ingredient parsing: $e")
         }
+
+        return result
+    }
+
+    fun postIngredients(ingredientsData: String, locale: String): List<IngredientItem> {
+        val result: MutableList<IngredientItem> = mutableListOf()
+        for (ingredientData in ingredientsData.split("\n")) {
+            if (ingredientData.isNotBlank()) {
+                result.addAll(parseIngredient(ingredientData, locale))
+            }
+        }
+        return result
     }
 
     suspend fun classifyRecipeAndIngredients(recipe: Recipe) {
         if (recipe.parsed_ingredients.isEmpty()) {
             val ingredientsData = recipe.ingredients.joinToString("\n")
-            recipe.parsed_ingredients = postIngredients(ingredientsData)
+            // TODO add locale from recipe?
+            var locale = "en"
+            if (recipe.url.contains("marmiton") ||
+                recipe.url.contains("ricardo") ||
+                recipe.url.contains("cha-cu.it"))
+            {
+                locale = "fr"
+            }
+            recipe.parsed_ingredients = postIngredients(ingredientsData, locale)
             recipe.tags = TagClassifier(context).classify(recipe.toSmallJson().toString())
             update(recipe)
             return

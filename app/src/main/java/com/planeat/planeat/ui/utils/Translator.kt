@@ -15,36 +15,75 @@ class Translator {
 
         // If the current locale is English, return the name directly
         if (currentLocale.language == Locale.ENGLISH.language) {
-            continuation.resume(value) { }
+            continuation.resume(value) {}
             return@suspendCancellableCoroutine
         }
 
-        val options = TranslatorOptions.Builder()
-            .setSourceLanguage(TranslateLanguage.ENGLISH)
-            .setTargetLanguage(TranslateLanguage.fromLanguageTag(currentLocale.language)!!)
-            .build()
+        val options =
+                TranslatorOptions.Builder()
+                        .setSourceLanguage(TranslateLanguage.ENGLISH)
+                        .setTargetLanguage(
+                                TranslateLanguage.fromLanguageTag(currentLocale.language)!!
+                        )
+                        .build()
 
         val englishTranslator = Translation.getClient(options)
-        val conditions = DownloadConditions.Builder()
-            .requireWifi()
-            .build()
+        val conditions = DownloadConditions.Builder().requireWifi().build()
 
         // Download the translation model if needed
-        englishTranslator.downloadModelIfNeeded(conditions)
-            .addOnSuccessListener {
-                // Once the model is downloaded, perform the translation
-                englishTranslator.translate(value)
-                    .addOnSuccessListener { translatedText ->
-                        continuation.resume(translatedText.replaceFirstChar(Char::titlecase)) { }
-                    }
-                    .addOnFailureListener {
-                        // If translation fails, return the original name
-                        continuation.resume(value) { }
-                    }
-            }
-            .addOnFailureListener {
-                // If model download fails, return the original name
-                continuation.resume(value) { }
-            }
+        englishTranslator
+                .downloadModelIfNeeded(conditions)
+                .addOnSuccessListener {
+                    // Once the model is downloaded, perform the translation
+                    englishTranslator
+                            .translate(value)
+                            .addOnSuccessListener { translatedText ->
+                                continuation.resume(
+                                        translatedText.replaceFirstChar(Char::titlecase)
+                                ) {}
+                            }
+                            .addOnFailureListener {
+                                // If translation fails, return the original name
+                                continuation.resume(value) {}
+                            }
+                }
+                .addOnFailureListener {
+                    // If model download fails, return the original name
+                    continuation.resume(value) {}
+                }
     }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    suspend fun toEnglish(value: String, locale: String): String =
+            suspendCancellableCoroutine { continuation ->
+                val options =
+                        TranslatorOptions.Builder()
+                                .setTargetLanguage(TranslateLanguage.ENGLISH)
+                                .setSourceLanguage(TranslateLanguage.fromLanguageTag(locale)!!)
+                                .build()
+
+                val englishTranslator = Translation.getClient(options)
+                val conditions = DownloadConditions.Builder().requireWifi().build()
+
+                // Download the translation model if needed
+                englishTranslator
+                        .downloadModelIfNeeded(conditions)
+                        .addOnSuccessListener {
+                            // Once the model is downloaded, perform the translation
+                            englishTranslator
+                                    .translate(value)
+                                    .addOnSuccessListener { translatedText ->
+                                        continuation.resume(
+                                                translatedText.replaceFirstChar(Char::titlecase)
+                                        ) { cause, _, _ -> }
+                                    }
+                                    .addOnFailureListener {
+                                        // If translation fails, return the original name
+                                        continuation.resume(value) { cause, _, _ -> }
+                                    }
+                        }
+                        .addOnFailureListener {
+                            // If model download fails, return the original name
+                            continuation.resume(value) { cause, _, _ -> }
+                        }
+            }
 }

@@ -58,7 +58,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.chaquo.python.Python
 import com.example.compose.onPrimaryContainerLight
 import com.example.compose.primaryContainerLight
 import com.example.compose.primaryLight
@@ -71,20 +70,11 @@ import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
 import com.planeat.planeat.ui.components.MinimalRecipeItemList
 import com.planeat.planeat.ui.components.RecipeListItem
+import java.time.ZoneOffset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.time.ZoneOffset
-
-// In your Activity's onCreate or a relevant function
-fun runPythonScript() {
-    val py = Python.getInstance()
-    val module = py.getModule("math") // "my_module.py" file in src/main/python
-    val sumFunc = module["pow"]
-    val result = sumFunc?.call(2, 3)
-    println("@@@@: $result")
-}
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -102,9 +92,6 @@ fun RecipesScreen(
 ) {
     var filter by remember { mutableStateOf("") }
     var current_search by rememberSaveable { mutableStateOf("") }
-
-
-    runPythonScript()
 
     var currentTag by remember { mutableStateOf(model.currentTag.value) }
     var context = LocalContext.current
@@ -160,9 +147,7 @@ fun RecipesScreen(
     }
 
     if (filter.isNotEmpty()) {
-        BackHandler {
-            filter = ""
-        }
+        BackHandler { filter = "" }
 
         Scaffold(
                 topBar = {
