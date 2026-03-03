@@ -4,13 +4,11 @@ import android.util.Log
 import com.planeat.planeat.data.Recipe
 import org.json.JSONArray
 import org.json.JSONObject
-
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-
 
 class Marmiton : Connector {
     private var maxResult: Int
@@ -34,8 +32,7 @@ class Marmiton : Connector {
                 for (element in elements) {
                     val relurl = element.select(".recipe-card-link").attr("href")
                     val recipe = getRecipe(relurl)
-                    if (recipe.title.isEmpty())
-                        continue
+                    if (recipe.title.isEmpty()) continue
                     onRecipe(recipe)
                 }
             } catch (error: Exception) {
@@ -55,11 +52,9 @@ class Marmiton : Connector {
             for (element in elements) {
                 val relurl = element.select(".recipe-card-link").attr("href")
                 val recipe = getRecipe(relurl)
-                if (recipe.title.isEmpty())
-                    continue
+                if (recipe.title.isEmpty()) continue
                 onRecipe(recipe)
-                if (i == this.maxResult)
-                    break
+                if (i == this.maxResult) break
                 i++
             }
         } catch (error: Exception) {
@@ -76,19 +71,16 @@ class Marmiton : Connector {
             // Select all anchor tags within divs with class 'mrtn-card__title'
             val elements: Elements = doc.select("div.mrtn-card__title a")
             for (element in elements) {
-                val relurl = element.attr("href")  // Get the href attribute
-                val recipe = getRecipe(relurl)  // Assuming you have a function to process the URL
-                if (recipe.title.isEmpty())
-                    continue
-                onRecipe(recipe)  // Pass the recipe object to the callback
-                if (i == this.maxSuggestion)
-                    break
+                val relurl = element.attr("href") // Get the href attribute
+                val recipe = getRecipe(relurl) // Assuming you have a function to process the URL
+                if (recipe.title.isEmpty()) continue
+                onRecipe(recipe) // Pass the recipe object to the callback
+                if (i == this.maxSuggestion) break
                 i++
             }
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }
-
     }
 
     override fun getRecipe(url: String): Recipe {
@@ -126,9 +118,14 @@ class Marmiton : Connector {
                 if (recipeData.has("recipeTags")) {
                     tags += recipeData.getString("recipeTags").split(", ")
                 }
+                if (recipeData.has("recipeCuisine")) {
+                    tags += recipeData.getString("recipeCuisine").split(", ")
+                }
 
-                val duration = recipeData.getString("totalTime").replace("\\D".toRegex(), "").toInt()
-                val ingredients = recipeData.getJSONArray("recipeIngredient").toList().map { it.toString() }
+                val duration =
+                        recipeData.getString("totalTime").replace("\\D".toRegex(), "").toInt()
+                val ingredients =
+                        recipeData.getJSONArray("recipeIngredient").toList().map { it.toString() }
                 val steps = JSONArray()
                 val recipeInstructions = recipeData.getJSONArray("recipeInstructions")
                 for (i in 0 until recipeInstructions.length()) {
@@ -151,9 +148,17 @@ class Marmiton : Connector {
 
                 val imageUrl = recipeData.getJSONArray("image").getString(0)
 
-                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags.map { it.lowercase() }, cookingTime = duration, ingredients = ingredients, steps = steps.toString())
+                recipe =
+                        recipe.copy(
+                                title = name,
+                                url = url,
+                                image = imageUrl,
+                                tags = tags.map { it.lowercase() },
+                                cookingTime = duration,
+                                ingredients = ingredients,
+                                steps = steps.toString()
+                        )
             }
-
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
         }

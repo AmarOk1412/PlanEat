@@ -91,11 +91,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
-    androidResources {
-        noCompress += listOf("tflite")
-    }
-
-    // Specify tflite file should not be compressed for the app
 }
 
 chaquopy {
@@ -111,11 +106,6 @@ chaquopy {
 dependencies {
     // Translation
     implementation(libs.translate)
-    // Classify recipes
-    implementation(libs.litert)
-    implementation(libs.tensorflow.lite.select.tf.ops)
-    implementation(libs.litert.metadata)
-    implementation(libs.litert.support.api)
     // FOR RELEASE KEEP THIS
     implementation(libs.androidx.room.common)
     implementation(libs.room.ktx)

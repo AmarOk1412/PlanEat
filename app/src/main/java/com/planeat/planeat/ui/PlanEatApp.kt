@@ -41,7 +41,6 @@ import com.planeat.planeat.data.Agenda
 import com.planeat.planeat.data.AgendaDb
 import com.planeat.planeat.data.IngredientItem
 import com.planeat.planeat.data.IngredientsDb
-import com.planeat.planeat.data.ParsedIngredient
 import com.planeat.planeat.data.Recipe
 import com.planeat.planeat.data.RecipesDb
 import com.planeat.planeat.data.Tags
@@ -56,11 +55,8 @@ import com.planeat.planeat.ui.navigation.PlanEatRoute
 import com.planeat.planeat.ui.navigation.PlanEatTopLevelDestination
 import com.planeat.planeat.ui.utils.IngredientClassifier
 import com.planeat.planeat.ui.utils.PlanEatNavigationType
-import com.planeat.planeat.ui.utils.TagClassifier
 import com.planeat.planeat.ui.utils.Translator
 import java.io.File
-import java.io.FileWriter
-import java.net.SocketTimeoutException
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -70,15 +66,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import org.json.JSONObject
-import org.jsoup.Connection
-import org.jsoup.Jsoup
 
 @SuppressLint("NewApi")
 class AppModel(
@@ -165,6 +158,7 @@ class AppModel(
     }
 
     suspend fun gigaDataset() {
+        // TODO nytime???
         val categoriesUrl = mutableMapOf<Tags, List<String>>()
         categoriesUrl[Tags.Appetizer] =
                 listOf("https://www.marmiton.org/recettes/index/categorie/aperitif-ou-buffet/PAGE")
@@ -219,71 +213,28 @@ class AppModel(
 
         var dataset = mutableMapOf<Recipe, List<Tags>>()
         coroutineScope {
-            val marmiton = Marmiton(3)
-            val ricardo = Ricardo(3)
+            val marmiton = Marmiton(10)
+            val ricardo = Ricardo(10)
             var i = 0
+            var tagMap = mutableMapOf<String, Int>()
             launch(Dispatchers.IO) {
                 categoriesUrl.forEach { tag, listUrls ->
                     val onRecipe: (Recipe) -> Unit = { r ->
-                        val result = emptyList<Tags>().toMutableList()
-                        result += tag
-                        if (r.tags.any { it.contains("boisson") }) result += Tags.Drinks
-                        if (r.tags.any { it.contains("maroc") }) result += Tags.MiddleEastern
-                        if (r.tags.any { it.contains("oriental") }) result += Tags.MiddleEastern
-                        if (r.tags.any { it.contains("amuse-gueule") }) result += Tags.Appetizer
-                        if (r.tags.any { it.contains("comfort") }) result += Tags.ComfortFood
-                        if (r.tags.any { it.contains("sant") }) result += Tags.Healthy
-                        if (r.tags.any { it.contains("fruits de mer") } ||
-                                        r.tags.any { it.contains("crustacés") }
-                        )
-                                result += Tags.Seafood
-                        if (r.tags.any { it.contains("méditerranée") }) result += Tags.MiddleEastern
-                        if (r.tags.any { it.contains("asia") } ||
-                                        r.tags.any { it.contains("japonais") }
-                        )
-                                result += Tags.Asian
-                        if (r.tags.any { it.contains("été") }) result += Tags.ComfortFood
-                        if (r.tags.any { it.contains("américain") }) result += Tags.American
-                        if (r.tags.any { it.contains("grec") } ||
-                                        r.tags.any { it.contains("italie") } ||
-                                        r.tags.any { it.contains("portugua") } ||
-                                        r.tags.any { it.contains("fran") }
-                        )
-                                result += Tags.European
-                        if (r.tags.any { it.contains("végétarien") }) result += Tags.Vegetarian
-                        if (r.tags.any { it.contains("dessert") } ||
-                                        r.tags.any { it.contains("gâteau") }
-                        )
-                                result += Tags.Desserts
-                        synchronized(dataset) {
-                            dataset[r] = result
-                            i += 1
-                            Log.d("PlanEat", "Dataset size: ${i}")
-                            if (dataset.size >= 100) {
-                                dataset.forEach { recipe, tags ->
-                                    val file = File(context.filesDir, "input.csv")
-                                    FileWriter(file, true).use { writer ->
-                                        dataset.forEach { recipe, tags ->
-                                            // Convert recipe to JSON string and tags to a string
-                                            // separated by commas
-                                            val recipeJson =
-                                                    recipe.toSmallJson() // Assuming this is your
-                                            // JSON conversion method
-                                            val tagsString =
-                                                    tags.distinct()
-                                                            .joinToString(
-                                                                    ","
-                                                            ) // Convert list of tags to
-                                            // comma-separated string
-
-                                            // Append to the CSV file, separating the columns with
-                                            // '@'
-                                            writer.appendLine("$recipeJson@$tagsString")
-                                        }
-                                    }
-                                }
-                                dataset.clear()
+                        i += 1
+                        r.tags.forEach {
+                            val lowerIt = it.lowercase()
+                            if (tagMap.containsKey(lowerIt)) {
+                                tagMap[lowerIt] = tagMap[lowerIt]!! + 1
+                            } else {
+                                tagMap[lowerIt] = 1
                             }
+                        }
+                        if (i % 100 == 0) {
+                            Log.e("PlanEat", "Dataset size: ${i}")
+                            Log.e(
+                                    "PlanEat",
+                                    "Tag map: ${tagMap.toList().sortedByDescending { it.second }.take(20)}"
+                            )
                         }
                     }
 
@@ -341,7 +292,7 @@ class AppModel(
                 var quantity: Float = 1.0f
                 try {
                     if (ingredient["amount"] != null &&
-                        ingredient["amount"]?.asList()?.isNotEmpty() == true
+                                    ingredient["amount"]?.asList()?.isNotEmpty() == true
                     ) {
                         val amountList = ingredient["amount"]?.asList()
                         var bestIndex: Int? =
@@ -366,12 +317,19 @@ class AppModel(
 
                                     // Perform the division
                                     quantity = numerator / denominator
-
                                 } catch (e: NumberFormatException) {
-                                    println("Error: Invalid number format in the string")
+                                    println(
+                                            "Error: Invalid number format in the string $fractionStr"
+                                    )
                                 }
                             } else {
-                                quantity = fractionStr.toFloat()
+                                try {
+                                    quantity = fractionStr.toFloat()
+                                } catch (e: NumberFormatException) {
+                                    println(
+                                            "Error: Invalid number format in the string $fractionStr"
+                                    )
+                                }
                             }
                         }
                     }
@@ -381,7 +339,14 @@ class AppModel(
                 val ic = IngredientClassifier()
                 val db = IngredientsDb.getDatabase(context)
 
-                result.add(IngredientItem(name, quantity, unit, category = toIngredientCategory(name, ic, db)))
+                result.add(
+                        IngredientItem(
+                                name,
+                                quantity,
+                                unit,
+                                category = toIngredientCategory(name, ic, db)
+                        )
+                )
             }
         } catch (e: PyException) {
             Log.e("PlanEat", "Exception during ingredient parsing: $e")
@@ -406,13 +371,13 @@ class AppModel(
             // TODO add locale from recipe?
             var locale = "en"
             if (recipe.url.contains("marmiton") ||
-                recipe.url.contains("ricardo") ||
-                recipe.url.contains("cha-cu.it"))
-            {
+                            recipe.url.contains("ricardo") ||
+                            recipe.url.contains("cha-cu.it")
+            ) {
                 locale = "fr"
             }
             recipe.parsed_ingredients = postIngredients(ingredientsData, locale)
-            recipe.tags = TagClassifier(context).classify(recipe.toSmallJson().toString())
+            // TODO get best tags
             update(recipe)
             return
         }
@@ -796,8 +761,7 @@ fun PlanEatApp(
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     scope.launch {
-
-        // model.gigaDataset()
+        //model.gigaDataset()
         model.initSuggestions()
     }
 

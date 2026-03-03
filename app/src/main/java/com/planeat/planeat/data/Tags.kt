@@ -36,7 +36,46 @@ enum class Tags(private val resId: Int) {
 
     companion object {
         fun fromString(value: String): Tags? {
-            return values().find { it.name.equals(value, ignoreCase = true) }
+            // Check from commonly found tags in recipes
+            val tagMap =
+                    mapOf(
+                            "légume" to Tags.Healthy,
+                            "recette de semaine" to Tags.Easy,
+                            "choix sain" to Tags.Healthy,
+                            "italien" to Tags.European,
+                            "italian" to Tags.European,
+                            "santé" to Tags.Healthy,
+                            "dessert" to Tags.Desserts,
+                            "végétarien" to Tags.Vegetarian,
+                            "easy" to Tags.Easy,
+                            "medium" to Tags.Medium,
+                            "hard" to Tags.Hard,
+                            "appetizer" to Tags.Appetizer,
+                            "healthy" to Tags.Healthy,
+                            "middle eastern" to Tags.MiddleEastern,
+                            "asian" to Tags.Asian,
+                            "vegetarian" to Tags.Vegetarian,
+                            "desserts" to Tags.Desserts,
+                            "comfort food" to Tags.ComfortFood,
+                            "european" to Tags.European,
+                            "bakery" to Tags.Bakery,
+                            "seafood" to Tags.Seafood,
+                            "american" to Tags.American,
+                            "drink" to Tags.Drinks
+                    )
+            val tag =
+                    tagMap.entries
+                            .find {
+                                value.contains(it.key, ignoreCase = true) or
+                                        it.key.contains(value, ignoreCase = true)
+                            }
+                            ?.value
+            if (tag != null) return tag
+
+            return values().find {
+                it.name.contains(value, ignoreCase = true) or
+                        value.contains(it.name, ignoreCase = true)
+            }
         }
     }
 }
@@ -44,65 +83,95 @@ enum class Tags(private val resId: Int) {
 @Composable
 fun toTagIcon(tag: Tags) {
     if (tag == Tags.Easy) {
-        return Image(painter = painterResource(R.drawable.cooking_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.cooking_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Medium) {
-        return Image(painter = painterResource(R.drawable.curry_rice_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.curry_rice_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Hard) {
-        return Image(painter = painterResource(R.drawable.birthday_cake_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.birthday_cake_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Appetizer) {
-        return Image(painter = painterResource(R.drawable.clinking_beer_mugs_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.clinking_beer_mugs_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Healthy) {
-        return Image(painter = painterResource(R.drawable.green_salad_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.green_salad_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.MiddleEastern) {
-        return Image(painter = painterResource(R.drawable.falafel_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.falafel_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Asian) {
-        return Image(painter = painterResource(R.drawable.dumpling_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.dumpling_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Vegetarian) {
-        return Image(painter = painterResource(R.drawable.broccoli_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.broccoli_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Desserts) {
-        return Image(painter = painterResource(R.drawable.pie_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.pie_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.ComfortFood) {
-        return Image(painter = painterResource(R.drawable.pizza_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.pizza_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.European) {
-        return Image(painter = painterResource(R.drawable.fondue_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.fondue_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Bakery) {
-        return Image(painter = painterResource(R.drawable.croissant_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.croissant_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Seafood) {
-        return Image(painter = painterResource(R.drawable.shrimp_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.shrimp_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.American) {
-        return Image(painter = painterResource(R.drawable.hamburger_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.hamburger_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     } else if (tag == Tags.Drinks) {
-        return Image(painter = painterResource(R.drawable.cocktail_glass_3d),
-                     contentDescription = null,
-                     modifier = Modifier.size(26.dp))
+        return Image(
+                painter = painterResource(R.drawable.cocktail_glass_3d),
+                contentDescription = null,
+                modifier = Modifier.size(26.dp)
+        )
     }
     return Icon(Icons.Filled.Star, contentDescription = null)
 }
@@ -119,7 +188,7 @@ fun toTags(recipe: Recipe): List<Tags> {
     }
 
     for (tag in recipe.tags) {
-        tags.add(Tags.fromString(tag)?: Tags.All)
+        tags.add(Tags.fromString(tag) ?: Tags.All)
     }
 
     return tags

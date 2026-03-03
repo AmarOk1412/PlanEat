@@ -3,12 +3,11 @@ package com.planeat.planeat.connectors
 import android.util.Log
 import com.google.android.datatransport.BuildConfig
 import com.planeat.planeat.data.Recipe
-import org.json.JSONArray
-import org.json.JSONObject
-
-import org.jsoup.Jsoup
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import org.json.JSONArray
+import org.json.JSONObject
+import org.jsoup.Jsoup
 
 class Ricardo : Connector {
     private var maxResult: Int
@@ -51,28 +50,33 @@ class Ricardo : Connector {
         return routeProps
     }
 
-    override fun suggest(sonRecipe: (Recipe) -> Unit) {
-    }
+    override fun suggest(sonRecipe: (Recipe) -> Unit) {}
 
     override fun parsePages(url: String, onRecipe: (Recipe) -> Unit) {
         for (i in 1 until 11) {
             try {
                 val address = url.replace("PAGE", i.toString())
-                val response = Jsoup.connect(address).timeout(2000).userAgent("PlanEat ${BuildConfig.VERSION_NAME}").execute()
+                val response =
+                        Jsoup.connect(address)
+                                .timeout(2000)
+                                .userAgent("PlanEat ${BuildConfig.VERSION_NAME}")
+                                .execute()
                 val document = response.parse()
 
                 val scriptContent = document.select("script[id=\"react-bridge-bootstrap\"]").html()
                 val data = getRouteProps(scriptContent).getJSONObject("results")
 
                 if (data["status"] == "success") {
-                    val rows = data.getJSONObject("content").getJSONObject("results").getJSONArray("rows")
+                    val rows =
+                            data.getJSONObject("content")
+                                    .getJSONObject("results")
+                                    .getJSONArray("rows")
                     for (i in 0 until rows.length()) {
                         val row = rows.getJSONObject(i)
                         val rowUrl = row.getString("url")
                         val recipeUrl = "https://www.ricardocuisine.com/recettes/$rowUrl"
                         val recipe = getRecipe(recipeUrl)
-                        if (recipe.title.isEmpty())
-                            continue
+                        if (recipe.title.isEmpty()) continue
                         onRecipe(recipe)
                     }
                 }
@@ -86,7 +90,8 @@ class Ricardo : Connector {
         var r = 0
         try {
             val searchTermEscaped = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8.toString())
-            val url = "https://www.ricardocuisine.com/recherche?sort=score&searchValue=$searchTermEscaped&content-type=recipe&currentPage=1"
+            val url =
+                    "https://www.ricardocuisine.com/recherche?sort=score&searchValue=$searchTermEscaped&content-type=recipe&currentPage=1"
             val response = Jsoup.connect(url).timeout(2000).execute()
             val document = response.parse()
 
@@ -94,17 +99,16 @@ class Ricardo : Connector {
             val data = getRouteProps(scriptContent)
 
             if (data["status"] == "success") {
-                val rows = data.getJSONObject("content").getJSONObject("results").getJSONArray("rows")
+                val rows =
+                        data.getJSONObject("content").getJSONObject("results").getJSONArray("rows")
                 for (i in 0 until rows.length()) {
                     val row = rows.getJSONObject(i)
                     val rowUrl = row.getString("url")
                     val recipeUrl = "https://www.ricardocuisine.com/recettes/$rowUrl"
                     val recipe = getRecipe(recipeUrl)
-                    if (recipe.title.isEmpty())
-                        continue
+                    if (recipe.title.isEmpty()) continue
                     onRecipe(recipe)
-                    if (r == this.maxResult)
-                        break
+                    if (r == this.maxResult) break
                     r++
                 }
             }
@@ -139,18 +143,31 @@ class Ricardo : Connector {
                 if (recipeData.has("recipeCuisine")) {
                     tags = listOf(recipeData.getString("recipeCuisine"))
                 }
+                if (recipeData.has("recipeCategory")) {
+                    tags += recipeData.getString("recipeCategory").split(", ")
+                }
+                if (recipeData.has("recipeTags")) {
+                    tags += recipeData.getString("recipeTags").split(", ")
+                }
+
                 if (recipeData.has("keywords")) {
                     tags = recipeData.getString("keywords").split(", ")
                 } else if (recipeData.has("recipeCategory")) {
                     tags = recipeData.getString("recipeCategory").split(", ")
                 }
 
-                val duration = recipeData.getString("totalTime").replace("\\D".toRegex(), "").toInt()
-                val ingredients = recipeData.optJSONArray("recipeIngredient")?.toList()?.map { it.toString() } ?: emptyList()
+                val duration =
+                        recipeData.getString("totalTime").replace("\\D".toRegex(), "").toInt()
+                val ingredients =
+                        recipeData.optJSONArray("recipeIngredient")?.toList()?.map { it.toString() }
+                                ?: emptyList()
                 val imageUrl = recipeData.getJSONArray("image").getString(0)
                 val stepsListOpt = recipeData.optJSONArray("recipeInstructions")
                 val steps = JSONArray()
-                if (stepsListOpt?.length()!! >= 0 && (stepsListOpt.get(0) as JSONObject).optString("@type") == "HowToSection") {
+                if (stepsListOpt?.length()!! >= 0 &&
+                                (stepsListOpt.get(0) as JSONObject).optString("@type") ==
+                                        "HowToSection"
+                ) {
                     for (i in 0 until stepsListOpt.length()) {
                         val stepsList = (stepsListOpt.get(i) as JSONObject)
                         val items = stepsList.getJSONArray("itemListElement")
@@ -176,7 +193,16 @@ class Ricardo : Connector {
                         steps.put(stepObject)
                     }
                 }
-                recipe = recipe.copy(title = name, url = url, image = imageUrl, tags = tags.map { it.lowercase() }, cookingTime = duration, ingredients = ingredients, steps = steps.toString())
+                recipe =
+                        recipe.copy(
+                                title = name,
+                                url = url,
+                                image = imageUrl,
+                                tags = tags.map { it.lowercase() },
+                                cookingTime = duration,
+                                ingredients = ingredients,
+                                steps = steps.toString()
+                        )
             }
         } catch (error: Exception) {
             Log.e("PlanEat", error.toString())
